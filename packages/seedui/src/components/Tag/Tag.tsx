@@ -34,13 +34,14 @@ const TagDiv = styled.div<Required<TagProps>>((props) => {
         ? `${theme.spacing['050']}px ${theme.spacing['100']}px`
         : `${theme.spacing['050']}px ${theme.spacing['150']}px`,
     borderRadius: 100,
+    flexShrink: 0,
   };
 });
 
 const TagText = styled(Text)(() => ({
   color: 'inherit',
   lineHeight: 1,
-  margin: 0,
+  margin: '0 !important',
 }));
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(

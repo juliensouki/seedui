@@ -24,9 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 /.yarn/install-state.gz
 
-storybook.log
-storybook-static
-
 .rollup.cache
 rollup.build.css
 

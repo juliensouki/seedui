@@ -1,5 +1,6 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes } from 'react';
 import styled from 'styled-components';
+import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {
@@ -23,8 +24,21 @@ const TextFactory = (variant: TextVariants) => {
   return styled[tag]<Required<TextProps>>((props) => ({
     fontFamily: props.theme.typography[props.variant].fontFamily,
     fontWeight: props.theme.typography[props.variant].fontWeight,
+
     fontSize: props.theme.typography[props.variant].responsive.desktop.fontSize,
     lineHeight: `${props.theme.typography[props.variant].responsive.desktop.lineHeight}px`,
+    margin: `${props.theme.typography[props.variant].responsive.desktop.paragraphSpacing}px 0`,
+
+    [`@media only screen and (max-width: ${props.theme.breakpoints[tabletBreakpoint]}px)`]: {
+      fontSize: props.theme.typography[props.variant].responsive.tablet.fontSize,
+      lineHeight: `${props.theme.typography[props.variant].responsive.tablet.lineHeight}px`,
+      margin: `${props.theme.typography[props.variant].responsive.tablet.paragraphSpacing}px 0`,
+    },
+    [`@media only screen and (max-width: ${props.theme.breakpoints[mobileBreakpoint]}px)`]: {
+      fontSize: props.theme.typography[props.variant].responsive.mobile.fontSize,
+      lineHeight: `${props.theme.typography[props.variant].responsive.mobile.lineHeight}px`,
+      margin: `${props.theme.typography[props.variant].responsive.mobile.paragraphSpacing}px 0`,
+    },
   }));
 };
 

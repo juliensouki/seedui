@@ -1,3 +1,2 @@
-import './index.css';
-
-export { Tag, Text, ThemeProvider } from './components';
+export * from './components';
+export * from './types';

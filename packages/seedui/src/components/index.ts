@@ -1,3 +1,3 @@
-export { Tag } from './Tag';
-export { Text } from './Text';
-export { ThemeProvider } from './ThemeProvider';
+export * from './Tag';
+export * from './Text';
+export * from './ThemeProvider';

@@ -1,7 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Tag, Text, ThemeProvider } from '@seedui/seedui';
 
-import '@seedui/seedui/dist/style.css';
 import '@fontsource/poppins';
 import '@fontsource-variable/inter';
 
