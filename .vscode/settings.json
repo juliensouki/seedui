@@ -1,0 +1,17 @@
+{
+  "editor.bracketPairColorization.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "eslint.run": "onType",
+  "eslint.validate": ["typescript"],
+  "typescript.preferences.quoteStyle": "single",
+  "prettier.configPath": "./.prettierrc",
+  "search.exclude": {
+    "**/.pnp.*": true,
+    "**/tsconfig.json": true,
+    "**/.yarn": true
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}

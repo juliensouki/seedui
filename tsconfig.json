@@ -1,0 +1,9 @@
+{
+  "references": [{ "path": "./apps/sandbox" }, { "path": "./packages/seedui" }],
+  "compilerOptions": {
+    "useDefineForClassFields": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "types": ["jest", "node"]
+  }
+}
