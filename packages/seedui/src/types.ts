@@ -69,10 +69,7 @@ export interface BorderRadius {
 export interface TypographyConfig {
   fontFamily: string;
   fontWeight: string | number;
-  responsive: Record<
-    'desktop' | 'tablet' | 'mobile',
-    { fontSize: number | string; lineHeight: number | string; paragraphSpacing: number | string }
-  >;
+  responsive: Record<'desktop' | 'tablet' | 'mobile', { fontSize: number | string; lineHeight: number | string }>;
 }
 
 export type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';

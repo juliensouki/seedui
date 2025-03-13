@@ -7,17 +7,14 @@ export const h3Styles: TypographyConfig = {
     desktop: {
       fontSize: 40,
       lineHeight: 48,
-      paragraphSpacing: 36,
     },
     tablet: {
       fontSize: 32,
       lineHeight: 40,
-      paragraphSpacing: 32,
     },
     mobile: {
       fontSize: 26,
       lineHeight: 32,
-      paragraphSpacing: 36,
     },
   },
 };

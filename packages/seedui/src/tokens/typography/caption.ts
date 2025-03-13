@@ -7,17 +7,14 @@ export const captionStyles: TypographyConfig = {
     desktop: {
       fontSize: 12,
       lineHeight: 20,
-      paragraphSpacing: 16,
     },
     tablet: {
       fontSize: 12,
       lineHeight: 20,
-      paragraphSpacing: 16,
     },
     mobile: {
       fontSize: 12,
       lineHeight: 20,
-      paragraphSpacing: 16,
     },
   },
 };
