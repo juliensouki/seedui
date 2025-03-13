@@ -26,37 +26,37 @@ export const App: FunctionComponent = () => {
           Switch to {mode === 'light' ? 'dark' : 'light'} mode
         </button>
         <div style={{ width: 400 }}>
-          <Card variant="outlined" style={{ minWidth: 200, padding: '8px 12px' }}>
+          <Card variant="outlined" divProps={{ style: { minWidth: 200, padding: '8px 12px' } }}>
             <Text>Hello World!</Text>
           </Card>
         </div>
 
         <div style={{ marginTop: 80 }}>
-          <Text variant="h1" makeSomeSpace>
+          <Text variant="h1" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="h2" makeSomeSpace>
+          <Text variant="h2" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="h3" makeSomeSpace>
+          <Text variant="h3" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="h4" makeSomeSpace>
+          <Text variant="h4" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="h5" makeSomeSpace>
+          <Text variant="h5" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="h6" makeSomeSpace>
+          <Text variant="h6" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="p" makeSomeSpace>
+          <Text variant="p" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="caption" makeSomeSpace>
+          <Text variant="caption" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
-          <Text variant="small" makeSomeSpace>
+          <Text variant="small" bottomSpacing>
             Lorem ipsum et bla bla bla.
           </Text>
         </div>

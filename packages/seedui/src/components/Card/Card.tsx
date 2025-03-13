@@ -1,13 +1,12 @@
-import { CSSProperties, ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
+import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
-export type CardVariant = 'default' | 'outlined';
+export type CardVariants = 'default' | 'outlined';
 
 export interface CardProps {
   divProps?: HTMLAttributes<HTMLDivElement>;
   children?: ReactNode;
-  variant?: CardVariant;
-  style: CSSProperties;
+  variant?: CardVariants;
 }
 
 const CardDiv = styled.div<Required<CardProps>>((props) => {
@@ -28,9 +27,9 @@ const CardDiv = styled.div<Required<CardProps>>((props) => {
 });
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ style, variant = 'default', divProps, children }: CardProps, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+  ({ variant = 'default', divProps, children }: CardProps, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     return (
-      <CardDiv {...divProps} variant={variant} style={style} ref={forwardedRef}>
+      <CardDiv {...divProps} variant={variant} ref={forwardedRef}>
         {children}
       </CardDiv>
     );
