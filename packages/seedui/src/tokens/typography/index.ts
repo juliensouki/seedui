@@ -1,0 +1,9 @@
+export { h1Styles } from './h1';
+export { h2Styles } from './h2';
+export { h3Styles } from './h3';
+export { h4Styles } from './h4';
+export { h5Styles } from './h5';
+export { h6Styles } from './h6';
+export { pStyles } from './p';
+export { captionStyles } from './caption';
+export { smallStyles } from './small';
