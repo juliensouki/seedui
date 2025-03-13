@@ -24,6 +24,7 @@ const TextFactory = (variant: TextVariants) => {
   return styled[tag]<Required<TextProps>>((props) => ({
     fontFamily: props.theme.typography[props.variant].fontFamily,
     fontWeight: props.theme.typography[props.variant].fontWeight,
+    color: props.theme.mode === 'light' ? props.theme.colors.neutral.black : props.theme.colors.neutral.white,
 
     fontSize: props.theme.typography[props.variant].responsive.desktop.fontSize,
     lineHeight: `${props.theme.typography[props.variant].responsive.desktop.lineHeight}px`,

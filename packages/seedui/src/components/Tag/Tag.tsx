@@ -39,9 +39,12 @@ const TagDiv = styled.div<Required<TagProps>>((props) => {
 });
 
 const TagText = styled(Text)(() => ({
-  color: 'inherit',
   lineHeight: 1,
   margin: '0 !important',
+
+  '&&&': {
+    color: 'inherit ',
+  },
 }));
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(
