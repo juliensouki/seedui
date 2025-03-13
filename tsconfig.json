@@ -4,6 +4,6 @@
     "useDefineForClassFields": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "types": ["jest", "node"]
+    "types": ["node"]
   }
 }

@@ -54,3 +54,5 @@ export const Text = forwardRef<
     </TextElement>
   );
 });
+
+Text.displayName = 'Text';

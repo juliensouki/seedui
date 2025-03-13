@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 import { SemanticColors, Sizes } from '../../types';
@@ -13,7 +13,7 @@ export type TagSize = Extract<Sizes, 'sm' | 'md'>;
 export interface TagProps {
   color?: TagColor;
   size?: TagSize;
-  divProps?: React.HTMLAttributes<HTMLDivElement>;
+  divProps?: HTMLAttributes<HTMLDivElement>;
   textProps?: TextPropsAndAttributes;
   children: string;
 }
@@ -58,3 +58,5 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
     );
   },
 );
+
+Tag.displayName = 'Tag';
