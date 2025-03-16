@@ -25,7 +25,7 @@ export default tseslint.config(eslint.configs.recommended, tseslint.configs.reco
     ...react.configs['jsx-runtime'].rules,
     ...reactHooks.configs.recommended.rules,
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    '@stylistic/js/indent': ['error', 2],
+    '@stylistic/js/indent': ['error', 2, { ignoredNodes: ['ConditionalExpression'] }],
     '@stylistic/js/semi': 'error',
     '@stylistic/js/semi-spacing': ['error', { before: false, after: true }],
     'no-unused-vars': 'off',
