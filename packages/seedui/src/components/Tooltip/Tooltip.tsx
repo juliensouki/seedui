@@ -10,15 +10,22 @@ import {
 } from 'react';
 import styled from 'styled-components';
 
-import { Text } from '../Text';
+import { Text, TextPropsAndAttributes } from '../Text';
 import { Theme } from '../../types';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
 export interface TooltipProps {
-  divProps?: HTMLAttributes<HTMLDivElement>;
   text: string;
   direction?: TooltipDirection;
+  htmlAttributes?: {
+    rootDiv?: HTMLAttributes<HTMLDivElement>;
+    childrenWrapperDiv?: HTMLAttributes<HTMLDivElement>;
+    tooltipSpan?: HTMLAttributes<HTMLSpanElement>;
+  };
+  forwardProps?: {
+    text?: TextPropsAndAttributes;
+  };
   children: ReactNode;
 }
 
@@ -26,7 +33,7 @@ type TooltipSpanProps = Required<TooltipProps> & { tooltipWidth: number };
 
 // Necessary to avoid no-unsafe-member-access and no-unsafe-argument linting errors. TooltipSpanProps should be enough, but it's not.
 // Props type is "any" when extending styles on an existing component using styled function.
-type StyledProps = { theme: Theme; tooltipWidth: number };
+type StyledProps = { theme: Theme; tooltipWidth: number; tooltipTop?: number };
 
 const computeTooltipMarginX = (theme: Theme): number => theme.spacing['200'];
 const computeTooltipMarginY = (theme: Theme): number => theme.spacing['100'];
@@ -66,10 +73,12 @@ const BottomTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps)
 const LeftTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps) => ({
   marginRight: computeTooltipMarginX(props.theme),
   right: '100%',
+  top: props.tooltipTop,
   marginLeft: -props.tooltipWidth / 2,
 }));
 
 const RightTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps) => ({
+  top: props.tooltipTop,
   right: -(props.tooltipWidth + computeTooltipMarginX(props.theme)),
 }));
 
@@ -91,13 +100,25 @@ const TooltipText = styled(Text)(() => ({
 
   '&&&': {
     color: 'inherit ',
-    fontSize: 12,
     lineHeight: 1.5,
   },
 }));
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  ({ divProps, text, direction = 'top', children }, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+  (
+    {
+      text,
+      direction = 'top',
+      htmlAttributes: {
+        rootDiv: rootDivHTMLAttributes,
+        childrenWrapperDiv: childrenWrapperDivHTMLAttributes,
+        tooltipSpan: tooltipSpanHTMLAttributes,
+      } = {},
+      forwardProps: { text: textProps } = {},
+      children,
+    },
+    forwardedRef: ForwardedRef<HTMLDivElement>,
+  ) => {
     const [tooltipTop, setTooltipTop] = useState<number | undefined>(undefined);
     const [tooltipWidth, setTooltipWidth] = useState<number | undefined>(undefined);
 
@@ -140,10 +161,19 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         : RightTooltip;
 
     return (
-      <MainDiv {...divProps} ref={forwardedRef}>
-        <ChildrenWrapper ref={childrenContainerRef}>{children}</ChildrenWrapper>
-        <TooltipComponent ref={tooltipRef} tooltipWidth={tooltipWidth} style={{ top: tooltipTop }}>
-          <TooltipText>{text}</TooltipText>
+      <MainDiv ref={forwardedRef} {...rootDivHTMLAttributes}>
+        <ChildrenWrapper ref={childrenContainerRef} {...childrenWrapperDivHTMLAttributes}>
+          {children}
+        </ChildrenWrapper>
+        <TooltipComponent
+          ref={tooltipRef}
+          tooltipWidth={tooltipWidth}
+          tooltipTop={tooltipTop}
+          {...tooltipSpanHTMLAttributes}
+        >
+          <TooltipText variant="caption" {...textProps}>
+            {text}
+          </TooltipText>
         </TooltipComponent>
       </MainDiv>
     );

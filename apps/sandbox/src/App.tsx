@@ -27,7 +27,7 @@ export const App: FunctionComponent = () => {
         </button>
 
         <div style={{ padding: 300 }}>
-          <Tooltip text="This button is disabled." direction="top">
+          <Tooltip text="This button is disabled." direction="bottom">
             <button disabled>Hover Me</button>
           </Tooltip>
         </div>
