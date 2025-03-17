@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, Card, ThemeProvider, Text } from '@seedui/seedui';
+import { colors, ThemeProvider, Tooltip } from '@seedui/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -25,42 +25,15 @@ export const App: FunctionComponent = () => {
         >
           Switch to {mode === 'light' ? 'dark' : 'light'} mode
         </button>
-        <div style={{ width: 400 }}>
-          <Card variant="outlined" divProps={{ style: { minWidth: 200, padding: '8px 12px' } }}>
-            <Text>Hello World!</Text>
-          </Card>
-        </div>
 
-        <div style={{ marginTop: 80 }}>
-          <Text variant="h1" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="h2" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="h3" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="h4" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="h5" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="h6" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="p" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="caption" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
-          <Text variant="small" bottomSpacing>
-            Lorem ipsum et bla bla bla.
-          </Text>
+        <div style={{ padding: 300 }}>
+          <Tooltip text="This button is disabled." direction="bottom">
+            <button disabled>Hover Me</button>
+          </Tooltip>
         </div>
       </ThemeProvider>
     </div>
   );
 };
+
+// Fix all warnings in the console

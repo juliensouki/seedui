@@ -19,7 +19,7 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["src/react-app-env.d.ts", "config/", "scripts/"],
+  "ignorePatterns": ["config/", "scripts/"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "semi": ["error", "always"],

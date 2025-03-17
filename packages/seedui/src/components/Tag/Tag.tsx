@@ -13,8 +13,12 @@ export type TagSize = Extract<Sizes, 'sm' | 'md'>;
 export interface TagProps {
   color?: TagColor;
   size?: TagSize;
-  divProps?: HTMLAttributes<HTMLDivElement>;
-  textProps?: TextPropsAndAttributes;
+  htmlAttributes?: {
+    rootDiv?: HTMLAttributes<HTMLDivElement>;
+  };
+  forwardProps?: {
+    text?: TextPropsAndAttributes;
+  };
   children: string;
 }
 
@@ -26,6 +30,7 @@ const TagDiv = styled.div<Required<TagProps>>((props) => {
   return {
     display: 'block',
     height: '100%',
+    width: 'max-content',
     border: `1px solid ${color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600]}`,
     color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
     backgroundColor: theme.colors[color][100],
@@ -49,11 +54,17 @@ const TagText = styled(Text)(() => ({
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(
   (
-    { color = 'neutral', size = 'md', divProps, textProps, children }: TagProps,
+    {
+      color = 'neutral',
+      size = 'md',
+      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      forwardProps: { text: textProps } = {},
+      children,
+    }: TagProps,
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
     return (
-      <TagDiv {...divProps} color={color} size={size} ref={forwardedRef}>
+      <TagDiv color={color} size={size} ref={forwardedRef} {...rootDivHTMLAttributes}>
         <TagText variant={size === 'sm' ? 'small' : 'p'} size={size} {...textProps}>
           {children}
         </TagText>
