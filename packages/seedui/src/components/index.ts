@@ -1,5 +1,5 @@
 export * from './Card';
-export * from './IconButton';
+export * from './Button';
 export * from './Tag';
 export * from './Text';
 export * from './Tooltip';

@@ -1,6 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, IconButton, ThemeProvider } from '@seedui/seedui';
-import { GemIcon } from 'lucide-react';
+import { colors, Button, ThemeProvider } from '@seedui/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -28,82 +27,82 @@ export const App: FunctionComponent = () => {
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <IconButton variant="filled" color="primary" size="sm">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="primary" size="sm">
+            Hello World
+          </Button>
 
-          <IconButton variant="filled" color="primary" size="md">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="primary" size="md">
+            Hello World
+          </Button>
 
-          <IconButton variant="filled" color="primary" size="lg">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="primary" size="lg">
+            Hello World
+          </Button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <IconButton variant="transparent" color="primary" size="sm">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="primary" size="sm">
+            Hello World
+          </Button>
 
-          <IconButton variant="transparent" color="primary" size="md">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="primary" size="md">
+            Hello World
+          </Button>
 
-          <IconButton variant="transparent" color="primary" size="lg">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="primary" size="lg">
+            Hello World
+          </Button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <IconButton variant="filled" color="secondary" size="sm">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="secondary" size="sm">
+            Hello World
+          </Button>
 
-          <IconButton variant="filled" color="secondary" size="md">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="secondary" size="md">
+            Hello World
+          </Button>
 
-          <IconButton variant="filled" color="secondary" size="lg">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="secondary" size="lg">
+            Hello World
+          </Button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <IconButton variant="transparent" color="secondary" size="sm">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="secondary" size="sm">
+            Hello World
+          </Button>
 
-          <IconButton variant="transparent" color="secondary" size="md">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="secondary" size="md">
+            Hello World
+          </Button>
 
-          <IconButton variant="transparent" color="secondary" size="lg">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="secondary" size="lg">
+            Hello World
+          </Button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <IconButton variant="filled" color="neutral" size="sm">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="neutral" size="sm">
+            Hello World
+          </Button>
 
-          <IconButton variant="filled" color="neutral" size="md">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="neutral" size="md">
+            Hello World
+          </Button>
 
-          <IconButton variant="filled" color="neutral" size="lg">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="filled" color="neutral" size="lg">
+            Hello World
+          </Button>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <IconButton variant="transparent" color="neutral" size="sm">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="neutral" size="sm">
+            Hello World
+          </Button>
 
-          <IconButton variant="transparent" color="neutral" size="md">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="neutral" size="md">
+            Hello World
+          </Button>
 
-          <IconButton variant="transparent" color="neutral" size="lg">
-            <GemIcon strokeWidth={1} />
-          </IconButton>
+          <Button variant="transparent" color="neutral" size="lg">
+            Hello World
+          </Button>
         </div>
       </ThemeProvider>
     </div>
