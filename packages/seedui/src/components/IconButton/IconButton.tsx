@@ -52,7 +52,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       event.currentTarget.blur();
     };
 
-    const handleKeyEvent = (event: KeyboardEvent<HTMLButtonElement>) => {
+    const handleKeyEvent = (event: KeyboardEvent<HTMLButtonElement>): void => {
       if (event.key === ' ') {
         if (event.type === 'keydown') {
           setIsActive(true);
@@ -62,7 +62,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       }
     };
 
-    const handleMouseEvent = (event: MouseEvent<HTMLButtonElement>) => {
+    const handleMouseEvent = (event: MouseEvent<HTMLButtonElement>): void => {
       if (event.type === 'mousedown') {
         setIsClicking(true);
       } else if (event.type === 'mouseup') {
