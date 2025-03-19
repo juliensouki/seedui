@@ -66,6 +66,10 @@ export interface BorderRadius {
   '050': number;
   '075': number;
   '100': number;
+  '125': number;
+  '150': number;
+  '175': number;
+  '200': number;
 }
 
 export interface TypographyConfig {

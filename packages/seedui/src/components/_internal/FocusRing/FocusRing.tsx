@@ -6,6 +6,7 @@ import { Colors } from '../../../types';
 interface FocusRingProps {
   show: boolean;
   pressed?: boolean;
+  radius?: number | 'inherit';
   color: Colors;
 }
 
@@ -31,7 +32,7 @@ const FocusRingDiv = styled.div<Required<FocusRingProps>>((props) => {
     width: `calc(100% + ${offset * 2}px)`,
     height: `calc(100% + ${offset * 2}px)`,
     border: `${borderWidth}px solid ${borderColor}`,
-    borderRadius: 'inherit',
+    borderRadius: props.radius,
     opacity: props.show && !props.pressed ? 1 : 0,
     transition: 'opacity .1s, transform .2s',
     transform: `scale(${props.show && !props.pressed ? 1 : 0.8})`,
@@ -39,8 +40,11 @@ const FocusRingDiv = styled.div<Required<FocusRingProps>>((props) => {
 });
 
 export const FocusRing = forwardRef<HTMLButtonElement, FocusRingProps>(
-  ({ show, pressed = false, color }: FocusRingProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
-    return <FocusRingDiv color={color} show={show} pressed={pressed} ref={forwardedRef} />;
+  (
+    { show, pressed = false, radius = 'inherit', color }: FocusRingProps,
+    forwardedRef: ForwardedRef<HTMLButtonElement>,
+  ) => {
+    return <FocusRingDiv color={color} radius={radius} show={show} pressed={pressed} ref={forwardedRef} />;
   },
 );
 
