@@ -14,6 +14,8 @@ export interface SemanticColorShades extends PrimitiveColorShades {
   default: string;
 }
 
+export type Colors = keyof SemanticColors;
+
 export interface SemanticColors {
   primary: SemanticColorShades;
   secondary: SemanticColorShades;
@@ -85,3 +87,8 @@ export interface Theme {
 export type Mode = 'light' | 'dark';
 
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+// Necessary to avoid no-unsafe-member-access and no-unsafe-argument linting errors.
+// Props type is "any" when extending styles on an existing component using styled function.
+// This type is just a workaround to avoid linting errors when using the styled extension feature from styled-components.
+export type StyledProps<T> = { theme: Theme & { mode: Mode } } & T;

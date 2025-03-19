@@ -11,7 +11,7 @@ import {
 import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
-import { Theme } from '../../types';
+import { StyledProps, Theme } from '../../types';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -29,11 +29,7 @@ export interface TooltipProps {
   children: ReactNode;
 }
 
-type TooltipSpanProps = Required<TooltipProps> & { tooltipWidth: number };
-
-// Necessary to avoid no-unsafe-member-access and no-unsafe-argument linting errors. TooltipSpanProps should be enough, but it's not.
-// Props type is "any" when extending styles on an existing component using styled function.
-type StyledProps = { theme: Theme; tooltipWidth: number; tooltipTop?: number };
+type TooltipSpanProps = Required<TooltipProps> & { tooltipWidth: number; tooltipTop?: number };
 
 const computeTooltipMarginX = (theme: Theme): number => theme.spacing['200'];
 const computeTooltipMarginY = (theme: Theme): number => theme.spacing['100'];
@@ -58,26 +54,26 @@ const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
   };
 });
 
-const TopTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps) => ({
+const TopTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
   bottom: '100%',
   left: `calc(50% - ${props.tooltipWidth / 2}px)`,
   marginBottom: computeTooltipMarginY(props.theme),
 }));
 
-const BottomTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps) => ({
+const BottomTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
   top: '100%',
   left: `calc(50% - ${props.tooltipWidth / 2}px)`,
   marginTop: computeTooltipMarginY(props.theme),
 }));
 
-const LeftTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps) => ({
+const LeftTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
   marginRight: computeTooltipMarginX(props.theme),
   right: '100%',
   top: props.tooltipTop,
   marginLeft: -props.tooltipWidth / 2,
 }));
 
-const RightTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps) => ({
+const RightTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
   top: props.tooltipTop,
   right: -(props.tooltipWidth + computeTooltipMarginX(props.theme)),
 }));
