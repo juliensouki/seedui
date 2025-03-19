@@ -11,20 +11,20 @@ import {
 import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import { Sizes, StyledProps } from '../../../types';
+import { StyledProps } from '../../../types';
 import { getPrimaryFilledButtonStyles } from '../_common/styles/get-primary-filled-styles';
 import { getPrimaryTransparentButtonStyles } from '../_common/styles/get-primary-transparent-styles';
 import { getSecondaryFilledButtonStyles } from '../_common/styles/get-secondary-filled-styles';
 import { getNeutralFilledButtonStyles } from '../_common/styles/get-neutral-filled-styles';
 import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secondary-transparent-styles';
 import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
-import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonVariants } from '../_common/ButtonCommon';
+import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
 
 export interface IconButtonProps extends ButtonBaseProps {
   children?: ReactNode;
 }
 
-const mapSizeToAttributes: Record<Exclude<Sizes, 'xs' | 'xl'>, { iconSize: number }> = {
+const mapSizeToAttributes: Record<ButtonSizes, { iconSize: number }> = {
   sm: { iconSize: 17 },
   md: { iconSize: 22 },
   lg: { iconSize: 30 },

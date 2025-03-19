@@ -11,37 +11,57 @@ import {
 import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import { Sizes, StyledProps } from '../../../types';
+import { StyledProps, Theme } from '../../../types';
 import { getPrimaryFilledButtonStyles } from '../_common/styles/get-primary-filled-styles';
 import { getPrimaryTransparentButtonStyles } from '../_common/styles/get-primary-transparent-styles';
 import { getSecondaryFilledButtonStyles } from '../_common/styles/get-secondary-filled-styles';
 import { getNeutralFilledButtonStyles } from '../_common/styles/get-neutral-filled-styles';
 import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secondary-transparent-styles';
 import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
-import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonVariants } from '../_common/ButtonCommon';
+import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
 }
 
-const mapSizeToAttributes: Record<Exclude<Sizes, 'xs' | 'xl'>, { fontSize: number }> = {
-  sm: { fontSize: 12 },
-  md: { fontSize: 14 },
-  lg: { fontSize: 16 },
+const getButtonStyles = (
+  theme: Theme,
+): Record<ButtonSizes, { fontSize: string | number; borderRadius: number; padding: string }> => ({
+  sm: {
+    fontSize: theme.typography.small.responsive.desktop.fontSize,
+    borderRadius: theme.borderRadius['075'],
+    padding: `${theme.spacing['050']}px ${theme.spacing[100]}px`,
+  },
+  md: {
+    fontSize: theme.typography.p.responsive.desktop.fontSize,
+    borderRadius: theme.borderRadius[100],
+    padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
+  },
+  lg: {
+    fontSize: theme.typography.p.responsive.desktop.fontSize,
+    borderRadius: theme.borderRadius[125],
+    padding: `${theme.spacing[150]}px ${theme.spacing[200]}px`,
+  },
+});
+
+const mapSizeToRingBorderRadius: Record<ButtonSizes, number> = {
+  sm: 11,
+  md: 13,
+  lg: 15,
 };
 
 export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<ButtonProps>>) => {
-  const theme = props.theme;
   const size = props.size;
+  const { fontSize, borderRadius, padding } = getButtonStyles(props.theme)[size];
 
   return {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: theme.borderRadius[100],
-    padding: size === 'sm' ? theme.spacing[100] : theme.spacing[150],
-
     fontFamily: props.theme.typography.p.fontFamily,
-    fontSize: mapSizeToAttributes[size].fontSize,
+    fontSize,
+    borderRadius,
+    padding,
+    lineHeight: '24px',
   };
 });
 
@@ -121,7 +141,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         size={size}
         ref={buttonRef}
       >
-        <FocusRing color={color} radius={13} show={isFocused && !isClicking} pressed={isActive} />
+        <FocusRing
+          color={color}
+          radius={mapSizeToRingBorderRadius[size]}
+          show={isFocused && !isClicking}
+          pressed={isActive}
+        />
         {children}
       </ButtonComponent>
     );
