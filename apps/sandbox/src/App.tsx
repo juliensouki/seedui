@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Tooltip } from '@seedui/seedui';
+import { colors, IconButton, ThemeProvider } from '@seedui/seedui';
+import { GemIcon } from 'lucide-react';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -26,14 +27,85 @@ export const App: FunctionComponent = () => {
           Switch to {mode === 'light' ? 'dark' : 'light'} mode
         </button>
 
-        <div style={{ padding: 300 }}>
-          <Tooltip text="This button is disabled." direction="bottom">
-            <button disabled>Hover Me</button>
-          </Tooltip>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <IconButton variant="filled" color="primary" size="sm">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="filled" color="primary" size="md">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="filled" color="primary" size="lg">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
+          <IconButton variant="transparent" color="primary" size="sm">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="transparent" color="primary" size="md">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="transparent" color="primary" size="lg">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
+          <IconButton variant="filled" color="secondary" size="sm">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="filled" color="secondary" size="md">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="filled" color="secondary" size="lg">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
+          <IconButton variant="transparent" color="secondary" size="sm">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="transparent" color="secondary" size="md">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="transparent" color="secondary" size="lg">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
+          <IconButton variant="filled" color="neutral" size="sm">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="filled" color="neutral" size="md">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="filled" color="neutral" size="lg">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
+          <IconButton variant="transparent" color="neutral" size="sm">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="transparent" color="neutral" size="md">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
+
+          <IconButton variant="transparent" color="neutral" size="lg">
+            <GemIcon strokeWidth={1} />
+          </IconButton>
         </div>
       </ThemeProvider>
     </div>
   );
 };
-
-// Fix all warnings in the console
