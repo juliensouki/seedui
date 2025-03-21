@@ -1,10 +1,9 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Input } from '@seedui/seedui';
+import { colors, ThemeProvider, Textarea } from '@seedui/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
 import '@fontsource-variable/inter';
-import { GemIcon } from 'lucide-react';
 
 export const App: FunctionComponent = () => {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
@@ -29,21 +28,7 @@ export const App: FunctionComponent = () => {
         </button>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <Input
-            placeholder="Placeholder"
-            label="label"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            inputIcon={{ icon: <GemIcon strokeWidth={1} />, placement: 'left' }}
-          />
-          <Input placeholder="Placeholder" label="label" value={value} onChange={(e) => setValue(e.target.value)} />
-          <Input
-            placeholder="Placeholder"
-            label="label"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            disabled
-          />
+          <Textarea placeholder="Placeholder" label="label" value={value} onChange={(e) => setValue(e.target.value)} />
         </div>
       </ThemeProvider>
     </div>

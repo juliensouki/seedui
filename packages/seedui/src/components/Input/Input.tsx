@@ -1,8 +1,9 @@
 import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
-import { Text, TextPropsAndAttributes } from '../Text';
+import { TextPropsAndAttributes } from '../Text';
 import { StyledProps } from '../../types';
+import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -66,7 +67,7 @@ const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIc
       fontSize: theme.typography.p.responsive.desktop.fontSize,
 
       '&::placeholder': {
-        color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[400],
+        color: theme.colors.neutral[400],
       },
 
       '&:hover': {
@@ -92,16 +93,14 @@ const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIc
       '&:disabled': {
         backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
         borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+
+        '&::placeholder': {
+          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+        },
       },
     };
   },
 );
-
-const RootDiv = styled.div(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 4,
-}));
 
 const InputContainer = styled.div<StyledProps<{ iconPlacement: InputIconPlacement }>>(({ theme, iconPlacement }) => ({
   display: 'flex',
@@ -110,7 +109,7 @@ const InputContainer = styled.div<StyledProps<{ iconPlacement: InputIconPlacemen
   borderRadius: theme.borderRadius[100],
 }));
 
-export const Input = forwardRef<HTMLDivElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       value,
@@ -122,15 +121,10 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
       forwardProps = {},
       htmlAttributes = {},
     }: InputProps,
-    forwardedRef: ForwardedRef<HTMLDivElement>,
+    forwardedRef: ForwardedRef<HTMLInputElement>,
   ) => {
     return (
-      <RootDiv {...htmlAttributes.rootDiv}>
-        {label && (
-          <Text {...forwardProps?.labelTextProps} variant="caption">
-            Label
-          </Text>
-        )}
+      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes}>
         <InputContainer {...htmlAttributes.inputContainerDiv} iconPlacement={iconPlacement}>
           <InputElement
             {...htmlAttributes.input}
@@ -147,7 +141,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
             </IconContainer>
           )}
         </InputContainer>
-      </RootDiv>
+      </ContainerWithLabel>
     );
   },
 );
