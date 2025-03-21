@@ -1,7 +1,10 @@
 import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
+
 import { Text, TextPropsAndAttributes } from '../Text';
 import { StyledProps } from '../../types';
+
+export type InputIconPlacement = 'left' | 'right';
 
 export interface InputProps {
   value: string;
@@ -10,7 +13,7 @@ export interface InputProps {
   disabled?: boolean;
   inputIcon?: {
     icon: ReactNode;
-    placement?: 'left' | 'right';
+    placement?: InputIconPlacement;
   };
   onChange: ChangeEventHandler<HTMLInputElement>;
   forwardProps?: {
@@ -24,7 +27,7 @@ export interface InputProps {
   };
 }
 
-const IconContainer = styled.div<{ placement: 'left' | 'right' }>(({ theme, placement }) => ({
+const IconContainer = styled.div<{ placement: InputIconPlacement }>(({ theme, placement }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -42,7 +45,7 @@ const IconContainer = styled.div<{ placement: 'left' | 'right' }>(({ theme, plac
   },
 }));
 
-const InputElement = styled.input<Required<InputProps & { iconPlacement: 'left' | 'right' }>>((props) => {
+const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIconPlacement }>>((props) => {
   return {
     padding: '8px 12px',
     fontFamily: props.theme.typography.p.fontFamily,
@@ -92,7 +95,7 @@ const RootDiv = styled.div(() => ({
   gap: 4,
 }));
 
-const InputContainer = styled.div<StyledProps<{ iconPlacement: 'left' | 'right' }>>(({ theme, iconPlacement }) => ({
+const InputContainer = styled.div<StyledProps<{ iconPlacement: InputIconPlacement }>>(({ theme, iconPlacement }) => ({
   display: 'flex',
   flexDirection: iconPlacement === 'right' ? 'row' : 'row-reverse',
   width: 200,
