@@ -1,8 +1,9 @@
 import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
-import { Text, TextPropsAndAttributes } from '../Text';
+import { TextPropsAndAttributes } from '../Text';
 import { StyledProps } from '../../types';
+import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -45,55 +46,61 @@ const IconContainer = styled.div<{ placement: InputIconPlacement }>(({ theme, pl
   },
 }));
 
-const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIconPlacement }>>((props) => {
-  return {
-    padding: '8px 12px',
-    fontFamily: props.theme.typography.p.fontFamily,
-    fontSize: 14,
-    border: `1px solid ${props.theme.colors.neutral[300]}`,
-    backgroundColor: props.theme.colors.neutral.white,
-    width: '100%',
-    borderTopRightRadius: props.iconPlacement === 'right' ? 0 : 'inherit',
-    borderBottomRightRadius: props.iconPlacement === 'right' ? 0 : 'inherit',
-    borderTopLeftRadius: props.iconPlacement === 'left' ? 0 : 'inherit',
-    borderBottomLeftRadius: props.iconPlacement === 'left' ? 0 : 'inherit',
+const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIconPlacement }>>(
+  ({ theme, iconPlacement }) => {
+    const isLight = theme.mode === 'light';
 
-    '&::placeholder': {
-      color: props.theme.colors.neutral[300],
-    },
+    return {
+      width: '100%',
+      padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
 
-    '&:hover': {
-      borderColor: props.theme.colors.neutral[500],
+      borderTopRightRadius: iconPlacement === 'right' ? 0 : 'inherit',
+      borderBottomRightRadius: iconPlacement === 'right' ? 0 : 'inherit',
+      borderTopLeftRadius: iconPlacement === 'left' ? 0 : 'inherit',
+      borderBottomLeftRadius: iconPlacement === 'left' ? 0 : 'inherit',
+      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
 
-      [`& + ${IconContainer}`]: {
-        backgroundColor: props.theme.colors.neutral[500],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+      color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
+
+      fontFamily: theme.typography.p.fontFamily,
+      fontSize: theme.typography.p.responsive.desktop.fontSize,
+
+      '&::placeholder': {
+        color: theme.colors.neutral[400],
       },
-    },
 
-    '&:focus': {
-      outline: 'none',
-      borderColor: props.theme.colors.primary.default,
-      [`& + ${IconContainer}`]: {
-        backgroundColor: props.theme.colors.primary.default,
+      '&:hover': {
+        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
 
-        '& > svg': {
-          color: props.theme.colors.neutral.white,
+        [`& + ${IconContainer}`]: {
+          backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
         },
       },
-    },
 
-    '&:disabled': {
-      backgroundColor: props.theme.colors.neutral[100],
-      borderColor: props.theme.colors.neutral[200],
-    },
-  };
-});
+      '&:focus': {
+        outline: 'none',
+        borderColor: theme.colors.primary.default,
+        [`& + ${IconContainer}`]: {
+          backgroundColor: theme.colors.primary.default,
 
-const RootDiv = styled.div(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 4,
-}));
+          '& > svg': {
+            color: theme.colors.neutral.white,
+          },
+        },
+      },
+
+      '&:disabled': {
+        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+
+        '&::placeholder': {
+          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+        },
+      },
+    };
+  },
+);
 
 const InputContainer = styled.div<StyledProps<{ iconPlacement: InputIconPlacement }>>(({ theme, iconPlacement }) => ({
   display: 'flex',
@@ -102,7 +109,7 @@ const InputContainer = styled.div<StyledProps<{ iconPlacement: InputIconPlacemen
   borderRadius: theme.borderRadius[100],
 }));
 
-export const Input = forwardRef<HTMLDivElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       value,
@@ -114,15 +121,10 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
       forwardProps = {},
       htmlAttributes = {},
     }: InputProps,
-    forwardedRef: ForwardedRef<HTMLDivElement>,
+    forwardedRef: ForwardedRef<HTMLInputElement>,
   ) => {
     return (
-      <RootDiv {...htmlAttributes.rootDiv}>
-        {label && (
-          <Text {...forwardProps?.labelTextProps} variant="caption">
-            Label
-          </Text>
-        )}
+      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes}>
         <InputContainer {...htmlAttributes.inputContainerDiv} iconPlacement={iconPlacement}>
           <InputElement
             {...htmlAttributes.input}
@@ -139,7 +141,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
             </IconContainer>
           )}
         </InputContainer>
-      </RootDiv>
+      </ContainerWithLabel>
     );
   },
 );
