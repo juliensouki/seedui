@@ -45,53 +45,57 @@ const IconContainer = styled.div<{ placement: InputIconPlacement }>(({ theme, pl
   },
 }));
 
-const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIconPlacement }>>((props) => {
-  const isLight = props.theme.mode === 'light';
+const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIconPlacement }>>(
+  ({ theme, iconPlacement }) => {
+    const isLight = theme.mode === 'light';
 
-  return {
-    width: '100%',
-    padding: '8px 12px',
-    fontFamily: props.theme.typography.p.fontFamily,
-    fontSize: props.theme.typography.p.responsive.desktop.fontSize,
-    borderTopRightRadius: props.iconPlacement === 'right' ? 0 : 'inherit',
-    borderBottomRightRadius: props.iconPlacement === 'right' ? 0 : 'inherit',
-    borderTopLeftRadius: props.iconPlacement === 'left' ? 0 : 'inherit',
-    borderBottomLeftRadius: props.iconPlacement === 'left' ? 0 : 'inherit',
+    return {
+      width: '100%',
+      padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
 
-    border: `1px solid ${isLight ? props.theme.colors.neutral[300] : props.theme.colors.neutral[400]}`,
-    backgroundColor: isLight ? props.theme.colors.neutral.white : props.theme.colors.neutral[700],
-    color: isLight ? props.theme.colors.neutral.black : props.theme.colors.neutral.white,
+      borderTopRightRadius: iconPlacement === 'right' ? 0 : 'inherit',
+      borderBottomRightRadius: iconPlacement === 'right' ? 0 : 'inherit',
+      borderTopLeftRadius: iconPlacement === 'left' ? 0 : 'inherit',
+      borderBottomLeftRadius: iconPlacement === 'left' ? 0 : 'inherit',
+      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
 
-    '&::placeholder': {
-      color: isLight ? props.theme.colors.neutral[300] : props.theme.colors.neutral[400],
-    },
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+      color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
-    '&:hover': {
-      borderColor: isLight ? props.theme.colors.neutral[500] : props.theme.colors.neutral[200],
+      fontFamily: theme.typography.p.fontFamily,
+      fontSize: theme.typography.p.responsive.desktop.fontSize,
 
-      [`& + ${IconContainer}`]: {
-        backgroundColor: isLight ? props.theme.colors.neutral[500] : props.theme.colors.neutral[200],
+      '&::placeholder': {
+        color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[400],
       },
-    },
 
-    '&:focus': {
-      outline: 'none',
-      borderColor: props.theme.colors.primary.default,
-      [`& + ${IconContainer}`]: {
-        backgroundColor: props.theme.colors.primary.default,
+      '&:hover': {
+        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
 
-        '& > svg': {
-          color: props.theme.colors.neutral.white,
+        [`& + ${IconContainer}`]: {
+          backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
         },
       },
-    },
 
-    '&:disabled': {
-      backgroundColor: isLight ? props.theme.colors.neutral[100] : props.theme.colors.neutral[800],
-      borderColor: isLight ? props.theme.colors.neutral[200] : props.theme.colors.neutral[600],
-    },
-  };
-});
+      '&:focus': {
+        outline: 'none',
+        borderColor: theme.colors.primary.default,
+        [`& + ${IconContainer}`]: {
+          backgroundColor: theme.colors.primary.default,
+
+          '& > svg': {
+            color: theme.colors.neutral.white,
+          },
+        },
+      },
+
+      '&:disabled': {
+        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+      },
+    };
+  },
+);
 
 const RootDiv = styled.div(() => ({
   display: 'flex',
