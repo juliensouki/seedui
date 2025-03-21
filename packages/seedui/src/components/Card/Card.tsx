@@ -1,5 +1,6 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
+
 import { StyledComponentsPrefix } from '../../types';
 
 export type CardVariants = 'default' | 'outlined';
