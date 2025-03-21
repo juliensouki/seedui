@@ -46,27 +46,31 @@ const IconContainer = styled.div<{ placement: InputIconPlacement }>(({ theme, pl
 }));
 
 const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIconPlacement }>>((props) => {
+  const isLight = props.theme.mode === 'light';
+
   return {
+    width: '100%',
     padding: '8px 12px',
     fontFamily: props.theme.typography.p.fontFamily,
-    fontSize: 14,
-    border: `1px solid ${props.theme.colors.neutral[300]}`,
-    backgroundColor: props.theme.colors.neutral.white,
-    width: '100%',
+    fontSize: props.theme.typography.p.responsive.desktop.fontSize,
     borderTopRightRadius: props.iconPlacement === 'right' ? 0 : 'inherit',
     borderBottomRightRadius: props.iconPlacement === 'right' ? 0 : 'inherit',
     borderTopLeftRadius: props.iconPlacement === 'left' ? 0 : 'inherit',
     borderBottomLeftRadius: props.iconPlacement === 'left' ? 0 : 'inherit',
 
+    border: `1px solid ${isLight ? props.theme.colors.neutral[300] : props.theme.colors.neutral[400]}`,
+    backgroundColor: isLight ? props.theme.colors.neutral.white : props.theme.colors.neutral[700],
+    color: isLight ? props.theme.colors.neutral.black : props.theme.colors.neutral.white,
+
     '&::placeholder': {
-      color: props.theme.colors.neutral[300],
+      color: isLight ? props.theme.colors.neutral[300] : props.theme.colors.neutral[400],
     },
 
     '&:hover': {
-      borderColor: props.theme.colors.neutral[500],
+      borderColor: isLight ? props.theme.colors.neutral[500] : props.theme.colors.neutral[200],
 
       [`& + ${IconContainer}`]: {
-        backgroundColor: props.theme.colors.neutral[500],
+        backgroundColor: isLight ? props.theme.colors.neutral[500] : props.theme.colors.neutral[200],
       },
     },
 
@@ -83,8 +87,8 @@ const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIc
     },
 
     '&:disabled': {
-      backgroundColor: props.theme.colors.neutral[100],
-      borderColor: props.theme.colors.neutral[200],
+      backgroundColor: isLight ? props.theme.colors.neutral[100] : props.theme.colors.neutral[800],
+      borderColor: isLight ? props.theme.colors.neutral[200] : props.theme.colors.neutral[600],
     },
   };
 });
