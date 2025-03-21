@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
+import { StyledComponentsPrefix } from '../../types';
 
 export interface TextareaProps {
   value: string;
@@ -20,7 +21,7 @@ export interface TextareaProps {
   isResizable?: boolean;
 }
 
-const TextareaElement = styled.textarea<Required<TextareaProps>>(({ theme, isResizable }) => {
+const TextareaElement = styled.textarea<StyledComponentsPrefix<Required<TextareaProps>>>(({ theme, $isResizable }) => {
   const isLight = theme.mode === 'light';
 
   return {
@@ -36,7 +37,7 @@ const TextareaElement = styled.textarea<Required<TextareaProps>>(({ theme, isRes
     fontFamily: theme.typography.p.fontFamily,
     fontSize: theme.typography.p.responsive.desktop.fontSize,
 
-    resize: !isResizable ? 'none' : undefined,
+    resize: !$isResizable ? 'none' : undefined,
 
     '&::placeholder': {
       color: theme.colors.neutral[400],
@@ -85,7 +86,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          isResizable={isResizable}
+          $isResizable={isResizable}
         />
       </ContainerWithLabel>
     );

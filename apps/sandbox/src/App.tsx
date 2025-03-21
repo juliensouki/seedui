@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Textarea } from '@seedui/seedui';
+import { colors, ThemeProvider, Textarea, Tag, Button, Input, Card, Text, Tooltip } from '@seedui/seedui';
+import { BedIcon } from 'lucide-react';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -27,8 +28,44 @@ export const App: FunctionComponent = () => {
           Switch to {mode === 'light' ? 'dark' : 'light'} mode
         </button>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <Textarea placeholder="Placeholder" label="label" value={value} onChange={(e) => setValue(e.target.value)} />
+        <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
+          <Button>Save</Button>
+          <Button color="neutral">Cancel</Button>
+        </div>
+
+        <div style={{ marginTop: 32 }}>
+          <Tooltip text="OMG! You hovered me!" direction="right">
+            <Text>Hover Me!</Text>
+          </Tooltip>
+        </div>
+
+        <div style={{ marginTop: 32 }}>
+          <Card htmlAttributes={{ rootDiv: { style: { padding: '8px 16px' } } }}>
+            <Text>Hello World! This is a card component.</Text>
+            <Text>Looking pretty good!</Text>
+          </Card>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'row', gap: 8, marginTop: 32 }}>
+          <Tag color="primary">Hello World!</Tag>
+          <Tag color="info">Hello World!</Tag>
+          <Tag color="success">Hello World!</Tag>
+          <Tag color="warning">Hello World!</Tag>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 32 }}>
+          <Input placeholder="Placeholder" label="label" value={value} onChange={(e) => setValue(e.target.value)} />
+          <Input
+            placeholder="Placeholder"
+            label="label"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            inputIcon={{ icon: <BedIcon />, placement: 'left' }}
+          />
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 32 }}>
+          <Textarea placeholder="Placeholder" label="Label" value={value} onChange={(e) => setValue(e.target.value)} />
         </div>
       </ThemeProvider>
     </div>
