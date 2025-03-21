@@ -1,5 +1,6 @@
 import { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
+
 import { Text, TextPropsAndAttributes } from '../../Text';
 
 const RootDiv = styled.div(() => ({
