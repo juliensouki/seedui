@@ -1,12 +1,14 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, Button, ThemeProvider } from '@seedui/seedui';
+import { colors, ThemeProvider, Input } from '@seedui/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
 import '@fontsource-variable/inter';
+import { GemIcon } from 'lucide-react';
 
 export const App: FunctionComponent = () => {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [value, setValue] = useState<string>('');
 
   return (
     <div
@@ -26,83 +28,22 @@ export const App: FunctionComponent = () => {
           Switch to {mode === 'light' ? 'dark' : 'light'} mode
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Button variant="filled" color="primary" size="sm">
-            Hello World
-          </Button>
-
-          <Button variant="filled" color="primary" size="md">
-            Hello World
-          </Button>
-
-          <Button variant="filled" color="primary" size="lg">
-            Hello World
-          </Button>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <Button variant="transparent" color="primary" size="sm">
-            Hello World
-          </Button>
-
-          <Button variant="transparent" color="primary" size="md">
-            Hello World
-          </Button>
-
-          <Button variant="transparent" color="primary" size="lg">
-            Hello World
-          </Button>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <Button variant="filled" color="secondary" size="sm">
-            Hello World
-          </Button>
-
-          <Button variant="filled" color="secondary" size="md">
-            Hello World
-          </Button>
-
-          <Button variant="filled" color="secondary" size="lg">
-            Hello World
-          </Button>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <Button variant="transparent" color="secondary" size="sm">
-            Hello World
-          </Button>
-
-          <Button variant="transparent" color="secondary" size="md">
-            Hello World
-          </Button>
-
-          <Button variant="transparent" color="secondary" size="lg">
-            Hello World
-          </Button>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <Button variant="filled" color="neutral" size="sm">
-            Hello World
-          </Button>
-
-          <Button variant="filled" color="neutral" size="md">
-            Hello World
-          </Button>
-
-          <Button variant="filled" color="neutral" size="lg">
-            Hello World
-          </Button>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <Button variant="transparent" color="neutral" size="sm">
-            Hello World
-          </Button>
-
-          <Button variant="transparent" color="neutral" size="md">
-            Hello World
-          </Button>
-
-          <Button variant="transparent" color="neutral" size="lg">
-            Hello World
-          </Button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <Input
+            placeholder="Placeholder"
+            label="label"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            inputIcon={{ icon: <GemIcon strokeWidth={1} />, placement: 'left' }}
+          />
+          <Input placeholder="Placeholder" label="label" value={value} onChange={(e) => setValue(e.target.value)} />
+          <Input
+            placeholder="Placeholder"
+            label="label"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            disabled
+          />
         </div>
       </ThemeProvider>
     </div>
