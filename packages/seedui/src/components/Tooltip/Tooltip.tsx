@@ -11,7 +11,7 @@ import {
 import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
-import { StyledProps, Theme } from '../../types';
+import { StyledComponentsPrefix, StyledProps, Theme } from '../../types';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -29,7 +29,7 @@ export interface TooltipProps {
   children: ReactNode;
 }
 
-type TooltipSpanProps = Required<TooltipProps> & { tooltipWidth: number; tooltipTop?: number };
+type TooltipSpanProps = StyledComponentsPrefix<Required<TooltipProps> & { tooltipWidth: number; tooltipTop?: number }>;
 
 const computeTooltipMarginX = (theme: Theme): number => theme.spacing['200'];
 const computeTooltipMarginY = (theme: Theme): number => theme.spacing['100'];
@@ -54,29 +54,35 @@ const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
   };
 });
 
-const TopTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
+const TopTooltip = styled(TooltipSpan)<TooltipSpanProps>(({ theme, $tooltipWidth }: StyledProps<TooltipSpanProps>) => ({
   bottom: '100%',
-  left: `calc(50% - ${props.tooltipWidth / 2}px)`,
-  marginBottom: computeTooltipMarginY(props.theme),
+  left: `calc(50% - ${$tooltipWidth / 2}px)`,
+  marginBottom: computeTooltipMarginY(theme),
 }));
 
-const BottomTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
-  top: '100%',
-  left: `calc(50% - ${props.tooltipWidth / 2}px)`,
-  marginTop: computeTooltipMarginY(props.theme),
-}));
+const BottomTooltip = styled(TooltipSpan)<TooltipSpanProps>(
+  ({ theme, $tooltipWidth }: StyledProps<TooltipSpanProps>) => ({
+    top: '100%',
+    left: `calc(50% - ${$tooltipWidth / 2}px)`,
+    marginTop: computeTooltipMarginY(theme),
+  }),
+);
 
-const LeftTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
-  marginRight: computeTooltipMarginX(props.theme),
-  right: '100%',
-  top: props.tooltipTop,
-  marginLeft: -props.tooltipWidth / 2,
-}));
+const LeftTooltip = styled(TooltipSpan)<TooltipSpanProps>(
+  ({ theme, $tooltipWidth, $tooltipTop }: StyledProps<TooltipSpanProps>) => ({
+    marginRight: computeTooltipMarginX(theme),
+    right: '100%',
+    top: $tooltipTop,
+    marginLeft: -$tooltipWidth / 2,
+  }),
+);
 
-const RightTooltip = styled(TooltipSpan)<TooltipSpanProps>((props: StyledProps<TooltipSpanProps>) => ({
-  top: props.tooltipTop,
-  right: -(props.tooltipWidth + computeTooltipMarginX(props.theme)),
-}));
+const RightTooltip = styled(TooltipSpan)<TooltipSpanProps>(
+  ({ theme, $tooltipWidth, $tooltipTop }: StyledProps<TooltipSpanProps>) => ({
+    top: $tooltipTop,
+    right: -($tooltipWidth + computeTooltipMarginX(theme)),
+  }),
+);
 
 const ChildrenWrapper = styled.div({
   [`&:hover + ${TooltipSpan}`]: {
@@ -163,8 +169,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         </ChildrenWrapper>
         <TooltipComponent
           ref={tooltipRef}
-          tooltipWidth={tooltipWidth}
-          tooltipTop={tooltipTop}
+          $tooltipWidth={tooltipWidth}
+          $tooltipTop={tooltipTop}
           {...tooltipSpanHTMLAttributes}
         >
           <TooltipText variant="caption" {...textProps}>

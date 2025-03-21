@@ -36,8 +36,8 @@ const TagDiv = styled.div<Required<TagProps>>((props) => {
     backgroundColor: theme.colors[color][100],
     padding:
       size === 'sm'
-        ? `${theme.spacing['050']}px ${theme.spacing['100']}px`
-        : `${theme.spacing['050']}px ${theme.spacing['150']}px`,
+        ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
+        : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
     borderRadius: 100,
     flexShrink: 0,
   };
@@ -65,7 +65,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
   ) => {
     return (
       <TagDiv color={color} size={size} ref={forwardedRef} {...rootDivHTMLAttributes}>
-        <TagText variant={size === 'sm' ? 'small' : 'p'} size={size} {...textProps}>
+        <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>
           {children}
         </TagText>
       </TagDiv>

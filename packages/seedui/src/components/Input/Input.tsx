@@ -2,7 +2,7 @@ import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode
 import styled from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
-import { StyledProps } from '../../types';
+import { StyledComponentsPrefix, StyledProps } from '../../types';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 
 export type InputIconPlacement = 'left' | 'right';
@@ -28,36 +28,38 @@ export interface InputProps {
   };
 }
 
-const IconContainer = styled.div<{ placement: InputIconPlacement }>(({ theme, placement }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: theme.colors.neutral[300],
-  borderTopRightRadius: placement === 'left' ? 0 : 'inherit',
-  borderBottomRightRadius: placement === 'left' ? 0 : 'inherit',
-  borderTopLeftRadius: placement === 'right' ? 0 : 'inherit',
-  borderBottomLeftRadius: placement === 'right' ? 0 : 'inherit',
+const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPlacement }>>(
+  ({ theme, $placement }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.neutral[300],
+    borderTopRightRadius: $placement === 'left' ? 0 : 'inherit',
+    borderBottomRightRadius: $placement === 'left' ? 0 : 'inherit',
+    borderTopLeftRadius: $placement === 'right' ? 0 : 'inherit',
+    borderBottomLeftRadius: $placement === 'right' ? 0 : 'inherit',
 
-  padding: `0px ${theme.spacing[100]}px`,
+    padding: `0px ${theme.spacing[100]}px`,
 
-  '& svg': {
-    width: 18,
-    height: 18,
-  },
-}));
+    '& svg': {
+      width: 18,
+      height: 18,
+    },
+  }),
+);
 
-const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIconPlacement }>>(
-  ({ theme, iconPlacement }) => {
+const InputElement = styled.input<StyledComponentsPrefix<Required<InputProps & { iconPlacement: InputIconPlacement }>>>(
+  ({ theme, $iconPlacement }) => {
     const isLight = theme.mode === 'light';
 
     return {
       width: '100%',
       padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
 
-      borderTopRightRadius: iconPlacement === 'right' ? 0 : 'inherit',
-      borderBottomRightRadius: iconPlacement === 'right' ? 0 : 'inherit',
-      borderTopLeftRadius: iconPlacement === 'left' ? 0 : 'inherit',
-      borderBottomLeftRadius: iconPlacement === 'left' ? 0 : 'inherit',
+      borderTopRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
+      borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
+      borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
+      borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
       border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
 
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
@@ -102,12 +104,14 @@ const InputElement = styled.input<Required<InputProps & { iconPlacement: InputIc
   },
 );
 
-const InputContainer = styled.div<StyledProps<{ iconPlacement: InputIconPlacement }>>(({ theme, iconPlacement }) => ({
-  display: 'flex',
-  flexDirection: iconPlacement === 'right' ? 'row' : 'row-reverse',
-  width: 200,
-  borderRadius: theme.borderRadius[100],
-}));
+const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlacement: InputIconPlacement }>>>(
+  ({ theme, $iconPlacement }) => ({
+    display: 'flex',
+    flexDirection: $iconPlacement === 'right' ? 'row' : 'row-reverse',
+    width: 200,
+    borderRadius: theme.borderRadius[100],
+  }),
+);
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -125,7 +129,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes}>
-        <InputContainer {...htmlAttributes.inputContainerDiv} iconPlacement={iconPlacement}>
+        <InputContainer {...htmlAttributes.inputContainerDiv} $iconPlacement={iconPlacement}>
           <InputElement
             {...htmlAttributes.input}
             ref={forwardedRef}
@@ -133,10 +137,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            iconPlacement={icon ? iconPlacement : undefined}
+            $iconPlacement={icon ? iconPlacement : undefined}
           />
           {icon && (
-            <IconContainer {...htmlAttributes.iconContainerDiv} placement={iconPlacement}>
+            <IconContainer {...htmlAttributes.iconContainerDiv} $placement={iconPlacement}>
               {icon}
             </IconContainer>
           )}

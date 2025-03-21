@@ -1,6 +1,7 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes } from 'react';
 import styled from 'styled-components';
 import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
+import { StyledComponentsPrefix } from '../../types';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {
@@ -22,38 +23,57 @@ const TextFactory = (variant: TextVariants) => {
 
   const tag = isHeading ? variant : 'p';
 
-  return styled[tag]<Required<TextProps>>((props) => ({
-    fontFamily: props.theme.typography[props.variant].fontFamily,
-    fontWeight: props.theme.typography[props.variant].fontWeight,
-    color: props.theme.mode === 'light' ? props.theme.colors.neutral.black : props.theme.colors.neutral.white,
+  return styled[tag]<StyledComponentsPrefix<Required<TextProps & { $bottomSpacing: number }>>>(
+    ({ theme, $variant, $bottomSpacing }) => ({
+      fontFamily: theme.typography[$variant].fontFamily,
+      fontWeight: theme.typography[$variant].fontWeight,
+      color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
 
-    fontSize: props.theme.typography[props.variant].responsive.desktop.fontSize,
-    lineHeight: `${props.theme.typography[props.variant].responsive.desktop.lineHeight}px`,
-    margin: 0,
-    marginBottom: props.bottomSpacing ? '0.4em' : 0,
+      margin: 0,
+      fontSize: theme.typography[$variant].responsive.desktop.fontSize,
+      lineHeight: `${theme.typography[$variant].responsive.desktop.lineHeight}px`,
+      marginBottom: $bottomSpacing ? '0.4em' : 0,
 
-    [`@media only screen and (max-width: ${props.theme.breakpoints[tabletBreakpoint]}px)`]: {
-      fontSize: props.theme.typography[props.variant].responsive.tablet.fontSize,
-      lineHeight: `${props.theme.typography[props.variant].responsive.tablet.lineHeight}px`,
-    },
-    [`@media only screen and (max-width: ${props.theme.breakpoints[mobileBreakpoint]}px)`]: {
-      fontSize: props.theme.typography[props.variant].responsive.mobile.fontSize,
-      lineHeight: `${props.theme.typography[props.variant].responsive.mobile.lineHeight}px`,
-    },
-  }));
+      [`@media only screen and (max-width: ${theme.breakpoints[tabletBreakpoint]}px)`]: {
+        fontSize: theme.typography[$variant].responsive.tablet.fontSize,
+        lineHeight: `${theme.typography[$variant].responsive.tablet.lineHeight}px`,
+      },
+      [`@media only screen and (max-width: ${theme.breakpoints[mobileBreakpoint]}px)`]: {
+        fontSize: theme.typography[$variant].responsive.mobile.fontSize,
+        lineHeight: `${theme.typography[$variant].responsive.mobile.lineHeight}px`,
+      },
+    }),
+  );
+};
+
+const mapVariantToElement: Record<TextVariants, ReturnType<typeof TextFactory>> = {
+  h1: TextFactory('h1'),
+  h2: TextFactory('h2'),
+  h3: TextFactory('h3'),
+  h4: TextFactory('h4'),
+  h5: TextFactory('h5'),
+  h6: TextFactory('h6'),
+  p: TextFactory('p'),
+  caption: TextFactory('caption'),
+  small: TextFactory('small'),
 };
 
 export const Text = forwardRef<
   HTMLParagraphElement,
   PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement>>
->(({ children, variant = 'p', bottomSpacing = false, ...allProps }, forwardedRef: ForwardedRef<HTMLDivElement>) => {
-  const TextElement = TextFactory(variant);
+>(
+  (
+    { children, variant = 'p', bottomSpacing = false, ...allHTMLAttributes },
+    forwardedRef: ForwardedRef<HTMLDivElement>,
+  ) => {
+    const TextElement = mapVariantToElement[variant];
 
-  return (
-    <TextElement ref={forwardedRef} bottomSpacing={bottomSpacing} variant={variant} {...allProps}>
-      {children}
-    </TextElement>
-  );
-});
+    return (
+      <TextElement ref={forwardedRef} $bottomSpacing={bottomSpacing} $variant={variant} {...allHTMLAttributes}>
+        {children}
+      </TextElement>
+    );
+  },
+);
 
 Text.displayName = 'Text';
