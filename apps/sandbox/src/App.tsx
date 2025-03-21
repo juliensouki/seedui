@@ -60,7 +60,7 @@ export const App: FunctionComponent = () => {
             label="label"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            inputIcon={{ icon: <BedIcon />, placement: 'left' }}
+            inputIcon={{ icon: <BedIcon /> }}
           />
         </div>
 

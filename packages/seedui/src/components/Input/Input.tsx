@@ -121,12 +121,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       placeholder,
       label,
       disabled,
-      inputIcon: { icon, placement: iconPlacement } = { icon: null, placement: 'left' },
+      inputIcon = { icon: null, placement: 'left' },
       forwardProps = {},
       htmlAttributes = {},
     }: InputProps,
     forwardedRef: ForwardedRef<HTMLInputElement>,
   ) => {
+    const { icon, placement: iconPlacement = 'left' } = inputIcon;
+
     return (
       <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes}>
         <InputContainer {...htmlAttributes.inputContainerDiv} $iconPlacement={iconPlacement}>
