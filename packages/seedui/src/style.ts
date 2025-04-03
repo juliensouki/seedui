@@ -17,6 +17,6 @@ declare module 'styled-components' {
     spacing: Spacing;
     colors: SemanticColors;
     typography: Record<TypographyVariants, TypographyConfig>;
-    theme: Mode;
+    mode: Mode;
   }
 }
