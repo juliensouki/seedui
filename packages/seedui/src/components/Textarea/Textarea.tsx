@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { StyledComponentsPrefix } from '../../types';
+import { InternalProps } from '../../types.internal';
 
 export interface TextareaProps {
   value: string;
   label?: string;
   placeholder?: string;
   disabled?: boolean;
+  width?: string | number;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
@@ -25,9 +27,10 @@ const TextareaElement = styled.textarea<StyledComponentsPrefix<Required<Textarea
   const isLight = theme.mode === 'light';
 
   return {
-    width: 200,
+    width: '100%',
     borderRadius: theme.borderRadius[100],
     border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+    boxSizing: 'border-box',
 
     backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
     color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
@@ -63,22 +66,24 @@ const TextareaElement = styled.textarea<StyledComponentsPrefix<Required<Textarea
   };
 });
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & InternalProps>(
   (
     {
       value,
       onChange,
       placeholder,
+      width = 200,
       label,
       disabled,
       isResizable = true,
       forwardProps = {},
+      className,
       htmlAttributes = {},
-    }: TextareaProps,
+    },
     forwardedRef: ForwardedRef<HTMLTextAreaElement>,
   ) => {
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
         <TextareaElement
           {...htmlAttributes.textarea}
           ref={forwardedRef}
@@ -86,6 +91,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          className={[className, htmlAttributes?.textarea?.className].join(' ')}
           $isResizable={isResizable}
         />
       </ContainerWithLabel>

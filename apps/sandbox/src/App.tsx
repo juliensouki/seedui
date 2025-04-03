@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { colors, ThemeProvider, Textarea, Tag, Button, Input, Card, Text, Tooltip } from '@seedui/seedui';
 import { BedIcon } from 'lucide-react';
 
@@ -54,18 +54,28 @@ export const App: FunctionComponent = () => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 32 }}>
-          <Input placeholder="Placeholder" label="label" value={value} onChange={(e) => setValue(e.target.value)} />
           <Input
             placeholder="Placeholder"
             label="label"
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+          />
+          <Input
+            placeholder="Placeholder"
+            label="label"
+            value={value}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
             inputIcon={{ icon: <BedIcon /> }}
           />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 32 }}>
-          <Textarea placeholder="Placeholder" label="Label" value={value} onChange={(e) => setValue(e.target.value)} />
+          <Textarea
+            placeholder="Placeholder"
+            label="Label"
+            value={value}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
+          />
         </div>
       </ThemeProvider>
     </div>

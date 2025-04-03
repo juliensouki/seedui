@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { TextPropsAndAttributes } from '../Text';
 import { StyledComponentsPrefix, StyledProps } from '../../types';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
+import { InternalProps } from '../../types.internal';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -16,6 +17,7 @@ export interface InputProps {
     icon: ReactNode;
     placement?: InputIconPlacement;
   };
+  width?: string | number;
   onChange: ChangeEventHandler<HTMLInputElement>;
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
@@ -108,12 +110,12 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
   ({ theme, $iconPlacement }) => ({
     display: 'flex',
     flexDirection: $iconPlacement === 'right' ? 'row' : 'row-reverse',
-    width: 200,
+    width: '100%',
     borderRadius: theme.borderRadius[100],
   }),
 );
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
   (
     {
       value,
@@ -121,16 +123,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       placeholder,
       label,
       disabled,
+      width = 200,
       inputIcon = { icon: null, placement: 'left' },
       forwardProps = {},
       htmlAttributes = {},
-    }: InputProps,
+      className,
+    },
     forwardedRef: ForwardedRef<HTMLInputElement>,
   ) => {
     const { icon, placement: iconPlacement = 'left' } = inputIcon;
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
         <InputContainer {...htmlAttributes.inputContainerDiv} $iconPlacement={iconPlacement}>
           <InputElement
             {...htmlAttributes.input}
@@ -139,6 +143,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            className={[className, htmlAttributes?.input?.className].join(' ')}
             $iconPlacement={icon ? iconPlacement : undefined}
           />
           {icon && (

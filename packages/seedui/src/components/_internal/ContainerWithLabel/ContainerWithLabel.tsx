@@ -3,14 +3,16 @@ import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../../Text';
 
-const RootDiv = styled.div(() => ({
+const RootDiv = styled.div<{ $width?: string | number }>(({ $width }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 4,
+  width: $width || '100%',
 }));
 
 interface ContainerWithLabelProps {
   label?: string;
+  width?: string | number;
   children: ReactNode;
   htmlAttributes?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
@@ -23,12 +25,13 @@ interface ContainerWithLabelProps {
 export const ContainerWithLabel: FunctionComponent<ContainerWithLabelProps> = ({
   label,
   children,
+  width,
   htmlAttributes: { rootDiv } = {},
   forwardProps: { labelTextProps } = {},
 }) => {
   if (label) {
     return (
-      <RootDiv {...rootDiv}>
+      <RootDiv {...rootDiv} $width={width}>
         {label && (
           <Text {...labelTextProps} variant="caption">
             {label}
@@ -38,5 +41,9 @@ export const ContainerWithLabel: FunctionComponent<ContainerWithLabelProps> = ({
       </RootDiv>
     );
   }
-  return children;
+  return (
+    <RootDiv {...rootDiv} $width={width}>
+      {children}
+    </RootDiv>
+  );
 };

@@ -1,3 +1,7 @@
+import { DefaultTheme as Theme } from 'styled-components';
+
+export type { Theme };
+
 export interface PrimitiveColorShades {
   100: string;
   200: string;
@@ -79,14 +83,6 @@ export interface TypographyConfig {
 }
 
 export type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
-
-export interface Theme {
-  breakpoints: Breakpoints;
-  borderRadius: BorderRadius;
-  spacing: Spacing;
-  colors: SemanticColors;
-  typography: Record<TypographyVariants, TypographyConfig>;
-}
 
 export type Mode = 'light' | 'dark';
 
