@@ -1,6 +1,9 @@
 {
   "name": "@seedui/seedui",
-  "private": false,
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.1.0",
   "type": "module",
   "main": "dist/seedui.js",
