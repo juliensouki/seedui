@@ -22,7 +22,7 @@ jobs:
 
       - name: Extract version from tag
         run: |
-          TAG_VERSION=${GITHUB_REF#refs/tags/seedui@}
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
           echo "TAG_VERSION=$TAG_VERSION" >> $GITHUB_ENV
 
       - name: Version consistency check
@@ -45,4 +45,4 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd packages/seedui
-          npm publish --dry-run
+          npm publish
