@@ -8,10 +8,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import styled, { DefaultTheme as Theme } from 'styled-components';
+import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
-import { StyledComponentsPrefix, StyledProps } from '../../types';
+import { StyledComponentsPrefix, StyledProps, Theme } from '../../types';
 import { InternalProps } from '../../types.internal';
 import { joinClasses } from '../../utils/classes';
 

@@ -1,7 +1,3 @@
-import { DefaultTheme as Theme } from 'styled-components';
-
-export type { Theme };
-
 export interface PrimitiveColorShades {
   100: string;
   200: string;
@@ -96,3 +92,12 @@ export type StyledProps<T> = { theme: Theme & { mode: Mode } } & T;
 export type StyledComponentsPrefix<T> = {
   [K in keyof T as `$${string & K}`]: T[K];
 };
+
+export interface Theme {
+  breakpoints: Breakpoints;
+  borderRadius: BorderRadius;
+  spacing: Spacing;
+  colors: SemanticColors;
+  typography: Record<TypographyVariants, TypographyConfig>;
+  mode: Mode;
+}
