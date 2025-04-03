@@ -20,6 +20,7 @@ import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secon
 import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
 import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
 import { InternalProps } from '../../../types.internal';
+import { joinClasses } from '../../../utils/classes';
 
 export interface IconButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -31,7 +32,7 @@ const mapSizeToAttributes: Record<ButtonSizes, { iconSize: number }> = {
   lg: { iconSize: 30 },
 };
 
-export const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconButtonProps>>) => {
+const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconButtonProps>>) => {
   const theme = props.theme;
   const size = props.size;
   const isLight = theme.mode === 'light';
@@ -136,7 +137,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         color={color}
         disabled={disabled}
         size={size}
-        className={[className, rootButtonHTMLAttributes?.className].join(' ')}
+        className={joinClasses(className, rootButtonHTMLAttributes?.className)}
         ref={buttonRef}
       >
         <FocusRing color={color} show={isFocused && !isClicking} pressed={isActive} />

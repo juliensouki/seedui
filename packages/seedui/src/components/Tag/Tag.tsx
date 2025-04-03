@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
 import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export type TagColor = keyof Pick<
   SemanticColors,
@@ -81,7 +82,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
         color={color}
         size={size}
         ref={forwardedRef}
-        className={[className, rootDivHTMLAttributes?.className].join(' ')}
+        className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
         {...rootDivHTMLAttributes}
       >
         <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>

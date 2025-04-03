@@ -5,6 +5,7 @@ import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { StyledComponentsPrefix } from '../../types';
 import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export interface TextareaProps {
   value: string;
@@ -91,7 +92,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className={[className, htmlAttributes?.textarea?.className].join(' ')}
+          className={joinClasses(className, className, htmlAttributes?.textarea?.className)}
           $isResizable={isResizable}
         />
       </ContainerWithLabel>

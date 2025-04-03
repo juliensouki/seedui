@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { StyledComponentsPrefix } from '../../types';
 import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export type CardVariants = 'default' | 'outlined';
 
@@ -37,7 +38,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
       <CardDiv
         {...rootDivHTMLAttributes}
         $variant={variant}
-        className={[className, rootDivHTMLAttributes?.className].join(' ')}
+        className={joinClasses(className, rootDivHTMLAttributes?.className)}
         ref={forwardedRef}
       >
         {children}

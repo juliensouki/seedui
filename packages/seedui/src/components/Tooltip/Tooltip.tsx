@@ -13,6 +13,7 @@ import styled, { DefaultTheme as Theme } from 'styled-components';
 import { Text, TextPropsAndAttributes } from '../Text';
 import { StyledComponentsPrefix, StyledProps } from '../../types';
 import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -173,7 +174,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           ref={tooltipRef}
           $tooltipWidth={tooltipWidth}
           $tooltipTop={tooltipTop}
-          className={[className, rootDivHTMLAttributes?.className].join(' ')}
+          className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
           {...tooltipSpanHTMLAttributes}
         >
           <TooltipText variant="caption" {...textProps}>

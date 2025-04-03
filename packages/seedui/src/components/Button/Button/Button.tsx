@@ -20,6 +20,7 @@ import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secon
 import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
 import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
 import { InternalProps } from '../../../types.internal';
+import { joinClasses } from '../../../utils/classes';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -145,7 +146,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         color={color}
         disabled={disabled}
         size={size}
-        className={[className, rootButtonHTMLAttributes?.className].join(' ')}
+        className={joinClasses(className, rootButtonHTMLAttributes?.className)}
         ref={buttonRef}
       >
         <FocusRing

@@ -5,6 +5,7 @@ import { TextPropsAndAttributes } from '../Text';
 import { StyledComponentsPrefix, StyledProps } from '../../types';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -143,7 +144,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className={[className, htmlAttributes?.input?.className].join(' ')}
+            className={joinClasses(className, className, htmlAttributes?.input?.className)}
             $iconPlacement={icon ? iconPlacement : undefined}
           />
           {icon && (
