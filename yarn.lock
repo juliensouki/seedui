@@ -997,15 +997,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@seedui/sandbox@workspace:apps/sandbox":
+"@seedui-react/sandbox@workspace:apps/sandbox":
   version: 0.0.0-use.local
-  resolution: "@seedui/sandbox@workspace:apps/sandbox"
+  resolution: "@seedui-react/sandbox@workspace:apps/sandbox"
   dependencies:
     "@fontsource-variable/inter": ^5.2.5
     "@fontsource/poppins": ^5.2.5
     "@mdx-js/react": ^3.0.1
     "@mdx-js/rollup": ^3.0.1
-    "@seedui/seedui": "link:packages/seedui"
+    "@seedui-react/seedui": "link:packages/seedui"
     "@types/react": ^18.2.0
     "@types/react-dom": ^18.2.15
     "@vitejs/plugin-react-swc": ^3.5.0
@@ -1020,9 +1020,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@seedui/seed-ui@workspace:.":
+"@seedui-react/seed-ui@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@seedui/seed-ui@workspace:."
+  resolution: "@seedui-react/seed-ui@workspace:."
   dependencies:
     "@eslint/js": ^9.22.0
     "@stylistic/eslint-plugin-js": ^4.2.0
@@ -1042,9 +1042,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@seedui/seedui@workspace:packages/seedui":
+"@seedui-react/seedui@workspace:packages/seedui":
   version: 0.0.0-use.local
-  resolution: "@seedui/seedui@workspace:packages/seedui"
+  resolution: "@seedui-react/seedui@workspace:packages/seedui"
   dependencies:
     "@types/node": ^22.13.10
     "@types/react": ^18.2.38

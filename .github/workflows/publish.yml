@@ -1,4 +1,4 @@
-name: Publish @seedui/seedui
+name: Publish @seedui-react/seedui
 
 on:
   release:

@@ -1,6 +1,5 @@
 {
-  "name": "@seedui/seedui",
-  "private": false,
+  "name": "@seedui-react/seedui",
   "publishConfig": {
     "access": "public"
   },

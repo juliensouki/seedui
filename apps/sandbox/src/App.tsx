@@ -1,5 +1,5 @@
 import { ChangeEvent, FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Textarea, Tag, Button, Input, Card, Text, Tooltip } from '@seedui/seedui';
+import { colors, ThemeProvider, Textarea, Tag, Button, Input, Card, Text, Tooltip } from '@seedui-react/seedui';
 import { BedIcon } from 'lucide-react';
 
 import './style.css';
