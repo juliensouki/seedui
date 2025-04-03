@@ -1014,6 +1014,7 @@ __metadata:
     react-dom: ^18.2.0
     react-router-dom: ^6.27.0
     remark-gfm: ^4.0.0
+    styled-components: ^6.1.15
     typescript: ^5.8.2
     vite: ^5.0.0
   languageName: unknown
@@ -1049,13 +1050,13 @@ __metadata:
     "@types/react": ^18.2.38
     "@types/react-dom": ^18.2.15
     "@vitejs/plugin-react": ^4.2.0
-    styled-components: ^6.1.15
     typescript: ^5.8.2
     vite: ^5.0.0
     vite-plugin-dts: ^3.6.3
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
+    styled-components: ^6.1.15
   languageName: unknown
   linkType: soft
 
@@ -6180,8 +6181,8 @@ __metadata:
   linkType: hard
 
 "styled-components@npm:^6.1.15":
-  version: 6.1.15
-  resolution: "styled-components@npm:6.1.15"
+  version: 6.1.17
+  resolution: "styled-components@npm:6.1.17"
   dependencies:
     "@emotion/is-prop-valid": 1.2.2
     "@emotion/unitless": 0.8.1
@@ -6195,7 +6196,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
     react-dom: ">= 16.8.0"
-  checksum: f340a52fec3eddebe98a6171a30362d88bb92f3884befb7220ca06df1841e7541f70cf3e8c132decd9e46f45c1a640cc9c9a39df3dbe6ef781356bd3c1145c57
+  checksum: 417d5d4ec5250fa39771b57a1e10eb5c0dd54c0c425746f1b0813616d1d6844c7666dc5b14862fc7d9b9d26ff49c54ef748d69403e67014e3e9892763210d1d4
   languageName: node
   linkType: hard
 

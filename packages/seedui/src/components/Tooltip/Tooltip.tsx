@@ -12,6 +12,8 @@ import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
 import { StyledComponentsPrefix, StyledProps, Theme } from '../../types';
+import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -48,7 +50,7 @@ const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
     textAlign: 'center',
     borderRadius: props.theme.borderRadius[100],
     padding: `${props.theme.spacing[100]}px ${props.theme.spacing[150]}px`,
-    zIndex: 1,
+    zIndex: 9999,
     opacity: 0,
     transition: 'all 0.2s',
   };
@@ -106,7 +108,7 @@ const TooltipText = styled(Text)(() => ({
   },
 }));
 
-export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
+export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
   (
     {
       text,
@@ -116,6 +118,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         childrenWrapperDiv: childrenWrapperDivHTMLAttributes,
         tooltipSpan: tooltipSpanHTMLAttributes,
       } = {},
+      className,
       forwardProps: { text: textProps } = {},
       children,
     },
@@ -171,6 +174,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           ref={tooltipRef}
           $tooltipWidth={tooltipWidth}
           $tooltipTop={tooltipTop}
+          className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
           {...tooltipSpanHTMLAttributes}
         >
           <TooltipText variant="caption" {...textProps}>

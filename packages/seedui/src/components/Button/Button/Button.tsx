@@ -19,6 +19,8 @@ import { getNeutralFilledButtonStyles } from '../_common/styles/get-neutral-fill
 import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secondary-transparent-styles';
 import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
 import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
+import { InternalProps } from '../../../types.internal';
+import { joinClasses } from '../../../utils/classes';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -88,8 +90,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       color = 'primary',
       variant = 'filled',
       disabled,
+      onClick,
+      className,
       children,
-    }: ButtonProps,
+    }: ButtonProps & InternalProps,
     forwardedRef: ForwardedRef<HTMLButtonElement>,
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -101,6 +105,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 
     const preventFocusOnClick = (event: MouseEvent<HTMLButtonElement>): void => {
+      if (onClick) {
+        onClick(event);
+      }
       if (event.detail === 0) {
         // This means that the click was triggered by a keyboard event. We want to keep the focus in that case.
         return;
@@ -139,6 +146,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         color={color}
         disabled={disabled}
         size={size}
+        className={joinClasses(className, rootButtonHTMLAttributes?.className)}
         ref={buttonRef}
       >
         <FocusRing

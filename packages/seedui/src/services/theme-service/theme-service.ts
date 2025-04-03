@@ -76,6 +76,7 @@ export const themeServiceFactory = (): ThemeService => {
           caption: captionStyles,
           small: smallStyles,
         },
+        mode,
       };
     },
   };

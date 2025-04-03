@@ -2,6 +2,8 @@ import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { StyledComponentsPrefix } from '../../types';
+import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export type CardVariants = 'default' | 'outlined';
 
@@ -27,13 +29,18 @@ const CardDiv = styled.div<StyledComponentsPrefix<Required<CardProps>>>(({ theme
   };
 });
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(
+export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
   (
-    { variant = 'default', htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {}, children }: CardProps,
+    { variant = 'default', className, htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {}, children },
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
     return (
-      <CardDiv {...rootDivHTMLAttributes} $variant={variant} ref={forwardedRef}>
+      <CardDiv
+        {...rootDivHTMLAttributes}
+        $variant={variant}
+        className={joinClasses(className, rootDivHTMLAttributes?.className)}
+        ref={forwardedRef}
+      >
         {children}
       </CardDiv>
     );

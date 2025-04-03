@@ -27,7 +27,12 @@ const TextFactory = (variant: TextVariants) => {
     ({ theme, $variant, $bottomSpacing }) => ({
       fontFamily: theme.typography[$variant].fontFamily,
       fontWeight: theme.typography[$variant].fontWeight,
-      color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
+      color:
+        tag === 'p' && theme.mode === 'dark'
+          ? theme.colors.neutral[100]
+          : theme.mode === 'light'
+          ? theme.colors.neutral.black
+          : theme.colors.neutral.white,
 
       margin: 0,
       fontSize: theme.typography[$variant].responsive.desktop.fontSize,

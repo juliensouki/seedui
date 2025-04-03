@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
+import { InternalProps } from '../../types.internal';
+import { joinClasses } from '../../utils/classes';
 
 export type TagColor = keyof Pick<
   SemanticColors,
@@ -27,13 +29,24 @@ const TagDiv = styled.div<Required<TagProps>>((props) => {
   const color = props.color;
   const size = props.size;
 
+  const darkNeutralColors = {
+    backgroundColor: theme.colors.neutral[600],
+    color: theme.colors.neutral[200],
+    borderColor: theme.colors.neutral[500],
+  };
+  const commonColors = {
+    borderColor: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
+    color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
+    backgroundColor: theme.colors[color][100],
+  };
+
   return {
     display: 'block',
     height: '100%',
     width: 'max-content',
-    border: `1px solid ${color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600]}`,
-    color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-    backgroundColor: theme.colors[color][100],
+    boxSizing: 'border-box',
+    border: `1px solid`,
+    ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
     padding:
       size === 'sm'
         ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
@@ -52,19 +65,26 @@ const TagText = styled(Text)(() => ({
   },
 }));
 
-export const Tag = forwardRef<HTMLDivElement, TagProps>(
+export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
   (
     {
       color = 'neutral',
       size = 'md',
       htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
       forwardProps: { text: textProps } = {},
+      className,
       children,
-    }: TagProps,
+    },
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
     return (
-      <TagDiv color={color} size={size} ref={forwardedRef} {...rootDivHTMLAttributes}>
+      <TagDiv
+        color={color}
+        size={size}
+        ref={forwardedRef}
+        className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
+        {...rootDivHTMLAttributes}
+      >
         <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>
           {children}
         </TagText>

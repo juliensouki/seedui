@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
 import { Colors, Sizes } from '../../../types';
@@ -9,12 +9,13 @@ export type ButtonSizes = Exclude<Sizes, 'xs' | 'xl'>;
 
 export interface ButtonBaseProps {
   htmlAttributes?: {
-    rootButton?: Exclude<HTMLAttributes<HTMLButtonElement>, 'disabled'>;
+    rootButton?: Exclude<HTMLAttributes<HTMLButtonElement>, 'disabled' | 'onClick'>;
   };
   disabled?: boolean;
   size?: Exclude<Sizes, 'xs' | 'xl'>;
   color?: ButtonColors;
   variant?: ButtonVariants;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const ButtonCommon = styled.button((props) => {

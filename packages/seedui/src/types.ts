@@ -80,14 +80,6 @@ export interface TypographyConfig {
 
 export type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 
-export interface Theme {
-  breakpoints: Breakpoints;
-  borderRadius: BorderRadius;
-  spacing: Spacing;
-  colors: SemanticColors;
-  typography: Record<TypographyVariants, TypographyConfig>;
-}
-
 export type Mode = 'light' | 'dark';
 
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -100,3 +92,12 @@ export type StyledProps<T> = { theme: Theme & { mode: Mode } } & T;
 export type StyledComponentsPrefix<T> = {
   [K in keyof T as `$${string & K}`]: T[K];
 };
+
+export interface Theme {
+  breakpoints: Breakpoints;
+  borderRadius: BorderRadius;
+  spacing: Spacing;
+  colors: SemanticColors;
+  typography: Record<TypographyVariants, TypographyConfig>;
+  mode: Mode;
+}
