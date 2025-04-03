@@ -1,5 +1,5 @@
 {
-  "name": "@seedui/sandbox",
+  "name": "@seedui-react/sandbox",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,7 @@
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.5",
     "@fontsource/poppins": "^5.2.5",
-    "@seedui/seedui": "link:packages/seedui",
+    "@seedui-react/seedui": "link:packages/seedui",
     "lucide-react": "^0.482.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

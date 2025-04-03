@@ -1,5 +1,5 @@
 {
-  "name": "@seedui/seed-ui",
+  "name": "@seedui-react/seed-ui",
   "description": "Seed-ui codebase",
   "license": "UNLICENSED",
   "private": true,
@@ -8,7 +8,7 @@
     "apps/*"
   ],
   "resolutions": {
-    "@seedui/seedui": "workspace:packages/seedui"
+    "@seedui-react/seedui": "workspace:packages/seedui"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
@@ -29,10 +29,10 @@
   },
   "scripts": {
     "lint": "yarn workspaces foreach -A run lint",
-    "build:app:sandbox": "yarn workspace @seedui/sandbox run build",
-    "dev:app:sandbox": "yarn workspace @seedui/sandbox run dev",
-    "build:package:seedui": "yarn workspace @seedui/seedui run build",
-    "dev:package:seedui": "yarn workspace @seedui/seedui run dev"
+    "build:app:sandbox": "yarn workspace @seedui-react/sandbox run build",
+    "dev:app:sandbox": "yarn workspace @seedui-react/sandbox run dev",
+    "build:package:seedui": "yarn workspace @seedui-react/seedui run build",
+    "dev:package:seedui": "yarn workspace @seedui-react/seedui run dev"
   },
   "packageManager": "yarn@3.1.1"
 }
