@@ -1,6 +1,5 @@
 {
-  "name": "@seedui-react/seed-ui",
-  "description": "Seed-ui codebase",
+  "description": "Seed UI codebase",
   "license": "UNLICENSED",
   "private": true,
   "workspaces": [
@@ -31,6 +30,8 @@
     "lint": "yarn workspaces foreach -A run lint",
     "build:app:sandbox": "yarn workspace @seedui-react/sandbox run build",
     "dev:app:sandbox": "yarn workspace @seedui-react/sandbox run dev",
+    "build:app:demo": "yarn workspace @seedui-react/demo run build",
+    "dev:app:demo": "yarn workspace @seedui-react/demo run dev",
     "build:package:seedui": "yarn workspace @seedui-react/seedui run build",
     "dev:package:seedui": "yarn workspace @seedui-react/seedui run dev"
   },
