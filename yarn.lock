@@ -997,9 +997,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@seedui-react/sandbox@workspace:apps/sandbox":
+"@seedui-react/demo@workspace:apps/demo":
   version: 0.0.0-use.local
-  resolution: "@seedui-react/sandbox@workspace:apps/sandbox"
+  resolution: "@seedui-react/demo@workspace:apps/demo"
   dependencies:
     "@fontsource-variable/inter": ^5.2.5
     "@fontsource/poppins": ^5.2.5
@@ -1020,25 +1020,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@seedui-react/seed-ui@workspace:.":
+"@seedui-react/sandbox@workspace:apps/sandbox":
   version: 0.0.0-use.local
-  resolution: "@seedui-react/seed-ui@workspace:."
+  resolution: "@seedui-react/sandbox@workspace:apps/sandbox"
   dependencies:
-    "@eslint/js": ^9.22.0
-    "@stylistic/eslint-plugin-js": ^4.2.0
-    "@typescript-eslint/eslint-plugin": ^8.26.1
-    "@typescript-eslint/parser": ^6.10.0
-    "@yarnpkg/plugin-workspace-tools": ^4.0.0-rc.25
-    eslint: ^9.22.0
-    eslint-plugin-react: ^7.37.4
-    eslint-plugin-react-hooks: ^5.2.0
-    eslint-plugin-react-refresh: ^0.4.19
-    globals: ^16.0.0
-    jiti: ^2.4.2
-    ts-loader: ^9.5.1
-    ts-node: ^10.9.1
+    "@fontsource-variable/inter": ^5.2.5
+    "@fontsource/poppins": ^5.2.5
+    "@mdx-js/react": ^3.0.1
+    "@mdx-js/rollup": ^3.0.1
+    "@seedui-react/seedui": "link:packages/seedui"
+    "@types/react": ^18.2.0
+    "@types/react-dom": ^18.2.15
+    "@vitejs/plugin-react-swc": ^3.5.0
+    lucide-react: ^0.482.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-router-dom: ^6.27.0
+    remark-gfm: ^4.0.0
+    styled-components: ^6.1.15
     typescript: ^5.8.2
-    typescript-eslint: ^8.26.1
+    vite: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -5739,6 +5740,28 @@ __metadata:
   checksum: f862a20c2f6f2e2c56428f1315eebf255bb29b40baab3ecfebf558aaaa7f00b7544aa2f7a3b89ce3426aa4cfa6e7ec7de02dd250b0a7c1bef8b5c7fd690a052c
   languageName: node
   linkType: hard
+
+"root-workspace-0b6124@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "root-workspace-0b6124@workspace:."
+  dependencies:
+    "@eslint/js": ^9.22.0
+    "@stylistic/eslint-plugin-js": ^4.2.0
+    "@typescript-eslint/eslint-plugin": ^8.26.1
+    "@typescript-eslint/parser": ^6.10.0
+    "@yarnpkg/plugin-workspace-tools": ^4.0.0-rc.25
+    eslint: ^9.22.0
+    eslint-plugin-react: ^7.37.4
+    eslint-plugin-react-hooks: ^5.2.0
+    eslint-plugin-react-refresh: ^0.4.19
+    globals: ^16.0.0
+    jiti: ^2.4.2
+    ts-loader: ^9.5.1
+    ts-node: ^10.9.1
+    typescript: ^5.8.2
+    typescript-eslint: ^8.26.1
+  languageName: unknown
+  linkType: soft
 
 "run-parallel@npm:^1.1.9":
   version: 1.2.0
