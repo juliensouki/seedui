@@ -14,7 +14,7 @@ export const h6Styles: TypographyConfig = {
     },
     mobile: {
       fontSize: 18,
-      lineHeight: 20,
+      lineHeight: 24,
     },
   },
 };

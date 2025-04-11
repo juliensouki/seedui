@@ -14,7 +14,7 @@ export const h3Styles: TypographyConfig = {
     },
     mobile: {
       fontSize: 26,
-      lineHeight: 32,
+      lineHeight: 40,
     },
   },
 };

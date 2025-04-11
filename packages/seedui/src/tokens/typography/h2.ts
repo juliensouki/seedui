@@ -14,7 +14,7 @@ export const h2Styles: TypographyConfig = {
     },
     mobile: {
       fontSize: 28,
-      lineHeight: 32,
+      lineHeight: 40,
     },
   },
 };

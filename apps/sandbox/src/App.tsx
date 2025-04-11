@@ -1,5 +1,5 @@
 import { ChangeEvent, FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Textarea, Tag, Button, Input, Card, Text, Tooltip } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Textarea, Tag, Button, Input, Card, Text, Tooltip, Mode } from '@seedui-react/seedui';
 import { BedIcon } from 'lucide-react';
 
 import './style.css';
@@ -7,7 +7,7 @@ import '@fontsource/poppins';
 import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [mode, setMode] = useState<Mode>('light');
   const [value, setValue] = useState<string>('');
 
   return (

@@ -14,7 +14,7 @@ export const h5Styles: TypographyConfig = {
     },
     mobile: {
       fontSize: 20,
-      lineHeight: 20,
+      lineHeight: 28,
     },
   },
 };

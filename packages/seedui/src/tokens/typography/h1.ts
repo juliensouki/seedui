@@ -14,7 +14,7 @@ export const h1Styles: TypographyConfig = {
     },
     mobile: {
       fontSize: 32,
-      lineHeight: 40,
+      lineHeight: 48,
     },
   },
 };
