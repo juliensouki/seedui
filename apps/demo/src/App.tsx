@@ -56,12 +56,8 @@ export const App: FunctionComponent = () => {
         </ComponentName>
         <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
           <Button>Primary</Button>
-          <Button color="secondary">Secondary</Button>
           <Button color="neutral">Neutral</Button>
           <Button variant="transparent">Primary</Button>
-          <Button variant="transparent" color="secondary">
-            Secondary
-          </Button>
           <Button variant="transparent" color="neutral">
             Neutral
           </Button>
@@ -72,16 +68,10 @@ export const App: FunctionComponent = () => {
           <IconButton>
             <GemIcon strokeWidth={1.8} />
           </IconButton>
-          <IconButton color="secondary">
-            <GemIcon strokeWidth={1.8} />
-          </IconButton>
           <IconButton color="neutral">
             <GemIcon strokeWidth={1.8} />
           </IconButton>
           <IconButton variant="transparent">
-            <GemIcon strokeWidth={1.8} />
-          </IconButton>
-          <IconButton variant="transparent" color="secondary">
             <GemIcon strokeWidth={1.8} />
           </IconButton>
           <IconButton variant="transparent" color="neutral">
@@ -105,7 +95,6 @@ export const App: FunctionComponent = () => {
         <ComponentName variant="h6">Tag</ComponentName>
         <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
           <Tag color="primary">Primary</Tag>
-          <Tag color="secondary">Secondary</Tag>
           <Tag color="info">Info</Tag>
           <Tag color="success">Success</Tag>
           <Tag color="warning">Warning</Tag>
