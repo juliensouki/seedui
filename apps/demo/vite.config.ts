@@ -15,5 +15,12 @@ export default defineConfig(() => {
     optimizeDeps: {
       include: ['react/jsx-runtime'],
     },
+    build: {
+      rollupOptions: {
+        output: {
+          assetFileNames: `assets/[name].[ext]`,
+        },
+      },
+    },
   };
 });
