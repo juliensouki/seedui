@@ -14,6 +14,7 @@ import { Text, TextPropsAndAttributes } from '../Text';
 import { Theme } from '../../types';
 import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
+import { applyCustomStyles } from '../../utils/custom-styles';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -156,14 +157,16 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
       }
     }, [tooltipRef, childrenContainerRef, direction, text]);
 
-    const TooltipComponent =
+    const TooltipComponent = applyCustomStyles(
       direction === 'top'
         ? TopTooltip
         : direction === 'bottom'
         ? BottomTooltip
         : direction === 'left'
         ? LeftTooltip
-        : RightTooltip;
+        : RightTooltip,
+      'tooltip',
+    );
 
     return (
       <MainDiv ref={forwardedRef} {...rootDivHTMLAttributes}>

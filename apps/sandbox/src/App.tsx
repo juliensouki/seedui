@@ -18,7 +18,10 @@ export const App: FunctionComponent = () => {
         boxSizing: 'border-box',
       }}
     >
-      <ThemeProvider mode={mode}>
+      <ThemeProvider
+        mode={mode}
+        theme={{ components: { button: { styles: { '&:hover': { backgroundColor: 'orange' } } } } }}
+      >
         <button
           style={{ position: 'absolute', top: 30, right: 30 }}
           onClick={() => setMode((currentMode) => (currentMode === 'light' ? 'dark' : 'light'))}

@@ -1,6 +1,6 @@
-import { Mode, Theme } from '../../../../types';
+import { Theme } from '../../../../types';
 
-export const getPrimaryFilledButtonStyles = (theme: Theme & { mode: Mode }) => ({
+export const getPrimaryFilledButtonStyles = (theme: Theme) => ({
   backgroundColor: theme.colors.primary.default,
   color: theme.colors.neutral.white,
 

@@ -1,6 +1,6 @@
-import { Mode, Theme } from '../../../../types';
+import { Theme } from '../../../../types';
 
-export const getSecondaryTransparentButtonStyles = (theme: Theme & { mode: Mode }) => ({
+export const getSecondaryTransparentButtonStyles = (theme: Theme) => ({
   backgroundColor: 'transparent',
   color: theme.colors.secondary.default,
 

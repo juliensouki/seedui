@@ -1,6 +1,6 @@
-import { Mode, Theme } from '../../../../types';
+import { Theme } from '../../../../types';
 
-export const getNeutralFilledButtonStyles = (theme: Theme & { mode: Mode }) => ({
+export const getNeutralFilledButtonStyles = (theme: Theme) => ({
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[500],
   color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
 

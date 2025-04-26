@@ -21,6 +21,7 @@ import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral
 import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
+import { applyCustomStyles } from '../../../utils/custom-styles';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -64,6 +65,10 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
     borderRadius,
     padding,
     lineHeight: '24px',
+
+    '&:hover': {
+      cursor: 'pointer',
+    },
   };
 });
 
@@ -100,7 +105,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isClicking, setIsClicking] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const ButtonComponent = componentsMap[variant][color];
+    const ButtonComponent = applyCustomStyles(componentsMap[variant][color], 'button');
 
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 

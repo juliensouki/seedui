@@ -20,6 +20,7 @@ import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral
 import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
+import { applyCustomStyles } from '../../../utils/custom-styles';
 
 export interface IconButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -89,7 +90,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isClicking, setIsClicking] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const IconButtonComponent = componentsMap[variant][color];
+    const IconButtonComponent = applyCustomStyles(componentsMap[variant][color], 'iconButton');
 
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 

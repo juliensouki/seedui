@@ -5,6 +5,7 @@ import { SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
 import { InternalProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
+import { applyCustomStyles } from '../../utils/custom-styles';
 
 export type TagColor = keyof Pick<
   SemanticColors,
@@ -24,37 +25,40 @@ export interface TagProps {
   children: string;
 }
 
-const TagDiv = styled.div<Required<TagProps>>((props) => {
-  const theme = props.theme;
-  const color = props.color;
-  const size = props.size;
+const TagDiv = applyCustomStyles(
+  styled.div<Required<TagProps>>((props) => {
+    const theme = props.theme;
+    const color = props.color;
+    const size = props.size;
 
-  const darkNeutralColors = {
-    backgroundColor: theme.colors.neutral[600],
-    color: theme.colors.neutral[200],
-    borderColor: theme.colors.neutral[500],
-  };
-  const commonColors = {
-    borderColor: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-    color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-    backgroundColor: theme.colors[color][100],
-  };
+    const darkNeutralColors = {
+      backgroundColor: theme.colors.neutral[600],
+      color: theme.colors.neutral[200],
+      borderColor: theme.colors.neutral[500],
+    };
+    const commonColors = {
+      borderColor: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
+      color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
+      backgroundColor: theme.colors[color][100],
+    };
 
-  return {
-    display: 'block',
-    height: '100%',
-    width: 'max-content',
-    boxSizing: 'border-box',
-    border: `1px solid`,
-    ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
-    padding:
-      size === 'sm'
-        ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
-        : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
-    borderRadius: 100,
-    flexShrink: 0,
-  };
-});
+    return {
+      display: 'block',
+      height: '100%',
+      width: 'max-content',
+      boxSizing: 'border-box',
+      border: `1px solid`,
+      ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
+      padding:
+        size === 'sm'
+          ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
+          : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
+      borderRadius: 100,
+      flexShrink: 0,
+    };
+  }),
+  'tag',
+);
 
 const TagText = styled(Text)(() => ({
   lineHeight: 1,

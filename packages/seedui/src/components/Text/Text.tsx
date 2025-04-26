@@ -2,6 +2,7 @@ import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttribu
 import styled from 'styled-components';
 import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
 import { StyledComponentsPrefix } from '../../types/internal';
+import { applyCustomStyles } from '../../utils/custom-styles';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {
@@ -71,7 +72,7 @@ export const Text = forwardRef<
     { children, variant = 'p', bottomSpacing = false, ...allHTMLAttributes },
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
-    const TextElement = mapVariantToElement[variant];
+    const TextElement = applyCustomStyles(mapVariantToElement[variant], 'text');
 
     return (
       <TextElement ref={forwardedRef} $bottomSpacing={bottomSpacing} $variant={variant} {...allHTMLAttributes}>

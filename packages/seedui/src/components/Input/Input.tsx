@@ -5,6 +5,7 @@ import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
+import { applyCustomStyles } from '../../utils/custom-styles';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -50,60 +51,63 @@ const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPl
   }),
 );
 
-const InputElement = styled.input<StyledComponentsPrefix<Required<InputProps & { iconPlacement: InputIconPlacement }>>>(
-  ({ theme, $iconPlacement }) => {
-    const isLight = theme.mode === 'light';
+const InputElement = applyCustomStyles(
+  styled.input<StyledComponentsPrefix<Required<InputProps & { iconPlacement: InputIconPlacement }>>>(
+    ({ theme, $iconPlacement }) => {
+      const isLight = theme.mode === 'light';
 
-    return {
-      width: '100%',
-      padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
+      return {
+        width: '100%',
+        padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
 
-      borderTopRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
-      borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
-      borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
-      borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
-      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+        borderTopRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
+        borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
+        borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
+        borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
+        border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
 
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
-      color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
+        backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+        color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
-      fontFamily: theme.typography.p.fontFamily,
-      fontSize: theme.typography.p.responsive.desktop.fontSize,
-
-      '&::placeholder': {
-        color: theme.colors.neutral[400],
-      },
-
-      '&:hover': {
-        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
-
-        [`& + ${IconContainer}`]: {
-          backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
-        },
-      },
-
-      '&:focus': {
-        outline: 'none',
-        borderColor: theme.colors.primary.default,
-        [`& + ${IconContainer}`]: {
-          backgroundColor: theme.colors.primary.default,
-
-          '& > svg': {
-            color: theme.colors.neutral.white,
-          },
-        },
-      },
-
-      '&:disabled': {
-        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+        fontFamily: theme.typography.p.fontFamily,
+        fontSize: theme.typography.p.responsive.desktop.fontSize,
 
         '&::placeholder': {
-          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+          color: theme.colors.neutral[400],
         },
-      },
-    };
-  },
+
+        '&:hover': {
+          borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+
+          [`& + ${IconContainer}`]: {
+            backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+          },
+        },
+
+        '&:focus': {
+          outline: 'none',
+          borderColor: theme.colors.primary.default,
+          [`& + ${IconContainer}`]: {
+            backgroundColor: theme.colors.primary.default,
+
+            '& > svg': {
+              color: theme.colors.neutral.white,
+            },
+          },
+        },
+
+        '&:disabled': {
+          backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+          borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+
+          '&::placeholder': {
+            color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+          },
+        },
+      };
+    },
+  ),
+  'input',
 );
 
 const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlacement: InputIconPlacement }>>>(
