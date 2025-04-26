@@ -1,7 +1,8 @@
 import { ForwardedRef, forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { Colors, StyledComponentsPrefix } from '../../../types';
+import { Colors } from '../../../types';
+import { StyledComponentsPrefix } from '../../../types/internal';
 
 interface FocusRingProps {
   show: boolean;

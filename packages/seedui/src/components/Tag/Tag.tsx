@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
-import { InternalProps } from '../../types.internal';
+import { InternalProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 
 export type TagColor = keyof Pick<

@@ -3,8 +3,7 @@ import styled from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
-import { StyledComponentsPrefix } from '../../types';
-import { InternalProps } from '../../types.internal';
+import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 
 export interface TextareaProps {

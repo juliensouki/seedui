@@ -2,9 +2,8 @@ import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode
 import styled from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
-import { StyledComponentsPrefix, StyledProps } from '../../types';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
-import { InternalProps } from '../../types.internal';
+import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 
 export type InputIconPlacement = 'left' | 'right';

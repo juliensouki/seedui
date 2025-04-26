@@ -11,8 +11,8 @@ import {
 import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
-import { StyledComponentsPrefix, StyledProps, Theme } from '../../types';
-import { InternalProps } from '../../types.internal';
+import { Theme } from '../../types';
+import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';

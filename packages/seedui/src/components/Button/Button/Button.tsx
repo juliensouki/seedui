@@ -11,7 +11,7 @@ import {
 import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import { StyledProps, Theme } from '../../../types';
+import { Theme } from '../../../types';
 import { getPrimaryFilledButtonStyles } from '../_common/styles/get-primary-filled-styles';
 import { getPrimaryTransparentButtonStyles } from '../_common/styles/get-primary-transparent-styles';
 import { getSecondaryFilledButtonStyles } from '../_common/styles/get-secondary-filled-styles';
@@ -19,7 +19,7 @@ import { getNeutralFilledButtonStyles } from '../_common/styles/get-neutral-fill
 import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secondary-transparent-styles';
 import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
 import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
-import { InternalProps } from '../../../types.internal';
+import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
 
 export interface ButtonProps extends ButtonBaseProps {

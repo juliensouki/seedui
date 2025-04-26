@@ -1,8 +1,7 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
-import { StyledComponentsPrefix } from '../../types';
-import { InternalProps } from '../../types.internal';
+import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 
 export type CardVariants = 'default' | 'outlined';

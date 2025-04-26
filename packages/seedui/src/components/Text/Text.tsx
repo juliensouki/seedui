@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes } from 'react';
 import styled from 'styled-components';
 import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
-import { StyledComponentsPrefix } from '../../types';
+import { StyledComponentsPrefix } from '../../types/internal';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {
