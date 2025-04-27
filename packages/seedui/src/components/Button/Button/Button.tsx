@@ -74,16 +74,32 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
 
 const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof ButtonBase>> = {
   filled: {
-    primary: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
-    secondary: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getSecondaryFilledButtonStyles(props.theme)),
-    neutral: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
+    primary: applyCustomStyles(
+      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
+      'button',
+    ),
+    secondary: applyCustomStyles(
+      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getSecondaryFilledButtonStyles(props.theme)),
+      'button',
+    ),
+    neutral: applyCustomStyles(
+      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
+      'button',
+    ),
   },
   transparent: {
-    primary: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryTransparentButtonStyles(props.theme)),
-    secondary: styled(ButtonBase)((props: StyledProps<ButtonProps>) =>
-      getSecondaryTransparentButtonStyles(props.theme),
+    primary: applyCustomStyles(
+      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryTransparentButtonStyles(props.theme)),
+      'button',
     ),
-    neutral: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
+    secondary: applyCustomStyles(
+      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getSecondaryTransparentButtonStyles(props.theme)),
+      'button',
+    ),
+    neutral: applyCustomStyles(
+      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
+      'button',
+    ),
   },
 };
 
@@ -105,7 +121,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isClicking, setIsClicking] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const ButtonComponent = applyCustomStyles(componentsMap[variant][color], 'button');
+    const ButtonComponent = componentsMap[variant][color];
 
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 

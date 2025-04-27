@@ -109,6 +109,13 @@ const TooltipText = styled(Text)(() => ({
   },
 }));
 
+const mapDirectionToTooltip: Record<TooltipDirection, typeof TooltipSpan> = {
+  top: applyCustomStyles(TopTooltip, 'tooltip'),
+  right: applyCustomStyles(RightTooltip, 'tooltip'),
+  bottom: applyCustomStyles(BottomTooltip, 'tooltip'),
+  left: applyCustomStyles(LeftTooltip, 'tooltip'),
+};
+
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
   (
     {
@@ -127,7 +134,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
   ) => {
     const [tooltipTop, setTooltipTop] = useState<number | undefined>(undefined);
     const [tooltipWidth, setTooltipWidth] = useState<number | undefined>(undefined);
-
     const childrenContainerRef = useRef<HTMLDivElement>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -157,16 +163,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
       }
     }, [tooltipRef, childrenContainerRef, direction, text]);
 
-    const TooltipComponent = applyCustomStyles(
-      direction === 'top'
-        ? TopTooltip
-        : direction === 'bottom'
-        ? BottomTooltip
-        : direction === 'left'
-        ? LeftTooltip
-        : RightTooltip,
-      'tooltip',
-    );
+    const TooltipComponent = mapDirectionToTooltip[direction];
 
     return (
       <MainDiv ref={forwardedRef} {...rootDivHTMLAttributes}>
@@ -177,6 +174,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           ref={tooltipRef}
           $tooltipWidth={tooltipWidth}
           $tooltipTop={tooltipTop}
+          $direction={direction}
           className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
           {...tooltipSpanHTMLAttributes}
         >

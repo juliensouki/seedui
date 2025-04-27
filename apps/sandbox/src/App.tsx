@@ -20,7 +20,18 @@ export const App: FunctionComponent = () => {
     >
       <ThemeProvider
         mode={mode}
-        theme={{ components: { button: { styles: { '&:hover': { backgroundColor: 'orange' } } } } }}
+        theme={{
+          components: {
+            button: {
+              conditionalStyles: [
+                {
+                  styles: { '&:hover': { backgroundColor: 'orange', color: 'blue' } },
+                  condition: ({ color }, { mode }) => color === 'primary' && mode === 'light',
+                },
+              ],
+            },
+          },
+        }}
       >
         <button
           style={{ position: 'absolute', top: 30, right: 30 }}

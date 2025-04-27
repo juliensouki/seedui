@@ -1,5 +1,6 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes } from 'react';
 import styled from 'styled-components';
+
 import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
 import { StyledComponentsPrefix } from '../../types/internal';
 import { applyCustomStyles } from '../../utils/custom-styles';
@@ -53,15 +54,15 @@ const TextFactory = (variant: TextVariants) => {
 };
 
 const mapVariantToElement: Record<TextVariants, ReturnType<typeof TextFactory>> = {
-  h1: TextFactory('h1'),
-  h2: TextFactory('h2'),
-  h3: TextFactory('h3'),
-  h4: TextFactory('h4'),
-  h5: TextFactory('h5'),
-  h6: TextFactory('h6'),
-  p: TextFactory('p'),
-  caption: TextFactory('caption'),
-  small: TextFactory('small'),
+  h1: applyCustomStyles(TextFactory('h1'), 'text'),
+  h2: applyCustomStyles(TextFactory('h2'), 'text'),
+  h3: applyCustomStyles(TextFactory('h3'), 'text'),
+  h4: applyCustomStyles(TextFactory('h4'), 'text'),
+  h5: applyCustomStyles(TextFactory('h5'), 'text'),
+  h6: applyCustomStyles(TextFactory('h6'), 'text'),
+  p: applyCustomStyles(TextFactory('p'), 'text'),
+  caption: applyCustomStyles(TextFactory('caption'), 'text'),
+  small: applyCustomStyles(TextFactory('small'), 'text'),
 };
 
 export const Text = forwardRef<
@@ -72,7 +73,7 @@ export const Text = forwardRef<
     { children, variant = 'p', bottomSpacing = false, ...allHTMLAttributes },
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
-    const TextElement = applyCustomStyles(mapVariantToElement[variant], 'text');
+    const TextElement = mapVariantToElement[variant];
 
     return (
       <TextElement ref={forwardedRef} $bottomSpacing={bottomSpacing} $variant={variant} {...allHTMLAttributes}>

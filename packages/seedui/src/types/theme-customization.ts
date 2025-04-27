@@ -1,4 +1,5 @@
 import { CSSObject } from 'styled-components';
+
 import {
   ButtonProps,
   CardProps,
@@ -9,10 +10,15 @@ import {
   TextProps,
   TooltipProps,
 } from '../components';
+import { Theme } from './theme';
 
 type CustomComponentConfiguration<T> = {
-  defaultProps?: T;
+  defaultProps?: Partial<T>;
   styles?: CSSObject;
+  conditionalStyles?: {
+    styles: CSSObject;
+    condition: (props: T, theme: Theme) => boolean;
+  }[];
 };
 
 export interface CustomComponents {
