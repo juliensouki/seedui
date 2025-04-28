@@ -1,10 +1,12 @@
-import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes } from 'react';
-import styled, { useTheme } from 'styled-components';
+import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes, useContext } from 'react';
+import styled from 'styled-components';
 
 import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
 import { StyledComponentsPrefix } from '../../types/internal';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
+import { SeedContextType } from '../../types';
+import { SeedContext } from '../ThemeProvider/ThemeProvider';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {
@@ -75,10 +77,10 @@ export const Text = forwardRef<
   HTMLParagraphElement,
   PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement>>
 >((props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
-  const theme = useTheme();
+  const { customizations } = useContext<SeedContextType>(SeedContext);
   const { variant, children, bottomSpacing, ...allHTMLAttributes } = getDefaultProps<PropsWithChildren<TextProps>>({
     providedProps: props,
-    globalDefaultProps: theme?.components?.text?.defaultProps,
+    globalDefaultProps: customizations?.components?.text?.defaultProps,
     defaultProps,
   });
 

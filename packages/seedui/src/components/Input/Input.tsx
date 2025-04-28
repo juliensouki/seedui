@@ -1,5 +1,5 @@
-import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
-import styled, { useTheme } from 'styled-components';
+import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode, useContext } from 'react';
+import styled from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
@@ -7,6 +7,8 @@ import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
+import { SeedContextType } from '../../types';
+import { SeedContext } from '../ThemeProvider/ThemeProvider';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -138,11 +140,11 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
 
 export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
-    const theme = useTheme();
+    const { customizations } = useContext<SeedContextType>(SeedContext);
     const { value, onChange, placeholder, label, disabled, width, inputIcon, forwardProps, htmlAttributes, className } =
       getDefaultProps<InputProps & InternalProps>({
         providedProps: props,
-        globalDefaultProps: theme?.components?.input?.defaultProps,
+        globalDefaultProps: customizations?.components?.input?.defaultProps,
         defaultProps,
       });
     const { icon, placement: iconPlacement = 'left' } = inputIcon;

@@ -1,5 +1,3 @@
-import { CustomComponents } from './theme-customization';
-
 export interface PrimitiveColorShades {
   100: string;
   200: string;
@@ -93,5 +91,4 @@ export interface Theme {
   colors: SemanticColors;
   typography: Record<TypographyVariants, TypographyConfig>;
   mode: Mode;
-  components?: CustomComponents;
 }

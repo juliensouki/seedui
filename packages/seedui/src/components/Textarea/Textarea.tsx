@@ -1,5 +1,5 @@
-import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes } from 'react';
-import styled, { useTheme } from 'styled-components';
+import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, useContext } from 'react';
+import styled from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
@@ -7,6 +7,8 @@ import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
+import { SeedContextType } from '../../types';
+import { SeedContext } from '../ThemeProvider/ThemeProvider';
 
 export interface TextareaProps {
   value: string;
@@ -87,7 +89,7 @@ const TextareaElement = applyCustomStyles(
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLTextAreaElement>) => {
-    const theme = useTheme();
+    const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       value,
       onChange,
@@ -101,7 +103,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
       htmlAttributes,
     } = getDefaultProps<TextareaProps & InternalProps>({
       providedProps: props,
-      globalDefaultProps: theme?.components?.textarea?.defaultProps,
+      globalDefaultProps: customizations?.components?.textarea?.defaultProps,
       defaultProps,
     });
 

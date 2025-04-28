@@ -1,10 +1,12 @@
-import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
-import styled, { useTheme } from 'styled-components';
+import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode, useContext } from 'react';
+import styled from 'styled-components';
 
 import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
+import { SeedContextType } from '../../types';
+import { SeedContext } from '../ThemeProvider/ThemeProvider';
 
 export type CardVariants = 'default' | 'outlined';
 
@@ -44,7 +46,7 @@ const CardDiv = applyCustomStyles(
 
 export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
-    const theme = useTheme();
+    const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       variant,
       className,
@@ -52,7 +54,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
       children,
     } = getDefaultProps<CardProps & InternalProps>({
       providedProps: props,
-      globalDefaultProps: theme?.components?.card?.defaultProps,
+      globalDefaultProps: customizations?.components?.card?.defaultProps,
       defaultProps,
     });
 

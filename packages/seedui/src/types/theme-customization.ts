@@ -32,6 +32,10 @@ export interface CustomComponents {
   tooltip?: CustomComponentConfiguration<TooltipProps>;
 }
 
-export interface CustomTheme {
-  components: CustomComponents;
+export interface ThemeCustomization {
+  components?: CustomComponents;
+}
+
+export interface SeedContextType {
+  customizations: ThemeCustomization;
 }

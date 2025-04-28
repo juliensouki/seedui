@@ -1,12 +1,13 @@
-import { ForwardedRef, forwardRef, HTMLAttributes } from 'react';
-import styled, { useTheme } from 'styled-components';
+import { ForwardedRef, forwardRef, HTMLAttributes, useContext } from 'react';
+import styled from 'styled-components';
 
-import { SemanticColors, Sizes } from '../../types';
+import { SeedContextType, SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
 import { InternalProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
+import { SeedContext } from '../ThemeProvider/ThemeProvider';
 
 export type TagColor = keyof Pick<
   SemanticColors,
@@ -84,7 +85,7 @@ const TagText = styled(Text)(() => ({
 
 export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
-    const theme = useTheme();
+    const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       color,
       size,
@@ -94,7 +95,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
       children,
     } = getDefaultProps<TagProps & InternalProps>({
       providedProps: props,
-      globalDefaultProps: theme?.components?.tag?.defaultProps,
+      globalDefaultProps: customizations?.components?.tag?.defaultProps,
       defaultProps,
     });
 

@@ -4,11 +4,12 @@ import {
   KeyboardEvent,
   MouseEvent,
   ReactNode,
+  useContext,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
 import {
@@ -29,6 +30,8 @@ import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
 import { applyCustomStyles } from '../../../utils/custom-styles';
 import { getDefaultProps } from '../../../utils/props';
+import { SeedContextType } from '../../../types';
+import { SeedContext } from '../../ThemeProvider/ThemeProvider';
 
 export interface IconButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -82,7 +85,7 @@ const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof IconButt
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
-    const theme = useTheme();
+    const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       onClick,
       variant,
@@ -94,7 +97,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       children,
     } = getDefaultProps<IconButtonProps & InternalProps>({
       providedProps: props,
-      globalDefaultProps: theme?.components?.iconButton?.defaultProps,
+      globalDefaultProps: customizations?.components?.iconButton?.defaultProps,
       defaultProps,
     });
 

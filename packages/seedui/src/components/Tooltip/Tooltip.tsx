@@ -3,19 +3,21 @@ import {
   forwardRef,
   HTMLAttributes,
   ReactNode,
+  useContext,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
-import { Theme } from '../../types';
+import { SeedContextType, Theme } from '../../types';
 import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
+import { SeedContext } from '../ThemeProvider/ThemeProvider';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -133,7 +135,7 @@ const mapDirectionToTooltip: Record<TooltipDirection, typeof TooltipSpan> = {
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
-    const theme = useTheme();
+    const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       text,
       direction,
@@ -147,7 +149,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
       children,
     } = getDefaultProps<TooltipProps & InternalProps>({
       providedProps: props,
-      globalDefaultProps: theme?.components?.tooltip?.defaultProps,
+      globalDefaultProps: customizations?.components?.tooltip?.defaultProps,
       defaultProps,
     });
 

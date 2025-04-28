@@ -4,14 +4,15 @@ import {
   KeyboardEvent,
   MouseEvent,
   ReactNode,
+  useContext,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import { Theme } from '../../../types';
+import { SeedContextType, Theme } from '../../../types';
 import {
   getNeutralFilledButtonStyles,
   getNeutralTransparentButtonStyles,
@@ -30,6 +31,7 @@ import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
 import { applyCustomStyles } from '../../../utils/custom-styles';
 import { getDefaultProps } from '../../../utils/props';
+import { SeedContext } from '../../ThemeProvider/ThemeProvider';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -113,7 +115,7 @@ const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof ButtonBa
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
-    const theme = useTheme();
+    const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       onClick,
       variant,
@@ -125,7 +127,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
     } = getDefaultProps<ButtonProps & InternalProps>({
       providedProps: props,
-      globalDefaultProps: theme?.components?.button?.defaultProps,
+      globalDefaultProps: customizations?.components?.button?.defaultProps,
       defaultProps,
     });
 
