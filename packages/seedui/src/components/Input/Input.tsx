@@ -1,11 +1,12 @@
 import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -19,7 +20,7 @@ export interface InputProps {
     placement?: InputIconPlacement;
   };
   width?: string | number;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
@@ -30,6 +31,22 @@ export interface InputProps {
     iconContainerDiv?: HTMLAttributes<HTMLDivElement>;
   };
 }
+
+const defaultProps: InputProps = {
+  value: '',
+  onChange: undefined,
+  width: 200,
+  inputIcon: { icon: null, placement: 'left' },
+  htmlAttributes: {
+    rootDiv: {},
+    inputContainerDiv: {},
+    input: {},
+    iconContainerDiv: {},
+  },
+  forwardProps: {
+    labelTextProps: {},
+  },
+};
 
 const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPlacement }>>(
   ({ theme, $placement }) => ({
@@ -120,21 +137,14 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
 );
 
 export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
-  (
-    {
-      value,
-      onChange,
-      placeholder,
-      label,
-      disabled,
-      width = 200,
-      inputIcon = { icon: null, placement: 'left' },
-      forwardProps = {},
-      htmlAttributes = {},
-      className,
-    },
-    forwardedRef: ForwardedRef<HTMLInputElement>,
-  ) => {
+  (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
+    const theme = useTheme();
+    const { value, onChange, placeholder, label, disabled, width, inputIcon, forwardProps, htmlAttributes, className } =
+      getDefaultProps<InputProps & InternalProps>({
+        providedProps: props,
+        globalDefaultProps: theme?.components?.input?.defaultProps,
+        defaultProps,
+      });
     const { icon, placement: iconPlacement = 'left' } = inputIcon;
 
     return (

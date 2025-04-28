@@ -1,9 +1,10 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
 import { StyledComponentsPrefix } from '../../types/internal';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {
@@ -13,6 +14,11 @@ export interface TextProps {
 export type TextPropsAndAttributes = PropsWithChildren<
   TextProps & HTMLAttributes<HTMLParagraphElement> & RefAttributes<HTMLParagraphElement>
 >;
+
+const defaultProps: TextProps = {
+  variant: 'p',
+  bottomSpacing: false,
+};
 
 const TextFactory = (variant: TextVariants) => {
   const isHeading =
@@ -68,19 +74,21 @@ const mapVariantToElement: Record<TextVariants, ReturnType<typeof TextFactory>> 
 export const Text = forwardRef<
   HTMLParagraphElement,
   PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement>>
->(
-  (
-    { children, variant = 'p', bottomSpacing = false, ...allHTMLAttributes },
-    forwardedRef: ForwardedRef<HTMLDivElement>,
-  ) => {
-    const TextElement = mapVariantToElement[variant];
+>((props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+  const theme = useTheme();
+  const { variant, children, bottomSpacing, ...allHTMLAttributes } = getDefaultProps<PropsWithChildren<TextProps>>({
+    providedProps: props,
+    globalDefaultProps: theme?.components?.text?.defaultProps,
+    defaultProps,
+  });
 
-    return (
-      <TextElement ref={forwardedRef} $bottomSpacing={bottomSpacing} $variant={variant} {...allHTMLAttributes}>
-        {children}
-      </TextElement>
-    );
-  },
-);
+  const TextElement = mapVariantToElement[variant];
+
+  return (
+    <TextElement ref={forwardedRef} $bottomSpacing={bottomSpacing} $variant={variant} {...allHTMLAttributes}>
+      {children}
+    </TextElement>
+  );
+});
 
 Text.displayName = 'Text';

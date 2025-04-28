@@ -1,11 +1,12 @@
 import { ForwardedRef, forwardRef, HTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
 import { InternalProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
 
 export type TagColor = keyof Pick<
   SemanticColors,
@@ -24,6 +25,18 @@ export interface TagProps {
   };
   children: string;
 }
+
+const defaultProps: TagProps = {
+  color: 'neutral',
+  size: 'md',
+  children: '',
+  htmlAttributes: {
+    rootDiv: {},
+  },
+  forwardProps: {
+    text: {},
+  },
+};
 
 const TagDiv = applyCustomStyles(
   styled.div<Required<TagProps>>((props) => {
@@ -70,17 +83,21 @@ const TagText = styled(Text)(() => ({
 }));
 
 export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
-  (
-    {
-      color = 'neutral',
-      size = 'md',
+  (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+    const theme = useTheme();
+    const {
+      color,
+      size,
       htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
       forwardProps: { text: textProps } = {},
       className,
       children,
-    },
-    forwardedRef: ForwardedRef<HTMLDivElement>,
-  ) => {
+    } = getDefaultProps<TagProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: theme?.components?.tag?.defaultProps,
+      defaultProps,
+    });
+
     return (
       <TagDiv
         color={color}

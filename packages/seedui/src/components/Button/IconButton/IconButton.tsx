@@ -8,19 +8,27 @@ import {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import { getPrimaryFilledButtonStyles } from '../_common/styles/get-primary-filled-styles';
-import { getPrimaryTransparentButtonStyles } from '../_common/styles/get-primary-transparent-styles';
-import { getSecondaryFilledButtonStyles } from '../_common/styles/get-secondary-filled-styles';
-import { getNeutralFilledButtonStyles } from '../_common/styles/get-neutral-filled-styles';
-import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secondary-transparent-styles';
-import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
-import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
+import {
+  getNeutralFilledButtonStyles,
+  getNeutralTransparentButtonStyles,
+  getPrimaryFilledButtonStyles,
+  getPrimaryTransparentButtonStyles,
+  getSecondaryFilledButtonStyles,
+  getSecondaryTransparentButtonStyles,
+  ButtonBaseProps,
+  ButtonColors,
+  ButtonCommon,
+  ButtonSizes,
+  ButtonVariants,
+  defaultProps,
+} from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
 import { applyCustomStyles } from '../../../utils/custom-styles';
+import { getDefaultProps } from '../../../utils/props';
 
 export interface IconButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -73,19 +81,23 @@ const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof IconButt
 };
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  (
-    {
-      htmlAttributes: { rootButton: rootButtonHTMLAttributes } = {},
-      size = 'md',
-      color = 'primary',
-      variant = 'filled',
-      disabled,
+  (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
+    const theme = useTheme();
+    const {
       onClick,
-      children,
+      variant,
+      color,
+      disabled,
+      size,
       className,
-    }: IconButtonProps & InternalProps,
-    forwardedRef: ForwardedRef<HTMLButtonElement>,
-  ) => {
+      htmlAttributes: { rootButton: rootButtonHTMLAttributes },
+      children,
+    } = getDefaultProps<IconButtonProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: theme?.components?.iconButton?.defaultProps,
+      defaultProps,
+    });
+
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isClicking, setIsClicking] = useState<boolean>(false);

@@ -8,13 +8,14 @@ import {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
 import { Theme } from '../../types';
 import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -33,6 +34,20 @@ export interface TooltipProps {
 }
 
 type TooltipSpanProps = StyledComponentsPrefix<Required<TooltipProps> & { tooltipWidth: number; tooltipTop?: number }>;
+
+const defaultProps: TooltipProps = {
+  text: '',
+  direction: 'top',
+  htmlAttributes: {
+    rootDiv: {},
+    childrenWrapperDiv: {},
+    tooltipSpan: {},
+  },
+  forwardProps: {
+    text: {},
+  },
+  children: <></>,
+};
 
 const computeTooltipMarginX = (theme: Theme): number => theme.spacing['200'];
 const computeTooltipMarginY = (theme: Theme): number => theme.spacing['100'];
@@ -117,21 +132,25 @@ const mapDirectionToTooltip: Record<TooltipDirection, typeof TooltipSpan> = {
 };
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
-  (
-    {
+  (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+    const theme = useTheme();
+    const {
       text,
-      direction = 'top',
+      direction,
       htmlAttributes: {
         rootDiv: rootDivHTMLAttributes,
         childrenWrapperDiv: childrenWrapperDivHTMLAttributes,
         tooltipSpan: tooltipSpanHTMLAttributes,
-      } = {},
+      },
       className,
-      forwardProps: { text: textProps } = {},
+      forwardProps: { text: textProps },
       children,
-    },
-    forwardedRef: ForwardedRef<HTMLDivElement>,
-  ) => {
+    } = getDefaultProps<TooltipProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: theme?.components?.tooltip?.defaultProps,
+      defaultProps,
+    });
+
     const [tooltipTop, setTooltipTop] = useState<number | undefined>(undefined);
     const [tooltipWidth, setTooltipWidth] = useState<number | undefined>(undefined);
     const childrenContainerRef = useRef<HTMLDivElement>(null);

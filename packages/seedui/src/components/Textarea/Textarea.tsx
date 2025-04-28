@@ -1,11 +1,12 @@
 import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
 
 export interface TextareaProps {
   value: string;
@@ -13,7 +14,7 @@ export interface TextareaProps {
   placeholder?: string;
   disabled?: boolean;
   width?: string | number;
-  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
@@ -23,6 +24,20 @@ export interface TextareaProps {
   };
   isResizable?: boolean;
 }
+
+const defaultProps: TextareaProps = {
+  value: '',
+  width: 200,
+  disabled: false,
+  isResizable: true,
+  forwardProps: {
+    labelTextProps: {},
+  },
+  htmlAttributes: {
+    rootDiv: {},
+    textarea: {},
+  },
+};
 
 const TextareaElement = applyCustomStyles(
   styled.textarea<StyledComponentsPrefix<Required<TextareaProps>>>(({ theme, $isResizable }) => {
@@ -71,8 +86,9 @@ const TextareaElement = applyCustomStyles(
 );
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & InternalProps>(
-  (
-    {
+  (props, forwardedRef: ForwardedRef<HTMLTextAreaElement>) => {
+    const theme = useTheme();
+    const {
       value,
       onChange,
       placeholder,
@@ -80,12 +96,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
       label,
       disabled,
       isResizable = true,
-      forwardProps = {},
+      forwardProps,
       className,
-      htmlAttributes = {},
-    },
-    forwardedRef: ForwardedRef<HTMLTextAreaElement>,
-  ) => {
+      htmlAttributes,
+    } = getDefaultProps<TextareaProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: theme?.components?.textarea?.defaultProps,
+      defaultProps,
+    });
+
     return (
       <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
         <TextareaElement

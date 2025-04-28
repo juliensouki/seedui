@@ -1,9 +1,10 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
 
 export type CardVariants = 'default' | 'outlined';
 
@@ -14,6 +15,13 @@ export interface CardProps {
   children?: ReactNode;
   variant?: CardVariants;
 }
+
+const defaultProps: CardProps = {
+  variant: 'default',
+  htmlAttributes: {
+    rootDiv: {},
+  },
+};
 
 const CardDiv = applyCustomStyles(
   styled.div<StyledComponentsPrefix<Required<CardProps>>>(({ theme, $variant }) => {
@@ -35,10 +43,19 @@ const CardDiv = applyCustomStyles(
 );
 
 export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
-  (
-    { variant = 'default', className, htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {}, children },
-    forwardedRef: ForwardedRef<HTMLDivElement>,
-  ) => {
+  (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+    const theme = useTheme();
+    const {
+      variant,
+      className,
+      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      children,
+    } = getDefaultProps<CardProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: theme?.components?.card?.defaultProps,
+      defaultProps,
+    });
+
     return (
       <CardDiv
         {...rootDivHTMLAttributes}

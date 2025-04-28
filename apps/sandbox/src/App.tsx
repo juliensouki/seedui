@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Button, Mode } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, Button } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -23,10 +23,13 @@ export const App: FunctionComponent = () => {
         theme={{
           components: {
             button: {
+              defaultProps: {
+                color: 'neutral',
+              },
               conditionalStyles: [
                 {
-                  styles: { '&:hover': { backgroundColor: 'orange', color: 'blue' } },
-                  condition: ({ color }, { mode }) => color === 'primary' && mode === 'light',
+                  styles: { borderColor: 'orange' },
+                  condition: (_, { mode }) => mode === 'dark',
                 },
               ],
             },
@@ -41,8 +44,7 @@ export const App: FunctionComponent = () => {
         </button>
 
         <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
-          <Button>Save</Button>
-          <Button color="neutral">Cancel</Button>
+          <Button>Hello World</Button>
         </div>
       </ThemeProvider>
     </div>
