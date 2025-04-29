@@ -1,7 +1,7 @@
 import { borderRadius } from '../../tokens/border-radius';
 import { breakpoints } from '../../tokens/breakpoints';
 import { spacing } from '../../tokens/spacing';
-import { Mode, Theme } from '../../types';
+import { Mode, Theme, ThemeCustomization } from '../../types';
 import {
   primary as lightPrimary,
   secondary as lightSecondary,
@@ -34,6 +34,7 @@ import {
 
 interface ThemeService {
   getDefaultTheme: (mode?: Mode) => Theme;
+  getCustomizedTheme: (customTheme: ThemeCustomization, mode?: Mode) => Theme;
 }
 
 export const themeServiceFactory = (): ThemeService => {
@@ -58,25 +59,40 @@ export const themeServiceFactory = (): ThemeService => {
     },
   };
 
+  const getDefaultTheme = (mode: Mode = 'light'): Theme => ({
+    breakpoints,
+    spacing,
+    borderRadius,
+    colors: semanticColors[mode],
+    typography: {
+      h1: h1Styles,
+      h2: h2Styles,
+      h3: h3Styles,
+      h4: h4Styles,
+      h5: h5Styles,
+      h6: h6Styles,
+      p: pStyles,
+      caption: captionStyles,
+      small: smallStyles,
+    },
+    mode,
+  });
+
   return {
-    getDefaultTheme: (mode: Mode = 'light') => {
+    getDefaultTheme,
+    getCustomizedTheme: (customTheme: ThemeCustomization = {}, mode: Mode = 'light'): Theme => {
+      const defaultTheme = getDefaultTheme(mode);
+
       return {
-        breakpoints,
-        spacing,
-        borderRadius,
-        colors: semanticColors[mode],
-        typography: {
-          h1: h1Styles,
-          h2: h2Styles,
-          h3: h3Styles,
-          h4: h4Styles,
-          h5: h5Styles,
-          h6: h6Styles,
-          p: pStyles,
-          caption: captionStyles,
-          small: smallStyles,
+        ...defaultTheme,
+        breakpoints: {
+          ...defaultTheme.breakpoints,
+          ...customTheme.breakpoints,
         },
-        mode,
+        borderRadius: {
+          ...defaultTheme.borderRadius,
+          ...customTheme.borderRadius,
+        },
       };
     },
   };

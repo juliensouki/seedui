@@ -18,24 +18,7 @@ export const App: FunctionComponent = () => {
         boxSizing: 'border-box',
       }}
     >
-      <ThemeProvider
-        mode={mode}
-        theme={{
-          components: {
-            button: {
-              defaultProps: {
-                color: 'neutral',
-              },
-              conditionalStyles: [
-                {
-                  styles: { borderColor: 'orange' },
-                  condition: (_, { mode }) => mode === 'dark',
-                },
-              ],
-            },
-          },
-        }}
-      >
+      <ThemeProvider mode={mode} theme={{ breakpoints: { md: 1020 } }}>
         <button
           style={{ position: 'absolute', top: 30, right: 30 }}
           onClick={() => setMode((currentMode) => (currentMode === 'light' ? 'dark' : 'light'))}

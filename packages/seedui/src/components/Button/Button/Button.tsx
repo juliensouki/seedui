@@ -53,6 +53,8 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
   const size = props.size;
   const { fontSize, borderRadius, padding } = getButtonStyles(props.theme)[size];
 
+  console.log(props.theme.breakpoints);
+
   return {
     alignItems: 'center',
     justifyContent: 'center',

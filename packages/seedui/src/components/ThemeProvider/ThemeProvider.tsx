@@ -25,8 +25,12 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
 
   useEffect(() => {
     setMode(mode);
-    setTheme(themeService.getDefaultTheme(mode));
-  }, [mode]);
+    if (customTheme) {
+      setTheme(themeService.getCustomizedTheme(customTheme, mode));
+    } else {
+      setTheme(themeService.getDefaultTheme(mode));
+    }
+  }, [mode, customTheme]);
 
   return (
     <SCThemeProvider theme={{ ...theme, mode: currentMode }}>

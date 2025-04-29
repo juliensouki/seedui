@@ -10,7 +10,7 @@ import {
   TextProps,
   TooltipProps,
 } from '../components';
-import { Theme } from './theme';
+import { BorderRadius, Breakpoints, Theme } from './theme';
 
 export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
@@ -34,6 +34,8 @@ export interface CustomComponents {
 
 export interface ThemeCustomization {
   components?: CustomComponents;
+  breakpoints?: Partial<Breakpoints>;
+  borderRadius?: Partial<BorderRadius>;
 }
 
 export interface SeedContextType {
