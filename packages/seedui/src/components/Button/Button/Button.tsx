@@ -17,7 +17,7 @@ import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuil
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
 import { getDefaultProps } from '../../../utils/props';
-import { SeedContext } from '../../ThemeProvider/ThemeProvider';
+import { SeedContext } from '../../ThemeProvider/context';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -52,8 +52,6 @@ const mapSizeToRingBorderRadius: Record<ButtonSizes, number> = {
 export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<ButtonProps>>) => {
   const size = props.size;
   const { fontSize, borderRadius, padding } = getButtonStyles(props.theme)[size];
-
-  console.log(props.theme.breakpoints);
 
   return {
     alignItems: 'center',

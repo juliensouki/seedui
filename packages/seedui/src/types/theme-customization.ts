@@ -36,6 +36,7 @@ export interface ThemeCustomization {
   components?: CustomComponents;
   breakpoints?: Partial<Breakpoints>;
   borderRadius?: Partial<BorderRadius>;
+  spacing?: number;
 }
 
 export interface SeedContextType {

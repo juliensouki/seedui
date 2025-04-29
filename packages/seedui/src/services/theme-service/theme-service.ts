@@ -31,13 +31,14 @@ import {
   captionStyles,
   smallStyles,
 } from '../../tokens/typography';
+import { SpacingService } from '../spacing-service/spacing-service';
 
 interface ThemeService {
   getDefaultTheme: (mode?: Mode) => Theme;
   getCustomizedTheme: (customTheme: ThemeCustomization, mode?: Mode) => Theme;
 }
 
-export const themeServiceFactory = (): ThemeService => {
+export const themeServiceFactory = ({ spacingService }: { spacingService: SpacingService }): ThemeService => {
   const semanticColors = {
     light: {
       primary: lightPrimary,
@@ -93,6 +94,7 @@ export const themeServiceFactory = (): ThemeService => {
           ...defaultTheme.borderRadius,
           ...customTheme.borderRadius,
         },
+        spacing: spacingService.generateCustomSpacing(customTheme.spacing || 1),
       };
     },
   };

@@ -1,9 +1,11 @@
-import { createContext, FunctionComponent, ReactNode, useEffect, useState } from 'react';
+import { FunctionComponent, ReactNode, useEffect, useState } from 'react';
 import { ThemeProvider as SCThemeProvider } from 'styled-components';
 
-import { Mode, SeedContextType, Theme } from '../../types';
+import { Mode, Theme } from '../../types';
 import { themeServiceFactory } from '../../services/theme-service/theme-service';
 import { ThemeCustomization } from '../../types';
+import { spacingServiceFactory } from '../../services/spacing-service/spacing-service';
+import { SeedContext } from './context';
 
 interface ThemeProviderProps {
   mode?: Mode;
@@ -11,9 +13,8 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-const themeService = themeServiceFactory();
-
-export const SeedContext = createContext<SeedContextType>({ customizations: { components: {} } });
+const spacingService = spacingServiceFactory();
+const themeService = themeServiceFactory({ spacingService });
 
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   mode = 'light',

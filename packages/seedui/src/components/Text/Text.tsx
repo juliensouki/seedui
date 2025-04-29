@@ -6,7 +6,7 @@ import { StyledComponentsPrefix } from '../../types/internal';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContextType } from '../../types';
-import { SeedContext } from '../ThemeProvider/ThemeProvider';
+import { SeedContext } from '../ThemeProvider/context';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {

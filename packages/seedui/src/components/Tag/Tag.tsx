@@ -7,7 +7,7 @@ import { InternalProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
-import { SeedContext } from '../ThemeProvider/ThemeProvider';
+import { SeedContext } from '../ThemeProvider/context';
 
 export type TagColor = keyof Pick<
   SemanticColors,

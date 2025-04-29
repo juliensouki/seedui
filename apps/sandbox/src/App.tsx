@@ -18,7 +18,7 @@ export const App: FunctionComponent = () => {
         boxSizing: 'border-box',
       }}
     >
-      <ThemeProvider mode={mode} theme={{ breakpoints: { md: 1020 } }}>
+      <ThemeProvider mode={mode} theme={{ spacing: 1 }}>
         <button
           style={{ position: 'absolute', top: 30, right: 30 }}
           onClick={() => setMode((currentMode) => (currentMode === 'light' ? 'dark' : 'light'))}

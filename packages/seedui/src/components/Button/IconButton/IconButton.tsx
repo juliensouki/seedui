@@ -17,7 +17,7 @@ import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContextType } from '../../../types';
-import { SeedContext } from '../../ThemeProvider/ThemeProvider';
+import { SeedContext } from '../../ThemeProvider/context';
 
 export interface IconButtonProps extends ButtonBaseProps {
   children?: ReactNode;
