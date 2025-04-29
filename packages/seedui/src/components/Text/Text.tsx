@@ -62,15 +62,15 @@ const TextFactory = (variant: TextVariants) => {
 };
 
 const mapVariantToElement: Record<TextVariants, ReturnType<typeof TextFactory>> = {
-  h1: applyCustomStyles(TextFactory('h1'), 'text'),
-  h2: applyCustomStyles(TextFactory('h2'), 'text'),
-  h3: applyCustomStyles(TextFactory('h3'), 'text'),
-  h4: applyCustomStyles(TextFactory('h4'), 'text'),
-  h5: applyCustomStyles(TextFactory('h5'), 'text'),
-  h6: applyCustomStyles(TextFactory('h6'), 'text'),
-  p: applyCustomStyles(TextFactory('p'), 'text'),
-  caption: applyCustomStyles(TextFactory('caption'), 'text'),
-  small: applyCustomStyles(TextFactory('small'), 'text'),
+  h1: applyCustomStyles(TextFactory('h1')),
+  h2: applyCustomStyles(TextFactory('h2')),
+  h3: applyCustomStyles(TextFactory('h3')),
+  h4: applyCustomStyles(TextFactory('h4')),
+  h5: applyCustomStyles(TextFactory('h5')),
+  h6: applyCustomStyles(TextFactory('h6')),
+  p: applyCustomStyles(TextFactory('p')),
+  caption: applyCustomStyles(TextFactory('caption')),
+  small: applyCustomStyles(TextFactory('small')),
 };
 
 export const Text = forwardRef<
@@ -87,7 +87,13 @@ export const Text = forwardRef<
   const TextElement = mapVariantToElement[variant];
 
   return (
-    <TextElement ref={forwardedRef} $bottomSpacing={bottomSpacing} $variant={variant} {...allHTMLAttributes}>
+    <TextElement
+      ref={forwardedRef}
+      $bottomSpacing={bottomSpacing}
+      $variant={variant}
+      $customizations={customizations.components?.text}
+      {...allHTMLAttributes}
+    >
       {children}
     </TextElement>
   );

@@ -71,7 +71,6 @@ const TagDiv = applyCustomStyles(
       flexShrink: 0,
     };
   }),
-  'tag',
 );
 
 const TagText = styled(Text)(() => ({
@@ -105,6 +104,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
         size={size}
         ref={forwardedRef}
         className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
+        $customizations={customizations.components?.tag}
         {...rootDivHTMLAttributes}
       >
         <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>

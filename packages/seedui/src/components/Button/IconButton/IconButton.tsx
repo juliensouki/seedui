@@ -12,23 +12,9 @@ import {
 import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import {
-  getNeutralFilledButtonStyles,
-  getNeutralTransparentButtonStyles,
-  getPrimaryFilledButtonStyles,
-  getPrimaryTransparentButtonStyles,
-  getSecondaryFilledButtonStyles,
-  getSecondaryTransparentButtonStyles,
-  ButtonBaseProps,
-  ButtonColors,
-  ButtonCommon,
-  ButtonSizes,
-  ButtonVariants,
-  defaultProps,
-} from '../_common';
+import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
-import { applyCustomStyles } from '../../../utils/custom-styles';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContextType } from '../../../types';
 import { SeedContext } from '../../ThemeProvider/ThemeProvider';
@@ -62,26 +48,7 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
   };
 });
 
-const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof IconButtonBase>> = {
-  filled: {
-    primary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
-    secondary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getSecondaryFilledButtonStyles(props.theme),
-    ),
-    neutral: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
-  },
-  transparent: {
-    primary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getPrimaryTransparentButtonStyles(props.theme),
-    ),
-    secondary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getSecondaryTransparentButtonStyles(props.theme),
-    ),
-    neutral: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getNeutralTransparentButtonStyles(props.theme),
-    ),
-  },
-};
+const componentsMap = stylesMapBuilder(IconButtonBase);
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
@@ -105,7 +72,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isClicking, setIsClicking] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const IconButtonComponent = applyCustomStyles(componentsMap[variant][color], 'iconButton');
+    const IconButtonComponent = componentsMap[variant][color];
 
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 
@@ -153,6 +120,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         disabled={disabled}
         size={size}
         className={joinClasses(className, rootButtonHTMLAttributes?.className)}
+        $customizations={customizations.components?.iconButton}
         ref={buttonRef}
       >
         <FocusRing color={color} show={isFocused && !isClicking} pressed={isActive} />

@@ -126,7 +126,6 @@ const InputElement = applyCustomStyles(
       };
     },
   ),
-  'input',
 );
 
 const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlacement: InputIconPlacement }>>>(
@@ -161,6 +160,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
             placeholder={placeholder}
             className={joinClasses(className, className, htmlAttributes?.input?.className)}
             $iconPlacement={icon ? iconPlacement : undefined}
+            $customizations={customizations.components?.input}
           />
           {icon && (
             <IconContainer {...htmlAttributes.iconContainerDiv} $placement={iconPlacement}>

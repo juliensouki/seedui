@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { StyledComponent, StyledProps } from '../types/internal';
-import { CustomComponents, Theme } from '../types';
+import { Theme } from '../types';
 
 const remove$ = (property: string, value: unknown): { [key: string]: unknown } => {
   if (property[0] === '$') {
@@ -22,13 +22,10 @@ const cleanSCProps = (obj: { [key: string]: unknown }): { [key: string]: unknown
   return result;
 };
 
-export const applyCustomStyles = <T>(
-  base: StyledComponent<T>,
-  component: keyof CustomComponents,
-): StyledComponent<T> => {
+export const applyCustomStyles = <T>(base: StyledComponent<T>): StyledComponent<T> => {
   return styled(base)((styledProps: StyledProps<T>) => ({
-    ...styledProps.theme?.components?.[component]?.styles,
-    ...styledProps.theme?.components?.[component]?.conditionalStyles?.reduce((acc, { styles, condition }) => {
+    ...styledProps?.$customizations?.styles,
+    ...styledProps?.$customizations?.conditionalStyles?.reduce((acc, { styles, condition }) => {
       const { theme, ...prefixedProps } = styledProps;
 
       if ((condition as (props: T, theme: Theme) => boolean)(cleanSCProps(prefixedProps) as T, theme) === true) {

@@ -84,7 +84,6 @@ const TextareaElement = applyCustomStyles(
       },
     };
   }),
-  'textarea',
 );
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & InternalProps>(
@@ -117,6 +116,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
           onChange={onChange}
           placeholder={placeholder}
           className={joinClasses(className, className, htmlAttributes?.textarea?.className)}
+          $customizations={customizations.components?.textarea}
           $isResizable={isResizable}
         />
       </ContainerWithLabel>

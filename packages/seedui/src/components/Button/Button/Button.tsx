@@ -13,23 +13,9 @@ import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
 import { SeedContextType, Theme } from '../../../types';
-import {
-  getNeutralFilledButtonStyles,
-  getNeutralTransparentButtonStyles,
-  getPrimaryFilledButtonStyles,
-  getPrimaryTransparentButtonStyles,
-  getSecondaryFilledButtonStyles,
-  getSecondaryTransparentButtonStyles,
-  ButtonBaseProps,
-  ButtonColors,
-  ButtonCommon,
-  ButtonSizes,
-  ButtonVariants,
-  defaultProps,
-} from '../_common';
+import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
-import { applyCustomStyles } from '../../../utils/custom-styles';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContext } from '../../ThemeProvider/ThemeProvider';
 
@@ -82,36 +68,7 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
   };
 });
 
-const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof ButtonBase>> = {
-  filled: {
-    primary: applyCustomStyles(
-      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
-      'button',
-    ),
-    secondary: applyCustomStyles(
-      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getSecondaryFilledButtonStyles(props.theme)),
-      'button',
-    ),
-    neutral: applyCustomStyles(
-      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
-      'button',
-    ),
-  },
-  transparent: {
-    primary: applyCustomStyles(
-      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryTransparentButtonStyles(props.theme)),
-      'button',
-    ),
-    secondary: applyCustomStyles(
-      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getSecondaryTransparentButtonStyles(props.theme)),
-      'button',
-    ),
-    neutral: applyCustomStyles(
-      styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
-      'button',
-    ),
-  },
-};
+const componentsMap = stylesMapBuilder(ButtonBase);
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
@@ -182,6 +139,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         size={size}
         className={joinClasses(className, rootButtonHTMLAttributes?.className)}
+        $customizations={customizations.components?.button}
         ref={buttonRef}
       >
         <FocusRing

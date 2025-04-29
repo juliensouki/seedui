@@ -12,7 +12,7 @@ import {
 } from '../components';
 import { Theme } from './theme';
 
-type CustomComponentConfiguration<T> = {
+export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
   styles?: CSSObject;
   conditionalStyles?: {

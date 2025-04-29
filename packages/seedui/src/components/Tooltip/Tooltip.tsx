@@ -127,10 +127,10 @@ const TooltipText = styled(Text)(() => ({
 }));
 
 const mapDirectionToTooltip: Record<TooltipDirection, typeof TooltipSpan> = {
-  top: applyCustomStyles(TopTooltip, 'tooltip'),
-  right: applyCustomStyles(RightTooltip, 'tooltip'),
-  bottom: applyCustomStyles(BottomTooltip, 'tooltip'),
-  left: applyCustomStyles(LeftTooltip, 'tooltip'),
+  top: applyCustomStyles(TopTooltip),
+  right: applyCustomStyles(RightTooltip),
+  bottom: applyCustomStyles(BottomTooltip),
+  left: applyCustomStyles(LeftTooltip),
 };
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
@@ -196,6 +196,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           $tooltipWidth={tooltipWidth}
           $tooltipTop={tooltipTop}
           $direction={direction}
+          $customizations={customizations.components?.tooltip}
           className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
           {...tooltipSpanHTMLAttributes}
         >

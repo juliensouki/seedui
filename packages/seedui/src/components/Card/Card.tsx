@@ -41,7 +41,6 @@ const CardDiv = applyCustomStyles(
           : 'none',
     };
   }),
-  'card',
 );
 
 export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
@@ -62,6 +61,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
       <CardDiv
         {...rootDivHTMLAttributes}
         $variant={variant}
+        $customizations={customizations.components?.card}
         className={joinClasses(className, rootDivHTMLAttributes?.className)}
         ref={forwardedRef}
       >
