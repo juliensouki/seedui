@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, Button } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, Text } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -18,7 +18,10 @@ export const App: FunctionComponent = () => {
         boxSizing: 'border-box',
       }}
     >
-      <ThemeProvider mode={mode} theme={{ spacing: 1 }}>
+      <ThemeProvider
+        mode={mode}
+        theme={{ typography: { p: { responsive: { desktop: { fontSize: 30 } }, fontWeight: '600' } } }}
+      >
         <button
           style={{ position: 'absolute', top: 30, right: 30 }}
           onClick={() => setMode((currentMode) => (currentMode === 'light' ? 'dark' : 'light'))}
@@ -26,9 +29,7 @@ export const App: FunctionComponent = () => {
           Switch to {mode === 'light' ? 'dark' : 'light'} mode
         </button>
 
-        <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
-          <Button>Hello World</Button>
-        </div>
+        <Text>Hello World !</Text>
       </ThemeProvider>
     </div>
   );

@@ -6,7 +6,6 @@ export const breakpoints: Breakpoints = {
   md: 960,
   lg: 1200,
   xl: 1550,
+  mobile: 'sm',
+  tablet: 'md',
 };
-
-export const tabletBreakpoint: keyof Breakpoints = 'md';
-export const mobileBreakpoint: keyof Breakpoints = 'sm';

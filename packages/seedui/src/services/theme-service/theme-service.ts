@@ -32,13 +32,20 @@ import {
   smallStyles,
 } from '../../tokens/typography';
 import { SpacingService } from '../spacing-service/spacing-service';
+import { TypographyService } from '../typography-service/typography-service';
 
 interface ThemeService {
   getDefaultTheme: (mode?: Mode) => Theme;
   getCustomizedTheme: (customTheme: ThemeCustomization, mode?: Mode) => Theme;
 }
 
-export const themeServiceFactory = ({ spacingService }: { spacingService: SpacingService }): ThemeService => {
+export const themeServiceFactory = ({
+  spacingService,
+  typographyService,
+}: {
+  spacingService: SpacingService;
+  typographyService: TypographyService;
+}): ThemeService => {
   const semanticColors = {
     light: {
       primary: lightPrimary,
@@ -95,6 +102,7 @@ export const themeServiceFactory = ({ spacingService }: { spacingService: Spacin
           ...customTheme.borderRadius,
         },
         spacing: spacingService.generateCustomSpacing(customTheme.spacing || 1),
+        typography: typographyService.generateCustomTypography(customTheme.typography),
       };
     },
   };

@@ -1,7 +1,6 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes, useContext } from 'react';
 import styled from 'styled-components';
 
-import { mobileBreakpoint, tabletBreakpoint } from '../../tokens/breakpoints';
 import { StyledComponentsPrefix } from '../../types/internal';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
@@ -49,11 +48,11 @@ const TextFactory = (variant: TextVariants) => {
       lineHeight: `${theme.typography[$variant].responsive.desktop.lineHeight}px`,
       marginBottom: $bottomSpacing ? '0.4em' : 0,
 
-      [`@media only screen and (max-width: ${theme.breakpoints[tabletBreakpoint]}px)`]: {
+      [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
         fontSize: theme.typography[$variant].responsive.tablet.fontSize,
         lineHeight: `${theme.typography[$variant].responsive.tablet.lineHeight}px`,
       },
-      [`@media only screen and (max-width: ${theme.breakpoints[mobileBreakpoint]}px)`]: {
+      [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
         fontSize: theme.typography[$variant].responsive.mobile.fontSize,
         lineHeight: `${theme.typography[$variant].responsive.mobile.lineHeight}px`,
       },

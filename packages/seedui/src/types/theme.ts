@@ -26,12 +26,17 @@ export interface SemanticColors {
   error: SemanticColorShades;
 }
 
-export interface Breakpoints {
+interface BreakpointKeys {
   xs: number;
   sm: number;
   md: number;
   lg: number;
   xl: number;
+}
+
+export interface Breakpoints extends BreakpointKeys {
+  mobile: keyof BreakpointKeys;
+  tablet: keyof BreakpointKeys;
 }
 
 export interface Spacing {

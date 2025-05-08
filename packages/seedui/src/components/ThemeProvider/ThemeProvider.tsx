@@ -6,6 +6,7 @@ import { themeServiceFactory } from '../../services/theme-service/theme-service'
 import { ThemeCustomization } from '../../types';
 import { spacingServiceFactory } from '../../services/spacing-service/spacing-service';
 import { SeedContext } from './context';
+import { typographyServiceFactory } from '../../services/typography-service/typography-service';
 
 interface ThemeProviderProps {
   mode?: Mode;
@@ -14,7 +15,8 @@ interface ThemeProviderProps {
 }
 
 const spacingService = spacingServiceFactory();
-const themeService = themeServiceFactory({ spacingService });
+const typographyService = typographyServiceFactory();
+const themeService = themeServiceFactory({ spacingService, typographyService });
 
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   mode = 'light',
