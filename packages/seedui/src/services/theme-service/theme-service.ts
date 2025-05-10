@@ -33,6 +33,8 @@ import {
 } from '../../tokens/typography';
 import { SpacingService } from '../spacing-service/spacing-service';
 import { TypographyService } from '../typography-service/typography-service';
+import { boxShadow } from '../../tokens/box-shadow';
+import { BoxShadowService } from '../box-shadow-service/box-shadow-service';
 
 interface ThemeService {
   getDefaultTheme: (mode?: Mode) => Theme;
@@ -42,9 +44,11 @@ interface ThemeService {
 export const themeServiceFactory = ({
   spacingService,
   typographyService,
+  boxShadowService,
 }: {
   spacingService: SpacingService;
   typographyService: TypographyService;
+  boxShadowService: BoxShadowService;
 }): ThemeService => {
   const semanticColors = {
     light: {
@@ -72,6 +76,7 @@ export const themeServiceFactory = ({
     spacing,
     borderRadius,
     colors: semanticColors[mode],
+    boxShadow: boxShadow[mode],
     typography: {
       h1: h1Styles,
       h2: h2Styles,
@@ -103,6 +108,7 @@ export const themeServiceFactory = ({
         },
         spacing: spacingService.generateCustomSpacing(customTheme.spacing || 1),
         typography: typographyService.generateCustomTypography(customTheme.typography),
+        boxShadow: boxShadowService.generateCustomBoxShadow(customTheme.boxShadow || { light: {}, dark: {} }, mode),
       };
     },
   };

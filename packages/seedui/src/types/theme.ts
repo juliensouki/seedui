@@ -77,6 +77,14 @@ export interface BorderRadius {
   '200': number;
 }
 
+export interface BoxShadow {
+  1: string;
+  2: string;
+  3: string;
+  4: string;
+  5: string;
+}
+
 export interface TypographyConfig {
   fontFamily: string;
   fontWeight: string | number;
@@ -95,5 +103,6 @@ export interface Theme {
   spacing: Spacing;
   colors: SemanticColors;
   typography: Record<TypographyVariants, TypographyConfig>;
+  boxShadow: BoxShadow;
   mode: Mode;
 }

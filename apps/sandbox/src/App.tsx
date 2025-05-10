@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, Text } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, Card, Text } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -20,7 +20,9 @@ export const App: FunctionComponent = () => {
     >
       <ThemeProvider
         mode={mode}
-        theme={{ typography: { p: { responsive: { desktop: { fontSize: 30 } }, fontWeight: '600' } } }}
+        theme={{
+          boxShadow: { light: { 1: 'rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px' } },
+        }}
       >
         <button
           style={{ position: 'absolute', top: 30, right: 30 }}
@@ -29,7 +31,11 @@ export const App: FunctionComponent = () => {
           Switch to {mode === 'light' ? 'dark' : 'light'} mode
         </button>
 
-        <Text>Hello World !</Text>
+        <div style={{ display: 'flex', gap: 50, flexDirection: 'row' }}>
+          <Card htmlAttributes={{ rootDiv: { style: { padding: 30 } } }}>
+            <Text>Hello World !</Text>
+          </Card>
+        </div>
       </ThemeProvider>
     </div>
   );

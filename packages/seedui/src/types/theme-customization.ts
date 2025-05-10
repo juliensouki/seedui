@@ -10,7 +10,7 @@ import {
   TextProps,
   TooltipProps,
 } from '../components';
-import { BorderRadius, Breakpoints, Theme, TypographyVariants } from './theme';
+import { BorderRadius, BoxShadow, Breakpoints, Theme, TypographyVariants } from './theme';
 
 export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
@@ -40,6 +40,8 @@ export type CustomTypographyResponsiveConfig = Partial<{
   >;
 }>;
 
+export type CustomBoxShadow = Partial<{ light: Partial<BoxShadow>; dark: Partial<BoxShadow> }>;
+
 export type CustomTypographyConfig = Partial<Record<TypographyVariants, CustomTypographyResponsiveConfig>>;
 
 export interface ThemeCustomization {
@@ -48,6 +50,7 @@ export interface ThemeCustomization {
   borderRadius?: Partial<BorderRadius>;
   spacing?: number;
   typography?: CustomTypographyConfig;
+  boxShadow?: CustomBoxShadow;
 }
 
 export interface SeedContextType {
