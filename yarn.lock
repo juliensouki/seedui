@@ -221,6 +221,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ctrl/tinycolor@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@ctrl/tinycolor@npm:4.1.0"
+  checksum: 124016e1dbf0cb84c6f18a64a7fb64be37de01e8591ecf7090b9bbb0cf5bc0806c434feb36bf95c0556d53ffb1cd9b6ba13f27f0d2891db69debb3c1606e2791
+  languageName: node
+  linkType: hard
+
 "@emotion/is-prop-valid@npm:1.2.2":
   version: 1.2.2
   resolution: "@emotion/is-prop-valid@npm:1.2.2"
@@ -1047,6 +1054,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@seedui-react/seedui@workspace:packages/seedui"
   dependencies:
+    "@ctrl/tinycolor": ^4.1.0
     "@types/node": ^22.13.10
     "@types/react": ^18.2.38
     "@types/react-dom": ^18.2.15

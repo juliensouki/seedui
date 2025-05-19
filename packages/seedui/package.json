@@ -28,5 +28,8 @@
     "typescript": "^5.8.2",
     "vite": "^5.0.0",
     "vite-plugin-dts": "^3.6.3"
+  },
+  "dependencies": {
+    "@ctrl/tinycolor": "^4.1.0"
   }
 }

@@ -18,3 +18,5 @@ export type StyledComponentsPrefix<T> = {
 export type StyledProps<T> = { theme: Theme & { mode: Mode } } & T & InternalProps;
 
 export type StyledComponent<T> = IStyledComponent<'web', StyledProps<T>>;
+
+export type MultiMode<T> = { light: T; dark: T };

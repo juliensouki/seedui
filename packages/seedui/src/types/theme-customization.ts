@@ -10,7 +10,8 @@ import {
   TextProps,
   TooltipProps,
 } from '../components';
-import { BorderRadius, BoxShadow, Breakpoints, Theme, TypographyVariants } from './theme';
+import { BorderRadius, BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
+import { MultiMode } from './internal';
 
 export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
@@ -44,6 +45,16 @@ export type CustomBoxShadow = Partial<{ light: Partial<BoxShadow>; dark: Partial
 
 export type CustomTypographyConfig = Partial<Record<TypographyVariants, CustomTypographyResponsiveConfig>>;
 
+export interface CustomizedColors {
+  primary?: Partial<SemanticColorShades> | string;
+  secondary?: Partial<SemanticColorShades> | string;
+  neutral?: (Partial<SemanticColorShades> & { white: string; black: string }) | string;
+  success?: Partial<SemanticColorShades> | string;
+  info?: Partial<SemanticColorShades> | string;
+  warning?: Partial<SemanticColorShades> | string;
+  error?: Partial<SemanticColorShades> | string;
+}
+
 export interface ThemeCustomization {
   components?: CustomComponents;
   breakpoints?: Partial<Breakpoints>;
@@ -51,6 +62,7 @@ export interface ThemeCustomization {
   spacing?: number;
   typography?: CustomTypographyConfig;
   boxShadow?: CustomBoxShadow;
+  colors?: MultiMode<CustomizedColors>;
 }
 
 export interface SeedContextType {

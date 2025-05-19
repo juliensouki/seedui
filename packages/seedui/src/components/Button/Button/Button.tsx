@@ -85,7 +85,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     } = getDefaultProps<ButtonProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.button?.defaultProps,
-      defaultProps,
+      defaultProps: defaultProps as ButtonProps,
     });
 
     const [isFocused, setIsFocused] = useState<boolean>(false);

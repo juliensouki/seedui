@@ -65,7 +65,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     } = getDefaultProps<IconButtonProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.iconButton?.defaultProps,
-      defaultProps,
+      defaultProps: defaultProps as IconButtonProps,
     });
 
     const [isFocused, setIsFocused] = useState<boolean>(false);
