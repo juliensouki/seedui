@@ -11,6 +11,7 @@ import {
   Tooltip,
   IconButton,
   styled,
+  Mode,
 } from '@seedui-react/seedui';
 import { BedIcon, GemIcon, MoonIcon, SunIcon } from 'lucide-react';
 
@@ -24,7 +25,7 @@ const ComponentName = styled(Text)(() => ({
 }));
 
 export const App: FunctionComponent = () => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [mode, setMode] = useState<Mode>('light');
   const [input1Value, setInput1Value] = useState<string>('');
   const [input2Value, setInput2Value] = useState<string>('');
   const [textareaValue, setTextareaValue] = useState<string>('');

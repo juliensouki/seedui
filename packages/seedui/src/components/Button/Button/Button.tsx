@@ -4,6 +4,7 @@ import {
   KeyboardEvent,
   MouseEvent,
   ReactNode,
+  useContext,
   useImperativeHandle,
   useRef,
   useState,
@@ -11,16 +12,12 @@ import {
 import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import { StyledProps, Theme } from '../../../types';
-import { getPrimaryFilledButtonStyles } from '../_common/styles/get-primary-filled-styles';
-import { getPrimaryTransparentButtonStyles } from '../_common/styles/get-primary-transparent-styles';
-import { getSecondaryFilledButtonStyles } from '../_common/styles/get-secondary-filled-styles';
-import { getNeutralFilledButtonStyles } from '../_common/styles/get-neutral-filled-styles';
-import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secondary-transparent-styles';
-import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
-import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
-import { InternalProps } from '../../../types.internal';
+import { SeedContextType, Theme } from '../../../types';
+import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
+import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
+import { getDefaultProps } from '../../../utils/props';
+import { SeedContext } from '../../ThemeProvider/context';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -64,38 +61,33 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
     borderRadius,
     padding,
     lineHeight: '24px',
+
+    '&:hover': {
+      cursor: 'pointer',
+    },
   };
 });
 
-const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof ButtonBase>> = {
-  filled: {
-    primary: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
-    secondary: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getSecondaryFilledButtonStyles(props.theme)),
-    neutral: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
-  },
-  transparent: {
-    primary: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getPrimaryTransparentButtonStyles(props.theme)),
-    secondary: styled(ButtonBase)((props: StyledProps<ButtonProps>) =>
-      getSecondaryTransparentButtonStyles(props.theme),
-    ),
-    neutral: styled(ButtonBase)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
-  },
-};
+const componentsMap = stylesMapBuilder(ButtonBase);
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      htmlAttributes: { rootButton: rootButtonHTMLAttributes } = {},
-      size = 'md',
-      color = 'primary',
-      variant = 'filled',
-      disabled,
+  (props: ButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
+    const { customizations } = useContext<SeedContextType>(SeedContext);
+    const {
       onClick,
+      variant,
+      color,
+      disabled,
+      size,
       className,
+      htmlAttributes: { rootButton: rootButtonHTMLAttributes },
       children,
-    }: ButtonProps & InternalProps,
-    forwardedRef: ForwardedRef<HTMLButtonElement>,
-  ) => {
+    } = getDefaultProps<ButtonProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: customizations?.components?.button?.defaultProps,
+      defaultProps: defaultProps as ButtonProps,
+    });
+
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isClicking, setIsClicking] = useState<boolean>(false);
@@ -147,6 +139,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         size={size}
         className={joinClasses(className, rootButtonHTMLAttributes?.className)}
+        $customizations={customizations.components?.button}
         ref={buttonRef}
       >
         <FocusRing

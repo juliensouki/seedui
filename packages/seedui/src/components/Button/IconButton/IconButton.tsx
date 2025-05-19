@@ -4,6 +4,7 @@ import {
   KeyboardEvent,
   MouseEvent,
   ReactNode,
+  useContext,
   useImperativeHandle,
   useRef,
   useState,
@@ -11,16 +12,12 @@ import {
 import styled from 'styled-components';
 
 import { FocusRing } from '../../_internal/FocusRing';
-import { StyledProps } from '../../../types';
-import { getPrimaryFilledButtonStyles } from '../_common/styles/get-primary-filled-styles';
-import { getPrimaryTransparentButtonStyles } from '../_common/styles/get-primary-transparent-styles';
-import { getSecondaryFilledButtonStyles } from '../_common/styles/get-secondary-filled-styles';
-import { getNeutralFilledButtonStyles } from '../_common/styles/get-neutral-filled-styles';
-import { getSecondaryTransparentButtonStyles } from '../_common/styles/get-secondary-transparent-styles';
-import { getNeutralTransparentButtonStyles } from '../_common/styles/get-neutral-transparent-styles';
-import { ButtonBaseProps, ButtonColors, ButtonCommon, ButtonSizes, ButtonVariants } from '../_common/ButtonCommon';
-import { InternalProps } from '../../../types.internal';
+import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
+import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
+import { getDefaultProps } from '../../../utils/props';
+import { SeedContextType } from '../../../types';
+import { SeedContext } from '../../ThemeProvider/context';
 
 export interface IconButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -51,41 +48,26 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
   };
 });
 
-const componentsMap: Record<ButtonVariants, Record<ButtonColors, typeof IconButtonBase>> = {
-  filled: {
-    primary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
-    secondary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getSecondaryFilledButtonStyles(props.theme),
-    ),
-    neutral: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
-  },
-  transparent: {
-    primary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getPrimaryTransparentButtonStyles(props.theme),
-    ),
-    secondary: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getSecondaryTransparentButtonStyles(props.theme),
-    ),
-    neutral: styled(IconButtonBase)((props: StyledProps<IconButtonProps>) =>
-      getNeutralTransparentButtonStyles(props.theme),
-    ),
-  },
-};
+const componentsMap = stylesMapBuilder(IconButtonBase);
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  (
-    {
-      htmlAttributes: { rootButton: rootButtonHTMLAttributes } = {},
-      size = 'md',
-      color = 'primary',
-      variant = 'filled',
-      disabled,
+  (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
+    const { customizations } = useContext<SeedContextType>(SeedContext);
+    const {
       onClick,
-      children,
+      variant,
+      color,
+      disabled,
+      size,
       className,
-    }: IconButtonProps & InternalProps,
-    forwardedRef: ForwardedRef<HTMLButtonElement>,
-  ) => {
+      htmlAttributes: { rootButton: rootButtonHTMLAttributes },
+      children,
+    } = getDefaultProps<IconButtonProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: customizations?.components?.iconButton?.defaultProps,
+      defaultProps: defaultProps as IconButtonProps,
+    });
+
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isClicking, setIsClicking] = useState<boolean>(false);
@@ -138,6 +120,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         disabled={disabled}
         size={size}
         className={joinClasses(className, rootButtonHTMLAttributes?.className)}
+        $customizations={customizations.components?.iconButton}
         ref={buttonRef}
       >
         <FocusRing color={color} show={isFocused && !isClicking} pressed={isActive} />

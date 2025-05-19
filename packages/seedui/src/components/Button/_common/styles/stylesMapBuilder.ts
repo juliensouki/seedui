@@ -1,0 +1,39 @@
+import styled from 'styled-components';
+
+import { StyledComponent, StyledProps } from '../../../../types/internal';
+import { applyCustomStyles } from '../../../../utils/custom-styles';
+import { ButtonProps } from '../../Button';
+import { getNeutralFilledButtonStyles } from './get-neutral-filled-styles';
+import { getNeutralTransparentButtonStyles } from './get-neutral-transparent-styles';
+import { getPrimaryFilledButtonStyles } from './get-primary-filled-styles';
+import { getPrimaryTransparentButtonStyles } from './get-primary-transparent-styles';
+import { getSecondaryFilledButtonStyles } from './get-secondary-filled-styles';
+import { getSecondaryTransparentButtonStyles } from './get-secondary-transparent-styles';
+import { ButtonColors, ButtonVariants } from '../ButtonCommon';
+
+export const stylesMapBuilder = (
+  base: StyledComponent<unknown>,
+): Record<ButtonVariants, Record<ButtonColors, typeof base>> => ({
+  filled: {
+    primary: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
+    ),
+    secondary: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getSecondaryFilledButtonStyles(props.theme)),
+    ),
+    neutral: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
+    ),
+  },
+  transparent: {
+    primary: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getPrimaryTransparentButtonStyles(props.theme)),
+    ),
+    secondary: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getSecondaryTransparentButtonStyles(props.theme)),
+    ),
+    neutral: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
+    ),
+  },
+});

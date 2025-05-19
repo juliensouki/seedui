@@ -3,6 +3,7 @@ import {
   forwardRef,
   HTMLAttributes,
   ReactNode,
+  useContext,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -11,9 +12,12 @@ import {
 import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../Text';
-import { StyledComponentsPrefix, StyledProps, Theme } from '../../types';
-import { InternalProps } from '../../types.internal';
+import { SeedContextType, Theme } from '../../types';
+import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
+import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
+import { SeedContext } from '../ThemeProvider/context';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
@@ -32,6 +36,20 @@ export interface TooltipProps {
 }
 
 type TooltipSpanProps = StyledComponentsPrefix<Required<TooltipProps> & { tooltipWidth: number; tooltipTop?: number }>;
+
+const defaultProps: TooltipProps = {
+  text: '',
+  direction: 'top',
+  htmlAttributes: {
+    rootDiv: {},
+    childrenWrapperDiv: {},
+    tooltipSpan: {},
+  },
+  forwardProps: {
+    text: {},
+  },
+  children: <></>,
+};
 
 const computeTooltipMarginX = (theme: Theme): number => theme.spacing['200'];
 const computeTooltipMarginY = (theme: Theme): number => theme.spacing['100'];
@@ -108,25 +126,35 @@ const TooltipText = styled(Text)(() => ({
   },
 }));
 
+const mapDirectionToTooltip: Record<TooltipDirection, typeof TooltipSpan> = {
+  top: applyCustomStyles(TopTooltip),
+  right: applyCustomStyles(RightTooltip),
+  bottom: applyCustomStyles(BottomTooltip),
+  left: applyCustomStyles(LeftTooltip),
+};
+
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
-  (
-    {
+  (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+    const { customizations } = useContext<SeedContextType>(SeedContext);
+    const {
       text,
-      direction = 'top',
+      direction,
       htmlAttributes: {
         rootDiv: rootDivHTMLAttributes,
         childrenWrapperDiv: childrenWrapperDivHTMLAttributes,
         tooltipSpan: tooltipSpanHTMLAttributes,
-      } = {},
+      },
       className,
-      forwardProps: { text: textProps } = {},
+      forwardProps: { text: textProps },
       children,
-    },
-    forwardedRef: ForwardedRef<HTMLDivElement>,
-  ) => {
+    } = getDefaultProps<TooltipProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: customizations?.components?.tooltip?.defaultProps,
+      defaultProps,
+    });
+
     const [tooltipTop, setTooltipTop] = useState<number | undefined>(undefined);
     const [tooltipWidth, setTooltipWidth] = useState<number | undefined>(undefined);
-
     const childrenContainerRef = useRef<HTMLDivElement>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -156,14 +184,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
       }
     }, [tooltipRef, childrenContainerRef, direction, text]);
 
-    const TooltipComponent =
-      direction === 'top'
-        ? TopTooltip
-        : direction === 'bottom'
-        ? BottomTooltip
-        : direction === 'left'
-        ? LeftTooltip
-        : RightTooltip;
+    const TooltipComponent = mapDirectionToTooltip[direction];
 
     return (
       <MainDiv ref={forwardedRef} {...rootDivHTMLAttributes}>
@@ -174,6 +195,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           ref={tooltipRef}
           $tooltipWidth={tooltipWidth}
           $tooltipTop={tooltipTop}
+          $direction={direction}
+          $customizations={customizations.components?.tooltip}
           className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
           {...tooltipSpanHTMLAttributes}
         >

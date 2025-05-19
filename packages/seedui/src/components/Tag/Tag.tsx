@@ -1,10 +1,13 @@
-import { ForwardedRef, forwardRef, HTMLAttributes } from 'react';
+import { ForwardedRef, forwardRef, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
 
-import { SemanticColors, Sizes } from '../../types';
+import { SeedContextType, SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
-import { InternalProps } from '../../types.internal';
+import { InternalProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
+import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
+import { SeedContext } from '../ThemeProvider/context';
 
 export type TagColor = keyof Pick<
   SemanticColors,
@@ -24,37 +27,51 @@ export interface TagProps {
   children: string;
 }
 
-const TagDiv = styled.div<Required<TagProps>>((props) => {
-  const theme = props.theme;
-  const color = props.color;
-  const size = props.size;
+const defaultProps: TagProps = {
+  color: 'neutral',
+  size: 'md',
+  children: '',
+  htmlAttributes: {
+    rootDiv: {},
+  },
+  forwardProps: {
+    text: {},
+  },
+};
 
-  const darkNeutralColors = {
-    backgroundColor: theme.colors.neutral[600],
-    color: theme.colors.neutral[200],
-    borderColor: theme.colors.neutral[500],
-  };
-  const commonColors = {
-    borderColor: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-    color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-    backgroundColor: theme.colors[color][100],
-  };
+const TagDiv = applyCustomStyles(
+  styled.div<Required<TagProps>>((props) => {
+    const theme = props.theme;
+    const color = props.color;
+    const size = props.size;
 
-  return {
-    display: 'block',
-    height: '100%',
-    width: 'max-content',
-    boxSizing: 'border-box',
-    border: `1px solid`,
-    ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
-    padding:
-      size === 'sm'
-        ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
-        : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
-    borderRadius: 100,
-    flexShrink: 0,
-  };
-});
+    const darkNeutralColors = {
+      backgroundColor: theme.colors.neutral[600],
+      color: theme.colors.neutral[200],
+      borderColor: theme.colors.neutral[500],
+    };
+    const commonColors = {
+      borderColor: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
+      color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
+      backgroundColor: theme.colors[color][100],
+    };
+
+    return {
+      display: 'block',
+      height: '100%',
+      width: 'max-content',
+      boxSizing: 'border-box',
+      border: `1px solid`,
+      ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
+      padding:
+        size === 'sm'
+          ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
+          : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
+      borderRadius: 100,
+      flexShrink: 0,
+    };
+  }),
+);
 
 const TagText = styled(Text)(() => ({
   lineHeight: 1,
@@ -66,23 +83,28 @@ const TagText = styled(Text)(() => ({
 }));
 
 export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
-  (
-    {
-      color = 'neutral',
-      size = 'md',
+  (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+    const { customizations } = useContext<SeedContextType>(SeedContext);
+    const {
+      color,
+      size,
       htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
       forwardProps: { text: textProps } = {},
       className,
       children,
-    },
-    forwardedRef: ForwardedRef<HTMLDivElement>,
-  ) => {
+    } = getDefaultProps<TagProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: customizations?.components?.tag?.defaultProps,
+      defaultProps,
+    });
+
     return (
       <TagDiv
         color={color}
         size={size}
         ref={forwardedRef}
         className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
+        $customizations={customizations.components?.tag}
         {...rootDivHTMLAttributes}
       >
         <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>

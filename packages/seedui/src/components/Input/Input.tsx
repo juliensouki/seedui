@@ -1,11 +1,14 @@
-import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from 'react';
+import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, ReactNode, useContext } from 'react';
 import styled from 'styled-components';
 
 import { TextPropsAndAttributes } from '../Text';
-import { StyledComponentsPrefix, StyledProps } from '../../types';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
-import { InternalProps } from '../../types.internal';
+import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
+import { applyCustomStyles } from '../../utils/custom-styles';
+import { getDefaultProps } from '../../utils/props';
+import { SeedContextType } from '../../types';
+import { SeedContext } from '../ThemeProvider/context';
 
 export type InputIconPlacement = 'left' | 'right';
 
@@ -19,7 +22,7 @@ export interface InputProps {
     placement?: InputIconPlacement;
   };
   width?: string | number;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
@@ -30,6 +33,22 @@ export interface InputProps {
     iconContainerDiv?: HTMLAttributes<HTMLDivElement>;
   };
 }
+
+const defaultProps: InputProps = {
+  value: '',
+  onChange: undefined,
+  width: 200,
+  inputIcon: { icon: null, placement: 'left' },
+  htmlAttributes: {
+    rootDiv: {},
+    inputContainerDiv: {},
+    input: {},
+    iconContainerDiv: {},
+  },
+  forwardProps: {
+    labelTextProps: {},
+  },
+};
 
 const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPlacement }>>(
   ({ theme, $placement }) => ({
@@ -51,60 +70,62 @@ const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPl
   }),
 );
 
-const InputElement = styled.input<StyledComponentsPrefix<Required<InputProps & { iconPlacement: InputIconPlacement }>>>(
-  ({ theme, $iconPlacement }) => {
-    const isLight = theme.mode === 'light';
+const InputElement = applyCustomStyles(
+  styled.input<StyledComponentsPrefix<Required<InputProps & { iconPlacement: InputIconPlacement }>>>(
+    ({ theme, $iconPlacement }) => {
+      const isLight = theme.mode === 'light';
 
-    return {
-      width: '100%',
-      padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
+      return {
+        width: '100%',
+        padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
 
-      borderTopRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
-      borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
-      borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
-      borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
-      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+        borderTopRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
+        borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
+        borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
+        borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
+        border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
 
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
-      color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
+        backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+        color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
-      fontFamily: theme.typography.p.fontFamily,
-      fontSize: theme.typography.p.responsive.desktop.fontSize,
-
-      '&::placeholder': {
-        color: theme.colors.neutral[400],
-      },
-
-      '&:hover': {
-        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
-
-        [`& + ${IconContainer}`]: {
-          backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
-        },
-      },
-
-      '&:focus': {
-        outline: 'none',
-        borderColor: theme.colors.primary.default,
-        [`& + ${IconContainer}`]: {
-          backgroundColor: theme.colors.primary.default,
-
-          '& > svg': {
-            color: theme.colors.neutral.white,
-          },
-        },
-      },
-
-      '&:disabled': {
-        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+        fontFamily: theme.typography.p.fontFamily,
+        fontSize: theme.typography.p.responsive.desktop.fontSize,
 
         '&::placeholder': {
-          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+          color: theme.colors.neutral[400],
         },
-      },
-    };
-  },
+
+        '&:hover': {
+          borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+
+          [`& + ${IconContainer}`]: {
+            backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+          },
+        },
+
+        '&:focus': {
+          outline: 'none',
+          borderColor: theme.colors.primary.default,
+          [`& + ${IconContainer}`]: {
+            backgroundColor: theme.colors.primary.default,
+
+            '& > svg': {
+              color: theme.colors.neutral.white,
+            },
+          },
+        },
+
+        '&:disabled': {
+          backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+          borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+
+          '&::placeholder': {
+            color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+          },
+        },
+      };
+    },
+  ),
 );
 
 const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlacement: InputIconPlacement }>>>(
@@ -117,21 +138,14 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
 );
 
 export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
-  (
-    {
-      value,
-      onChange,
-      placeholder,
-      label,
-      disabled,
-      width = 200,
-      inputIcon = { icon: null, placement: 'left' },
-      forwardProps = {},
-      htmlAttributes = {},
-      className,
-    },
-    forwardedRef: ForwardedRef<HTMLInputElement>,
-  ) => {
+  (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
+    const { customizations } = useContext<SeedContextType>(SeedContext);
+    const { value, onChange, placeholder, label, disabled, width, inputIcon, forwardProps, htmlAttributes, className } =
+      getDefaultProps<InputProps & InternalProps>({
+        providedProps: props,
+        globalDefaultProps: customizations?.components?.input?.defaultProps,
+        defaultProps,
+      });
     const { icon, placement: iconPlacement = 'left' } = inputIcon;
 
     return (
@@ -146,6 +160,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
             placeholder={placeholder}
             className={joinClasses(className, className, htmlAttributes?.input?.className)}
             $iconPlacement={icon ? iconPlacement : undefined}
+            $customizations={customizations.components?.input}
           />
           {icon && (
             <IconContainer {...htmlAttributes.iconContainerDiv} $placement={iconPlacement}>
