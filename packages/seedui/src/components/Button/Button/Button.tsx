@@ -18,6 +18,7 @@ import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContext } from '../../ThemeProvider/context';
+import { Loader } from '../../_internal/Loader/Loader';
 
 export interface ButtonProps extends ButtonBaseProps {
   children?: ReactNode;
@@ -45,7 +46,7 @@ const getButtonStyles = (
 
 const mapSizeToRingBorderRadius: Record<ButtonSizes, number> = {
   sm: 11,
-  md: 13,
+  md: 50,
   lg: 15,
 };
 
@@ -79,6 +80,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       color,
       disabled,
       size,
+      isLoading,
       className,
       htmlAttributes: { rootButton: rootButtonHTMLAttributes },
       children,
@@ -97,7 +99,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 
     const preventFocusOnClick = (event: MouseEvent<HTMLButtonElement>): void => {
-      if (onClick) {
+      if (onClick && !isLoading) {
         onClick(event);
       }
       if (event.detail === 0) {
@@ -148,7 +150,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           show={isFocused && !isClicking}
           pressed={isActive}
         />
-        {children}
+        {isLoading ? (
+          <Loader size={size} color={color === 'primary' && variant === 'filled' ? 'white' : undefined} />
+        ) : (
+          children
+        )}
       </ButtonComponent>
     );
   },

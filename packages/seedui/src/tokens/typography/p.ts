@@ -5,16 +5,16 @@ export const pStyles: TypographyConfig = {
   fontWeight: 'normal',
   responsive: {
     desktop: {
-      fontSize: 16,
-      lineHeight: 24,
+      fontSize: 14,
+      lineHeight: 20,
     },
     tablet: {
-      fontSize: 16,
-      lineHeight: 24,
+      fontSize: 14,
+      lineHeight: 20,
     },
     mobile: {
-      fontSize: 16,
-      lineHeight: 24,
+      fontSize: 14,
+      lineHeight: 20,
     },
   },
 };

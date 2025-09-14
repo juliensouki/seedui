@@ -11,6 +11,7 @@ export interface ButtonBaseProps {
   htmlAttributes?: {
     rootButton?: Exclude<HTMLAttributes<HTMLButtonElement>, 'disabled' | 'onClick'>;
   };
+  isLoading?: boolean;
   disabled?: boolean;
   size?: Exclude<Sizes, 'xs' | 'xl'>;
   color?: ButtonColors;

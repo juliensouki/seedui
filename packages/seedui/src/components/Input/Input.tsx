@@ -11,12 +11,14 @@ import { SeedContextType } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
 
 export type InputIconPlacement = 'left' | 'right';
+export type InputType = 'email' | 'number' | 'password' | 'tel' | 'text' | 'url';
 
 export interface InputProps {
   value: string;
   label?: string;
   placeholder?: string;
   disabled?: boolean;
+  type?: InputType;
   inputIcon?: {
     icon: ReactNode;
     placement?: InputIconPlacement;
@@ -36,6 +38,7 @@ export interface InputProps {
 
 const defaultProps: InputProps = {
   value: '',
+  type: 'text',
   onChange: undefined,
   width: 200,
   inputIcon: { icon: null, placement: 'left' },
@@ -83,7 +86,7 @@ const InputElement = applyCustomStyles(
         borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
         borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
         borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
-        border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+        border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[400]}`,
 
         backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
         color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
@@ -104,7 +107,8 @@ const InputElement = applyCustomStyles(
         },
 
         '&:focus': {
-          outline: 'none',
+          outline: `2px solid ${theme.colors.primary[300]}`,
+          outlineOffset: 1,
           borderColor: theme.colors.primary.default,
           [`& + ${IconContainer}`]: {
             backgroundColor: theme.colors.primary.default,
@@ -140,12 +144,23 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
 export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
-    const { value, onChange, placeholder, label, disabled, width, inputIcon, forwardProps, htmlAttributes, className } =
-      getDefaultProps<InputProps & InternalProps>({
-        providedProps: props,
-        globalDefaultProps: customizations?.components?.input?.defaultProps,
-        defaultProps,
-      });
+    const {
+      value,
+      onChange,
+      placeholder,
+      label,
+      disabled,
+      width,
+      inputIcon,
+      forwardProps,
+      htmlAttributes,
+      type,
+      className,
+    } = getDefaultProps<InputProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: customizations?.components?.input?.defaultProps,
+      defaultProps,
+    });
     const { icon, placement: iconPlacement = 'left' } = inputIcon;
 
     return (
@@ -156,6 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
             ref={forwardedRef}
             disabled={disabled}
             value={value}
+            type={type}
             onChange={onChange}
             placeholder={placeholder}
             className={joinClasses(className, className, htmlAttributes?.input?.className)}
