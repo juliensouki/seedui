@@ -8,6 +8,11 @@ export const getSecondaryFilledButtonStyles = (theme: Theme) => ({
     backgroundColor: theme.mode === 'light' ? theme.colors.secondary[500] : theme.colors.secondary[400],
   },
 
+  '&:focus': {
+    outline: `2px solid ${theme.mode === 'light' ? theme.colors.secondary[200] : theme.colors.secondary[400]}`,
+    outlineOffset: 1,
+  },
+
   '&:active': {
     backgroundColor: theme.colors.secondary[800],
   },

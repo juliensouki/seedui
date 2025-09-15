@@ -8,6 +8,11 @@ export const getNeutralFilledButtonStyles = (theme: Theme) => ({
     backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[400],
   },
 
+  '&:focus': {
+    outline: `2px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[400]}`,
+    outlineOffset: 1,
+  },
+
   '&:active': {
     backgroundColor: theme.mode === 'light' ? theme.colors.neutral[500] : theme.colors.neutral[700],
   },

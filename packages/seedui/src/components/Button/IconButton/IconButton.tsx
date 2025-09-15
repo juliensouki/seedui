@@ -11,7 +11,6 @@ import {
 } from 'react';
 import styled from 'styled-components';
 
-import { FocusRing } from '../../_internal/FocusRing';
 import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { joinClasses } from '../../../utils/classes';
@@ -68,9 +67,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       defaultProps: defaultProps as IconButtonProps,
     });
 
-    const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [isActive, setIsActive] = useState<boolean>(false);
-    const [isClicking, setIsClicking] = useState<boolean>(false);
+    const [_isFocused, setIsFocused] = useState<boolean>(false);
+    const [_isActive, setIsActive] = useState<boolean>(false);
+    const [_isClicking, setIsClicking] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const IconButtonComponent = componentsMap[variant][color];
 
@@ -123,7 +122,6 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         $customizations={customizations.components?.iconButton}
         ref={buttonRef}
       >
-        <FocusRing color={color} show={isFocused && !isClicking} pressed={isActive} />
         {children}
       </IconButtonComponent>
     );

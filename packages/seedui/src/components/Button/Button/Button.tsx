@@ -11,7 +11,6 @@ import {
 } from 'react';
 import styled from 'styled-components';
 
-import { FocusRing } from '../../_internal/FocusRing';
 import { SeedContextType, Theme } from '../../../types';
 import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
@@ -43,12 +42,6 @@ const getButtonStyles = (
     padding: `${theme.spacing[150]}px ${theme.spacing[200]}px`,
   },
 });
-
-const mapSizeToRingBorderRadius: Record<ButtonSizes, number> = {
-  sm: 11,
-  md: 50,
-  lg: 15,
-};
 
 export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<ButtonProps>>) => {
   const size = props.size;
@@ -90,9 +83,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       defaultProps: defaultProps as ButtonProps,
     });
 
-    const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [isActive, setIsActive] = useState<boolean>(false);
-    const [isClicking, setIsClicking] = useState<boolean>(false);
+    const [_isFocused, setIsFocused] = useState<boolean>(false);
+    const [_isActive, setIsActive] = useState<boolean>(false);
+    const [_isClicking, setIsClicking] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const ButtonComponent = componentsMap[variant][color];
 
@@ -144,12 +137,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         $customizations={customizations.components?.button}
         ref={buttonRef}
       >
-        <FocusRing
-          color={color}
-          radius={mapSizeToRingBorderRadius[size]}
-          show={isFocused && !isClicking}
-          pressed={isActive}
-        />
         {isLoading ? (
           <Loader size={size} color={color === 'primary' && variant === 'filled' ? 'white' : undefined} />
         ) : (
