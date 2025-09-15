@@ -21,7 +21,6 @@ export const App: FunctionComponent = () => {
       <ThemeProvider
         mode={mode}
         theme={{
-          colors: { light: { primary: 'orange' } },
           typography: { p: { responsive: { desktop: { fontSize: 14 } } } },
         }}
       >

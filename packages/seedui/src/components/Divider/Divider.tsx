@@ -45,13 +45,13 @@ const Line = styled.div<{ vertical: boolean }>(({ theme, vertical }) => ({
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[800],
   ...(vertical
     ? {
-        width: 1,
-        height: '100%',
-      }
+      width: 1,
+      height: '100%',
+    }
     : {
-        width: '100%',
-        height: 1,
-      }),
+      width: '100%',
+      height: 1,
+    }),
 }));
 
 const ChildrenContainer = styled.div<{

@@ -39,6 +39,12 @@ export default tseslint.config(eslint.configs.recommended, tseslint.configs.reco
     '@stylistic/js/semi': 'error',
     '@stylistic/js/semi-spacing': ['error', { before: false, after: true }],
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
   },
 });
