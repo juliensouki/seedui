@@ -7,6 +7,20 @@ import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
   const [mode, setMode] = useState<Mode>('light');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleClick = () => {
+    setIsLoading((value) => {
+      if (value) {
+        return value;
+      }
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+      return true;
+    });
+  };
 
   return (
     <div
@@ -30,11 +44,9 @@ export const App: FunctionComponent = () => {
           </Button>
         </div>
 
-        <div style={{ display: 'flex', gap: 50, flexDirection: 'row' }}>
-          <Card htmlAttributes={{ rootDiv: { style: { padding: 30 } } }}>
-            <Text>Hello World !</Text>
-          </Card>
-        </div>
+        <Button isLoading={isLoading} onClick={handleClick}>
+          My Button
+        </Button>
       </ThemeProvider>
     </div>
   );

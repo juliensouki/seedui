@@ -1,13 +1,13 @@
 import {
   ForwardedRef,
   forwardRef,
-  KeyboardEvent,
   MouseEvent,
   ReactNode,
   useContext,
   useImperativeHandle,
   useRef,
   useState,
+  useLayoutEffect,
 } from 'react';
 import styled from 'styled-components';
 
@@ -83,13 +83,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       defaultProps: defaultProps as ButtonProps,
     });
 
-    const [_isFocused, setIsFocused] = useState<boolean>(false);
-    const [_isActive, setIsActive] = useState<boolean>(false);
-    const [_isClicking, setIsClicking] = useState<boolean>(false);
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const ButtonComponent = componentsMap[variant][color];
+    const innerRef = useRef<HTMLButtonElement>(null);
+    const [buttonSize, setButtonSize] = useState<{
+      width?: number;
+      height?: number;
+    }>({});
 
-    useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
+    useImperativeHandle(forwardedRef, () => innerRef.current as HTMLButtonElement);
+
+    useLayoutEffect(() => {
+      if (innerRef.current && !isLoading) {
+        const { width, height } = innerRef.current.getBoundingClientRect();
+        setButtonSize({ width, height });
+      }
+    }, [isLoading, children]);
 
     const preventFocusOnClick = (event: MouseEvent<HTMLButtonElement>): void => {
       if (onClick && !isLoading) {
@@ -102,40 +109,27 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       event.currentTarget.blur();
     };
 
-    const handleKeyEvent = (event: KeyboardEvent<HTMLButtonElement>): void => {
-      if (event.key === ' ') {
-        if (event.type === 'keydown') {
-          setIsActive(true);
-        } else if (event.type === 'keyup') {
-          setIsActive(false);
-        }
-      }
-    };
-
-    const handleMouseEvent = (event: MouseEvent<HTMLButtonElement>): void => {
-      if (event.type === 'mousedown') {
-        setIsClicking(true);
-      } else if (event.type === 'mouseup') {
-        setIsClicking(false);
-      }
-    };
+    const ButtonComponent = componentsMap[variant][color];
 
     return (
       <ButtonComponent
         {...rootButtonHTMLAttributes}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onKeyDown={handleKeyEvent}
-        onKeyUp={handleKeyEvent}
         onClick={preventFocusOnClick}
-        onMouseDown={handleMouseEvent}
-        onMouseUp={handleMouseEvent}
         color={color}
         disabled={disabled}
         size={size}
         className={joinClasses(className, rootButtonHTMLAttributes?.className)}
         $customizations={customizations.components?.button}
-        ref={buttonRef}
+        ref={innerRef}
+        // lock dimensions when loading
+        style={
+          isLoading && buttonSize.width && buttonSize.height
+            ? {
+                width: `${buttonSize.width}px`,
+                height: `${buttonSize.height}px`,
+              }
+            : undefined
+        }
       >
         {isLoading ? (
           <Loader size={size} color={color === 'primary' && variant === 'filled' ? 'white' : undefined} />
