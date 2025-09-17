@@ -84,7 +84,7 @@ const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPl
   }),
 );
 
-const ValidationIconContainer = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
+const ValidationIconContainer = styled.div(({ theme }) => ({
   position: 'absolute',
   right: theme.spacing[100],
   top: '50%',
@@ -99,7 +99,7 @@ const ValidationIconContainer = styled.div<StyledComponentsPrefix<{}>>(({ theme 
   zIndex: 1,
 }));
 
-const ValidationIcon = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
+const ValidationIcon = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
