@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, Card, Text, Button } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, Button } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
