@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, Button } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, Button, Input } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -7,20 +7,9 @@ import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
   const [mode, setMode] = useState<Mode>('light');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [value, setValue] = useState<string>('');
 
-  const handleClick = () => {
-    setIsLoading((value) => {
-      if (value) {
-        return value;
-      }
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
-      return true;
-    });
-  };
+  const inputValidation = (value: string): boolean => value.length >= 8;
 
   return (
     <div
@@ -44,9 +33,13 @@ export const App: FunctionComponent = () => {
           </Button>
         </div>
 
-        <Button isLoading={isLoading} onClick={handleClick}>
-          My Button
-        </Button>
+        <Input
+          value={value}
+          label="Label"
+          placeholder="Enter text..."
+          inputValidation={inputValidation}
+          onChange={(e) => setValue(e.target.value)}
+        />
       </ThemeProvider>
     </div>
   );
