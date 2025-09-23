@@ -127,9 +127,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={
           isLoading && buttonSize.width && buttonSize.height
             ? {
-                width: `${buttonSize.width}px`,
-                height: `${buttonSize.height}px`,
-              }
+              width: `${buttonSize.width}px`,
+              height: `${buttonSize.height}px`,
+            }
             : undefined
         }
       >
