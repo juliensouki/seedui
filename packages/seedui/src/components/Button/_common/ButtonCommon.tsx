@@ -6,6 +6,7 @@ import { Colors, Sizes } from '../../../types';
 export type ButtonColors = Exclude<Colors, 'success' | 'warning' | 'error' | 'info'>;
 export type ButtonVariants = 'filled' | 'transparent';
 export type ButtonSizes = Exclude<Sizes, 'xs' | 'xl'>;
+export type ButtonType = 'button' | 'reset' | 'submit';
 
 export interface ButtonBaseProps {
   htmlAttributes?: {
@@ -17,6 +18,7 @@ export interface ButtonBaseProps {
   color?: ButtonColors;
   variant?: ButtonVariants;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  type?: ButtonType;
 }
 
 export const ButtonCommon = styled.button((props) => {

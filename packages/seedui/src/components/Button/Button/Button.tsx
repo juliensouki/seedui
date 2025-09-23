@@ -73,6 +73,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       color,
       disabled,
       size,
+      type,
       isLoading,
       className,
       htmlAttributes: { rootButton: rootButtonHTMLAttributes },
@@ -118,6 +119,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         color={color}
         disabled={disabled}
         size={size}
+        type={type}
         className={joinClasses(className, rootButtonHTMLAttributes?.className)}
         $customizations={customizations.components?.button}
         ref={innerRef}
@@ -125,9 +127,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={
           isLoading && buttonSize.width && buttonSize.height
             ? {
-              width: `${buttonSize.width}px`,
-              height: `${buttonSize.height}px`,
-            }
+                width: `${buttonSize.width}px`,
+                height: `${buttonSize.height}px`,
+              }
             : undefined
         }
       >

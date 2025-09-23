@@ -5,6 +5,7 @@ export const defaultProps: ButtonProps | IconButtonProps = {
   variant: 'filled',
   color: 'primary',
   size: 'md',
+  type: 'button',
   disabled: false,
   htmlAttributes: {
     rootButton: {},
