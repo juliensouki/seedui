@@ -12,6 +12,7 @@ import {
 } from '../components';
 import { BorderRadius, BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
 import { MultiMode } from './internal';
+import { SearchBarProps } from '../components/SearchBar/SearchBar';
 
 export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
@@ -27,6 +28,7 @@ export interface CustomComponents {
   card?: CustomComponentConfiguration<CardProps>;
   iconButton?: CustomComponentConfiguration<IconButtonProps>;
   input?: CustomComponentConfiguration<InputProps>;
+  searchBar?: CustomComponentConfiguration<SearchBarProps>;
   tag?: CustomComponentConfiguration<TagProps>;
   text?: CustomComponentConfiguration<TextProps>;
   textarea?: CustomComponentConfiguration<TextareaProps>;
