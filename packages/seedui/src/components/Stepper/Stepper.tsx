@@ -5,7 +5,7 @@ import { getDefaultProps } from '../../utils/props';
 import { joinClasses } from '../../utils/classes';
 import { SeedContext } from '../ThemeProvider/context';
 import { SeedContextType } from '../../types';
-import { StyledComponentsPrefix, InternalProps } from '../../types/internal';
+import { StyledComponentsPrefix, InternalProps, StyledProps } from '../../types/internal';
 import { Text } from '../Text';
 
 export interface StepperProps {
@@ -77,13 +77,13 @@ const StepCircle = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ 
   transition: 'background-color 0.4s ease, color 0.4s ease',
 }));
 
-const StepLabel = styled(Text)(({ theme }) => ({
+const StepLabel = styled(Text)(({ theme }: StyledProps<StepperProps>) => ({
   marginTop: theme.spacing['050'],
   fontSize: theme.typography.caption.responsive.desktop.fontSize,
   textAlign: 'center',
 }));
 
-const StepNumberText = styled(Text)(({ theme }) => ({
+const StepNumberText = styled(Text)(({ theme }: StyledProps<StepperProps>) => ({
   fontSize: theme.typography.small.responsive.desktop.fontSize,
   color: 'inherit',
 }));

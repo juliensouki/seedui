@@ -6,7 +6,7 @@ import { joinClasses } from '../../utils/classes';
 import { SeedContext } from '../ThemeProvider/context';
 import { SeedContextType } from '../../types';
 import { Input } from '../Input';
-import { StyledComponentsPrefix, InternalProps } from '../../types/internal';
+import { StyledComponentsPrefix, InternalProps, StyledProps } from '../../types/internal';
 import { Button } from '../Button';
 
 export interface SearchBarProps {
@@ -59,7 +59,7 @@ const SearchInput = styled(Input)({
   },
 });
 
-const SearchButton = styled(Button)(({ theme }) => ({
+const SearchButton = styled(Button)(({ theme }: StyledProps<SearchBarProps>) => ({
   height: 34,
   '&:focus': {
     outline: `1px solid ${theme.colors.primary[600]}`,
