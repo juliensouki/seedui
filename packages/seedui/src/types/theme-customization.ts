@@ -5,6 +5,8 @@ import {
   CardProps,
   IconButtonProps,
   InputProps,
+  SearchBarProps,
+  StepperProps,
   TagProps,
   TextareaProps,
   TextProps,
@@ -12,7 +14,6 @@ import {
 } from '../components';
 import { BorderRadius, BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
 import { MultiMode } from './internal';
-import { SearchBarProps } from '../components/SearchBar/SearchBar';
 
 export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
@@ -29,6 +30,7 @@ export interface CustomComponents {
   iconButton?: CustomComponentConfiguration<IconButtonProps>;
   input?: CustomComponentConfiguration<InputProps>;
   searchBar?: CustomComponentConfiguration<SearchBarProps>;
+  stepper?: CustomComponentConfiguration<StepperProps>;
   tag?: CustomComponentConfiguration<TagProps>;
   text?: CustomComponentConfiguration<TextProps>;
   textarea?: CustomComponentConfiguration<TextareaProps>;

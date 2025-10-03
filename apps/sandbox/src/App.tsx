@@ -1,13 +1,12 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, SearchBar } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, Stepper } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
 import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
-  const [mode, setMode] = useState<Mode>('light');
-  const [value, setValue] = useState<string>('');
+  const [mode, _setMode] = useState<Mode>('light');
 
   return (
     <div
@@ -25,7 +24,9 @@ export const App: FunctionComponent = () => {
           typography: { p: { responsive: { desktop: { fontSize: 14 } } } },
         }}
       >
-        <SearchBar value={value} onChange={(e) => setValue(e.target.value)} onSearch={() => console.log('searching')} />
+        <div style={{ margin: 'auto', width: 400 }}>
+          <Stepper steps={['Intro', 'Details', 'Overview', 'Confirmation']} activeStep={3} />
+        </div>
       </ThemeProvider>
     </div>
   );
