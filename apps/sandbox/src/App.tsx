@@ -24,8 +24,8 @@ export const App: FunctionComponent = () => {
           typography: { p: { responsive: { desktop: { fontSize: 14 } } } },
         }}
       >
-        <div style={{ margin: 'auto', width: 400 }}>
-          <Stepper steps={['Intro', 'Details', 'Overview', 'Confirmation']} activeStep={3} />
+        <div style={{ border: '1px solid grey', margin: 'auto', width: 500 }}>
+          <Stepper steps={['Intro', 'Details', 'Overview', 'Confirmation']} activeStep={2} />
         </div>
       </ThemeProvider>
     </div>

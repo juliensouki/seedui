@@ -22,42 +22,40 @@ const defaultProps: StepperProps = {
 const StepperContainer = styled.div({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
   width: '100%',
 });
 
 const StepWrapper = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ theme, $isActive }) => {
-  const gapBetweenCirclesAndLines = 14;
+  const gap = 14;
+  const circleDiameter = 18;
+  const lineTop = circleDiameter / 2;
 
   return {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    flex: 1,
     position: 'relative',
 
-    // Base line (grey)
     '&:not(:last-child)::after': {
       content: '""',
       position: 'absolute',
-      top: '9px', // vertical center of circle
-      left: `calc(50% + ${gapBetweenCirclesAndLines}px)`, // start 16px to the right of the circle
-      right: `calc(-50% + ${gapBetweenCirclesAndLines}px)`, // end 16px before next circle
+      top: `${lineTop}px`,
+      left: `calc(50% + ${gap}px)`,
+      width: `calc(100% - ${gap * 2}px)`,
       height: '1px',
-      backgroundColor: theme.colors.neutral[200],
+      backgroundColor: theme.colors.neutral[300],
       zIndex: 0,
     },
 
-    // Animated active line
     '&:not(:last-child)::before': {
       content: '""',
       position: 'absolute',
-      top: '9px',
-      left: `calc(50% + ${gapBetweenCirclesAndLines}px)`, // same offset
+      top: `${lineTop}px`,
+      left: `calc(50% + ${gap}px)`,
       height: '1px',
       backgroundColor: theme.colors.primary.default,
-      width: $isActive ? `calc(100% - ${gapBetweenCirclesAndLines * 2}px)` : '0%', // shrink to keep 3px gap on both sides
-      transition: 'width 0.4s ease',
+      width: $isActive ? `calc(100% - ${gap * 2}px)` : '0%',
       zIndex: 1,
     },
   };
@@ -67,21 +65,23 @@ const StepCircle = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ 
   width: 18,
   height: 18,
   borderRadius: '50%',
-  backgroundColor: $isActive ? theme.colors.primary.default : theme.colors.neutral[200],
+  backgroundColor: $isActive ? theme.colors.primary.default : theme.colors.neutral[300],
   color: $isActive ? theme.colors.neutral.white : theme.colors.neutral[600],
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   zIndex: 2,
   position: 'relative',
-  transition: 'background-color 0.4s ease, color 0.4s ease',
 }));
 
-const StepLabel = styled(Text)(({ theme }: StyledProps<StepperProps>) => ({
-  marginTop: theme.spacing['050'],
-  fontSize: theme.typography.caption.responsive.desktop.fontSize,
-  textAlign: 'center',
-}));
+const StepLabel = styled(Text)(({ theme }: StyledProps<{ $align?: 'left' | 'center' | 'right' }>) => {
+  return {
+    marginTop: theme.spacing['050'],
+    fontSize: theme.typography.caption.responsive.desktop.fontSize,
+    textAlign: 'center',
+    width: '100%',
+  };
+});
 
 const StepNumberText = styled(Text)(({ theme }: StyledProps<StepperProps>) => ({
   fontSize: theme.typography.small.responsive.desktop.fontSize,
