@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useContext } from 'react';
+import { ForwardedRef, forwardRef, FunctionComponent, useContext } from 'react';
 import styled from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
@@ -22,42 +22,14 @@ const defaultProps: StepperProps = {
 const StepperContainer = styled.div({
   display: 'flex',
   alignItems: 'center',
-  width: '100%',
 });
 
-const StepWrapper = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ theme, $isActive }) => {
-  const gap = 14;
-  const circleDiameter = 18;
-  const lineTop = circleDiameter / 2;
-
+const StepWrapper = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ theme }) => {
   return {
-    flex: 1,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
-    position: 'relative',
-
-    '&:not(:last-child)::after': {
-      content: '""',
-      position: 'absolute',
-      top: `${lineTop}px`,
-      left: `calc(50% + ${gap}px)`,
-      width: `calc(100% - ${gap * 2}px)`,
-      height: '1px',
-      backgroundColor: theme.colors.neutral[300],
-      zIndex: 0,
-    },
-
-    '&:not(:last-child)::before': {
-      content: '""',
-      position: 'absolute',
-      top: `${lineTop}px`,
-      left: `calc(50% + ${gap}px)`,
-      height: '1px',
-      backgroundColor: theme.colors.primary.default,
-      width: $isActive ? `calc(100% - ${gap * 2}px)` : '0%',
-      zIndex: 1,
-    },
+    gap: theme.spacing[100],
   };
 });
 
@@ -65,6 +37,7 @@ const StepCircle = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ 
   width: 18,
   height: 18,
   borderRadius: '50%',
+  flexShrink: 0,
   backgroundColor: $isActive ? theme.colors.primary.default : theme.colors.neutral[300],
   color: $isActive ? theme.colors.neutral.white : theme.colors.neutral[600],
   display: 'flex',
@@ -74,19 +47,70 @@ const StepCircle = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ 
   position: 'relative',
 }));
 
-const StepLabel = styled(Text)(({ theme }: StyledProps<{ $align?: 'left' | 'center' | 'right' }>) => {
+const StepLabel = styled(Text)(({ theme, $isActive }: StyledProps<{ $isActive: boolean }>) => {
   return {
-    marginTop: theme.spacing['050'],
+    color: $isActive ? theme.colors.neutral.black : theme.colors.neutral[400],
     fontSize: theme.typography.caption.responsive.desktop.fontSize,
     textAlign: 'center',
     width: '100%',
   };
 });
 
+const StepLabelContainer = styled.div(({ theme }) => {
+  return {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: theme.spacing[100],
+    alignItems: 'center',
+  };
+});
+
+const CheckIconStyled = styled.svg(({ theme }) => ({
+  color: theme.colors.neutral[400],
+  marginLeft: theme.spacing[200],
+  marginRight: theme.spacing[200],
+}));
+
 const StepNumberText = styled(Text)(({ theme }: StyledProps<StepperProps>) => ({
   fontSize: theme.typography.small.responsive.desktop.fontSize,
   color: 'inherit',
 }));
+
+const CheckIcon: FunctionComponent<{ size?: number }> = ({ size = 12 }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    role="img"
+    aria-label="Check icon"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M20 6L9 17l-5-5" />
+  </svg>
+);
+
+const RightChevron: FunctionComponent<{ size?: number }> = ({ size = 12 }) => (
+  <CheckIconStyled
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    role="img"
+    aria-label="Chevron right icon"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M9 6l6 6-6 6" />
+  </CheckIconStyled>
+);
 
 export const Stepper = forwardRef<HTMLDivElement, StepperProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
@@ -105,15 +129,18 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps & InternalProps>(
         $customizations={customizations.components?.stepper}
       >
         {steps.map((step, index) => {
-          const isLinkActive = index + 1 < activeStep;
-          const isCircleActive = index + 1 <= activeStep;
+          const isChecked = index + 1 < activeStep;
+          const isActive = index + 1 === activeStep;
 
           return (
-            <StepWrapper key={index} $isActive={isLinkActive}>
-              <StepCircle $isActive={isCircleActive}>
-                <StepNumberText>{index + 1}</StepNumberText>
-              </StepCircle>
-              <StepLabel>{step}</StepLabel>
+            <StepWrapper key={index}>
+              {index !== 0 && <RightChevron size={14} />}
+              <StepLabelContainer>
+                <StepCircle $isActive={isChecked || isActive}>
+                  {isChecked ? <CheckIcon /> : <StepNumberText>{index + 1}</StepNumberText>}
+                </StepCircle>
+                <StepLabel $isActive={isChecked || isActive}>{step}</StepLabel>
+              </StepLabelContainer>
             </StepWrapper>
           );
         })}
