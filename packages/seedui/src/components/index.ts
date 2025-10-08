@@ -3,6 +3,7 @@ export * from './Card';
 export * from './Divider';
 export * from './Input';
 export * from './SearchBar';
+export * from './Select';
 export * from './Stepper';
 export * from './Tag';
 export * from './Text';

@@ -86,9 +86,9 @@ const CheckIcon: FunctionComponent<{ size?: number }> = ({ size = 12 }) => (
     aria-label="Check icon"
     fill="none"
     stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
     <path d="M20 6L9 17l-5-5" />
   </svg>

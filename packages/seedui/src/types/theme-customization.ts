@@ -14,6 +14,7 @@ import {
 } from '../components';
 import { BorderRadius, BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
 import { MultiMode } from './internal';
+import { MenuItemProps } from '../components/Select/MenuItem';
 
 export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
@@ -35,6 +36,10 @@ export interface CustomComponents {
   text?: CustomComponentConfiguration<TextProps>;
   textarea?: CustomComponentConfiguration<TextareaProps>;
   tooltip?: CustomComponentConfiguration<TooltipProps>;
+  select?: {
+    select?: CustomComponentConfiguration<MenuItemProps>;
+    menuItem?: CustomComponentConfiguration<MenuItemProps>;
+  };
 }
 
 export type CustomTypographyResponsiveConfig = Partial<{
