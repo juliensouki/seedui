@@ -248,7 +248,7 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
           data-testid="select-label"
           variant="caption"
           className={labelClassName}
-          style={{ marginBottom: 2, ...labelStyle }}
+          style={{ marginBottom: 4, ...labelStyle }}
         >
           {label}
         </Text>
