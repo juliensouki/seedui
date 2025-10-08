@@ -124,7 +124,7 @@ const InputElement = applyCustomStyles(
 
     return {
       width: '100%',
-      padding: `${theme.spacing[100]}px ${rightPadding}px ${theme.spacing[100]}px ${theme.spacing[150]}px`,
+      padding: `${theme.spacing[150]}px ${rightPadding}px ${theme.spacing[150]}px ${theme.spacing[150]}px`,
 
       borderTopRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
       borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',

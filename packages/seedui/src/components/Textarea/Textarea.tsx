@@ -70,7 +70,8 @@ const TextareaElement = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: 'none',
+        outline: `2px solid ${theme.colors.primary[300]}`,
+        outlineOffset: 1,
         borderColor: theme.colors.primary.default,
       },
 

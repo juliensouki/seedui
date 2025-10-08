@@ -56,12 +56,12 @@ const defaultProps: SelectProps = {
 };
 
 const SelectDiv = applyCustomStyles(
-  styled.div<{ $width?: string | number }>`
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: ${({ $width }) => (typeof $width === 'number' ? `${$width}px` : $width)};
-  `,
+  styled.div<{ $width?: string | number }>(({ $width }) => ({
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    width: typeof $width === 'number' ? `${$width}px` : $width,
+  })),
 );
 
 const SelectContainer = applyCustomStyles(
@@ -75,7 +75,7 @@ const SelectContainer = applyCustomStyles(
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      borderRadius: theme.borderRadius['050'],
+      borderRadius: theme.borderRadius[100],
       backgroundColor: $disabled
         ? isLight
           ? theme.colors.neutral[100]
