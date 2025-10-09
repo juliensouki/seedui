@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, Select } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, SearchBar } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -7,26 +7,7 @@ import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
   const [mode, _setMode] = useState<Mode>('light');
-  const [value, setValue] = useState<string | null>('0');
-
-  const options = [
-    {
-      label: 'None',
-      value: null,
-    },
-    {
-      label: 'France',
-      value: '0',
-    },
-    {
-      label: 'Spain',
-      value: '1',
-    },
-    {
-      label: 'Portugal',
-      value: '2',
-    },
-  ];
+  const [value, setValue] = useState<string>('');
 
   return (
     <div
@@ -45,13 +26,10 @@ export const App: FunctionComponent = () => {
         }}
       >
         <div style={{ margin: 'auto', width: 600 }}>
-          <Select
-            width="100%"
-            placeholder="Country..."
-            label={{ text: 'Countries' }}
+          <SearchBar
             value={value}
-            onChange={setValue}
-            options={options}
+            onChange={(e) => setValue(e.target.value)}
+            onSearch={() => console.log('searching')}
           />
         </div>
       </ThemeProvider>

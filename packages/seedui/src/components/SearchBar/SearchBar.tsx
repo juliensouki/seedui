@@ -1,5 +1,5 @@
 import { ChangeEventHandler, ForwardedRef, forwardRef, useContext, useState } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
 import { joinClasses } from '../../utils/classes';
@@ -85,6 +85,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
     const [isFocused, setIsFocused] = useState<boolean>(false);
+    const { spacing } = useTheme();
 
     const { value, placeholder, disabled, inputValidation, width, onChange, onSearch, buttonLabel, className } =
       getDefaultProps<SearchBarProps & InternalProps>({
@@ -124,6 +125,10 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
           width="100%"
           htmlAttributes={{
             input: {
+              style: {
+                padding: 'unset',
+                paddingRight: spacing[100],
+              },
               onFocus: () => setIsFocused(true),
               onBlur: () => setIsFocused(false),
             },
