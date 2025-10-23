@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, SearchBar } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, TagSelector, SearchBar } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -7,7 +7,7 @@ import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
   const [mode, _setMode] = useState<Mode>('light');
-  const [value, setValue] = useState<string>('');
+  const [tags, setTags] = useState<string[]>(['Tag 1', 'Tag 2', 'Tag 3']);
 
   return (
     <div
@@ -26,10 +26,10 @@ export const App: FunctionComponent = () => {
         }}
       >
         <div style={{ margin: 'auto', width: 600 }}>
-          <SearchBar
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onSearch={() => console.log('searching')}
+          <TagSelector
+            tags={tags}
+            onAddTag={(tag) => setTags([...tags, tag])}
+            onRemoveTag={(tag) => setTags(tags.filter((t) => t !== tag))}
           />
         </div>
       </ThemeProvider>

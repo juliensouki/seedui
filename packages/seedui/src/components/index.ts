@@ -6,6 +6,7 @@ export * from './SearchBar';
 export * from './Select';
 export * from './Stepper';
 export * from './Tag';
+export * from './TagSelector';
 export * from './Text';
 export * from './Textarea';
 export * from './Tooltip';

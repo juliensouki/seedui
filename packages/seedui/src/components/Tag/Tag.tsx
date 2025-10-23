@@ -8,6 +8,7 @@ import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
+import { IconButton } from '../Button';
 
 export type TagColor = keyof Pick<
   SemanticColors,
@@ -18,6 +19,8 @@ export type TagSize = Extract<Sizes, 'sm' | 'md'>;
 export interface TagProps {
   color?: TagColor;
   size?: TagSize;
+  removable?: boolean;
+  onRemove?: () => void;
   htmlAttributes?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
@@ -30,6 +33,8 @@ export interface TagProps {
 const defaultProps: TagProps = {
   color: 'neutral',
   size: 'md',
+  removable: false,
+  onRemove: undefined,
   children: '',
   htmlAttributes: {
     rootDiv: {},
@@ -43,7 +48,7 @@ const TagDiv = applyCustomStyles(
   styled.div<Required<TagProps>>((props) => {
     const theme = props.theme;
     const color = props.color;
-    const size = props.size;
+    const removable = props.removable;
 
     const darkNeutralColors = {
       backgroundColor: theme.colors.neutral[600],
@@ -51,22 +56,22 @@ const TagDiv = applyCustomStyles(
       borderColor: theme.colors.neutral[500],
     };
     const commonColors = {
-      borderColor: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-      color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-      backgroundColor: theme.colors[color][100],
+      borderColor: color === 'neutral' ? theme.colors.neutral[200] : theme.colors[color][600],
+      color: color === 'neutral' ? theme.colors.neutral[600] : theme.colors[color][600],
+      backgroundColor: theme.colors[color][200],
     };
 
     return {
-      display: 'block',
+      display: 'flex',
+      gap: theme.spacing['100'],
+      alignItems: 'center',
       height: '100%',
       width: 'max-content',
       boxSizing: 'border-box',
       border: `1px solid`,
       ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
-      padding:
-        size === 'sm'
-          ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
-          : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
+      padding: removable ? theme.spacing['050'] : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
+      paddingLeft: theme.spacing['100'],
       borderRadius: 100,
       flexShrink: 0,
     };
@@ -82,12 +87,22 @@ const TagText = styled(Text)(() => ({
   },
 }));
 
+const RemoveButton = styled(IconButton)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 24,
+  height: 24,
+}));
+
 export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       color,
       size,
+      removable,
+      onRemove,
       htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
       forwardProps: { text: textProps } = {},
       className,
@@ -102,6 +117,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
       <TagDiv
         color={color}
         size={size}
+        removable={removable}
         ref={forwardedRef}
         className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
         $customizations={customizations.components?.tag}
@@ -110,6 +126,11 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
         <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>
           {children}
         </TagText>
+        {removable && onRemove && (
+          <RemoveButton size="sm" color="neutral" onClick={onRemove} type="button">
+            <Text style={{ padding: 0, fontSize: 18 }}>×</Text>
+          </RemoveButton>
+        )}
       </TagDiv>
     );
   },
