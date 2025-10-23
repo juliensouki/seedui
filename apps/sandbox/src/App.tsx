@@ -27,6 +27,7 @@ export const App: FunctionComponent = () => {
       >
         <div style={{ margin: 'auto', width: 600 }}>
           <TagSelector
+            label="Tags (5 max)"
             tags={tags}
             onAddTag={(tag) => setTags([...tags, tag])}
             onRemoveTag={(tag) => setTags(tags.filter((t) => t !== tag))}

@@ -10,6 +10,7 @@ import { StyledComponentsPrefix, InternalProps, StyledProps } from '../../types/
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { Tag } from '../Tag';
+import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 
 export interface TagSelectorProps {
   placeholder?: string;
@@ -20,8 +21,15 @@ export interface TagSelectorProps {
   onRemoveTag?: (tag: string) => void;
   tags: string[];
   maxTags?: number;
+  label?: string;
   buttonLabel?: string;
   className?: string;
+  forwardProps?: {
+    labelTextProps?: any;
+  };
+  htmlAttributes?: {
+    rootDiv?: any;
+  };
 }
 
 const defaultProps: TagSelectorProps = {
@@ -34,12 +42,18 @@ const defaultProps: TagSelectorProps = {
   tags: [],
   maxTags: undefined,
   buttonLabel: 'Add',
+  label: '',
+  forwardProps: {
+    labelTextProps: {},
+  },
+  htmlAttributes: {
+    rootDiv: {},
+  },
 };
 
-const TagSelectorContainer = styled.div<StyledComponentsPrefix<{ width?: string | number }>>(({ theme, $width }) => ({
+const TagSelectorContainer = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  width: $width,
   gap: theme.spacing['025'],
 }));
 
@@ -102,8 +116,11 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       onRemoveTag,
       tags,
       maxTags,
+      label,
       className,
       buttonLabel,
+      forwardProps,
+      htmlAttributes,
     } = getDefaultProps<TagSelectorProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.searchBar?.defaultProps,
@@ -141,48 +158,46 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       disabled || !inputValue.trim() || tags.includes(inputValue.trim()) || (maxTags ? tags.length >= maxTags : false);
 
     return (
-      <TagSelectorContainer
-        className={joinClasses(className)}
-        $width={width}
-        $customizations={customizations.components?.searchBar}
-      >
-        <InputContainer $isFocused={isFocused}>
-          <TagInput
-            ref={forwardedRef}
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder={placeholder}
-            disabled={disabled}
-            inputValidation={inputValidation}
-            width="100%"
-            htmlAttributes={{
-              input: {
-                style: {
-                  paddingTop: 0,
-                  paddingBottom: 0,
+      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
+        <TagSelectorContainer className={joinClasses(className)} $customizations={customizations.components?.searchBar}>
+          <InputContainer $isFocused={isFocused}>
+            <TagInput
+              ref={forwardedRef}
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder={placeholder}
+              disabled={disabled}
+              inputValidation={inputValidation}
+              width="100%"
+              htmlAttributes={{
+                input: {
+                  style: {
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                  },
+                  onFocus: () => setIsFocused(true),
+                  onBlur: () => setIsFocused(false),
+                  onKeyPress: handleKeyPress,
                 },
-                onFocus: () => setIsFocused(true),
-                onBlur: () => setIsFocused(false),
-                onKeyPress: handleKeyPress,
-              },
-            }}
-          />
+              }}
+            />
 
-          <AddButton onClick={handleAddTag} disabled={isAddDisabled}>
-            <Text style={{ color: 'white' }}>{buttonLabel}</Text>
-          </AddButton>
-        </InputContainer>
+            <AddButton onClick={handleAddTag} disabled={isAddDisabled}>
+              <Text style={{ color: 'white' }}>{buttonLabel}</Text>
+            </AddButton>
+          </InputContainer>
 
-        {tags.length > 0 && (
-          <TagsContainer>
-            {tags.map((tag, index) => (
-              <Tag key={index} removable onRemove={() => handleRemoveTag(tag)}>
-                {tag}
-              </Tag>
-            ))}
-          </TagsContainer>
-        )}
-      </TagSelectorContainer>
+          {tags.length > 0 && (
+            <TagsContainer>
+              {tags.map((tag, index) => (
+                <Tag key={index} removable onRemove={() => handleRemoveTag(tag)}>
+                  {tag}
+                </Tag>
+              ))}
+            </TagsContainer>
+          )}
+        </TagSelectorContainer>
+      </ContainerWithLabel>
     );
   },
 );
