@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Mode, TagSelector, SearchBar } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Stepper, Mode } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -7,7 +7,6 @@ import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
   const [mode, _setMode] = useState<Mode>('light');
-  const [tags, setTags] = useState<string[]>(['Tag 1', 'Tag 2', 'Tag 3']);
 
   return (
     <div
@@ -25,12 +24,21 @@ export const App: FunctionComponent = () => {
           typography: { p: { responsive: { desktop: { fontSize: 14 } } } },
         }}
       >
-        <div style={{ margin: 'auto', width: 600 }}>
-          <TagSelector
-            label="Tags (5 max)"
-            tags={tags}
-            onAddTag={(tag) => setTags([...tags, tag])}
-            onRemoveTag={(tag) => setTags(tags.filter((t) => t !== tag))}
+        <div style={{ margin: 'auto', maxWidth: 600, width: '100%' }}>
+          <Stepper
+            steps={[
+              'Step 1',
+              'Step 2',
+              'Step 3',
+              'Step 4',
+              'Step 5',
+              'Step 6',
+              'Step 7',
+              'Step 8',
+              'Step 9',
+              'Step 10',
+            ]}
+            activeStep={2}
           />
         </div>
       </ThemeProvider>

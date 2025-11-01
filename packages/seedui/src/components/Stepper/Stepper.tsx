@@ -19,10 +19,18 @@ const defaultProps: StepperProps = {
   activeStep: 0,
 };
 
-const StepperContainer = styled.div({
+const StepperContainer = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-});
+  flexWrap: 'wrap',
+  gap: theme.spacing[100],
+  width: '100%',
+  maxWidth: '100%',
+  boxSizing: 'border-box',
+  [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
+    gap: theme.spacing['050'],
+  },
+}));
 
 const StepWrapper = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ theme }) => {
   return {
@@ -30,6 +38,9 @@ const StepWrapper = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacing[100],
+    [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
+      gap: theme.spacing['050'],
+    },
   };
 });
 
@@ -52,7 +63,9 @@ const StepLabel = styled(Text)(({ theme, $isActive }: StyledProps<{ $isActive: b
     color: $isActive ? theme.colors.neutral.black : theme.colors.neutral[400],
     fontSize: theme.typography.caption.responsive.desktop.fontSize,
     textAlign: 'center',
-    width: '100%',
+    [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
+      display: $isActive ? 'block' : 'none',
+    },
   };
 });
 
@@ -69,11 +82,21 @@ const CheckIconStyled = styled.svg(({ theme }) => ({
   color: theme.colors.neutral[400],
   marginLeft: theme.spacing[200],
   marginRight: theme.spacing[200],
+  [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
+    marginLeft: theme.spacing[100],
+    marginRight: theme.spacing[100],
+  },
 }));
 
 const StepNumberText = styled(Text)(({ theme }: StyledProps<StepperProps>) => ({
   fontSize: theme.typography.small.responsive.desktop.fontSize,
   color: 'inherit',
+  [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
+    fontSize: theme.typography.small.responsive.tablet.fontSize,
+  },
+  [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
+    fontSize: theme.typography.small.responsive.mobile.fontSize,
+  },
 }));
 
 const CheckIcon: FunctionComponent<{ size?: number }> = ({ size = 12 }) => (
@@ -104,9 +127,9 @@ const RightChevron: FunctionComponent<{ size?: number }> = ({ size = 12 }) => (
     aria-label="Chevron right icon"
     fill="none"
     stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
   >
     <path d="M9 6l6 6-6 6" />
   </CheckIconStyled>
@@ -134,13 +157,13 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps & InternalProps>(
 
           return (
             <StepWrapper key={index}>
-              {index !== 0 && <RightChevron size={14} />}
               <StepLabelContainer>
                 <StepCircle $isActive={isChecked || isActive}>
                   {isChecked ? <CheckIcon /> : <StepNumberText>{index + 1}</StepNumberText>}
                 </StepCircle>
-                <StepLabel $isActive={isChecked || isActive}>{step}</StepLabel>
+                <StepLabel $isActive={isActive}>{step}</StepLabel>
               </StepLabelContainer>
+              {index < steps.length - 1 && <RightChevron size={14} />}
             </StepWrapper>
           );
         })}
