@@ -9,6 +9,8 @@ import { getPrimaryFilledButtonStyles } from './get-primary-filled-styles';
 import { getPrimaryTransparentButtonStyles } from './get-primary-transparent-styles';
 import { getSecondaryFilledButtonStyles } from './get-secondary-filled-styles';
 import { getSecondaryTransparentButtonStyles } from './get-secondary-transparent-styles';
+import { getErrorFilledButtonStyles } from './get-error-filled-styles';
+import { getErrorTransparentButtonStyles } from './get-error-transparent-styles';
 import { ButtonColors, ButtonVariants } from '../ButtonCommon';
 
 export const stylesMapBuilder = (
@@ -24,6 +26,9 @@ export const stylesMapBuilder = (
     neutral: applyCustomStyles(
       styled(base)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
     ),
+    error: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getErrorFilledButtonStyles(props.theme)),
+    ),
   },
   transparent: {
     primary: applyCustomStyles(
@@ -34,6 +39,9 @@ export const stylesMapBuilder = (
     ),
     neutral: applyCustomStyles(
       styled(base)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
+    ),
+    error: applyCustomStyles(
+      styled(base)((props: StyledProps<ButtonProps>) => getErrorTransparentButtonStyles(props.theme)),
     ),
   },
 });
