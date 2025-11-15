@@ -20,6 +20,7 @@ export interface MenuItemProps {
   buildRefMap?: () => Map<number, HTMLDivElement>;
   handleItemClick?: (value: string | null) => void;
   isActive?: boolean;
+  isHighlighted?: boolean;
   selectUniqueId?: string;
   onHover?: (index: number) => void;
   activeItemStyle?: SelectActiveItemStyle;
@@ -27,7 +28,7 @@ export interface MenuItemProps {
 }
 
 const MenuItemDiv = applyCustomStyles(
-  styled.div(({ theme }) => {
+  styled.div<{ $highlighted?: boolean }>(({ theme, $highlighted }) => {
     const isLight = theme.mode === 'light';
     return {
       display: 'flex',
@@ -38,7 +39,7 @@ const MenuItemDiv = applyCustomStyles(
       outline: 'none',
       borderRadius: theme.borderRadius['050'],
       transition: 'background-color 0.15s ease-in-out',
-      backgroundColor: 'transparent',
+      backgroundColor: $highlighted ? (isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]) : 'transparent',
       color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,
 
       '&:hover': {
@@ -61,6 +62,7 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
   buildRefMap,
   handleItemClick,
   isActive = false,
+  isHighlighted = false,
   selectUniqueId,
   onHover,
   activeItemStyle,
@@ -78,7 +80,7 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
   return (
     <MenuItemDiv
       $customizations={customizations.components?.select?.menuItem}
-      data-testid={`menu-item-${index}`}
+      $highlighted={isHighlighted}
       key={option.label || uniqueId}
       id={option.value || selectUniqueId}
       className={joinClasses('menu-item', className)}
@@ -97,7 +99,6 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
     >
       {option.icon && cloneElement(option.icon, { style: { ...optionIconStyles } })}
       <MenuItemText
-        data-testid={`menu-item-text-${index}`}
         style={{
           fontWeight: isActive ? activeFontWeight : undefined,
           color: isActive ? activeTextColor : undefined,

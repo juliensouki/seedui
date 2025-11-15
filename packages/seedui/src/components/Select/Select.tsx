@@ -92,6 +92,13 @@ const SelectContainer = applyCustomStyles(
       outlineOffset: $isFocused ? 1 : undefined,
       borderColor: theme.colors.primary.default,
       border: `1px solid ${$isFocused ? activeColor : baseColor}`,
+
+      '::selection': {
+        background: 'transparent',
+      },
+      '::-moz-selection': {
+        background: 'transparent',
+      },
     };
   }),
 );
@@ -104,6 +111,10 @@ const SelectInput = styled.input(({ theme }) => ({
   border: 'none',
   outline: 'none',
   font: 'inherit',
+  userSelect: 'none',
+  WebkitUserSelect: 'none',
+  msUserSelect: 'none',
+  caretColor: 'transparent',
   whiteSpace: 'nowrap',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
@@ -112,6 +123,9 @@ const SelectInput = styled.input(({ theme }) => ({
   fontSize: theme.typography.p.responsive.desktop.fontSize,
 
   '::selection': {
+    background: 'transparent',
+  },
+  '::-moz-selection': {
     background: 'transparent',
   },
 }));
@@ -178,6 +192,7 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
   const [activeItemInMenu, setActiveItemInMenu] = useState<number>(0);
   const menuItemsRefs = useRef<Map<number, HTMLDivElement>>();
   const inputRef = useRef<HTMLInputElement>(null);
+  const skipOpenOnceRef = useRef<boolean>(false);
 
   const uniqueId = useId();
 
@@ -197,41 +212,63 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
   };
 
   const handleContainerFocus: FocusEventHandler<HTMLDivElement> = (e) => {
-    if (e.target.id === `${uniqueId}-select-arrow`) return;
+    if (skipOpenOnceRef.current) {
+      skipOpenOnceRef.current = false;
+      return;
+    }
+    if ((e.target as HTMLElement)?.id === `${uniqueId}-select-input`) {
+      setActiveItemInMenu(0);
+      setIsMenuOpen(true);
+    }
+  };
+
+  const handleContainerBlur: FocusEventHandler<HTMLDivElement> = (e) => {
+    const next = e.relatedTarget as Node | null;
+    if (next && e.currentTarget.contains(next)) return;
+    setIsMenuOpen(false);
+  };
+
+  const handleArrowClick: MouseEventHandler = (e) => {
+    setIsMenuOpen((prev) => {
+      if (prev) {
+        skipOpenOnceRef.current = true;
+        inputRef.current?.blur();
+        return false;
+      } else {
+        inputRef.current?.focus();
+        return true;
+      }
+    });
+    e.stopPropagation();
+  };
+
+  const handleContainerMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
+    if (disabled) return;
+    const target = e.target as HTMLElement;
+    if (target.closest('.select-arrow-container')) return;
+    if (target.closest('.select-menu-container')) return;
+    inputRef.current?.focus();
     setActiveItemInMenu(0);
     setIsMenuOpen(true);
   };
 
-  const handleContainerBlur: FocusEventHandler<HTMLDivElement> = (e) => {
-    if (
-      e.relatedTarget &&
-      (options.find((o) => o.value === e.relatedTarget?.id) ||
-        e.relatedTarget?.id === uniqueId ||
-        e.relatedTarget?.id === `${uniqueId}-select-arrow` ||
-        e.relatedTarget?.id === `${uniqueId}-select-input`)
-    )
-      return;
-    setIsMenuOpen(false);
-  };
-
-  const handleArrowClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    setIsMenuOpen((prev) => !prev);
-    e.stopPropagation();
-  };
-
   const handleKeyboard: KeyboardEventHandler = (e) => {
     if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!isMenuOpen) setIsMenuOpen(true);
       setActiveItemInMenu((i) => (i === 0 ? options.length - 1 : i - 1));
     } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!isMenuOpen) setIsMenuOpen(true);
       setActiveItemInMenu((i) => (i === options.length - 1 ? 0 : i + 1));
     } else if (e.key === 'Enter') {
       e.preventDefault();
       const newValue = options[activeItemInMenu]?.value;
       handleItemClick(newValue);
-    } else if (e.key === 'Escape' || e.key === 'Tab') {
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
       setIsMenuOpen(false);
     }
-    e.preventDefault();
   };
 
   return (
@@ -240,16 +277,10 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
       ref={ref}
       $width={width}
       $customizations={customizations.components?.select}
-      data-testid="root-container"
       className={joinClasses('select-root', rootContainerProps?.className)}
     >
       {label && (
-        <Text
-          data-testid="select-label"
-          variant="caption"
-          className={labelClassName}
-          style={{ marginBottom: 4, ...labelStyle }}
-        >
+        <Text variant="caption" className={labelClassName} style={{ marginBottom: 4, ...labelStyle }}>
           {label}
         </Text>
       )}
@@ -259,19 +290,14 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
         onFocus={handleContainerFocus}
         onBlur={handleContainerBlur}
         onKeyDown={handleKeyboard}
+        onMouseDown={handleContainerMouseDown}
         $isFocused={isMenuOpen}
         $disabled={disabled}
         $customizations={customizations.components?.select}
-        data-testid="select-main-container"
         className={joinClasses('select-container', selectContainerProps?.className)}
       >
         {activeItem?.icon && (
-          <div
-            data-testid="select-icon-container"
-            id={`${uniqueId}-select-input`}
-            tabIndex={1}
-            style={{ display: 'flex', alignItems: 'center', paddingRight: 6 }}
-          >
+          <div style={{ display: 'flex', alignItems: 'center', paddingRight: 6 }}>
             {cloneElement(activeItem.icon, { style: { ...optionIconStyles } })}
           </div>
         )}
@@ -284,18 +310,22 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
           disabled={disabled}
           ref={inputRef}
           id={`${uniqueId}-select-input`}
-          data-testid="select-input"
         />
 
-        <SelectArrowContainer onClick={handleArrowClick} data-testid="select-arrow-container">
-          <ExpandArrow isExpanded={isMenuOpen} id={`${uniqueId}-select-arrow`} tabIndex={-1} data-testid="arrow-icon" />
+        <SelectArrowContainer className="select-arrow-container">
+          <ExpandArrow
+            isExpanded={isMenuOpen}
+            id={`${uniqueId}-select-arrow`}
+            tabIndex={-1}
+            onClick={handleArrowClick}
+          />
         </SelectArrowContainer>
 
         {isMenuOpen && (
           <SelectMenu
             $menuHeight={menuHeight}
-            data-testid="select-menu-container"
             $customizations={customizations.components?.select}
+            className="select-menu-container"
           >
             {options.length === 0 ? (
               <MenuItem option={{ label: noOptionMessage, value: null }} index={0} />
@@ -306,6 +336,7 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
                   option={option}
                   index={index}
                   buildRefMap={buildRefMap}
+                  isHighlighted={index === activeItemInMenu}
                   isActive={value === option.value && option.value !== null}
                   handleItemClick={handleItemClick}
                   selectUniqueId={uniqueId}

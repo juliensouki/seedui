@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { colors, ThemeProvider, Stepper, Mode, Button } from '@seedui-react/seedui';
+import { colors, ThemeProvider, Mode, Tag } from '@seedui-react/seedui';
 
 import './style.css';
 import '@fontsource/poppins';
@@ -7,6 +7,7 @@ import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
   const [mode, _setMode] = useState<Mode>('light');
+  const [fruit, setFruit] = useState<string | null>(null);
 
   return (
     <div
@@ -25,21 +26,14 @@ export const App: FunctionComponent = () => {
         }}
       >
         <div style={{ margin: 'auto', maxWidth: 600, width: '100%' }}>
-          <Stepper
-            steps={[
-              'Step 1',
-              'Step 2',
-              'Step 3',
-              'Step 4',
-              'Step 5',
-              'Step 6',
-              'Step 7',
-              'Step 8',
-              'Step 9',
-              'Step 10',
-            ]}
-            activeStep={2}
-          />
+          <div style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
+            <Tag color="neutral">Neutral</Tag>
+            <Tag color="primary">Fruit</Tag>
+            <Tag color="success">Fruit</Tag>
+            <Tag color="info">Fruit</Tag>
+            <Tag color="warning">Fruit</Tag>
+            <Tag color="error">Fruit</Tag>
+          </div>
         </div>
       </ThemeProvider>
     </div>

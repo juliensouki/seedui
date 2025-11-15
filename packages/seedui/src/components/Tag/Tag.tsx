@@ -48,16 +48,13 @@ const TagDiv = applyCustomStyles(
   styled.div<Required<TagProps>>((props) => {
     const theme = props.theme;
     const color = props.color;
-    const removable = props.removable;
 
     const darkNeutralColors = {
       backgroundColor: theme.colors.neutral[600],
       color: theme.colors.neutral[200],
-      borderColor: theme.colors.neutral[500],
     };
     const commonColors = {
-      borderColor: color === 'neutral' ? theme.colors.neutral[200] : theme.colors[color][600],
-      color: color === 'neutral' ? theme.colors.neutral[600] : theme.colors[color][600],
+      color: color === 'neutral' ? theme.colors.neutral[800] : theme.colors[color][600],
       backgroundColor: theme.colors[color][200],
     };
 
@@ -68,11 +65,9 @@ const TagDiv = applyCustomStyles(
       height: '100%',
       width: 'max-content',
       boxSizing: 'border-box',
-      border: `1px solid`,
       ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
-      padding: removable ? theme.spacing['050'] : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
-      paddingLeft: theme.spacing['100'],
-      borderRadius: 100,
+      padding: `${theme.spacing['075']}px ${theme.spacing['100']}px`,
+      borderRadius: theme.borderRadius[150],
       flexShrink: 0,
     };
   }),
