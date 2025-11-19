@@ -1,10 +1,4 @@
-import {
-  ChangeEventHandler,
-  ForwardedRef,
-  forwardRef,
-  HTMLAttributes,
-  useContext,
-} from 'react';
+import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
 
 import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
@@ -59,14 +53,16 @@ const getToggleSizes = () => ({
   },
 });
 
-const ToggleContainer = styled.div<StyledComponentsPrefix<{}>>(() => ({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 8,
-}));
+const ToggleContainer = applyCustomStyles(
+  styled.div<StyledComponentsPrefix<{}>>(() => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+  })),
+);
 
-const ToggleLabel = styled.label<StyledComponentsPrefix<{ disabled?: boolean }>>(
-  ({ theme, $disabled }) => ({
+const ToggleLabel = applyCustomStyles(
+  styled.label<StyledComponentsPrefix<{ disabled?: boolean }>>(({ theme, $disabled }) => ({
     display: 'flex',
     alignItems: 'center',
     cursor: $disabled ? 'not-allowed' : 'pointer',
@@ -75,11 +71,11 @@ const ToggleLabel = styled.label<StyledComponentsPrefix<{ disabled?: boolean }>>
     fontSize: theme.typography.p.responsive.desktop.fontSize,
     color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
     opacity: $disabled ? 0.5 : 1,
-  }),
+  })),
 );
 
-const ToggleInput = styled.input<StyledComponentsPrefix<{ size: 'sm' | 'md' | 'lg'; checked: boolean }>>(
-  ({ theme, $size, $checked }) => {
+const ToggleInput = applyCustomStyles(
+  styled.input<StyledComponentsPrefix<{ size: 'sm' | 'md' | 'lg'; checked: boolean }>>(({ theme, $size, $checked }) => {
     const isLight = theme.mode === 'light';
     const sizes = getToggleSizes();
     const { width, height, thumbSize, thumbOffset } = sizes[$size];
@@ -135,7 +131,7 @@ const ToggleInput = styled.input<StyledComponentsPrefix<{ size: 'sm' | 'md' | 'l
         opacity: 0.5,
       },
     };
-  },
+  }),
 );
 
 const ToggleLabelText = styled.span(() => ({
@@ -168,6 +164,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps & InternalProps>(
         <ToggleLabel
           {...labelHTMLAttributes}
           $disabled={disabled}
+          $customizations={customizations.components?.toggle}
           className={joinClasses(labelHTMLAttributes?.className)}
         >
           <ToggleInput
@@ -192,4 +189,3 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps & InternalProps>(
 );
 
 Toggle.displayName = 'Toggle';
-
