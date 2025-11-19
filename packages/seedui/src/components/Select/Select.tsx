@@ -130,6 +130,27 @@ const SelectInput = styled.input(({ theme }) => ({
   },
 }));
 
+const SelectDisplay = styled.div(({ theme }) => ({
+  width: '100%',
+  flex: 1,
+  background: 'inherit',
+  color: 'inherit',
+  border: 'none',
+  outline: 'none',
+  font: 'inherit',
+  userSelect: 'none',
+  WebkitUserSelect: 'none',
+  msUserSelect: 'none',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  padding: 0,
+  fontFamily: theme.typography.p.fontFamily,
+  fontSize: theme.typography.p.responsive.desktop.fontSize,
+  display: 'flex',
+  alignItems: 'center',
+}));
+
 const SelectArrowContainer = styled.div({
   display: 'flex',
   alignItems: 'center',
@@ -191,7 +212,7 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItemInMenu, setActiveItemInMenu] = useState<number>(0);
   const menuItemsRefs = useRef<Map<number, HTMLDivElement>>();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | HTMLDivElement>(null);
   const skipOpenOnceRef = useRef<boolean>(false);
 
   const uniqueId = useId();
@@ -216,7 +237,8 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
       skipOpenOnceRef.current = false;
       return;
     }
-    if ((e.target as HTMLElement)?.id === `${uniqueId}-select-input`) {
+    const targetId = (e.target as HTMLElement)?.id;
+    if (targetId === `${uniqueId}-select-input`) {
       setActiveItemInMenu(0);
       setIsMenuOpen(true);
     }
@@ -302,15 +324,32 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
           </div>
         )}
 
-        <SelectInput
-          {...inputProps}
-          placeholder={placeholder}
-          value={activeItem?.value === null ? '' : activeItem?.label || ''}
-          readOnly
-          disabled={disabled}
-          ref={inputRef}
-          id={`${uniqueId}-select-input`}
-        />
+        {typeof activeItem?.label === 'string' ? (
+          <SelectInput
+            {...inputProps}
+            placeholder={placeholder}
+            value={activeItem?.value === null ? '' : activeItem?.label || ''}
+            readOnly
+            disabled={disabled}
+            ref={inputRef as RefObject<HTMLInputElement>}
+            id={`${uniqueId}-select-input`}
+          />
+        ) : (
+          <SelectDisplay
+            id={`${uniqueId}-select-input`}
+            ref={inputRef as RefObject<HTMLDivElement>}
+            tabIndex={disabled ? -1 : 0}
+            role="combobox"
+            aria-expanded={isMenuOpen}
+            aria-haspopup="listbox"
+          >
+            {!activeItem || activeItem.value === null ? (
+              <span style={{ color: 'inherit', opacity: 0.5 }}>{placeholder}</span>
+            ) : (
+              activeItem.label
+            )}
+          </SelectDisplay>
+        )}
 
         <SelectArrowContainer className="select-arrow-container">
           <ExpandArrow

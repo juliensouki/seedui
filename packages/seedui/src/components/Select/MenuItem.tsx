@@ -1,4 +1,4 @@
-import { cloneElement, FunctionComponent, useId, useContext, ReactElement } from 'react';
+import { cloneElement, FunctionComponent, useId, useContext, ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { SeedContext } from '../ThemeProvider/context';
@@ -10,7 +10,7 @@ import { optionIconStyles, SelectActiveItemStyle } from './shared';
 
 export interface SelectOption {
   value: string | null;
-  label: string;
+  label: string | ReactNode;
   icon?: ReactElement;
 }
 
@@ -81,7 +81,7 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
     <MenuItemDiv
       $customizations={customizations.components?.select?.menuItem}
       $highlighted={isHighlighted}
-      key={option.label || uniqueId}
+      key={typeof option.label === 'string' ? option.label : uniqueId}
       id={option.value || selectUniqueId}
       className={joinClasses('menu-item', className)}
       ref={(node: HTMLDivElement) => {
@@ -98,15 +98,27 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
       }}
     >
       {option.icon && cloneElement(option.icon, { style: { ...optionIconStyles } })}
-      <MenuItemText
-        style={{
-          fontWeight: isActive ? activeFontWeight : undefined,
-          color: isActive ? activeTextColor : undefined,
-          whiteSpace: 'pre',
-        }}
-      >
-        {option.label || ' '}
-      </MenuItemText>
+      {typeof option.label === 'string' ? (
+        <MenuItemText
+          style={{
+            fontWeight: isActive ? activeFontWeight : undefined,
+            color: isActive ? activeTextColor : undefined,
+            whiteSpace: 'pre',
+          }}
+        >
+          {option.label || ' '}
+        </MenuItemText>
+      ) : (
+        <div
+          style={{
+            flex: 1,
+            fontWeight: isActive ? activeFontWeight : undefined,
+            color: isActive ? activeTextColor : undefined,
+          }}
+        >
+          {option.label}
+        </div>
+      )}
     </MenuItemDiv>
   );
 };

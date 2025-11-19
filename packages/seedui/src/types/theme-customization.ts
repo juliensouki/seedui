@@ -5,11 +5,13 @@ import {
   CardProps,
   IconButtonProps,
   InputProps,
+  ModalProps,
   SearchBarProps,
   StepperProps,
   TagProps,
   TextareaProps,
   TextProps,
+  ToggleProps,
   TooltipProps,
 } from '../components';
 import { BorderRadius, BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
@@ -30,11 +32,13 @@ export interface CustomComponents {
   card?: CustomComponentConfiguration<CardProps>;
   iconButton?: CustomComponentConfiguration<IconButtonProps>;
   input?: CustomComponentConfiguration<InputProps>;
+  modal?: CustomComponentConfiguration<ModalProps>;
   searchBar?: CustomComponentConfiguration<SearchBarProps>;
   stepper?: CustomComponentConfiguration<StepperProps>;
   tag?: CustomComponentConfiguration<TagProps>;
   text?: CustomComponentConfiguration<TextProps>;
   textarea?: CustomComponentConfiguration<TextareaProps>;
+  toggle?: CustomComponentConfiguration<ToggleProps>;
   tooltip?: CustomComponentConfiguration<TooltipProps>;
   select?: {
     select?: CustomComponentConfiguration<MenuItemProps>;
