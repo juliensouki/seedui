@@ -6,11 +6,11 @@ import '@fontsource/poppins';
 import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {
-  const [mode, _setMode] = useState<Mode>('light');
-  const [isPopoverBottomOpen, setIsPopoverBottomOpen] = useState(false);
-  const [isPopoverTopOpen, setIsPopoverTopOpen] = useState(false);
-  const [isPopoverRightOpen, setIsPopoverRightOpen] = useState(false);
-  const [isPopoverLeftOpen, setIsPopoverLeftOpen] = useState(false);
+  const [mode] = useState<Mode>('light');
+  const [openPopover, setOpenPopover] = useState<string | null>(null);
+
+  const handleOpen = (id: string) => setOpenPopover(id);
+  const handleClose = () => setOpenPopover(null);
 
   return (
     <div
@@ -34,88 +34,130 @@ export const App: FunctionComponent = () => {
               <Text>
                 <h2 style={{ marginBottom: 16 }}>Popover Component</h2>
               </Text>
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
                   <Popover
-                    isOpen={isPopoverBottomOpen}
-                    onOpen={() => setIsPopoverBottomOpen(true)}
-                    onClose={() => setIsPopoverBottomOpen(false)}
-                    direction="bottom"
-                    spacing={10}
+                    isOpen={openPopover === 'p1'}
+                    onOpen={() => handleOpen('p1')}
+                    onClose={handleClose}
+                    verticalAlignment="bottom"
+                    horizontalAlignment="center"
                     content={
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                         <Text>
-                          <strong>Popover Menu</strong>
+                          <strong>Bottom Center</strong>
                         </Text>
-                        <Text>This is a popover that appears when you click the button.</Text>
+                        <Text>Aligned below, centered horizontally.</Text>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 8 }}>
-                          <Button size="sm" variant="transparent" onClick={() => setIsPopoverBottomOpen(false)}>
+                          <Button size="sm" variant="transparent" onClick={handleClose}>
                             Option 1
                           </Button>
-                          <Button size="sm" variant="transparent" onClick={() => setIsPopoverBottomOpen(false)}>
+                          <Button size="sm" variant="transparent" onClick={handleClose}>
                             Option 2
-                          </Button>
-                          <Button size="sm" variant="transparent" onClick={() => setIsPopoverBottomOpen(false)}>
-                            Option 3
                           </Button>
                         </div>
                       </div>
                     }
                   >
-                    <Button>Open Popover (Bottom)</Button>
+                    <Button>Bottom Center</Button>
                   </Popover>
+
                   <Popover
-                    isOpen={isPopoverTopOpen}
-                    onOpen={() => setIsPopoverTopOpen(true)}
-                    onClose={() => setIsPopoverTopOpen(false)}
-                    direction="top"
+                    isOpen={openPopover === 'p2'}
+                    onOpen={() => handleOpen('p2')}
+                    onClose={handleClose}
+                    verticalAlignment="bottom"
+                    horizontalAlignment="left"
                     content={
                       <div>
                         <Text>
-                          <strong>Top Popover</strong>
+                          <strong>Bottom Left</strong>
                         </Text>
-                        <Text>This popover appears above the trigger element.</Text>
+                        <Text>Below, left edges aligned.</Text>
                       </div>
                     }
                   >
-                    <Button>Open Popover (Top)</Button>
+                    <Button>Bottom Left</Button>
                   </Popover>
+
                   <Popover
-                    isOpen={isPopoverRightOpen}
-                    onOpen={() => setIsPopoverRightOpen(true)}
-                    onClose={() => setIsPopoverRightOpen(false)}
-                    direction="right"
+                    isOpen={openPopover === 'p3'}
+                    onOpen={() => handleOpen('p3')}
+                    onClose={handleClose}
+                    verticalAlignment="bottom"
+                    horizontalAlignment="right"
                     content={
                       <div>
                         <Text>
-                          <strong>Right Popover</strong>
+                          <strong>Bottom Right</strong>
                         </Text>
-                        <Text>This popover appears to the right of the trigger.</Text>
+                        <Text>Below, right edges aligned.</Text>
                       </div>
                     }
                   >
-                    <Button>Open Popover (Right)</Button>
+                    <Button>Bottom Right</Button>
                   </Popover>
+
                   <Popover
-                    isOpen={isPopoverLeftOpen}
-                    onOpen={() => setIsPopoverLeftOpen(true)}
-                    onClose={() => setIsPopoverLeftOpen(false)}
-                    direction="left"
+                    isOpen={openPopover === 'p4'}
+                    onOpen={() => handleOpen('p4')}
+                    onClose={handleClose}
+                    verticalAlignment="top"
+                    horizontalAlignment="center"
                     content={
                       <div>
                         <Text>
-                          <strong>Left Popover</strong>
+                          <strong>Top Center</strong>
                         </Text>
-                        <Text>This popover appears to the left of the trigger.</Text>
+                        <Text>Above, centered horizontally.</Text>
                       </div>
                     }
                   >
-                    <Button>Open Popover (Left)</Button>
+                    <Button>Top Center</Button>
+                  </Popover>
+
+                  <Popover
+                    isOpen={openPopover === 'p5'}
+                    onOpen={() => handleOpen('p5')}
+                    onClose={handleClose}
+                    verticalAlignment="center"
+                    horizontalAlignment="right"
+                    content={
+                      <div>
+                        <Text>
+                          <strong>Right Center</strong>
+                        </Text>
+                        <Text>Right side, centered vertically.</Text>
+                      </div>
+                    }
+                  >
+                    <Button>Right Center</Button>
+                  </Popover>
+
+                  <Popover
+                    isOpen={openPopover === 'p6'}
+                    onOpen={() => handleOpen('p6')}
+                    onClose={handleClose}
+                    verticalAlignment="center"
+                    horizontalAlignment="left"
+                    content={
+                      <div>
+                        <Text>
+                          <strong>Left Center</strong>
+                        </Text>
+                        <Text>Left side, centered vertically.</Text>
+                      </div>
+                    }
+                  >
+                    <Button>Left Center</Button>
                   </Popover>
                 </div>
+
                 <Text>
                   <p style={{ fontSize: 12, color: 'inherit', opacity: 0.7 }}>
-                    Popovers can be closed by clicking outside, pressing Escape, or clicking the trigger again.
+                    Popovers support independent vertical (top/bottom/center) and horizontal (left/right/center)
+                    alignment for precise positioning control. Spacing can be customized per popover.
                   </p>
                 </Text>
               </div>

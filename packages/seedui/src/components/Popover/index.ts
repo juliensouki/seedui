@@ -1,1 +1,1 @@
-export { Popover, type PopoverProps, type PopoverDirection } from './Popover';
+export { Popover, type PopoverProps, type PopoverVerticalAlignment, type PopoverHorizontalAlignment } from './Popover';
