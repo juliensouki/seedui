@@ -6,6 +6,7 @@ import {
   IconButtonProps,
   InputProps,
   ModalProps,
+  PopoverProps,
   SearchBarProps,
   StepperProps,
   TagProps,
@@ -33,6 +34,7 @@ export interface CustomComponents {
   iconButton?: CustomComponentConfiguration<IconButtonProps>;
   input?: CustomComponentConfiguration<InputProps>;
   modal?: CustomComponentConfiguration<ModalProps>;
+  popover?: CustomComponentConfiguration<PopoverProps>;
   searchBar?: CustomComponentConfiguration<SearchBarProps>;
   stepper?: CustomComponentConfiguration<StepperProps>;
   tag?: CustomComponentConfiguration<TagProps>;
