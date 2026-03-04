@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn install:*)",
+      "Bash(yarn build:package:seedui:*)",
+      "Bash(yarn build:app:docs:*)",
+      "Bash(done)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vite:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(yarn add:*)",
+      "Bash(node:*)",
+      "Bash(grep:*)"
+    ]
+  }
+}

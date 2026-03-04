@@ -32,6 +32,8 @@
     "dev:app:sandbox": "yarn workspace @seedui-react/sandbox run dev",
     "build:app:demo": "yarn workspace @seedui-react/demo run build",
     "dev:app:demo": "yarn workspace @seedui-react/demo run dev",
+    "build:app:docs": "yarn workspace @seedui-react/docs run build",
+    "dev:app:docs": "yarn workspace @seedui-react/docs run dev",
     "build:package:seedui": "yarn workspace @seedui-react/seedui run build",
     "dev:package:seedui": "yarn workspace @seedui-react/seedui run dev"
   },
