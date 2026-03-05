@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@seedui-react/seedui';
 import { ComponentCategory } from '../data/components';
-import { NavPage } from '../data/navigation';
+import { NavPage, ThemeCategory } from '../data/navigation';
 
 const Nav = styled('nav')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -143,17 +143,17 @@ const CategoryLink = styled(NavLink)(({ theme }) => {
 
 interface SidebarProps {
   gettingStartedPages: NavPage[];
-  tokenPages: NavPage[];
+  themeGroups: { category: ThemeCategory; pages: NavPage[] }[];
   componentGroups: { category: ComponentCategory; names: string[] }[];
 }
 
 export const Sidebar: FunctionComponent<SidebarProps> = ({
   gettingStartedPages,
-  tokenPages,
+  themeGroups,
   componentGroups,
 }) => {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
-    tokens: true,
+    theme: true,
   });
 
   const toggle = (key: string) =>
@@ -181,18 +181,32 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
         </div>
       )}
 
-      {tokenPages.length > 0 && (
+      {themeGroups.length > 0 && (
         <div style={{ marginTop: 16 }}>
-          <SectionHeader onClick={() => toggle('tokens')}>
-            Design Tokens
-            <Chevron $open={isOpen('tokens')}>&#8250;</Chevron>
+          <SectionHeader onClick={() => toggle('theme')}>
+            Theme
+            <Chevron $open={isOpen('theme')}>&#8250;</Chevron>
           </SectionHeader>
-          <SectionLinks $open={isOpen('tokens')}>
+          <SectionLinks $open={isOpen('theme')}>
             <div>
-              {tokenPages.map((page) => (
-                <StyledLink key={page.path} to={page.path}>
-                  {page.name}
-                </StyledLink>
+              {themeGroups.map((group) => (
+                <CategoryGroup key={group.category}>
+                  <CategoryHeader onClick={() => toggle(`theme-${group.category}`)}>
+                    {group.category}
+                    <SmallChevron $open={isOpen(`theme-${group.category}`)}>&#8250;</SmallChevron>
+                  </CategoryHeader>
+                  <SectionLinks $open={isOpen(`theme-${group.category}`)}>
+                    <div>
+                      <CategoryLinks>
+                        {group.pages.map((page) => (
+                          <CategoryLink key={page.path} to={page.path}>
+                            {page.name}
+                          </CategoryLink>
+                        ))}
+                      </CategoryLinks>
+                    </div>
+                  </SectionLinks>
+                </CategoryGroup>
               ))}
             </div>
           </SectionLinks>

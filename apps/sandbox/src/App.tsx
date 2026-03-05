@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import { colors, ThemeProvider, Mode, Text, Button, Popover } from '@seedui-react/seedui';
 
 import './style.css';
-import '@fontsource/poppins';
+import '@fontsource-variable/source-serif-4';
 import '@fontsource-variable/inter';
 
 export const App: FunctionComponent = () => {

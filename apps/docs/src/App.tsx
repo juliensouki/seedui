@@ -1,14 +1,17 @@
-import { FunctionComponent, useEffect, useMemo, useRef, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, styled, colors, Mode } from '@seedui-react/seedui';
-import { componentDocs, categoryOrder, ComponentCategory } from './data/components';
-import { gettingStartedPages, tokenPages } from './data/navigation';
+import { componentDocs, categoryOrder } from './data/components';
+import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from './data/navigation';
 import { Topbar } from './components/Topbar';
 import { Sidebar } from './components/Sidebar';
 import { HomePage } from './pages/HomePage';
 import { ComponentPage } from './pages/ComponentPage';
 import { InstallationPage } from './pages/InstallationPage';
 import { QuickStartPage } from './pages/QuickStartPage';
+import { ThemeProviderPage } from './pages/theming/ThemeProviderPage';
+import { ComponentStylesPage } from './pages/theming/ComponentStylesPage';
+import { DefaultPropsPage } from './pages/theming/DefaultPropsPage';
 import { ColorsPage } from './pages/tokens/ColorsPage';
 import { TypographyPage } from './pages/tokens/TypographyPage';
 import { SpacingPage } from './pages/tokens/SpacingPage';
@@ -50,8 +53,17 @@ const Inner = styled('div')(() => ({
   margin: '0 auto',
 }));
 
+const themeGroups = themeCategoryOrder.map((category) => ({
+  category,
+  pages: themePagesByCategory[category],
+}));
+
+const componentGroups = categoryOrder.map((category) => ({
+  category,
+  names: componentDocs.filter((d) => d.category === category).map((d) => d.name),
+})).filter((g) => g.names.length > 0);
+
 export const App: FunctionComponent = () => {
-  const [search, setSearch] = useState('');
   const [mode, setMode] = useState<Mode>('light');
   const contentRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
@@ -59,31 +71,6 @@ export const App: FunctionComponent = () => {
   useEffect(() => {
     contentRef.current?.scrollTo(0, 0);
   }, [pathname]);
-
-  const filtered = useMemo(() => {
-    const q = search.toLowerCase().trim();
-
-    const filteredGettingStarted = gettingStartedPages.filter(
-      (p) => !q || p.name.toLowerCase().includes(q),
-    );
-
-    const filteredTokens = tokenPages.filter(
-      (p) => !q || p.name.toLowerCase().includes(q),
-    );
-
-    const filteredComponents = componentDocs.filter(
-      (d) => !q || d.name.toLowerCase().includes(q),
-    );
-    const componentGroups: { category: ComponentCategory; names: string[] }[] = [];
-    for (const cat of categoryOrder) {
-      const names = filteredComponents
-        .filter((d) => d.category === cat)
-        .map((d) => d.name);
-      if (names.length > 0) componentGroups.push({ category: cat, names });
-    }
-
-    return { gettingStarted: filteredGettingStarted, tokens: filteredTokens, componentGroups };
-  }, [search]);
 
   return (
     <div
@@ -97,12 +84,12 @@ export const App: FunctionComponent = () => {
     >
       <ThemeProvider mode={mode}>
         <Shell>
-          <Topbar search={search} onSearchChange={setSearch} mode={mode} onModeToggle={() => setMode(m => m === 'light' ? 'dark' : 'light')} />
+          <Topbar mode={mode} onModeToggle={() => setMode(m => m === 'light' ? 'dark' : 'light')} />
           <Body>
             <Sidebar
-              gettingStartedPages={filtered.gettingStarted}
-              tokenPages={filtered.tokens}
-              componentGroups={filtered.componentGroups}
+              gettingStartedPages={gettingStartedPages}
+              themeGroups={themeGroups}
+              componentGroups={componentGroups}
             />
             <Content ref={contentRef}>
               <Inner>
@@ -110,6 +97,9 @@ export const App: FunctionComponent = () => {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/getting-started/installation" element={<InstallationPage />} />
                   <Route path="/getting-started/quick-start" element={<QuickStartPage />} />
+                  <Route path="/theming/theme-provider" element={<ThemeProviderPage />} />
+                  <Route path="/theming/component-styles" element={<ComponentStylesPage />} />
+                  <Route path="/theming/default-props" element={<DefaultPropsPage />} />
                   <Route path="/tokens/colors" element={<ColorsPage />} />
                   <Route path="/tokens/typography" element={<TypographyPage />} />
                   <Route path="/tokens/spacing" element={<SpacingPage />} />

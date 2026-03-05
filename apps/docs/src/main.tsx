@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 
 import './style.css';
-import '@fontsource/poppins';
+import '@fontsource-variable/source-serif-4';
 import '@fontsource-variable/inter';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);

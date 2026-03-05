@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes, useContext } from 'react';
+import { ElementType, ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes, useContext } from 'react';
 import styled from 'styled-components';
 
 import { StyledComponentsPrefix } from '../../types/internal';
@@ -10,6 +10,7 @@ import { SeedContext } from '../ThemeProvider/context';
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
 export interface TextProps {
   variant?: TextVariants;
+  as?: ElementType;
   bottomSpacing?: boolean;
 }
 export type TextPropsAndAttributes = PropsWithChildren<
@@ -77,7 +78,7 @@ export const Text = forwardRef<
   PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement>>
 >((props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
   const { customizations } = useContext<SeedContextType>(SeedContext);
-  const { variant, children, bottomSpacing, ...allHTMLAttributes } = getDefaultProps<PropsWithChildren<TextProps>>({
+  const { variant, as: asProp, children, bottomSpacing, ...allHTMLAttributes } = getDefaultProps<PropsWithChildren<TextProps>>({
     providedProps: props,
     globalDefaultProps: customizations?.components?.text?.defaultProps,
     defaultProps,
@@ -88,6 +89,7 @@ export const Text = forwardRef<
   return (
     <TextElement
       ref={forwardedRef}
+      as={asProp}
       $bottomSpacing={bottomSpacing}
       $variant={variant}
       $customizations={customizations.components?.text}

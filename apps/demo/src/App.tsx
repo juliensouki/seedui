@@ -16,7 +16,7 @@ import {
 import { BedIcon, GemIcon, MoonIcon, SunIcon } from 'lucide-react';
 
 import './style.css';
-import '@fontsource/poppins';
+import '@fontsource-variable/source-serif-4';
 import '@fontsource-variable/inter';
 
 const ComponentName = styled(Text)(() => ({

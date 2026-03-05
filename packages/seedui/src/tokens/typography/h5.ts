@@ -1,20 +1,20 @@
 import { TypographyConfig } from '../../types';
 
 export const h5Styles: TypographyConfig = {
-  fontFamily: 'poppins',
-  fontWeight: 'bold',
+  fontFamily: "'Source Serif 4 Variable', serif",
+  fontWeight: 600,
   responsive: {
     desktop: {
-      fontSize: 24,
+      fontSize: 22,
       lineHeight: 28,
     },
     tablet: {
-      fontSize: 24,
-      lineHeight: 28,
+      fontSize: 20,
+      lineHeight: 26,
     },
     mobile: {
-      fontSize: 20,
-      lineHeight: 28,
+      fontSize: 18,
+      lineHeight: 24,
     },
   },
 };

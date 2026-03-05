@@ -505,10 +505,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/poppins@npm:^5.2.5":
-  version: 5.2.5
-  resolution: "@fontsource/poppins@npm:5.2.5"
-  checksum: 12a0bdf89dfe1a1e10ed3ea72437fcf13d6d4bd7d71964acaccc7a9f3bdea561af4110d1a73146995fcc40dedbe7e791750141804102df4fb28469e9d18144e8
+"@fontsource-variable/source-serif-4@npm:^5.2.5":
+  version: 5.2.9
+  resolution: "@fontsource-variable/source-serif-4@npm:5.2.9"
+  checksum: 63dd99e750fed9efd95d4e37dc1b157250e4fb19f374bfc345906c568e13577ac315db1c7b6431956ef41f9ede40f9120aa880ffc0b1c381e2477aea5fc8b4aa
   languageName: node
   linkType: hard
 
@@ -1019,7 +1019,7 @@ __metadata:
   resolution: "@seedui-react/demo@workspace:apps/demo"
   dependencies:
     "@fontsource-variable/inter": ^5.2.5
-    "@fontsource/poppins": ^5.2.5
+    "@fontsource-variable/source-serif-4": ^5.2.5
     "@mdx-js/react": ^3.0.1
     "@mdx-js/rollup": ^3.0.1
     "@seedui-react/seedui": "link:packages/seedui"
@@ -1042,7 +1042,7 @@ __metadata:
   resolution: "@seedui-react/docs@workspace:apps/docs"
   dependencies:
     "@fontsource-variable/inter": ^5.2.5
-    "@fontsource/poppins": ^5.2.5
+    "@fontsource-variable/source-serif-4": ^5.2.5
     "@seedui-react/seedui": "link:packages/seedui"
     "@types/react": ^18.2.0
     "@types/react-dom": ^18.2.15
@@ -1063,7 +1063,7 @@ __metadata:
   resolution: "@seedui-react/sandbox@workspace:apps/sandbox"
   dependencies:
     "@fontsource-variable/inter": ^5.2.5
-    "@fontsource/poppins": ^5.2.5
+    "@fontsource-variable/source-serif-4": ^5.2.5
     "@mdx-js/react": ^3.0.1
     "@mdx-js/rollup": ^3.0.1
     "@seedui-react/seedui": "link:packages/seedui"

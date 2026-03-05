@@ -33,9 +33,9 @@ export const InstallationPage: FunctionComponent = () => {
       <Section>
         <SectionTitle>2. Install fonts</SectionTitle>
         <Text variant="p" style={{ marginBottom: 12 }}>
-          SeedUI uses Inter and Poppins. Install them via Fontsource:
+          SeedUI uses Inter and Source Serif 4. Install them via Fontsource:
         </Text>
-        <CodeBlock code={`npm install @fontsource-variable/inter @fontsource/poppins`} />
+        <CodeBlock code={`npm install @fontsource-variable/inter @fontsource-variable/source-serif-4`} />
       </Section>
 
       <Section>
@@ -43,7 +43,7 @@ export const InstallationPage: FunctionComponent = () => {
         <Text variant="p" style={{ marginBottom: 12 }}>
           Import the fonts at the root of your application (e.g. main.tsx):
         </Text>
-        <CodeBlock code={`import '@fontsource-variable/inter';\nimport '@fontsource/poppins/400.css';\nimport '@fontsource/poppins/600.css';\nimport '@fontsource/poppins/700.css';`} />
+        <CodeBlock code={`import '@fontsource-variable/inter';\nimport '@fontsource-variable/source-serif-4';`} />
       </Section>
 
       <Section>
