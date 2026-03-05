@@ -75,7 +75,7 @@ const mapVariantToElement: Record<TextVariants, ReturnType<typeof TextFactory>> 
 
 export const Text = forwardRef<
   HTMLParagraphElement,
-  PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement>>
+  PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement> & { as?: ElementType }>
 >((props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
   const { customizations } = useContext<SeedContextType>(SeedContext);
   const { variant, as: asProp, children, bottomSpacing, ...allHTMLAttributes } = getDefaultProps<PropsWithChildren<TextProps>>({

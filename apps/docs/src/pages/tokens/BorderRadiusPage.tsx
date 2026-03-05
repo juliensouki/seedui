@@ -1,18 +1,21 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
-}));
 
 const Grid = styled('div')(() => ({
   display: 'grid',
@@ -54,6 +57,10 @@ const Value = styled('span')(({ theme }) => ({
   color: theme.colors.neutral[500],
 }));
 
+const tocItems = [
+  { id: 'scale', label: 'Scale' },
+];
+
 export const BorderRadiusPage: FunctionComponent = () => {
   const theme = useTheme();
   const entries = Object.entries(theme.borderRadius).sort(
@@ -61,16 +68,17 @@ export const BorderRadiusPage: FunctionComponent = () => {
   );
 
   return (
-    <div>
-      <Text variant="h3">Border Radius</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">Border Radius</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
         Border radius tokens for consistent rounding across components.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Scale</SectionTitle>
+      <Section id="scale">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
         <Text variant="p" style={{ marginBottom: 16 }}>
           Access via <code>theme.borderRadius['100']</code> (returns the pixel value as a number).
         </Text>
@@ -84,6 +92,9 @@ export const BorderRadiusPage: FunctionComponent = () => {
           ))}
         </Grid>
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

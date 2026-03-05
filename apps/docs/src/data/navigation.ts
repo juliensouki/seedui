@@ -18,6 +18,7 @@ export const themeCategoryOrder: ThemeCategory[] = ['Configuration', 'Design Tok
 
 const configurationPages: NavPage[] = [
   { name: 'ThemeProvider', path: '/theming/theme-provider', section: 'Theme' },
+  { name: 'Dark Mode', path: '/theming/dark-mode', section: 'Theme' },
   { name: 'Component Styles', path: '/theming/component-styles', section: 'Theme' },
   { name: 'Default Props', path: '/theming/default-props', section: 'Theme' },
 ];

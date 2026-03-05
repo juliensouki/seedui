@@ -11,7 +11,8 @@
       "Bash(curl:*)",
       "Bash(yarn add:*)",
       "Bash(node:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(npm run:*)"
     ]
   }
 }

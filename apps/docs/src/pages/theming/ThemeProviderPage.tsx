@@ -1,28 +1,21 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { CodeBlock } from '../../components/CodeBlock';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
-
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
-}));
-
-const PropsTableWrapper = styled('div')(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    borderRadius: 8,
-    overflow: 'hidden',
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-  };
-});
 
 const Table = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -30,49 +23,59 @@ const Table = styled('table')(({ theme }) => {
     width: '100%',
     borderCollapse: 'collapse' as const,
     fontSize: 14,
-    '& th': {
-      textAlign: 'left' as const,
-      padding: '10px 16px',
-      fontWeight: 600,
-      fontSize: 12,
-      textTransform: 'uppercase' as const,
-      letterSpacing: '0.03em',
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-      color: theme.colors.neutral[500],
-      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    },
-    '& td': {
-      padding: '10px 16px',
-      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-      color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
-    },
-    '& tr:last-child td': {
-      borderBottom: 'none',
-    },
-    '& code': {
-      fontSize: 13,
-      padding: '2px 6px',
-      borderRadius: 4,
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-      fontFamily: "'SF Mono', 'Fira Code', monospace",
-    },
+    fontFamily: 'inherit',
+    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
   };
 });
 
+const Th = styled('th')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    textAlign: 'left' as const,
+    padding: '10px 0px',
+    fontWeight: 600,
+    fontSize: 12,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.04em',
+    color: theme.colors.neutral[500],
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+  };
+});
+
+const Td = styled('td')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    padding: `${theme.spacing[200]}px 0`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
+    verticalAlign: 'top' as const,
+    lineHeight: 1.5,
+  };
+});
+
+const tocItems = [
+  { id: 'section-overview', label: 'Overview' },
+  { id: 'section-props', label: 'Props' },
+  { id: 'section-light-dark-mode', label: 'Light and dark mode' },
+  { id: 'section-customizing-the-theme', label: 'Customizing the theme' },
+  { id: 'section-themecustomization-reference', label: 'ThemeCustomization reference' },
+  { id: 'section-accessing-the-theme', label: 'Accessing the theme' },
+];
+
 export const ThemeProviderPage: FunctionComponent = () => {
   return (
-    <div>
-      <Text variant="h3">ThemeProvider</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">ThemeProvider</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        The root component that provides theming and customization to all SeedUI components.
+        The root component that provides theming and customization to all seedui components.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Overview</SectionTitle>
+      <Section id="section-overview">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Overview</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
-          Every SeedUI application must be wrapped in a <code>ThemeProvider</code>. It supplies the
+          Every seedui application must be wrapped in a <code>ThemeProvider</code>. It supplies the
           design tokens (colors, spacing, typography, etc.) and component customizations to the
           entire component tree via React context.
         </Text>
@@ -87,46 +90,44 @@ function App() {
 }`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Props</SectionTitle>
-        <PropsTableWrapper>
-          <Table>
+      <Section id="section-props">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Props</Text>
+        <Table>
             <thead>
               <tr>
-                <th>Prop</th>
-                <th>Type</th>
-                <th>Default</th>
-                <th>Description</th>
+                <Th>Prop</Th>
+                <Th>Type</Th>
+                <Th>Default</Th>
+                <Th>Description</Th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><code>mode</code></td>
-                <td><code>'light' | 'dark'</code></td>
-                <td><code>'light'</code></td>
-                <td>Sets the color mode for the entire application.</td>
+                <Td><code>mode</code></Td>
+                <Td><code>'light' | 'dark'</code></Td>
+                <Td><code>'light'</code></Td>
+                <Td>Sets the color mode for the entire application.</Td>
               </tr>
               <tr>
-                <td><code>theme</code></td>
-                <td><code>ThemeCustomization</code></td>
-                <td><code>undefined</code></td>
-                <td>Optional theme customization object. Allows overriding colors, spacing, typography, component styles, and more.</td>
+                <Td><code>theme</code></Td>
+                <Td><code>ThemeCustomization</code></Td>
+                <Td><code>undefined</code></Td>
+                <Td>Optional theme customization object. Allows overriding colors, spacing, typography, component styles, and more.</Td>
               </tr>
               <tr>
-                <td><code>children</code></td>
-                <td><code>ReactNode</code></td>
-                <td>&mdash;</td>
-                <td>Your application content.</td>
+                <Td><code>children</code></Td>
+                <Td><code>ReactNode</code></Td>
+                <Td>&mdash;</Td>
+                <Td>Your application content.</Td>
               </tr>
             </tbody>
           </Table>
-        </PropsTableWrapper>
       </Section>
 
-      <Section>
-        <SectionTitle>Light and dark mode</SectionTitle>
+      <Section id="section-light-dark-mode">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Light and dark mode</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
-          Toggle between light and dark mode by changing the <code>mode</code> prop. All SeedUI
+          Toggle between light and dark mode by changing the <code>mode</code> prop. All seedui
           components and design tokens automatically adapt to the current mode.
         </Text>
         <CodeBlock code={`import { useState } from 'react';
@@ -146,8 +147,8 @@ function App() {
 }`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Customizing the theme</SectionTitle>
+      <Section id="section-customizing-the-theme">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Customizing the theme</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           Pass a <code>ThemeCustomization</code> object to the <code>theme</code> prop to override
           any design token or component behavior globally.
@@ -180,65 +181,63 @@ function App() {
 }`} />
       </Section>
 
-      <Section>
-        <SectionTitle>ThemeCustomization reference</SectionTitle>
+      <Section id="section-themecustomization-reference">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>ThemeCustomization reference</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           The full shape of the customization object:
         </Text>
-        <PropsTableWrapper>
-          <Table>
+        <Table>
             <thead>
               <tr>
-                <th>Property</th>
-                <th>Type</th>
-                <th>Description</th>
+                <Th>Property</Th>
+                <Th>Type</Th>
+                <Th>Description</Th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><code>colors</code></td>
-                <td><code>{'{ light?, dark? }'}</code></td>
-                <td>Override semantic colors per mode. Pass a hex string to auto-generate all shades, or provide individual shade overrides.</td>
+                <Td><code>colors</code></Td>
+                <Td><code>{'{ light?, dark? }'}</code></Td>
+                <Td>Override semantic colors per mode. Pass a hex string to auto-generate all shades, or provide individual shade overrides.</Td>
               </tr>
               <tr>
-                <td><code>spacing</code></td>
-                <td><code>number</code></td>
-                <td>Multiplier applied to the base 8px spacing scale (e.g. <code>1.5</code> makes all spacing 50% larger).</td>
+                <Td><code>spacing</code></Td>
+                <Td><code>number</code></Td>
+                <Td>Multiplier applied to the base 8px spacing scale (e.g. <code>1.5</code> makes all spacing 50% larger).</Td>
               </tr>
               <tr>
-                <td><code>typography</code></td>
-                <td><code>CustomTypographyConfig</code></td>
-                <td>Override font family, weight, or responsive sizes for any typography variant.</td>
+                <Td><code>typography</code></Td>
+                <Td><code>CustomTypographyConfig</code></Td>
+                <Td>Override font family, weight, or responsive sizes for any typography variant.</Td>
               </tr>
               <tr>
-                <td><code>borderRadius</code></td>
-                <td><code>Partial&lt;BorderRadius&gt;</code></td>
-                <td>Override specific border-radius token values.</td>
+                <Td><code>borderRadius</code></Td>
+                <Td><code>Partial&lt;BorderRadius&gt;</code></Td>
+                <Td>Override specific border-radius token values.</Td>
               </tr>
               <tr>
-                <td><code>boxShadow</code></td>
-                <td><code>{'{ light?, dark? }'}</code></td>
-                <td>Override box-shadow elevation values per mode.</td>
+                <Td><code>boxShadow</code></Td>
+                <Td><code>{'{ light?, dark? }'}</code></Td>
+                <Td>Override box-shadow elevation values per mode.</Td>
               </tr>
               <tr>
-                <td><code>breakpoints</code></td>
-                <td><code>Partial&lt;Breakpoints&gt;</code></td>
-                <td>Override responsive breakpoint values.</td>
+                <Td><code>breakpoints</code></Td>
+                <Td><code>Partial&lt;Breakpoints&gt;</code></Td>
+                <Td>Override responsive breakpoint values.</Td>
               </tr>
               <tr>
-                <td><code>components</code></td>
-                <td><code>CustomComponents</code></td>
-                <td>Per-component customization: default props, styles, and conditional styles.</td>
+                <Td><code>components</code></Td>
+                <Td><code>CustomComponents</code></Td>
+                <Td>Per-component customization: default props, styles, and conditional styles.</Td>
               </tr>
             </tbody>
           </Table>
-        </PropsTableWrapper>
       </Section>
 
-      <Section>
-        <SectionTitle>Accessing the theme</SectionTitle>
+      <Section id="section-accessing-the-theme">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Accessing the theme</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
-          SeedUI provides two ways to access theme values in your own components:
+          seedui provides two ways to access theme values in your own components:
         </Text>
         <Text variant="p" style={{ marginBottom: 8, fontWeight: 500 }}>
           1. The <code>useTheme</code> hook
@@ -260,6 +259,9 @@ const Box = styled('div')(({ theme }) => ({
   borderRadius: theme.borderRadius[50],
 }));`} />
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

@@ -1,18 +1,21 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
-}));
 
 const Table = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -20,30 +23,39 @@ const Table = styled('table')(({ theme }) => {
     width: '100%',
     borderCollapse: 'collapse' as const,
     fontSize: 14,
-    '& th': {
-      textAlign: 'left' as const,
-      padding: '10px 16px',
-      fontWeight: 600,
-      fontSize: 12,
-      textTransform: 'uppercase' as const,
-      letterSpacing: '0.03em',
-      color: theme.colors.neutral[500],
-      borderBottom: `2px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    },
-    '& td': {
-      padding: '10px 16px',
-      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-      color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
-    },
-    '& code': {
-      fontFamily: "'SF Mono', 'Fira Code', monospace",
-      fontSize: 13,
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-      padding: '2px 6px',
-      borderRadius: 4,
-    },
+    fontFamily: 'inherit',
+    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
   };
 });
+
+const Th = styled('th')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    textAlign: 'left' as const,
+    padding: '10px 0px',
+    fontWeight: 600,
+    fontSize: 12,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.04em',
+    color: theme.colors.neutral[500],
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+  };
+});
+
+const Td = styled('td')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    padding: `${theme.spacing[200]}px 0`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
+    verticalAlign: 'top' as const,
+    lineHeight: 1.5,
+  };
+});
+
+const tocItems = [
+  { id: 'pixel-breakpoints', label: 'Pixel breakpoints' },
+  { id: 'semantic-aliases', label: 'Semantic aliases' },
+];
 
 export const BreakpointsPage: FunctionComponent = () => {
   const theme = useTheme();
@@ -63,61 +75,65 @@ export const BreakpointsPage: FunctionComponent = () => {
   ];
 
   return (
-    <div>
-      <Text variant="h3">Breakpoints</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">Breakpoints</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
         Responsive breakpoints for adapting layouts across screen sizes.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Pixel breakpoints</SectionTitle>
+      <Section id="pixel-breakpoints">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Pixel breakpoints</Text>
         <Text variant="p" style={{ marginBottom: 16 }}>
           Access via <code>theme.breakpoints.sm</code> etc. Values are in pixels.
         </Text>
         <Table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Value</th>
-              <th>Min-width query</th>
+              <Th>Name</Th>
+              <Th>Value</Th>
+              <Th>Min-width query</Th>
             </tr>
           </thead>
           <tbody>
             {pixelBreakpoints.map((bp) => (
               <tr key={bp.name}>
-                <td><code>{bp.name}</code></td>
-                <td>{bp.value}px</td>
-                <td><code>@media (min-width: {bp.value}px)</code></td>
+                <Td><code>{bp.name}</code></Td>
+                <Td>{bp.value}px</Td>
+                <Td><code>@media (min-width: {bp.value}px)</code></Td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Section>
 
-      <Section>
-        <SectionTitle>Semantic aliases</SectionTitle>
+      <Section id="semantic-aliases">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Semantic aliases</Text>
         <Text variant="p" style={{ marginBottom: 16 }}>
           Convenience aliases that map to the pixel breakpoints above.
         </Text>
         <Table>
           <thead>
             <tr>
-              <th>Alias</th>
-              <th>Maps to</th>
+              <Th>Alias</Th>
+              <Th>Maps to</Th>
             </tr>
           </thead>
           <tbody>
             {aliases.map((a) => (
               <tr key={a.name}>
-                <td><code>{a.name}</code></td>
-                <td><code>{a.mapsTo}</code></td>
+                <Td><code>{a.name}</code></Td>
+                <Td><code>{a.mapsTo}</code></Td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

@@ -12,6 +12,7 @@ import { QuickStartPage } from './pages/QuickStartPage';
 import { ThemeProviderPage } from './pages/theming/ThemeProviderPage';
 import { ComponentStylesPage } from './pages/theming/ComponentStylesPage';
 import { DefaultPropsPage } from './pages/theming/DefaultPropsPage';
+import { DarkModePage } from './pages/theming/DarkModePage';
 import { ColorsPage } from './pages/tokens/ColorsPage';
 import { TypographyPage } from './pages/tokens/TypographyPage';
 import { SpacingPage } from './pages/tokens/SpacingPage';
@@ -98,6 +99,7 @@ export const App: FunctionComponent = () => {
                   <Route path="/getting-started/installation" element={<InstallationPage />} />
                   <Route path="/getting-started/quick-start" element={<QuickStartPage />} />
                   <Route path="/theming/theme-provider" element={<ThemeProviderPage />} />
+                  <Route path="/theming/dark-mode" element={<DarkModePage />} />
                   <Route path="/theming/component-styles" element={<ComponentStylesPage />} />
                   <Route path="/theming/default-props" element={<DefaultPropsPage />} />
                   <Route path="/tokens/colors" element={<ColorsPage />} />

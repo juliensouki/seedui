@@ -171,7 +171,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <img
           src="/logo-black.svg"
-          alt="SeedUI"
+          alt="seedui"
           height={24}
           width={24}
           style={mode === 'dark' ? { filter: 'invert(1)' } : undefined}

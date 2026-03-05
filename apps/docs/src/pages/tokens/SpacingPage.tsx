@@ -1,18 +1,21 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
-}));
 
 const TokenRow = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -55,6 +58,10 @@ const Bar = styled('div')(({ theme }) => ({
   transition: 'width 0.2s',
 }));
 
+const tocItems = [
+  { id: 'scale', label: 'Scale' },
+];
+
 export const SpacingPage: FunctionComponent = () => {
   const theme = useTheme();
   const entries = Object.entries(theme.spacing).sort(
@@ -62,16 +69,17 @@ export const SpacingPage: FunctionComponent = () => {
   );
 
   return (
-    <div>
-      <Text variant="h3">Spacing</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">Spacing</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
         A consistent spacing scale used for padding, margins, and gaps.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Scale</SectionTitle>
+      <Section id="scale">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
         <Text variant="p" style={{ marginBottom: 16 }}>
           Access via <code>theme.spacing['100']</code> (returns the pixel value as a number).
         </Text>
@@ -83,6 +91,9 @@ export const SpacingPage: FunctionComponent = () => {
           </TokenRow>
         ))}
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

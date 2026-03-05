@@ -1,17 +1,19 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme, colors } from '@seedui-react/seedui';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
-}));
-
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
 }));
 
 const PaletteLabel = styled(Text)(({ theme }) => {
@@ -61,21 +63,27 @@ const semanticNames = ['primary', 'secondary', 'neutral', 'success', 'info', 'wa
 
 const primitiveNames = ['purple', 'turquoise', 'grey', 'blue', 'green', 'orange', 'red'] as const;
 
+const tocItems = [
+  { id: 'semantic-colors', label: 'Semantic colors' },
+  { id: 'primitive-colors', label: 'Primitive colors' },
+];
+
 export const ColorsPage: FunctionComponent = () => {
   const theme = useTheme();
   const primitives = theme.mode === 'light' ? colors.light.primitive : colors.dark.primitive;
 
   return (
-    <div>
-      <Text variant="h3">Colors</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">Colors</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
         Semantic and primitive color palettes. Semantic colors adapt to light/dark mode.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Semantic colors</SectionTitle>
+      <Section id="semantic-colors">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Semantic colors</Text>
         <Text variant="p" style={{ marginBottom: 8 }}>
           Use semantic colors via <code>theme.colors.primary[600]</code> etc. They map to primitive palettes and change between modes.
         </Text>
@@ -103,8 +111,8 @@ export const ColorsPage: FunctionComponent = () => {
         })}
       </Section>
 
-      <Section>
-        <SectionTitle>Primitive colors</SectionTitle>
+      <Section id="primitive-colors">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Primitive colors</Text>
         <Text variant="p" style={{ marginBottom: 8 }}>
           Raw color palettes available via the <code>colors</code> export. Use semantic colors in components whenever possible.
         </Text>
@@ -133,6 +141,9 @@ export const ColorsPage: FunctionComponent = () => {
           );
         })}
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

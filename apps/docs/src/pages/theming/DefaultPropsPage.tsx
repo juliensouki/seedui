@@ -1,18 +1,20 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { CodeBlock } from '../../components/CodeBlock';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
-}));
-
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
 }));
 
 const Callout = styled('div')(({ theme }) => {
@@ -36,62 +38,63 @@ const Callout = styled('div')(({ theme }) => {
   };
 });
 
-const PropsTableWrapper = styled('div')(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    borderRadius: 8,
-    overflow: 'hidden',
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-  };
-});
-
 const Table = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: '100%',
     borderCollapse: 'collapse' as const,
     fontSize: 14,
-    '& th': {
-      textAlign: 'left' as const,
-      padding: '10px 16px',
-      fontWeight: 600,
-      fontSize: 12,
-      textTransform: 'uppercase' as const,
-      letterSpacing: '0.03em',
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-      color: theme.colors.neutral[500],
-      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    },
-    '& td': {
-      padding: '10px 16px',
-      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-      color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
-    },
-    '& tr:last-child td': {
-      borderBottom: 'none',
-    },
-    '& code': {
-      fontSize: 13,
-      padding: '2px 6px',
-      borderRadius: 4,
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-      fontFamily: "'SF Mono', 'Fira Code', monospace",
-    },
+    fontFamily: 'inherit',
+    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
   };
 });
 
+const Th = styled('th')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    textAlign: 'left' as const,
+    padding: '10px 0px',
+    fontWeight: 600,
+    fontSize: 12,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.04em',
+    color: theme.colors.neutral[500],
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+  };
+});
+
+const Td = styled('td')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    padding: `${theme.spacing[200]}px 0`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
+    verticalAlign: 'top' as const,
+    lineHeight: 1.5,
+  };
+});
+
+const tocItems = [
+  { id: 'section-overview', label: 'Overview' },
+  { id: 'section-basic-usage', label: 'Basic usage' },
+  { id: 'section-multiple-components', label: 'Multiple components' },
+  { id: 'section-priority-order', label: 'Priority order' },
+  { id: 'section-combining-with-styles', label: 'Combining with styles' },
+  { id: 'section-supported-components', label: 'Supported components' },
+];
+
 export const DefaultPropsPage: FunctionComponent = () => {
   return (
-    <div>
-      <Text variant="h3">Default Props</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">Default Props</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        Set default prop values for any SeedUI component globally through the theme.
+        Set default prop values for any seedui component globally through the theme.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Overview</SectionTitle>
+      <Section id="section-overview">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Overview</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           Instead of passing the same props to every instance of a component, you can define global
           defaults via the <code>theme.components</code> configuration. This is useful for
@@ -102,8 +105,8 @@ export const DefaultPropsPage: FunctionComponent = () => {
         </Callout>
       </Section>
 
-      <Section>
-        <SectionTitle>Basic usage</SectionTitle>
+      <Section id="section-basic-usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Basic usage</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           Use the <code>defaultProps</code> property within a component's configuration to set
           global defaults.
@@ -135,8 +138,8 @@ function App() {
 }`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Multiple components</SectionTitle>
+      <Section id="section-multiple-components">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Multiple components</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           You can configure defaults for as many components as you need in a single theme object.
         </Text>
@@ -174,43 +177,41 @@ function App() {
 };`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Priority order</SectionTitle>
+      <Section id="section-priority-order">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Priority order</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           Props are resolved in the following order, from highest to lowest priority:
         </Text>
-        <PropsTableWrapper>
-          <Table>
+        <Table>
             <thead>
               <tr>
-                <th>Priority</th>
-                <th>Source</th>
-                <th>Description</th>
+                <Th>Priority</Th>
+                <Th>Source</Th>
+                <Th>Description</Th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>1 (highest)</td>
-                <td><code>{'<Button size="sm" />'}</code></td>
-                <td>Props passed directly to the component instance.</td>
+                <Td>1 (highest)</Td>
+                <Td><code>{'<Button size="sm" />'}</code></Td>
+                <Td>Props passed directly to the component instance.</Td>
               </tr>
               <tr>
-                <td>2</td>
-                <td><code>theme.components.button.defaultProps</code></td>
-                <td>Global defaults set via ThemeProvider.</td>
+                <Td>2</Td>
+                <Td><code>theme.components.button.defaultProps</code></Td>
+                <Td>Global defaults set via ThemeProvider.</Td>
               </tr>
               <tr>
-                <td>3 (lowest)</td>
-                <td>Component built-in defaults</td>
-                <td>The component's own internal default values.</td>
+                <Td>3 (lowest)</Td>
+                <Td>Component built-in defaults</Td>
+                <Td>The component's own internal default values.</Td>
               </tr>
             </tbody>
           </Table>
-        </PropsTableWrapper>
       </Section>
 
-      <Section>
-        <SectionTitle>Combining with styles</SectionTitle>
+      <Section id="section-combining-with-styles">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Combining with styles</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           Default props work together with global style overrides and conditional styles. You can
           use all three in the same component configuration.
@@ -239,10 +240,10 @@ function App() {
 };`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Supported components</SectionTitle>
+      <Section id="section-supported-components">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Supported components</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
-          All SeedUI components that accept props support global default overrides:
+          All seedui components that accept props support global default overrides:
         </Text>
         <Text variant="p" style={{ lineHeight: 2 }}>
           <code>button</code> <code>card</code> <code>iconButton</code> <code>input</code>{' '}
@@ -251,6 +252,9 @@ function App() {
           <code>toggle</code> <code>tooltip</code>
         </Text>
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

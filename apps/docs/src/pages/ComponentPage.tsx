@@ -25,17 +25,6 @@ const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-const SectionTitle = styled(Text)(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    fontWeight: 600,
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
-    fontSize: 18,
-    letterSpacing: '0.01em',
-    marginBottom: 12,
-  };
-});
-
 const AnatomyTable = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
@@ -107,7 +96,7 @@ export const ComponentPage: FunctionComponent = () => {
       <MainContent>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <Text variant="h3">{doc.name}</Text>
+            <Text variant="h3" as="h1">{doc.name}</Text>
             <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
               {doc.description}
             </Text>
@@ -125,7 +114,7 @@ export const ComponentPage: FunctionComponent = () => {
         <Divider spacing={28} />
 
         <Section id="section-overview">
-          <SectionTitle>Overview</SectionTitle>
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Overview</Text>
           <ComponentDemo><doc.example /></ComponentDemo>
           <Text variant="p" style={{ lineHeight: 1.7, opacity: 0.8, marginTop: 20 }}>
             {doc.overview}
@@ -133,17 +122,17 @@ export const ComponentPage: FunctionComponent = () => {
         </Section>
 
         <Section id="section-import">
-          <SectionTitle>Import</SectionTitle>
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Import</Text>
           <CodeBlock code={`import { ${doc.name} } from '@seedui-react/seedui';`} />
         </Section>
 
         <Section id="section-usage">
-          <SectionTitle>Usage</SectionTitle>
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
           {doc.usageExamples ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
               {doc.usageExamples.map((ex, i) => (
                 <div key={i}>
-                  <Text variant="p" style={{ marginBottom: 6, fontSize: 15, fontWeight: 600 }}>{ex.title}</Text>
+                  <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>{ex.title}</Text>
                   <Text variant="p" style={{ opacity: 0.7, marginBottom: 12, lineHeight: 1.6 }}>
                     {ex.description}
                   </Text>
@@ -157,7 +146,7 @@ export const ComponentPage: FunctionComponent = () => {
         </Section>
 
         <Section id="section-anatomy">
-          <SectionTitle>Anatomy</SectionTitle>
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Anatomy</Text>
           <Text variant="p" style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: 20 }}>
             The diagram below shows the internal structure of the component. Each part can be customized
             either through the <code>htmlAttributes</code> prop or by targeting its CSS class.
@@ -186,7 +175,7 @@ export const ComponentPage: FunctionComponent = () => {
         </Section>
 
         <Section id="section-props">
-          <SectionTitle>Props</SectionTitle>
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Props</Text>
           <PropsTable props={doc.props} />
         </Section>
 

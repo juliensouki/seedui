@@ -1,18 +1,21 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
-}));
 
 const Grid = styled('div')(() => ({
   display: 'grid',
@@ -53,21 +56,26 @@ const ShadowValue = styled('span')(({ theme }) => ({
   wordBreak: 'break-all' as const,
 }));
 
+const tocItems = [
+  { id: 'levels', label: 'Levels' },
+];
+
 export const BoxShadowPage: FunctionComponent = () => {
   const theme = useTheme();
   const entries = Object.entries(theme.boxShadow);
 
   return (
-    <div>
-      <Text variant="h3">Box Shadow</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">Box Shadow</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
         Elevation levels for creating depth and visual hierarchy.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Levels</SectionTitle>
+      <Section id="levels">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Levels</Text>
         <Text variant="p" style={{ marginBottom: 16 }}>
           Access via <code>theme.boxShadow[1]</code> through <code>theme.boxShadow[5]</code>.
         </Text>
@@ -80,6 +88,9 @@ export const BoxShadowPage: FunctionComponent = () => {
           ))}
         </Grid>
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

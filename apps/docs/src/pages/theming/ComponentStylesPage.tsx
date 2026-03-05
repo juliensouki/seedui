@@ -1,18 +1,20 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { CodeBlock } from '../../components/CodeBlock';
+import { TableOfContents } from '../../components/TableOfContents';
+
+const PageLayout = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+}));
+
+const MainContent = styled('div')(() => ({
+  flex: 1,
+  minWidth: 0,
+}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
-}));
-
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
 }));
 
 const Callout = styled('div')(({ theme }) => {
@@ -36,20 +38,30 @@ const Callout = styled('div')(({ theme }) => {
   };
 });
 
+const tocItems = [
+  { id: 'section-overview', label: 'Overview' },
+  { id: 'section-static-style-overrides', label: 'Static style overrides' },
+  { id: 'section-conditional-styles', label: 'Conditional styles' },
+  { id: 'section-combining-static-and-conditional-styles', label: 'Combining static and conditional styles' },
+  { id: 'section-using-the-theme-in-conditions', label: 'Using the theme in conditions' },
+  { id: 'section-supported-components', label: 'Supported components' },
+];
+
 export const ComponentStylesPage: FunctionComponent = () => {
   return (
-    <div>
-      <Text variant="h3">Component Styles</Text>
+    <PageLayout>
+      <MainContent>
+      <Text variant="h3" as="h1">Component Styles</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        Override and extend the styles of any SeedUI component globally through the theme.
+        Override and extend the styles of any seedui component globally through the theme.
       </Text>
 
       <Divider spacing={28} />
 
-      <Section>
-        <SectionTitle>Overview</SectionTitle>
+      <Section id="section-overview">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Overview</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
-          Every SeedUI component supports global style customization through the{' '}
+          Every seedui component supports global style customization through the{' '}
           <code>theme.components</code> configuration. You can apply static CSS overrides and
           conditional styles that respond to component props and theme values &mdash; all without
           touching individual component instances.
@@ -60,8 +72,8 @@ export const ComponentStylesPage: FunctionComponent = () => {
         </Callout>
       </Section>
 
-      <Section>
-        <SectionTitle>Static style overrides</SectionTitle>
+      <Section id="section-static-style-overrides">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Static style overrides</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           Use the <code>styles</code> property to apply CSS overrides to every instance of a
           component. The value is a standard CSS-in-JS object.
@@ -100,8 +112,8 @@ function App() {
 }`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Conditional styles</SectionTitle>
+      <Section id="section-conditional-styles">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Conditional styles</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           Use <code>conditionalStyles</code> to apply styles only when certain conditions are met.
           Each entry has a <code>condition</code> function that receives the component's props and
@@ -138,8 +150,8 @@ function App() {
         </Text>
       </Section>
 
-      <Section>
-        <SectionTitle>Combining static and conditional styles</SectionTitle>
+      <Section id="section-combining-static-and-conditional-styles">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Combining static and conditional styles</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           You can use both <code>styles</code> and <code>conditionalStyles</code> together. Static
           styles are applied first, then conditional styles are layered on top.
@@ -174,8 +186,8 @@ function App() {
 };`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Using the theme in conditions</SectionTitle>
+      <Section id="section-using-the-theme-in-conditions">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Using the theme in conditions</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           The <code>condition</code> function receives the current theme as its second argument,
           allowing you to write mode-aware or token-aware conditional styles.
@@ -198,8 +210,8 @@ function App() {
 };`} />
       </Section>
 
-      <Section>
-        <SectionTitle>Supported components</SectionTitle>
+      <Section id="section-supported-components">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Supported components</Text>
         <Text variant="p" style={{ marginBottom: 12 }}>
           The following components support global style customization:
         </Text>
@@ -210,6 +222,9 @@ function App() {
           <code>toggle</code> <code>tooltip</code>
         </Text>
       </Section>
-    </div>
+      </MainContent>
+
+      <TableOfContents items={tocItems} />
+    </PageLayout>
   );
 };

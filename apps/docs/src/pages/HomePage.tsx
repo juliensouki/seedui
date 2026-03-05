@@ -41,10 +41,6 @@ const FeatureCard = styled('div')(({ theme }) => {
   };
 });
 
-const FeatureTitle = styled(Text)(() => ({
-  fontWeight: 600,
-  marginBottom: 6,
-}));
 
 const FeatureDescription = styled(Text)(({ theme }) => ({
   color: theme.colors.neutral[500],
@@ -612,31 +608,31 @@ export const HomePage: FunctionComponent = () => {
       <Divider spacing={28} />
 
       <Section>
-        <SectionTitle>Why SeedUI</SectionTitle>
+        <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>Why seedui</Text>
         <FeatureGrid>
           <FeatureCard>
-            <FeatureTitle variant="h6">Design Token System</FeatureTitle>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Design Token System</Text>
             <FeatureDescription>
               A comprehensive set of tokens for colors, typography, spacing, border radius,
               box shadows, and breakpoints. Every value is consistent and overridable.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <FeatureTitle variant="h6">Fully Themeable</FeatureTitle>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Fully Themeable</Text>
             <FeatureDescription>
               Customize the entire look and feel through the ThemeProvider. Override design tokens,
               set global default props, and apply conditional styles to any component.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <FeatureTitle variant="h6">Dark Mode</FeatureTitle>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Dark Mode</Text>
             <FeatureDescription>
               Built-in light and dark mode support. All components and tokens adapt automatically
               when you switch modes — no extra configuration needed.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <FeatureTitle variant="h6">Styled Components</FeatureTitle>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Styled Components</Text>
             <FeatureDescription>
               Built on styled-components with full TypeScript support. Use the re-exported{' '}
               <code>styled</code> and <code>useTheme</code> utilities to build custom components
@@ -644,14 +640,14 @@ export const HomePage: FunctionComponent = () => {
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <FeatureTitle variant="h6">TypeScript First</FeatureTitle>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>TypeScript First</Text>
             <FeatureDescription>
               Every component, token, and theme configuration is fully typed. Get autocompletion
               and type safety for props, style overrides, and conditional style conditions.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <FeatureTitle variant="h6">Component Customization</FeatureTitle>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Component Customization</Text>
             <FeatureDescription>
               Go beyond props — apply global CSS overrides and conditional styles that react to
               component props and theme values, all from a single configuration object.
