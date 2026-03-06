@@ -7,7 +7,7 @@ import { NavPage, ThemeCategory } from '../data/navigation';
 const Nav = styled('nav')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    width: 220,
+    width: 260,
     flexShrink: 0,
     borderRight: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
     backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
@@ -28,11 +28,9 @@ const SectionHeader = styled('button')(({ theme }) => {
     border: 'none',
     background: 'none',
     cursor: 'pointer',
-    color: theme.colors.neutral[500],
-    fontSize: 12,
-    textTransform: 'uppercase' as const,
-    letterSpacing: '0.05em',
-    fontWeight: 600,
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
+    fontSize: 14,
+    fontWeight: 700,
     fontFamily: 'inherit',
     '&:hover': {
       color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
@@ -63,11 +61,19 @@ const SectionLinks = styled('div')<{ $open: boolean }>(({ $open }) => ({
   },
 }));
 
+const LinkList = styled('div')(() => ({
+  padding: '0 10px',
+  display: 'flex',
+  flexDirection: 'column' as const,
+  gap: 1,
+}));
+
 const StyledLink = styled(NavLink)(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
-    padding: '7px 20px',
+    padding: '7px 10px',
+    borderRadius: 6,
     fontSize: 14,
     fontFamily: 'inherit',
     color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
@@ -103,7 +109,8 @@ const CategoryHeader = styled('button')(({ theme }) => {
     fontWeight: 600,
     color: theme.colors.neutral[400],
     fontFamily: 'inherit',
-    letterSpacing: '0.03em',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.05em',
     '&:hover': {
       color: theme.colors.neutral[400],
     },
@@ -116,6 +123,9 @@ const CategoryLinks = styled('div')(({ theme }) => {
     marginLeft: 6,
     paddingLeft: 6,
     borderLeft: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: 2,
   };
 });
 
@@ -125,7 +135,7 @@ const CategoryLink = styled(NavLink)(({ theme }) => {
     display: 'block',
     padding: '5px 8px',
     borderRadius: 4,
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: 'inherit',
     color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
     textDecoration: 'none',
@@ -171,11 +181,13 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
           </SectionHeader>
           <SectionLinks $open={isOpen('getting-started')}>
             <div>
-              {gettingStartedPages.map((page) => (
-                <StyledLink key={page.path} to={page.path} end={page.path === '/'}>
-                  {page.name}
-                </StyledLink>
-              ))}
+              <LinkList>
+                {gettingStartedPages.map((page) => (
+                  <StyledLink key={page.path} to={page.path} end={page.path === '/'}>
+                    {page.name}
+                  </StyledLink>
+                ))}
+              </LinkList>
             </div>
           </SectionLinks>
         </div>

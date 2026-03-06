@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { CodeBlock } from '../../components/CodeBlock';
 import { TableOfContents } from '../../components/TableOfContents';
+import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -259,6 +260,7 @@ const Box = styled('div')(({ theme }) => ({
   borderRadius: theme.borderRadius[50],
 }));`} />
       </Section>
+      <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

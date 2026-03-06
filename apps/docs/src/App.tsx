@@ -19,7 +19,6 @@ import { SpacingPage } from './pages/tokens/SpacingPage';
 import { BorderRadiusPage } from './pages/tokens/BorderRadiusPage';
 import { BoxShadowPage } from './pages/tokens/BoxShadowPage';
 import { BreakpointsPage } from './pages/tokens/BreakpointsPage';
-import { PageNavigation } from './components/PageNavigation';
 
 const Shell = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -110,7 +109,6 @@ export const App: FunctionComponent = () => {
                   <Route path="/tokens/breakpoints" element={<BreakpointsPage />} />
                   <Route path="/components/:name" element={<ComponentPage />} />
                 </Routes>
-                {!pathname.startsWith('/components/') && <PageNavigation />}
               </Inner>
             </Content>
           </Body>

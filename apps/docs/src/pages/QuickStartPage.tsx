@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { styled, Text, Divider, Button } from '@seedui-react/seedui';
 import { CodeBlock } from '../components/CodeBlock';
 import { TableOfContents } from '../components/TableOfContents';
+import { PageNavigation } from '../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -74,6 +75,7 @@ export const QuickStartPage: FunctionComponent = () => {
         </Text>
         <CodeBlock code={`import { useTheme } from '@seedui-react/seedui';\n\nfunction MyComponent() {\n  const theme = useTheme();\n  return (\n    <div style={{ color: theme.colors.primary[600] }}>\n      Themed content\n    </div>\n  );\n}`} />
       </Section>
+      <PageNavigation />
       </MainContent>
       <TableOfContents items={tocItems} />
     </PageLayout>

@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
+import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -131,6 +132,7 @@ export const BreakpointsPage: FunctionComponent = () => {
           </tbody>
         </Table>
       </Section>
+      <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { CodeBlock } from '../../components/CodeBlock';
 import { TableOfContents } from '../../components/TableOfContents';
+import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -215,6 +216,7 @@ function App() {
   },
 };`} />
       </Section>
+      <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
+import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -88,6 +89,7 @@ export const TypographyPage: FunctionComponent = () => {
           the raw values via <code>theme.typography.h1</code> etc.
         </Text>
       </Section>
+      <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

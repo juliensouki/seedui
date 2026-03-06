@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme, colors } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
+import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -141,6 +142,7 @@ export const ColorsPage: FunctionComponent = () => {
           );
         })}
       </Section>
+      <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

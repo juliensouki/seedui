@@ -2,6 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { CodeBlock } from '../components/CodeBlock';
 import { TableOfContents } from '../components/TableOfContents';
+import { PageNavigation } from '../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -118,6 +119,7 @@ export const InstallationPage: FunctionComponent = () => {
         </Text>
         <CodeBlock code={`import { ThemeProvider } from '@seedui-react/seedui';\n\nfunction App() {\n  return (\n    <ThemeProvider mode="light">\n      {/* Your app content */}\n    </ThemeProvider>\n  );\n}`} />
       </Section>
+      <PageNavigation />
       </MainContent>
       <TableOfContents items={tocItems} />
     </PageLayout>

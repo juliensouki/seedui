@@ -1,7 +1,7 @@
 import { ChangeEvent, FunctionComponent, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { styled, Toggle, Mode, Popover, Text, useTheme } from '@seedui-react/seedui';
-import { SearchIcon, MoonIcon, GithubIcon, FigmaIcon } from 'lucide-react';
+import { styled, Toggle, Mode, Popover, Text, Tag, IconButton, SearchBar, useTheme } from '@seedui-react/seedui';
+import { MoonIcon, GithubIcon, FigmaIcon } from 'lucide-react';
 import { allPages, NavPage } from '../data/navigation';
 
 const Bar = styled('header')(({ theme }) => {
@@ -18,41 +18,10 @@ const Bar = styled('header')(({ theme }) => {
   };
 });
 
-const SearchWrapper = styled('div')(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 8,
-    padding: '6px 12px',
-    borderRadius: 8,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-    color: theme.colors.neutral[500],
-    width: 260,
-  };
-});
-
-const SearchInput = styled('input')(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    border: 'none',
-    outline: 'none',
-    background: 'transparent',
-    fontSize: 14,
-    fontFamily: 'inherit',
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
-    width: '100%',
-    '&::placeholder': {
-      color: theme.colors.neutral[400],
-    },
-  };
-});
-
 const RightSection = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
-  gap: 12,
+  gap: 4,
 }));
 
 const VerticalDivider = styled('div')(({ theme }) => {
@@ -61,20 +30,6 @@ const VerticalDivider = styled('div')(({ theme }) => {
     width: 1,
     height: 20,
     backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
-  };
-});
-
-const IconLink = styled('a')(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: theme.colors.neutral[500],
-    transition: 'color 150ms',
-    '&:hover': {
-      color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
-    },
   };
 });
 
@@ -177,16 +132,26 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
           style={mode === 'dark' ? { filter: 'invert(1)' } : undefined}
         />
         <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', fontFamily: theme.typography.h1.fontFamily }}>seedui</span>
-        <span style={{ fontSize: 12, fontWeight: 500, opacity: 0.4 }}>docs</span>
+        <Tag color="neutral" size="sm">docs</Tag>
       </div>
       <RightSection>
-        <IconLink href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <IconButton
+          variant="transparent"
+          color="neutral"
+          size="sm"
+          htmlAttributes={{ rootButton: { onClick: () => window.open('https://github.com', '_blank') } }}
+        >
           <GithubIcon size={18} />
-        </IconLink>
-        <IconLink href="https://figma.com" target="_blank" rel="noopener noreferrer" aria-label="Figma">
+        </IconButton>
+        <IconButton
+          variant="transparent"
+          color="neutral"
+          size="sm"
+          htmlAttributes={{ rootButton: { onClick: () => window.open('https://figma.com', '_blank') } }}
+        >
           <FigmaIcon size={18} />
-        </IconLink>
-        <VerticalDivider />
+        </IconButton>
+        <VerticalDivider style={{ margin: '0 8px' }} />
         <Popover
           isOpen={popoverOpen}
           onClose={() => setPopoverOpen(false)}
@@ -211,16 +176,15 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             </ResultList>
           }
         >
-          <SearchWrapper>
-            <SearchIcon size={16} />
-            <SearchInput
-              value={search}
-              onChange={handleChange}
-              placeholder="Search docs..."
-            />
-          </SearchWrapper>
+          <SearchBar
+            value={search}
+            onChange={handleChange}
+            placeholder="Search docs..."
+            width={260}
+            hideButton
+          />
         </Popover>
-        <VerticalDivider />
+        <VerticalDivider style={{ margin: '0 8px' }} />
         <ThemeToggle>
           <MoonIcon size={16} />
           <Toggle checked={mode === 'dark'} onChange={onModeToggle} size="sm" />

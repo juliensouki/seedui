@@ -18,6 +18,7 @@ export interface SearchBarProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onSearch?: () => void;
   buttonLabel?: string;
+  hideButton?: boolean;
   className?: string;
 }
 
@@ -30,15 +31,18 @@ const defaultProps: SearchBarProps = {
   onChange: undefined,
   onSearch: undefined,
   buttonLabel: 'Search',
+  hideButton: false,
 };
 
-const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; width?: string | number }>>(
-  ({ theme, $isFocused, $width }) => ({
+const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; width?: string | number; hideButton?: boolean }>>(
+  ({ theme, $isFocused, $width, $hideButton }) => ({
     display: 'flex',
     alignItems: 'center',
     width: $width,
     backgroundColor: theme.colors.neutral.white,
-    padding: `${theme.spacing['050']}px ${theme.spacing['050']}px`,
+    padding: $hideButton
+      ? `${theme.spacing['100']}px ${theme.spacing['150']}px`
+      : `${theme.spacing['050']}px`,
     borderRadius: theme.borderRadius[100],
     border: `1px solid ${theme.colors.neutral[200]}`,
 
@@ -87,7 +91,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const { spacing } = useTheme();
 
-    const { value, placeholder, disabled, inputValidation, width, onChange, onSearch, buttonLabel, className } =
+    const { value, placeholder, disabled, inputValidation, width, onChange, onSearch, buttonLabel, hideButton, className } =
       getDefaultProps<SearchBarProps & InternalProps>({
         providedProps: props,
         globalDefaultProps: customizations?.components?.searchBar?.defaultProps,
@@ -100,6 +104,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
         $width={width}
         $customizations={customizations.components?.searchBar}
         $isFocused={isFocused}
+        $hideButton={hideButton}
       >
         <IconWrapper>
           <svg
@@ -135,9 +140,11 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
           }}
         />
 
-        <SearchButton onClick={onSearch} disabled={disabled}>
-          {buttonLabel}
-        </SearchButton>
+        {!hideButton && (
+          <SearchButton onClick={onSearch} disabled={disabled}>
+            {buttonLabel}
+          </SearchButton>
+        )}
       </SearchBarContainer>
     );
   },
