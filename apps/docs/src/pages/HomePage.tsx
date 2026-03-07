@@ -1,4 +1,5 @@
 import { FunctionComponent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   styled,
   Text,
@@ -11,6 +12,7 @@ import {
   Textarea,
   useTheme,
 } from '@seedui-react/seedui';
+import { GithubIcon } from 'lucide-react';
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
@@ -54,7 +56,8 @@ const HeroSection = styled('div')(() => ({
   display: 'flex',
   alignItems: 'stretch',
   gap: 0,
-  marginBottom: 40,
+  marginTop: -40,
+  marginBottom: 0,
   height: 600,
   overflow: 'hidden',
   position: 'relative' as const,
@@ -578,6 +581,7 @@ const WallContent: FunctionComponent = () => {
 
 export const HomePage: FunctionComponent = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -592,6 +596,15 @@ export const HomePage: FunctionComponent = () => {
               Everything you need to craft polished applications, internal tools, and
               delightful user experiences — designed to get out of your way.
             </Text>
+            <div style={{ display: 'flex', gap: 10, marginTop: 24 }}>
+              <Button variant="filled" color="primary" size="md" onClick={() => navigate('/getting-started/installation')}>
+                How to install
+              </Button>
+              <Button variant="transparent" color="neutral" size="md">
+                <GithubIcon size={16} style={{ marginRight: 6 }} />
+                View on GitHub
+              </Button>
+            </div>
           </div>
         </HeroLeft>
         <HeroRight>
@@ -605,7 +618,7 @@ export const HomePage: FunctionComponent = () => {
         </HeroRight>
       </HeroSection>
 
-      <Divider spacing={28} />
+      <Divider spacing={0} style={{ marginBottom: 28 }} />
 
       <Section>
         <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>Why seedui</Text>

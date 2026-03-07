@@ -1,5 +1,5 @@
-import { FunctionComponent, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { styled } from '@seedui-react/seedui';
 import { ComponentCategory } from '../data/components';
 import { NavPage, ThemeCategory } from '../data/navigation';
@@ -162,14 +162,65 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
   themeGroups,
   componentGroups,
 }) => {
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
-    theme: true,
+  const { pathname } = useLocation();
+
+  // Compute which keys need to be open for a given path
+  const getKeysForPath = useCallback((path: string): string[] => {
+    const keys: string[] = [];
+
+    // Check getting-started
+    if (gettingStartedPages.some((p) => p.path === path)) {
+      keys.push('getting-started');
+      return keys;
+    }
+
+    // Check theme groups
+    for (const group of themeGroups) {
+      if (group.pages.some((p) => p.path === path)) {
+        keys.push('theme', `theme-${group.category}`);
+        return keys;
+      }
+    }
+
+    // Check component groups
+    const componentName = path.startsWith('/components/') ? path.replace('/components/', '') : '';
+    for (const group of componentGroups) {
+      if (group.names.includes(componentName)) {
+        keys.push('components', `cat-${group.category}`);
+        return keys;
+      }
+    }
+
+    return ['getting-started'];
+  }, [gettingStartedPages, themeGroups, componentGroups]);
+
+  // State tracks open/closed for each key
+  const [openState, setOpenState] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const key of getKeysForPath(pathname)) {
+      initial[key] = true;
+    }
+    return initial;
   });
 
-  const toggle = (key: string) =>
-    setCollapsed((prev) => ({ ...prev, [key]: !prev[key] }));
+  // When navigating, ensure the target section/subsection is open (but don't close anything)
+  useEffect(() => {
+    const needed = getKeysForPath(pathname);
+    setOpenState((prev) => {
+      const allOpen = needed.every((k) => prev[k]);
+      if (allOpen) return prev;
+      const next = { ...prev };
+      for (const key of needed) {
+        next[key] = true;
+      }
+      return next;
+    });
+  }, [pathname, getKeysForPath]);
 
-  const isOpen = (key: string) => !collapsed[key];
+  const isOpen = (key: string) => !!openState[key];
+
+  const toggle = (key: string) =>
+    setOpenState((prev) => ({ ...prev, [key]: !prev[key] }));
 
   return (
     <Nav>

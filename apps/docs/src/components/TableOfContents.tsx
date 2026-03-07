@@ -15,7 +15,7 @@ const Nav = styled('nav')(({ theme }) => {
   return {
     position: 'sticky' as const,
     top: 40,
-    width: 160,
+    width: 180,
     flexShrink: 0,
     alignSelf: 'flex-start' as const,
     marginLeft: 40,
@@ -29,17 +29,14 @@ const Indicator = styled('div')(({ theme }) => ({
   left: -17,
   width: 2,
   backgroundColor: theme.colors.primary[500],
-  borderRadius: 1,
+  borderRadius: 2,
   transition: 'top 0.25s ease, height 0.25s ease',
 }));
 
 const Label = styled('div')(() => ({
-  fontSize: 11,
+  fontSize: 15,
   fontWeight: 600,
-  textTransform: 'uppercase',
-  letterSpacing: '0.06em',
-  opacity: 0.4,
-  marginBottom: 12,
+  marginBottom: 14,
 }));
 
 const ItemList = styled('div')(() => ({
@@ -52,8 +49,8 @@ const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => ({
   textAlign: 'left',
   background: 'none',
   border: 'none',
-  padding: '4px 0',
-  fontSize: 13,
+  padding: '5px 0',
+  fontSize: 14,
   cursor: 'pointer',
   color: $active ? theme.colors.primary[500] : theme.colors.neutral[500],
   fontWeight: $active ? 600 : 400,
