@@ -6,16 +6,16 @@ export const h4Styles: TypographyConfig = {
   letterSpacing: '-0.01em',
   responsive: {
     desktop: {
-      fontSize: 28,
-      lineHeight: 34,
+      fontSize: '1.75rem',
+      lineHeight: '2.125rem',
     },
     tablet: {
-      fontSize: 24,
-      lineHeight: 30,
+      fontSize: '1.5rem',
+      lineHeight: '1.875rem',
     },
     mobile: {
-      fontSize: 22,
-      lineHeight: 28,
+      fontSize: '1.375rem',
+      lineHeight: '1.75rem',
     },
   },
 };

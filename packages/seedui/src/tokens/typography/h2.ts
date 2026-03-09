@@ -6,16 +6,16 @@ export const h2Styles: TypographyConfig = {
   letterSpacing: '-0.02em',
   responsive: {
     desktop: {
-      fontSize: 44,
-      lineHeight: 54,
+      fontSize: '2.75rem',
+      lineHeight: '3.375rem',
     },
     tablet: {
-      fontSize: 36,
-      lineHeight: 44,
+      fontSize: '2.25rem',
+      lineHeight: '2.75rem',
     },
     mobile: {
-      fontSize: 26,
-      lineHeight: 34,
+      fontSize: '1.625rem',
+      lineHeight: '2.125rem',
     },
   },
 };

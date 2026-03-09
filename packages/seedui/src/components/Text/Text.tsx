@@ -47,16 +47,16 @@ const TextFactory = (variant: TextVariants) => {
 
       margin: 0,
       fontSize: theme.typography[$variant].responsive.desktop.fontSize,
-      lineHeight: `${theme.typography[$variant].responsive.desktop.lineHeight}px`,
+      lineHeight: theme.typography[$variant].responsive.desktop.lineHeight,
       marginBottom: $bottomSpacing ? '0.4em' : 0,
 
       [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
         fontSize: theme.typography[$variant].responsive.tablet.fontSize,
-        lineHeight: `${theme.typography[$variant].responsive.tablet.lineHeight}px`,
+        lineHeight: theme.typography[$variant].responsive.tablet.lineHeight,
       },
       [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
         fontSize: theme.typography[$variant].responsive.mobile.fontSize,
-        lineHeight: `${theme.typography[$variant].responsive.mobile.lineHeight}px`,
+        lineHeight: theme.typography[$variant].responsive.mobile.lineHeight,
       },
     }),
   );

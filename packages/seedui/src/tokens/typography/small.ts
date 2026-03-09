@@ -6,16 +6,16 @@ export const smallStyles: TypographyConfig = {
   letterSpacing: '0.02em',
   responsive: {
     desktop: {
-      fontSize: 11,
-      lineHeight: 16,
+      fontSize: '0.6875rem',
+      lineHeight: '1rem',
     },
     tablet: {
-      fontSize: 11,
-      lineHeight: 16,
+      fontSize: '0.6875rem',
+      lineHeight: '1rem',
     },
     mobile: {
-      fontSize: 11,
-      lineHeight: 16,
+      fontSize: '0.6875rem',
+      lineHeight: '1rem',
     },
   },
 };

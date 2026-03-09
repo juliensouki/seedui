@@ -6,16 +6,16 @@ export const h3Styles: TypographyConfig = {
   letterSpacing: '-0.01em',
   responsive: {
     desktop: {
-      fontSize: 36,
-      lineHeight: 44,
+      fontSize: '2.25rem',
+      lineHeight: '2.75rem',
     },
     tablet: {
-      fontSize: 30,
-      lineHeight: 38,
+      fontSize: '1.875rem',
+      lineHeight: '2.375rem',
     },
     mobile: {
-      fontSize: 24,
-      lineHeight: 32,
+      fontSize: '1.5rem',
+      lineHeight: '2rem',
     },
   },
 };

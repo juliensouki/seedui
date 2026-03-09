@@ -6,16 +6,16 @@ export const h5Styles: TypographyConfig = {
   letterSpacing: 'normal',
   responsive: {
     desktop: {
-      fontSize: 18,
-      lineHeight: 24,
+      fontSize: '1.125rem',
+      lineHeight: '1.5rem',
     },
     tablet: {
-      fontSize: 16,
-      lineHeight: 22,
+      fontSize: '1rem',
+      lineHeight: '1.375rem',
     },
     mobile: {
-      fontSize: 16,
-      lineHeight: 22,
+      fontSize: '1rem',
+      lineHeight: '1.375rem',
     },
   },
 };

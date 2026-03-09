@@ -6,16 +6,16 @@ export const captionStyles: TypographyConfig = {
   letterSpacing: '0.01em',
   responsive: {
     desktop: {
-      fontSize: 12,
-      lineHeight: 18,
+      fontSize: '0.75rem',
+      lineHeight: '1.125rem',
     },
     tablet: {
-      fontSize: 12,
-      lineHeight: 18,
+      fontSize: '0.75rem',
+      lineHeight: '1.125rem',
     },
     mobile: {
-      fontSize: 12,
-      lineHeight: 18,
+      fontSize: '0.75rem',
+      lineHeight: '1.125rem',
     },
   },
 };
