@@ -15,7 +15,7 @@ import {
   ToggleProps,
   TooltipProps,
 } from '../components';
-import { BorderRadius, BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
+import { BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
 import { MultiMode } from './internal';
 import { MenuItemProps } from '../components/Select/MenuItem';
 
@@ -51,6 +51,7 @@ export interface CustomComponents {
 export type CustomTypographyResponsiveConfig = Partial<{
   fontFamily: string;
   fontWeight: string | number;
+  letterSpacing: string;
   responsive: Partial<
     Record<'desktop' | 'tablet' | 'mobile', Partial<{ fontSize: number | string; lineHeight: number | string }>>
   >;
@@ -72,8 +73,8 @@ export interface CustomizedColors {
 export interface ThemeCustomization {
   components?: CustomComponents;
   breakpoints?: Partial<Breakpoints>;
-  borderRadius?: Partial<BorderRadius>;
-  spacing?: number;
+  borderRadius?: number; // base size in px (default: 2)
+  spacing?: number; // base size in px (default: 8)
   typography?: CustomTypographyConfig;
   boxShadow?: CustomBoxShadow;
   colors?: MultiMode<CustomizedColors>;

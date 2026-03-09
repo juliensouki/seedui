@@ -183,7 +183,7 @@ const AvatarLg = styled(AvatarBase)(({ theme }) => ({
   height: 52,
   borderRadius: '50%',
   fontSize: 18,
-  boxShadow: `0 0 0 2px ${theme.colors.neutral.white}, 0 0 0 4px ${theme.colors.secondary[200]}`,
+  boxShadow: `0 0 0 2px ${theme.colors.neutral.white}, 0 0 0 4px ${theme.colors.primary[200]}`,
 }));
 
 const AvatarStack = styled('div')(() => ({
@@ -314,7 +314,7 @@ const WallContent: FunctionComponent = () => {
       {/* ── User profile card ── */}
       <MiniCard>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 16 }}>
-          <AvatarLg style={{ backgroundColor: theme.colors.secondary[500] }}>JD</AvatarLg>
+          <AvatarLg style={{ backgroundColor: theme.colors.primary[500] }}>JD</AvatarLg>
           <div style={{ flex: 1 }}>
             <Text variant="h6" style={{ lineHeight: 1.2 }}>Jane Doe</Text>
             <Text variant="caption" style={{ color: theme.colors.neutral[400], marginTop: 2 }}>
@@ -558,7 +558,7 @@ const WallContent: FunctionComponent = () => {
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           {[
-            { initials: 'JD', name: 'Jane', role: 'Design', bg: theme.colors.secondary[500] },
+            { initials: 'JD', name: 'Jane', role: 'Design', bg: theme.colors.info[500] },
             { initials: 'AL', name: 'Alice', role: 'Frontend', bg: theme.colors.primary[500] },
             { initials: 'BK', name: 'Bob', role: 'Backend', bg: theme.colors.success[500] },
             { initials: 'CM', name: 'Carol', role: 'PM', bg: theme.colors.warning[500] },

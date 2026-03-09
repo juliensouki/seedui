@@ -1,5 +1,5 @@
 import { borderRadius } from '../../tokens/border-radius';
-import { breakpoints } from '../../tokens/breakpoints';
+import { breakpoints, createBreakpointHelpers } from '../../tokens/breakpoints';
 import { spacing } from '../../tokens/spacing';
 import { Mode, Theme, ThemeCustomization } from '../../types';
 import {
@@ -97,15 +97,20 @@ export const themeServiceFactory = ({
 
       return {
         ...defaultTheme,
-        breakpoints: {
-          ...defaultTheme.breakpoints,
-          ...customTheme.breakpoints,
-        },
-        borderRadius: {
-          ...defaultTheme.borderRadius,
-          ...customTheme.borderRadius,
-        },
-        spacing: spacingService.generateCustomSpacing(customTheme.spacing || 1),
+        breakpoints: (() => {
+          const merged = {
+            ...defaultTheme.breakpoints,
+            ...customTheme.breakpoints,
+          };
+          return {
+            ...merged,
+            ...createBreakpointHelpers(merged),
+          };
+        })(),
+        borderRadius: customTheme.borderRadius
+          ? (factor: number | 'full') => (factor === 'full' ? 9999 : customTheme.borderRadius! * (factor as number))
+          : defaultTheme.borderRadius,
+        spacing: spacingService.generateCustomSpacing(customTheme.spacing || 8),
         typography: typographyService.generateCustomTypography(customTheme.typography),
         boxShadow: boxShadowService.generateCustomBoxShadow(customTheme.boxShadow || { light: {}, dark: {} }, mode),
         colors: colorService.generateCustomColors(customTheme.colors || {}),

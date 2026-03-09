@@ -51,8 +51,8 @@ const defaultProps: TooltipProps = {
   children: <></>,
 };
 
-const computeTooltipMarginX = (theme: Theme): number => theme.spacing['200'];
-const computeTooltipMarginY = (theme: Theme): number => theme.spacing['100'];
+const computeTooltipMarginX = (theme: Theme): number => theme.spacing(2);
+const computeTooltipMarginY = (theme: Theme): number => theme.spacing(1);
 
 const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
   const theme = props.theme;
@@ -66,8 +66,8 @@ const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
     width: 'max-content',
     maxWidth: 200,
     textAlign: 'center',
-    borderRadius: props.theme.borderRadius[100],
-    padding: `${props.theme.spacing[100]}px ${props.theme.spacing[150]}px`,
+    borderRadius: props.theme.borderRadius(4),
+    padding: `${props.theme.spacing(1)}px ${props.theme.spacing(1.5)}px`,
     zIndex: 9999,
     opacity: 0,
     transition: 'all 0.2s',

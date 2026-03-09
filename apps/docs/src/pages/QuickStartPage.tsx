@@ -65,7 +65,7 @@ export const QuickStartPage: FunctionComponent = () => {
           seedui re-exports styled-components' <code>styled</code> function with full theme typing.
           Use it to create custom styled elements that access the theme:
         </Text>
-        <CodeBlock code={`import { styled } from '@seedui-react/seedui';\n\nconst Container = styled('div')(({ theme }) => ({\n  padding: theme.spacing[300],\n  backgroundColor: theme.colors.primary[100],\n  borderRadius: theme.borderRadius[100],\n}));`} />
+        <CodeBlock code={`import { styled } from '@seedui-react/seedui';\n\nconst Container = styled('div')(({ theme }) => ({\n  padding: theme.spacing(3),\n  backgroundColor: theme.colors.primary[100],\n  borderRadius: theme.borderRadius(4),\n}));`} />
       </Section>
 
       <Section id="section-use-theme">

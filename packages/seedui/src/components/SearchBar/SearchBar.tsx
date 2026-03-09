@@ -35,23 +35,26 @@ const defaultProps: SearchBarProps = {
 };
 
 const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; width?: string | number; hideButton?: boolean }>>(
-  ({ theme, $isFocused, $width, $hideButton }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    width: $width,
-    backgroundColor: theme.colors.neutral.white,
-    padding: $hideButton
-      ? `${theme.spacing['100']}px ${theme.spacing['150']}px`
-      : `${theme.spacing['050']}px`,
-    borderRadius: theme.borderRadius[100],
-    border: `1px solid ${theme.colors.neutral[200]}`,
+  ({ theme, $isFocused, $width, $hideButton }) => {
+    const isLight = theme.mode === 'light';
+    return {
+      display: 'flex',
+      alignItems: 'center',
+      width: $width,
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+      padding: $hideButton
+        ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px`
+        : `${theme.spacing(0.5)}px`,
+      borderRadius: theme.borderRadius(4),
+      border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[500]}`,
 
-    ...($isFocused && {
-      outline: `2px solid ${theme.colors.primary[300]}`,
-      outlineOffset: 1,
-      borderColor: theme.colors.primary.default,
-    }),
-  }),
+      ...($isFocused && {
+        outline: `2px solid ${theme.colors.primary[300]}`,
+        outlineOffset: 1,
+        borderColor: theme.colors.primary.default,
+      }),
+    };
+  },
 );
 
 const SearchInput = styled(Input)({
@@ -71,19 +74,22 @@ const SearchButton = styled(Button)(({ theme }: StyledProps<SearchBarProps>) => 
   },
 }));
 
-const IconWrapper = styled.div(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  pointerEvents: 'none',
-  paddingLeft: theme.spacing['100'],
-  paddingRight: theme.spacing['100'],
-  '& svg': {
-    width: 18,
-    height: 18,
-    color: theme.colors.neutral[400],
-  },
-}));
+const IconWrapper = styled.div(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    pointerEvents: 'none',
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    '& svg': {
+      width: 18,
+      height: 18,
+      color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[300],
+    },
+  };
+});
 
 export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
@@ -132,7 +138,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
             input: {
               style: {
                 padding: 'unset',
-                paddingRight: spacing[100],
+                paddingRight: spacing(1),
               },
               onFocus: () => setIsFocused(true),
               onBlur: () => setIsFocused(false),

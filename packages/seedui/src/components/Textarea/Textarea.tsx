@@ -47,14 +47,14 @@ const TextareaElement = applyCustomStyles(
 
     return {
       width: '100%',
-      borderRadius: theme.borderRadius[100],
+      borderRadius: theme.borderRadius(4),
       border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
       boxSizing: 'border-box',
 
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
       color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
-      padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
+      padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
 
       fontFamily: theme.typography.p.fontFamily,
       fontSize: theme.typography.p.responsive.desktop.fontSize,

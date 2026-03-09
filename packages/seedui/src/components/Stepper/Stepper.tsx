@@ -23,12 +23,12 @@ const StepperContainer = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   flexWrap: 'wrap',
-  gap: theme.spacing[100],
+  gap: theme.spacing(1),
   width: '100%',
   maxWidth: '100%',
   boxSizing: 'border-box',
   [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
-    gap: theme.spacing['050'],
+    gap: theme.spacing(0.5),
   },
 }));
 
@@ -37,9 +37,9 @@ const StepWrapper = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing[100],
+    gap: theme.spacing(1),
     [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
-      gap: theme.spacing['050'],
+      gap: theme.spacing(0.5),
     },
   };
 });
@@ -73,18 +73,18 @@ const StepLabelContainer = styled.div(({ theme }) => {
   return {
     display: 'flex',
     flexDirection: 'row',
-    gap: theme.spacing[100],
+    gap: theme.spacing(1),
     alignItems: 'center',
   };
 });
 
 const CheckIconStyled = styled.svg(({ theme }) => ({
   color: theme.colors.neutral[400],
-  marginLeft: theme.spacing[200],
-  marginRight: theme.spacing[200],
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
   [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
-    marginLeft: theme.spacing[100],
-    marginRight: theme.spacing[100],
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
 }));
 

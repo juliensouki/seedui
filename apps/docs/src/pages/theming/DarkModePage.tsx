@@ -113,8 +113,8 @@ function App() {
 const Card = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: theme.spacing[300],
-    borderRadius: theme.borderRadius[100],
+    padding: theme.spacing(3),
+    borderRadius: theme.borderRadius(4),
     backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[800],
     border: \`1px solid \${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}\`,
   };

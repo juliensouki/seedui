@@ -75,7 +75,7 @@ const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPl
     borderTopLeftRadius: $placement === 'right' ? 0 : 'inherit',
     borderBottomLeftRadius: $placement === 'right' ? 0 : 'inherit',
 
-    padding: `0px ${theme.spacing[100]}px`,
+    padding: `0px ${theme.spacing(1)}px`,
 
     '& svg': {
       width: 18,
@@ -86,7 +86,7 @@ const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPl
 
 const ValidationIconContainer = styled.div(({ theme }) => ({
   position: 'absolute',
-  right: theme.spacing[100],
+  right: theme.spacing(1),
   top: '50%',
   transform: 'translateY(-50%)',
   display: 'flex',
@@ -120,11 +120,11 @@ const InputElement = applyCustomStyles(
     StyledComponentsPrefix<Required<InputProps & { iconPlacement: InputIconPlacement; isValidated: boolean }>>
   >(({ theme, $iconPlacement, $isValidated }) => {
     const isLight = theme.mode === 'light';
-    const rightPadding = $isValidated ? theme.spacing[400] : theme.spacing[150];
+    const rightPadding = $isValidated ? theme.spacing(4) : theme.spacing(1.5);
 
     return {
       width: '100%',
-      padding: `${theme.spacing[150]}px ${rightPadding}px ${theme.spacing[150]}px ${theme.spacing[150]}px`,
+      padding: `${theme.spacing(1.5)}px ${rightPadding}px ${theme.spacing(1.5)}px ${theme.spacing(1.5)}px`,
 
       borderTopRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
       borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
@@ -181,7 +181,7 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
     display: 'flex',
     flexDirection: $iconPlacement === 'right' ? 'row' : 'row-reverse',
     width: '100%',
-    borderRadius: theme.borderRadius[100],
+    borderRadius: theme.borderRadius(4),
   }),
 );
 

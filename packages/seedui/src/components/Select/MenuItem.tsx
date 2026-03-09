@@ -37,7 +37,7 @@ const MenuItemDiv = applyCustomStyles(
       padding: '8px 10px',
       cursor: 'pointer',
       outline: 'none',
-      borderRadius: theme.borderRadius['050'],
+      borderRadius: theme.borderRadius(2),
       transition: 'background-color 0.15s ease-in-out',
       backgroundColor: $highlighted ? (isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]) : 'transparent',
       color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,

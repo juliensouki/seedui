@@ -8,10 +8,16 @@ import {
   useRef,
   useContext,
 } from 'react';
-import { LiveProvider, LivePreview, LiveContext, Editor } from 'react-live';
+import { LiveProvider, LivePreview, LiveContext } from 'react-live';
 import { themes } from 'prism-react-renderer';
+import SimpleEditor from 'react-simple-code-editor';
+import { createHighlighterCoreSync } from 'shiki/core';
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
+import tsx from 'shiki/langs/tsx.mjs';
+import darkPlus from 'shiki/themes/dark-plus.mjs';
 import {
   styled,
+  useTheme,
   Button,
   Card,
   Divider,
@@ -55,6 +61,7 @@ const liveScope = {
   useCallback,
   useMemo,
   styled,
+  useTheme,
   Button,
   Card,
   Divider,
@@ -88,6 +95,19 @@ const liveScope = {
   CloudSnowIcon,
   WindIcon,
 };
+
+const highlighter = createHighlighterCoreSync({
+  themes: [darkPlus],
+  langs: [tsx],
+  engine: createJavaScriptRegexEngine(),
+});
+
+function highlightCode(code: string): string {
+  const html = highlighter.codeToHtml(code, { lang: 'tsx', theme: 'dark-plus' });
+  return html
+    .replace(/^<pre[^>]*><code[^>]*>/, '')
+    .replace(/<\/code><\/pre>$/, '');
+}
 
 function prepareCode(code: string): { code: string; noInline: boolean } {
   const hasHooks = /\buse[A-Z]\w*\s*\(/.test(code);
@@ -176,13 +196,13 @@ const CodePane = styled('div')(({ theme }) => ({
   borderTop: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
   backgroundColor: theme.colors.neutral[900],
 
-  '& > div': {
-    fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
-    fontSize: 13,
-    lineHeight: 1.6,
+  '& .code-editor': {
+    fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
+    fontSize: '13px !important',
+    lineHeight: '1.6 !important',
   },
 
-  '& [contenteditable], & pre': {
+  '& .code-editor > textarea, & .code-editor > pre': {
     padding: '16px 48px 16px 16px !important',
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
     fontSize: '13px !important',
@@ -251,6 +271,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   const [noInline, setNoInline] = useState(initialPrepared.noInline);
   const [copied, setCopied] = useState(false);
   const editorCodeRef = useRef(code);
+  const [editorCode, setEditorCode] = useState(code);
 
   // Sync state when the code prop changes (e.g. navigating between components)
   useEffect(() => {
@@ -258,12 +279,12 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
     setLiveCode(prepared.code);
     setNoInline(prepared.noInline);
     editorCodeRef.current = code;
+    setEditorCode(code);
   }, [code]);
 
-  // Editor shows the original (clean) code. When edited, we prepare it and
-  // update the LiveProvider only if compilation succeeds.
   const handleCodeChange = useCallback((newCode: string) => {
     editorCodeRef.current = newCode;
+    setEditorCode(newCode);
     const prepared = prepareCode(newCode);
     setLiveCode(prepared.code);
     setNoInline(prepared.noInline);
@@ -285,11 +306,12 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
           <CopyButton onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
-          <Editor
-            code={code}
-            theme={themes.vsDark}
-            language="tsx"
-            onChange={handleCodeChange}
+          <SimpleEditor
+            className="code-editor"
+            value={editorCode}
+            onValueChange={handleCodeChange}
+            highlight={highlightCode}
+            style={{ backgroundColor: 'transparent', color: '#D4D4D4' }}
           />
         </CodePane>
         <LiveErrorBar />

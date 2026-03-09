@@ -54,7 +54,7 @@ const AnatomyTh = styled('th')(({ theme }) => {
 const AnatomyTd = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: `${theme.spacing[200]}px 0`,
+    padding: `${theme.spacing(2)}px 0`,
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,

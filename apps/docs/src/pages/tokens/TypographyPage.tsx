@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
 import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
@@ -17,7 +18,6 @@ const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-
 const VariantRow = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
@@ -29,13 +29,18 @@ const VariantRow = styled('div')(({ theme }) => {
   };
 });
 
-const Meta = styled('div')(({ theme }) => ({
+const MetaGrid = styled('div')(({ theme }) => ({
   display: 'flex',
-  gap: 24,
+  flexWrap: 'wrap' as const,
+  gap: '4px 20px',
   marginTop: 8,
   fontSize: 12,
   color: theme.colors.neutral[500],
   fontFamily: "'SF Mono', 'Fira Code', monospace",
+}));
+
+const MetaLabel = styled('span')(({ theme }) => ({
+  color: theme.colors.neutral[400],
 }));
 
 const variants = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'caption', 'small'] as const;
@@ -44,6 +49,13 @@ const tocItems = [
   { id: 'variants', label: 'Variants' },
   { id: 'usage', label: 'Usage' },
 ];
+
+const usageCode = `<div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+  <Text variant="h4">Heading 4</Text>
+  <Text variant="p">This is body text using the p variant.</Text>
+  <Text variant="caption">Caption text for secondary information.</Text>
+  <Text variant="small">Small text for fine print.</Text>
+</div>`;
 
 export const TypographyPage: FunctionComponent = () => {
   const theme = useTheme();
@@ -70,13 +82,13 @@ export const TypographyPage: FunctionComponent = () => {
               <Text variant={variant}>
                 {variant} — The quick brown fox jumps over the lazy dog
               </Text>
-              <Meta>
-                <span>font: {config.fontFamily}</span>
-                <span>weight: {config.fontWeight}</span>
-                <span>desktop: {desktop.fontSize}/{desktop.lineHeight}px</span>
-                <span>tablet: {tablet.fontSize}/{tablet.lineHeight}px</span>
-                <span>mobile: {mobile.fontSize}/{mobile.lineHeight}px</span>
-              </Meta>
+              <MetaGrid>
+                <span><MetaLabel>font:</MetaLabel> {config.fontFamily}</span>
+                <span><MetaLabel>weight:</MetaLabel> {config.fontWeight}</span>
+                <span><MetaLabel>tracking:</MetaLabel> {config.letterSpacing}</span>
+                <span><MetaLabel>size:</MetaLabel> {desktop.fontSize}px <MetaLabel>(tablet: {tablet.fontSize}px, mobile: {mobile.fontSize}px)</MetaLabel></span>
+                <span><MetaLabel>line-height:</MetaLabel> {desktop.lineHeight}px <MetaLabel>(tablet: {tablet.lineHeight}px, mobile: {mobile.lineHeight}px)</MetaLabel></span>
+              </MetaGrid>
             </VariantRow>
           );
         })}
@@ -84,10 +96,11 @@ export const TypographyPage: FunctionComponent = () => {
 
       <Section id="usage">
         <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-        <Text variant="p">
-          Use the <code>Text</code> component with a <code>variant</code> prop, or access
-          the raw values via <code>theme.typography.h1</code> etc.
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Use the <code>Text</code> component with a <code>variant</code> prop.
+          All variants are responsive and adapt to the current breakpoint automatically.
         </Text>
+        <ComponentPlayground code={usageCode} />
       </Section>
       <PageNavigation />
       </MainContent>

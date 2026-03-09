@@ -46,7 +46,7 @@ const ResultList = styled('div')(({ theme }) => ({
   maxHeight: 360,
   overflowY: 'auto' as const,
   padding: '6px 0',
-  borderRadius: theme.borderRadius[100],
+  borderRadius: theme.borderRadius(4),
 }));
 
 const SectionLabel = styled('div')(({ theme }) => ({

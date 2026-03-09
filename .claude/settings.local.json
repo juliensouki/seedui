@@ -13,7 +13,13 @@
       "Bash(node:*)",
       "Bash(grep:*)",
       "Bash(npm run:*)",
-      "Bash(yarn build:*)"
+      "Bash(yarn build:*)",
+      "WebSearch",
+      "Bash(npx shiki:*)",
+      "Bash(netstat:*)",
+      "Bash(pkill:*)",
+      "Bash(powershell:*)",
+      "Bash(powershell.exe:*)"
     ]
   }
 }

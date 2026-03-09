@@ -54,15 +54,15 @@ const defaultProps: TagSelectorProps = {
 const TagSelectorContainer = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.spacing['025'],
+  gap: theme.spacing(0.25),
 }));
 
 const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean }>>(({ theme, $isFocused }) => ({
   display: 'flex',
   alignItems: 'center',
   backgroundColor: theme.colors.neutral.white,
-  padding: theme.spacing['050'],
-  borderRadius: theme.borderRadius[100],
+  padding: theme.spacing(0.5),
+  borderRadius: theme.borderRadius(4),
   border: `1px solid ${theme.colors.neutral[200]}`,
   gap: '8px',
 
@@ -89,7 +89,7 @@ const TagsContainer = styled.div(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
   gap: '4px',
-  marginTop: theme.spacing['075'],
+  marginTop: theme.spacing(0.75),
 }));
 
 const AddButton = styled(Button)(({ theme }: StyledProps<TagSelectorProps>) => ({

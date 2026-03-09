@@ -33,7 +33,7 @@ const CardDiv = applyCustomStyles(
       display: 'block',
       width: 'fit-content',
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[800],
-      borderRadius: theme.borderRadius['075'],
+      borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[1],
       border:
         $variant === 'outlined'

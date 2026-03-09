@@ -3,6 +3,7 @@ import { TypographyConfig } from '../../types';
 export const pStyles: TypographyConfig = {
   fontFamily: 'Inter Variable',
   fontWeight: 'normal',
+  letterSpacing: 'normal',
   responsive: {
     desktop: {
       fontSize: 14,

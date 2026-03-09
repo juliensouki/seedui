@@ -71,7 +71,7 @@ const PopoverContainer = applyCustomStyles(
     return {
       position: 'fixed',
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
-      borderRadius: theme.borderRadius[100],
+      borderRadius: theme.borderRadius(4),
       boxShadow: theme.boxShadow[1],
       boxSizing: 'border-box',
       zIndex: 9999,
@@ -124,7 +124,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
 
     useImperativeHandle(forwardedRef, () => triggerRef.current as HTMLDivElement);
 
-    const computePopoverMargin = (): number => spacing ?? theme.spacing['100'];
+    const computePopoverMargin = (): number => spacing ?? theme.spacing(1);
 
     const calculateAndApplyPosition = useCallback(() => {
       if (!triggerRef.current || !popoverRef.current) {

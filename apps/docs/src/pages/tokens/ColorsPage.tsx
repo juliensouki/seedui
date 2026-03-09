@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
-import { styled, Text, Divider, useTheme, colors } from '@seedui-react/seedui';
+import { FunctionComponent, useCallback, useState } from 'react';
+import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
 import { PageNavigation } from '../../components/PageNavigation';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
 
 const PageLayout = styled('div')(() => ({
   display: 'flex',
@@ -17,132 +18,205 @@ const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-const PaletteLabel = styled(Text)(({ theme }) => {
+/* ── Palette block ── */
+
+const PaletteBlock = styled('div')(() => ({
+  marginBottom: 20,
+}));
+
+const PaletteHeader = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'baseline',
+  gap: 8,
+  marginBottom: 8,
+}));
+
+const PaletteNameText = styled('span')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    marginTop: 24,
-    marginBottom: 8,
+    fontSize: 14,
     fontWeight: 600,
     color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
     textTransform: 'capitalize' as const,
   };
 });
 
-const SwatchRow = styled('div')(() => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))',
-  gap: 8,
+const PrimitiveBadge = styled('span')(({ theme }) => ({
+  fontSize: 12,
+  fontFamily: "'SF Mono', 'Fira Code', monospace",
+  color: theme.colors.neutral[500],
 }));
 
-const Swatch = styled('div')(() => ({
+/* ── Swatch grid ── */
+
+const SwatchGrid = styled('div')(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(9, 1fr)',
+  gap: 6,
+
+  [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    gridTemplateColumns: 'repeat(5, 1fr)',
+  },
+
+  [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+    gridTemplateColumns: 'repeat(3, 1fr)',
+  },
+}));
+
+const SwatchCard = styled('div')(({ theme }) => ({
   borderRadius: 8,
   overflow: 'hidden',
+  cursor: 'pointer',
+  transition: 'transform 0.15s',
+
+  '&:hover': {
+    transform: 'scale(1.04)',
+  },
+
+  '&:active': {
+    transform: 'scale(0.98)',
+  },
+
+  [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+    '&:hover': {
+      transform: 'none',
+    },
+  },
 }));
 
 const SwatchColor = styled('div')(() => ({
-  height: 48,
+  height: 52,
 }));
 
 const SwatchInfo = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: '6px 8px',
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: "'SF Mono', 'Fira Code', monospace",
-    color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[400],
+    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    borderTop: 'none',
-    borderRadius: '0 0 8px 8px',
-    lineHeight: 1.3,
+    lineHeight: 1.4,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   };
 });
 
 const shades = [100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
-const semanticNames = ['primary', 'neutral', 'success', 'info', 'warning', 'error'] as const;
-
-const primitiveNames = ['purple', 'grey', 'blue', 'green', 'orange', 'red'] as const;
+const colorConfig = [
+  { semantic: 'primary', primitive: 'purple' },
+  { semantic: 'neutral', primitive: 'grey' },
+  { semantic: 'success', primitive: 'green' },
+  { semantic: 'info', primitive: 'blue' },
+  { semantic: 'warning', primitive: 'orange' },
+  { semantic: 'error', primitive: 'red' },
+] as const;
 
 const tocItems = [
-  { id: 'semantic-colors', label: 'Semantic colors' },
-  { id: 'primitive-colors', label: 'Primitive colors' },
+  { id: 'palettes', label: 'Palettes' },
+  { id: 'usage', label: 'Usage' },
 ];
+
+const usageExampleCode = `const theme = useTheme();
+
+<div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+  <Button
+    htmlAttributes={{ rootButton: { style: { backgroundColor: theme.colors.success[500] } } }}
+  >
+    Success 500
+  </Button>
+  <Button
+    htmlAttributes={{ rootButton: { style: { backgroundColor: theme.colors.error[300] } } }}
+  >
+    Error 300
+  </Button>
+</div>`;
+
+const ColorPalette: FunctionComponent<{
+  semantic: string;
+  primitive: string;
+  palette: Record<number, string>;
+  copiedKey: string | null;
+  onCopy: (key: string, value: string) => void;
+}> = ({ semantic, primitive, palette, copiedKey, onCopy }) => (
+  <PaletteBlock>
+    <PaletteHeader>
+      <PaletteNameText>{semantic}</PaletteNameText>
+      <PrimitiveBadge>{primitive}</PrimitiveBadge>
+    </PaletteHeader>
+    <SwatchGrid>
+      {shades.map((shade) => {
+        const color = palette[shade];
+        if (!color) return null;
+        const key = `${semantic}-${shade}`;
+        const isCopied = copiedKey === key;
+        return (
+          <SwatchCard
+            key={shade}
+            title={`Click to copy ${color}`}
+            onClick={() => onCopy(key, color)}
+          >
+            <SwatchColor style={{ backgroundColor: color }} />
+            <SwatchInfo>
+              <span style={{ fontWeight: 600 }}>{shade}</span>
+              <span>{isCopied ? 'Copied!' : color}</span>
+            </SwatchInfo>
+          </SwatchCard>
+        );
+      })}
+    </SwatchGrid>
+  </PaletteBlock>
+);
 
 export const ColorsPage: FunctionComponent = () => {
   const theme = useTheme();
-  const primitives = theme.mode === 'light' ? colors.light.primitive : colors.dark.primitive;
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  const copyToClipboard = useCallback((key: string, value: string) => {
+    navigator.clipboard.writeText(value);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey((prev) => (prev === key ? null : prev)), 1200);
+  }, []);
 
   return (
     <PageLayout>
       <MainContent>
-      <Text variant="h3" as="h1">Colors</Text>
-      <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        Semantic and primitive color palettes. Semantic colors adapt to light/dark mode.
-      </Text>
-
-      <Divider spacing={28} />
-
-      <Section id="semantic-colors">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Semantic colors</Text>
-        <Text variant="p" style={{ marginBottom: 8 }}>
-          Use semantic colors via <code>theme.colors.primary[600]</code> etc. They map to primitive palettes and change between modes.
+        <Text variant="h3" as="h1">Colors</Text>
+        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+          Each semantic color maps to a primitive palette.
+          Use semantic names in components so colors stay consistent when customized.
+          Click any swatch to copy its hex value.
         </Text>
-        {semanticNames.map((name) => {
-          const palette = theme.colors[name];
-          return (
-            <div key={name}>
-              <PaletteLabel variant="p">{name}</PaletteLabel>
-              <SwatchRow>
-                {shades.map((shade) => {
-                  const color = (palette as Record<number, string>)[shade];
-                  return (
-                    <Swatch key={shade}>
-                      <SwatchColor style={{ backgroundColor: color }} />
-                      <SwatchInfo>
-                        <div>{shade}</div>
-                        <div>{color}</div>
-                      </SwatchInfo>
-                    </Swatch>
-                  );
-                })}
-              </SwatchRow>
-            </div>
-          );
-        })}
-      </Section>
 
-      <Section id="primitive-colors">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Primitive colors</Text>
-        <Text variant="p" style={{ marginBottom: 8 }}>
-          Raw color palettes available via the <code>colors</code> export. Use semantic colors in components whenever possible.
-        </Text>
-        {primitiveNames.map((name) => {
-          const palette = (primitives as Record<string, Record<number, string>>)[name];
-          if (!palette) return null;
-          return (
-            <div key={name}>
-              <PaletteLabel variant="p">{name}</PaletteLabel>
-              <SwatchRow>
-                {shades.map((shade) => {
-                  const color = palette[shade];
-                  if (!color) return null;
-                  return (
-                    <Swatch key={shade}>
-                      <SwatchColor style={{ backgroundColor: color }} />
-                      <SwatchInfo>
-                        <div>{shade}</div>
-                        <div>{color}</div>
-                      </SwatchInfo>
-                    </Swatch>
-                  );
-                })}
-              </SwatchRow>
-            </div>
-          );
-        })}
-      </Section>
-      <PageNavigation />
+        <Divider spacing={28} />
+
+        <Section id="palettes">
+          <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>Palettes</Text>
+          {colorConfig.map(({ semantic, primitive }) => (
+            <ColorPalette
+              key={semantic}
+              semantic={semantic}
+              primitive={primitive}
+              palette={theme.colors[semantic] as unknown as Record<number, string>}
+              copiedKey={copiedKey}
+              onCopy={copyToClipboard}
+            />
+          ))}
+        </Section>
+
+        <Section id="usage">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+          <Text variant="p" style={{ opacity: 0.7, marginBottom: 12, lineHeight: 1.6 }}>
+            Access semantic colors via <code>useTheme()</code> or through the <code>theme</code> object
+            injected in <code>styled()</code> components. Use <code>theme.colors.[name][shade]</code> to
+            reference any color from the palette.
+          </Text>
+          <ComponentPlayground code={usageExampleCode} />
+        </Section>
+
+        <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

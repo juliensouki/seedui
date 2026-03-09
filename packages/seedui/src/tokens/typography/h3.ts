@@ -3,6 +3,7 @@ import { TypographyConfig } from '../../types';
 export const h3Styles: TypographyConfig = {
   fontFamily: "'Source Serif 4 Variable', serif",
   fontWeight: 600,
+  letterSpacing: '-0.01em',
   responsive: {
     desktop: {
       fontSize: 36,

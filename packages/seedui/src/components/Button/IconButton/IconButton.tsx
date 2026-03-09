@@ -37,7 +37,7 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '100%',
-    padding: size === 'sm' ? theme.spacing[100] : theme.spacing[150],
+    padding: size === 'sm' ? theme.spacing(1) : theme.spacing(1.5),
 
     '& svg': {
       color: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],

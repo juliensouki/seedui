@@ -28,18 +28,18 @@ const getButtonStyles = (
 ): Record<ButtonSizes, { fontSize: string | number; borderRadius: number; padding: string }> => ({
   sm: {
     fontSize: theme.typography.small.responsive.desktop.fontSize,
-    borderRadius: theme.borderRadius['075'],
-    padding: `${theme.spacing['050']}px ${theme.spacing[100]}px`,
+    borderRadius: theme.borderRadius(3),
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
   },
   md: {
     fontSize: theme.typography.p.responsive.desktop.fontSize,
-    borderRadius: theme.borderRadius[100],
-    padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
+    borderRadius: theme.borderRadius(4),
+    padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
   },
   lg: {
     fontSize: theme.typography.p.responsive.desktop.fontSize,
-    borderRadius: theme.borderRadius[125],
-    padding: `${theme.spacing[150]}px ${theme.spacing[200]}px`,
+    borderRadius: theme.borderRadius(5),
+    padding: `${theme.spacing(1.5)}px ${theme.spacing(2)}px`,
   },
 });
 
@@ -123,15 +123,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={joinClasses(className, rootButtonHTMLAttributes?.className)}
         $customizations={customizations.components?.button}
         ref={innerRef}
-        // lock dimensions when loading
-        style={
-          isLoading && buttonSize.width && buttonSize.height
+        // lock dimensions when loading, merge with user-provided style
+        style={{
+          ...rootButtonHTMLAttributes?.style,
+          ...(isLoading && buttonSize.width && buttonSize.height
             ? {
               width: `${buttonSize.width}px`,
               height: `${buttonSize.height}px`,
             }
-            : undefined
-        }
+            : undefined),
+        }}
       >
         {isLoading ? (
           <Loader size={size} color={color === 'primary' && variant === 'filled' ? 'white' : undefined} />

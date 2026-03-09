@@ -60,14 +60,14 @@ const TagDiv = applyCustomStyles(
 
     return {
       display: 'flex',
-      gap: theme.spacing['100'],
+      gap: theme.spacing(1),
       alignItems: 'center',
       height: '100%',
       width: 'max-content',
       boxSizing: 'border-box',
       ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
-      padding: `${theme.spacing['075']}px ${theme.spacing['100']}px`,
-      borderRadius: theme.borderRadius[150],
+      padding: `${theme.spacing(0.75)}px ${theme.spacing(1)}px`,
+      borderRadius: theme.borderRadius(6),
       flexShrink: 0,
     };
   }),

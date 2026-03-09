@@ -75,7 +75,7 @@ const SelectContainer = applyCustomStyles(
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      borderRadius: theme.borderRadius[100],
+      borderRadius: theme.borderRadius(4),
       backgroundColor: $disabled
         ? isLight
           ? theme.colors.neutral[100]
@@ -84,7 +84,7 @@ const SelectContainer = applyCustomStyles(
         ? theme.colors.neutral.white
         : theme.colors.neutral[900],
       color: textColor,
-      padding: `${theme.spacing['050']}px ${theme.spacing[100]}px`,
+      padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
       paddingRight: 0,
       cursor: $disabled ? 'not-allowed' : 'pointer',
 
@@ -166,7 +166,7 @@ const SelectMenu = styled.div<{ $menuHeight: string | number }>(({ theme, $menuH
   width: '100%',
   maxHeight: typeof $menuHeight === 'number' ? `${$menuHeight}px` : $menuHeight,
   overflowY: 'auto',
-  borderRadius: theme.borderRadius['050'],
+  borderRadius: theme.borderRadius(2),
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral.white : theme.colors.neutral[900],
   border: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
   boxShadow: theme.boxShadow[1],

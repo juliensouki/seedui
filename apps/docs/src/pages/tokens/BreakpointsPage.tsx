@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
+import { CodeBlock } from '../../components/CodeBlock';
 import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
@@ -16,7 +17,6 @@ const MainContent = styled('div')(() => ({
 const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
-
 
 const Table = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -46,7 +46,7 @@ const Th = styled('th')(({ theme }) => {
 const Td = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: `${theme.spacing[200]}px 0`,
+    padding: `${theme.spacing(2)}px 0`,
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
@@ -56,7 +56,25 @@ const Td = styled('td')(({ theme }) => {
 const tocItems = [
   { id: 'pixel-breakpoints', label: 'Pixel breakpoints' },
   { id: 'semantic-aliases', label: 'Semantic aliases' },
+  { id: 'media-query-helpers', label: 'Media query helpers' },
+  { id: 'usage', label: 'Usage' },
 ];
+
+const usageCode = `const Container = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+
+  [theme.breakpoints.up('md')]: {
+    padding: theme.spacing(4),
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
+
+  [theme.breakpoints.between('sm', 'lg')]: {
+    maxWidth: 960,
+  },
+}))`;
 
 export const BreakpointsPage: FunctionComponent = () => {
   const theme = useTheme();
@@ -71,8 +89,9 @@ export const BreakpointsPage: FunctionComponent = () => {
   ];
 
   const aliases = [
-    { name: 'mobile', mapsTo: bp.mobile },
-    { name: 'tablet', mapsTo: bp.tablet },
+    { name: 'mobile', mapsTo: bp.mobile, resolvedValue: bp[bp.mobile] },
+    { name: 'tablet', mapsTo: bp.tablet, resolvedValue: bp[bp.tablet] },
+    { name: 'desktop', mapsTo: bp.desktop, resolvedValue: bp[bp.desktop] },
   ];
 
   return (
@@ -99,11 +118,11 @@ export const BreakpointsPage: FunctionComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {pixelBreakpoints.map((bp) => (
-              <tr key={bp.name}>
-                <Td><code>{bp.name}</code></Td>
-                <Td>{bp.value}px</Td>
-                <Td><code>@media (min-width: {bp.value}px)</code></Td>
+            {pixelBreakpoints.map((b) => (
+              <tr key={b.name}>
+                <Td><code>{b.name}</code></Td>
+                <Td>{b.value}px</Td>
+                <Td><code>@media (min-width: {b.value}px)</code></Td>
               </tr>
             ))}
           </tbody>
@@ -120,6 +139,7 @@ export const BreakpointsPage: FunctionComponent = () => {
             <tr>
               <Th>Alias</Th>
               <Th>Maps to</Th>
+              <Th>Resolved value</Th>
             </tr>
           </thead>
           <tbody>
@@ -127,11 +147,52 @@ export const BreakpointsPage: FunctionComponent = () => {
               <tr key={a.name}>
                 <Td><code>{a.name}</code></Td>
                 <Td><code>{a.mapsTo}</code></Td>
+                <Td>{a.resolvedValue}px</Td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Section>
+
+      <Section id="media-query-helpers">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Media query helpers</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Helper methods on <code>theme.breakpoints</code> that return ready-to-use media query strings.
+          Use them as keys in styled-component style objects.
+        </Text>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Method</Th>
+              <Th>Returns</Th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <Td><code>up(key)</code></Td>
+              <Td><code>{bp.up('sm')}</code></Td>
+            </tr>
+            <tr>
+              <Td><code>down(key)</code></Td>
+              <Td><code>{bp.down('sm')}</code></Td>
+            </tr>
+            <tr>
+              <Td><code>between(start, end)</code></Td>
+              <Td><code>{bp.between('sm', 'lg')}</code></Td>
+            </tr>
+          </tbody>
+        </Table>
+      </Section>
+
+      <Section id="usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Use the helpers inside <code>styled</code> components or access breakpoint values
+          via <code>useTheme()</code>.
+        </Text>
+        <CodeBlock code={usageCode} />
+      </Section>
+
       <PageNavigation />
       </MainContent>
 

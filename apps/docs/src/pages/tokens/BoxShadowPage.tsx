@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
 import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
@@ -59,7 +60,22 @@ const ShadowValue = styled('span')(({ theme }) => ({
 
 const tocItems = [
   { id: 'levels', label: 'Levels' },
+  { id: 'usage', label: 'Usage' },
 ];
+
+const usageCode = `const theme = useTheme();
+
+<div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
+  <Card htmlAttributes={{ rootDiv: { style: { boxShadow: theme.boxShadow[1], padding: 16 } } }}>
+    boxShadow[1]
+  </Card>
+  <Card htmlAttributes={{ rootDiv: { style: { boxShadow: theme.boxShadow[3], padding: 16 } } }}>
+    boxShadow[3]
+  </Card>
+  <Card htmlAttributes={{ rootDiv: { style: { boxShadow: theme.boxShadow[5], padding: 16 } } }}>
+    boxShadow[5]
+  </Card>
+</div>`;
 
 export const BoxShadowPage: FunctionComponent = () => {
   const theme = useTheme();
@@ -88,6 +104,13 @@ export const BoxShadowPage: FunctionComponent = () => {
             </ShadowCard>
           ))}
         </Grid>
+      </Section>
+      <Section id="usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Access box shadow via <code>useTheme()</code> or styled-components theme injection.
+        </Text>
+        <ComponentPlayground code={usageCode} />
       </Section>
       <PageNavigation />
       </MainContent>

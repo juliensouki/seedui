@@ -89,7 +89,7 @@ const ModalContainer = applyCustomStyles(
       maxWidth: '90vw',
       maxHeight: '90vh',
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
-      borderRadius: theme.borderRadius['075'],
+      borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[3],
       display: 'flex',
       flexDirection: 'column',
@@ -116,12 +116,12 @@ const ModalHeader = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: `${theme.spacing[200]}px ${theme.spacing[200]}px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
   };
 });
 
 const ModalContent = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
-  padding: theme.spacing[200],
+  padding: theme.spacing(2),
   overflowY: 'auto',
   flex: 1,
 }));
@@ -133,11 +133,11 @@ const CloseButton = styled.button<StyledComponentsPrefix<{}>>(({ theme }) => {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: theme.spacing['050'],
+    padding: theme.spacing(0.5),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: theme.borderRadius['050'],
+    borderRadius: theme.borderRadius(2),
     color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[400],
     transition: 'background-color 0.15s ease-in-out, color 0.15s ease-in-out',
 

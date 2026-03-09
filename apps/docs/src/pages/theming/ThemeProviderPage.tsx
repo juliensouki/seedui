@@ -46,7 +46,7 @@ const Th = styled('th')(({ theme }) => {
 const Td = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: `${theme.spacing[200]}px 0`,
+    padding: `${theme.spacing(2)}px 0`,
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
@@ -165,7 +165,7 @@ const myTheme: ThemeCustomization = {
       primary: '#818cf8',
     },
   },
-  spacing: 1.25,             // 25% larger spacing scale
+  spacing: 10,               // base size in px (default: 8)
   typography: {
     h1: {
       fontFamily: '"Poppins", sans-serif',
@@ -204,7 +204,7 @@ function App() {
               <tr>
                 <Td><code>spacing</code></Td>
                 <Td><code>number</code></Td>
-                <Td>Multiplier applied to the base 8px spacing scale (e.g. <code>1.5</code> makes all spacing 50% larger).</Td>
+                <Td>Base size in pixels for the spacing function (default: <code>8</code>). E.g. <code>10</code> makes <code>spacing(1)</code> return 10.</Td>
               </tr>
               <tr>
                 <Td><code>typography</code></Td>
@@ -255,9 +255,9 @@ function MyComponent() {
         <CodeBlock code={`import { styled } from '@seedui-react/seedui';
 
 const Box = styled('div')(({ theme }) => ({
-  padding: theme.spacing[200],
+  padding: theme.spacing(2),
   backgroundColor: theme.colors.primary[100],
-  borderRadius: theme.borderRadius[50],
+  borderRadius: theme.borderRadius(2),
 }));`} />
       </Section>
       <PageNavigation />

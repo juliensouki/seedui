@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { TableOfContents } from '../../components/TableOfContents';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
 import { PageNavigation } from '../../components/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
@@ -16,7 +17,6 @@ const MainContent = styled('div')(() => ({
 const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
-
 
 const Grid = styled('div')(() => ({
   display: 'grid',
@@ -41,14 +41,16 @@ const Box = styled('div')(({ theme }) => ({
   width: 56,
   height: 56,
   backgroundColor: theme.colors.primary[400],
+  overflow: 'hidden',
 }));
 
 const Label = styled('span')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "'SF Mono', 'Fira Code', monospace",
     color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
+    textAlign: 'center' as const,
   };
 });
 
@@ -60,20 +62,40 @@ const Value = styled('span')(({ theme }) => ({
 
 const tocItems = [
   { id: 'scale', label: 'Scale' },
+  { id: 'usage', label: 'Usage' },
 ];
+
+const radiusFactors: (number | 'full')[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 'full'];
+
+const usageCode = `const theme = useTheme();
+
+<div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+  <Button
+    htmlAttributes={{ rootButton: { style: { borderRadius: theme.borderRadius(2) } } }}
+  >
+    borderRadius(2)
+  </Button>
+  <Button
+    htmlAttributes={{ rootButton: { style: { borderRadius: theme.borderRadius(6) } } }}
+  >
+    borderRadius(6)
+  </Button>
+  <Button
+    htmlAttributes={{ rootButton: { style: { borderRadius: theme.borderRadius('full') } } }}
+  >
+    borderRadius('full')
+  </Button>
+</div>`;
 
 export const BorderRadiusPage: FunctionComponent = () => {
   const theme = useTheme();
-  const entries = Object.entries(theme.borderRadius).sort(
-    ([, a], [, b]) => (a as number) - (b as number),
-  );
 
   return (
     <PageLayout>
       <MainContent>
       <Text variant="h3" as="h1">Border Radius</Text>
       <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        Border radius tokens for consistent rounding across components.
+        A function-based border radius scale using a 2px base unit.
       </Text>
 
       <Divider spacing={28} />
@@ -81,17 +103,29 @@ export const BorderRadiusPage: FunctionComponent = () => {
       <Section id="scale">
         <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
         <Text variant="p" style={{ marginBottom: 16 }}>
-          Access via <code>theme.borderRadius['100']</code> (returns the pixel value as a number).
+          Access via <code>theme.borderRadius(factor)</code> — returns the pixel value as a number
+          (base &times; factor). Use <code>'full'</code> for pill/circle shapes (9999px).
         </Text>
         <Grid>
-          {entries.map(([token, px]) => (
-            <Sample key={token}>
-              <Box style={{ borderRadius: px as number }} />
-              <Label>{token}</Label>
-              <Value>{px}px</Value>
-            </Sample>
-          ))}
+          {radiusFactors.map((factor) => {
+            const px = theme.borderRadius(factor);
+            return (
+              <Sample key={String(factor)}>
+                <Box style={{ borderRadius: px }} />
+                <Label>{typeof factor === 'string' ? `'${factor}'` : factor}</Label>
+                <Value>{px}px</Value>
+              </Sample>
+            );
+          })}
         </Grid>
+      </Section>
+
+      <Section id="usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Access border radius via <code>useTheme()</code> or styled-components theme injection.
+        </Text>
+        <ComponentPlayground code={usageCode} />
       </Section>
       <PageNavigation />
       </MainContent>
