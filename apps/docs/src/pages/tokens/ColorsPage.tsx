@@ -60,9 +60,9 @@ const SwatchInfo = styled('div')(({ theme }) => {
 
 const shades = [100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
-const semanticNames = ['primary', 'secondary', 'neutral', 'success', 'info', 'warning', 'error'] as const;
+const semanticNames = ['primary', 'neutral', 'success', 'info', 'warning', 'error'] as const;
 
-const primitiveNames = ['purple', 'turquoise', 'grey', 'blue', 'green', 'orange', 'red'] as const;
+const primitiveNames = ['purple', 'grey', 'blue', 'green', 'orange', 'red'] as const;
 
 const tocItems = [
   { id: 'semantic-colors', label: 'Semantic colors' },

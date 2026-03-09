@@ -2,7 +2,7 @@ import { SemanticColorShades } from '../../../../types';
 import { orange } from '../primitives/orange';
 
 export const warning: SemanticColorShades = {
-  default: orange[500],
+  default: orange[600],
   100: orange[100],
   200: orange[200],
   300: orange[300],

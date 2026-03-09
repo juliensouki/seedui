@@ -62,7 +62,6 @@ export type CustomTypographyConfig = Partial<Record<TypographyVariants, CustomTy
 
 export interface CustomizedColors {
   primary?: Partial<SemanticColorShades> | string;
-  secondary?: Partial<SemanticColorShades> | string;
   neutral?: (Partial<SemanticColorShades> & { white: string; black: string }) | string;
   success?: Partial<SemanticColorShades> | string;
   info?: Partial<SemanticColorShades> | string;

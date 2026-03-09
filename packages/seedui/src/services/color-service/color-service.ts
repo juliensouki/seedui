@@ -21,12 +21,12 @@ export const colorServiceFactory = (): ColorService => {
     for (let i = 1; i < 10; i++) {
       let newColor;
 
-      if (i < 5) {
-        newColor = hexColor.clone().lighten((5 - i) * 10);
-      } else if (i === 5) {
+      if (i < 6) {
+        newColor = hexColor.clone().lighten((6 - i) * 8);
+      } else if (i === 6) {
         newColor = hexColor;
       } else {
-        newColor = hexColor.clone().darken((i - 5) * 10);
+        newColor = hexColor.clone().darken((i - 6) * 10);
       }
       shades = { ...shades, [`${i}00`]: `#${newColor.toHex()}` };
     }
@@ -35,7 +35,7 @@ export const colorServiceFactory = (): ColorService => {
 
   const setDefaultColors = (colors: SemanticColors): SemanticColors => {
     for (const [color, values] of getEntries<SemanticColors>(colors)) {
-      colors[color].default = values[500];
+      colors[color].default = values[600];
     }
     return colors;
   };

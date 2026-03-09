@@ -4,7 +4,6 @@ import { spacing } from '../../tokens/spacing';
 import { Mode, Theme, ThemeCustomization } from '../../types';
 import {
   primary as lightPrimary,
-  secondary as lightSecondary,
   neutral as lightNeutral,
   info as lightInfo,
   success as lightSuccess,
@@ -13,7 +12,6 @@ import {
 } from '../../tokens/colors/light/semantics';
 import {
   primary as darkPrimary,
-  secondary as darkSecondary,
   neutral as darkNeutral,
   info as darkInfo,
   success as darkSuccess,
@@ -56,7 +54,6 @@ export const themeServiceFactory = ({
   const semanticColors = {
     light: {
       primary: lightPrimary,
-      secondary: lightSecondary,
       neutral: lightNeutral,
       info: lightInfo,
       success: lightSuccess,
@@ -65,7 +62,6 @@ export const themeServiceFactory = ({
     },
     dark: {
       primary: darkPrimary,
-      secondary: darkSecondary,
       neutral: darkNeutral,
       info: darkInfo,
       success: darkSuccess,

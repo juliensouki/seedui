@@ -12,7 +12,7 @@ import { IconButton } from '../Button';
 
 export type TagColor = keyof Pick<
   SemanticColors,
-  'primary' | 'secondary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'
+  'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'
 >;
 export type TagSize = Extract<Sizes, 'sm' | 'md'>;
 

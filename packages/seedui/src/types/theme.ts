@@ -18,7 +18,6 @@ export type Colors = keyof SemanticColors;
 
 export interface SemanticColors {
   primary: SemanticColorShades;
-  secondary: SemanticColorShades;
   neutral: SemanticColorShades & { white: string; black: string };
   success: SemanticColorShades;
   info: SemanticColorShades;
