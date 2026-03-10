@@ -21,11 +21,10 @@ const Section = styled('section')(() => ({
 const Callout = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: '16px 20px',
+    padding: '14px 18px',
     borderRadius: 8,
-    borderLeft: `3px solid ${theme.colors.info[500]}`,
     backgroundColor: isLight ? theme.colors.info[100] : theme.colors.info[900],
-    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+    color: isLight ? theme.colors.info[800] : theme.colors.info[200],
     fontSize: 14,
     marginBottom: 16,
     lineHeight: 1.6,
@@ -33,7 +32,7 @@ const Callout = styled('div')(({ theme }) => {
       fontSize: 13,
       padding: '2px 6px',
       borderRadius: 4,
-      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
+      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
       fontFamily: "'SF Mono', 'Fira Code', monospace",
     },
   };
@@ -45,7 +44,6 @@ const tocItems = [
   { id: 'section-conditional-styles', label: 'Conditional styles' },
   { id: 'section-combining-static-and-conditional-styles', label: 'Combining static and conditional styles' },
   { id: 'section-using-the-theme-in-conditions', label: 'Using the theme in conditions' },
-  { id: 'section-supported-components', label: 'Supported components' },
 ];
 
 export const ComponentStylesPage: FunctionComponent = () => {
@@ -85,7 +83,7 @@ const theme: ThemeCustomization = {
   components: {
     button: {
       styles: {
-        borderRadius: '999px',     // pill-shaped buttons
+        borderRadius: '999px',
         textTransform: 'uppercase',
         letterSpacing: '0.05em',
       },
@@ -107,7 +105,7 @@ const theme: ThemeCustomization = {
 function App() {
   return (
     <ThemeProvider mode="light" theme={theme}>
-      {/* All Buttons are now pill-shaped, all Cards have a border, etc. */}
+      <YourApp />
     </ThemeProvider>
   );
 }`} />
@@ -126,7 +124,6 @@ function App() {
     button: {
       conditionalStyles: [
         {
-          // Reduce opacity for all disabled buttons
           condition: (props) => props.disabled === true,
           styles: {
             opacity: 0.4,
@@ -134,7 +131,6 @@ function App() {
           },
         },
         {
-          // Add a ring to primary buttons
           condition: (props, theme) =>
             props.color === 'primary' && props.variant === 'filled',
           styles: {
@@ -160,12 +156,10 @@ function App() {
         <CodeBlock code={`const theme: ThemeCustomization = {
   components: {
     tag: {
-      // Base styles for all tags
       styles: {
         fontWeight: 600,
         borderRadius: '999px',
       },
-      // Additional styles based on props
       conditionalStyles: [
         {
           condition: (props) => props.size === 'sm',
@@ -198,7 +192,6 @@ function App() {
     card: {
       conditionalStyles: [
         {
-          // Apply a glow effect only in dark mode
           condition: (_props, theme) => theme.mode === 'dark',
           styles: {
             boxShadow: '0 0 20px rgba(99, 102, 241, 0.15)',
@@ -211,18 +204,6 @@ function App() {
 };`} />
       </Section>
 
-      <Section id="section-supported-components">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Supported components</Text>
-        <Text variant="p" style={{ marginBottom: 12 }}>
-          The following components support global style customization:
-        </Text>
-        <Text variant="p" style={{ lineHeight: 2 }}>
-          <code>button</code> <code>card</code> <code>iconButton</code> <code>input</code>{' '}
-          <code>modal</code> <code>popover</code> <code>searchBar</code> <code>select</code>{' '}
-          <code>stepper</code> <code>tag</code> <code>text</code> <code>textarea</code>{' '}
-          <code>toggle</code> <code>tooltip</code>
-        </Text>
-      </Section>
       <PageNavigation />
       </MainContent>
 

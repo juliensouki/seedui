@@ -22,11 +22,11 @@ export const colorServiceFactory = (): ColorService => {
       let newColor;
 
       if (i < 6) {
-        newColor = hexColor.clone().lighten((6 - i) * 8);
+        newColor = hexColor.clone().tint((6 - i) * 15);
       } else if (i === 6) {
         newColor = hexColor;
       } else {
-        newColor = hexColor.clone().darken((i - 6) * 10);
+        newColor = hexColor.clone().shade((i - 6) * 15);
       }
       shades = { ...shades, [`${i}00`]: `#${newColor.toHex()}` };
     }

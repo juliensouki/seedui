@@ -123,7 +123,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       htmlAttributes,
     } = getDefaultProps<TagSelectorProps & InternalProps>({
       providedProps: props,
-      globalDefaultProps: customizations?.components?.searchBar?.defaultProps,
+      globalDefaultProps: customizations?.components?.tagSelector?.defaultProps,
       defaultProps,
     });
 

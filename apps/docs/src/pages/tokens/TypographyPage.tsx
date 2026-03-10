@@ -85,9 +85,9 @@ export const TypographyPage: FunctionComponent = () => {
               <MetaGrid>
                 <span><MetaLabel>font:</MetaLabel> {config.fontFamily}</span>
                 <span><MetaLabel>weight:</MetaLabel> {config.fontWeight}</span>
-                <span><MetaLabel>tracking:</MetaLabel> {config.letterSpacing}</span>
-                <span><MetaLabel>size:</MetaLabel> {desktop.fontSize}px <MetaLabel>(tablet: {tablet.fontSize}px, mobile: {mobile.fontSize}px)</MetaLabel></span>
-                <span><MetaLabel>line-height:</MetaLabel> {desktop.lineHeight}px <MetaLabel>(tablet: {tablet.lineHeight}px, mobile: {mobile.lineHeight}px)</MetaLabel></span>
+                <span><MetaLabel>letter-spacing:</MetaLabel> {config.letterSpacing}</span>
+                <span><MetaLabel>size:</MetaLabel> {desktop.fontSize} <MetaLabel>(tablet: {tablet.fontSize}, mobile: {mobile.fontSize})</MetaLabel></span>
+                <span><MetaLabel>line-height:</MetaLabel> {desktop.lineHeight} <MetaLabel>(tablet: {tablet.lineHeight}, mobile: {mobile.lineHeight})</MetaLabel></span>
               </MetaGrid>
             </VariantRow>
           );

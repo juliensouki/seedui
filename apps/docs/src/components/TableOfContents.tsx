@@ -10,15 +10,18 @@ interface TableOfContentsProps {
   items: TocItem[];
 }
 
-const Nav = styled('nav')(({ theme }) => {
+const Nav = styled('nav')(() => ({
+  position: 'sticky' as const,
+  top: 40,
+  width: 180,
+  flexShrink: 0,
+  alignSelf: 'flex-start' as const,
+  marginLeft: 40,
+}));
+
+const Inner = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    position: 'sticky' as const,
-    top: 40,
-    width: 180,
-    flexShrink: 0,
-    alignSelf: 'flex-start' as const,
-    marginLeft: 40,
     borderLeft: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
     paddingLeft: 16,
   };
@@ -63,10 +66,10 @@ const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => ({
 export const TableOfContents: FunctionComponent<TableOfContentsProps> = ({ items }) => {
   const [activeId, setActiveId] = useState(items[0]?.id ?? '');
   const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0 });
+  const [isScrollable, setIsScrollable] = useState(false);
   const itemListRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
-  // Update indicator position when activeId changes
   useEffect(() => {
     const el = itemRefs.current.get(activeId);
     const container = itemListRef.current;
@@ -80,13 +83,18 @@ export const TableOfContents: FunctionComponent<TableOfContentsProps> = ({ items
     }
   }, [activeId]);
 
+  const checkScrollable = useCallback(() => {
+    const scrollContainer = document.querySelector('main');
+    if (!scrollContainer) return;
+    setIsScrollable(scrollContainer.scrollHeight > scrollContainer.clientHeight);
+  }, []);
+
   const handleScroll = useCallback(() => {
     const scrollContainer = document.querySelector('main');
     if (!scrollContainer) return;
 
     const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
 
-    // If scrolled to the bottom, activate the last item
     if (scrollTop + clientHeight >= scrollHeight - 2) {
       setActiveId(items[items.length - 1]?.id ?? '');
       return;
@@ -112,11 +120,18 @@ export const TableOfContents: FunctionComponent<TableOfContentsProps> = ({ items
     const scrollContainer = document.querySelector('main');
     if (!scrollContainer) return;
 
+    checkScrollable();
+    const observer = new ResizeObserver(checkScrollable);
+    observer.observe(scrollContainer);
+
     scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    return () => scrollContainer.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+    return () => {
+      observer.disconnect();
+      scrollContainer.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll, checkScrollable]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -126,24 +141,28 @@ export const TableOfContents: FunctionComponent<TableOfContentsProps> = ({ items
     }
   };
 
+  if (!isScrollable) return null;
+
   return (
     <Nav>
-      <Label>On this page</Label>
-      <ItemList ref={itemListRef}>
-        <Indicator style={{ top: indicatorStyle.top, height: indicatorStyle.height }} />
-        {items.map((item) => (
-          <Item
-            key={item.id}
-            ref={(el) => {
-              if (el) itemRefs.current.set(item.id, el);
-            }}
-            $active={activeId === item.id}
-            onClick={() => scrollTo(item.id)}
-          >
-            {item.label}
-          </Item>
-        ))}
-      </ItemList>
+      <Inner>
+        <Label>On this page</Label>
+        <ItemList ref={itemListRef}>
+          <Indicator style={{ top: indicatorStyle.top, height: indicatorStyle.height }} />
+          {items.map((item) => (
+            <Item
+              key={item.id}
+              ref={(el) => {
+                if (el) itemRefs.current.set(item.id, el);
+              }}
+              $active={activeId === item.id}
+              onClick={() => scrollTo(item.id)}
+            >
+              {item.label}
+            </Item>
+          ))}
+        </ItemList>
+      </Inner>
     </Nav>
   );
 };

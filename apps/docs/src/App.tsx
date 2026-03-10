@@ -4,12 +4,14 @@ import { ThemeProvider, styled, colors, Mode } from '@seedui-react/seedui';
 import { componentDocs, categoryOrder } from './data/components';
 import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from './data/navigation';
 import { Topbar } from './components/Topbar';
+import { ModeToggleContext } from './components/ModeContext';
 import { Sidebar } from './components/Sidebar';
 import { HomePage } from './pages/HomePage';
 import { ComponentPage } from './pages/ComponentPage';
 import { InstallationPage } from './pages/InstallationPage';
 import { QuickStartPage } from './pages/QuickStartPage';
 import { ThemeProviderPage } from './pages/theming/ThemeProviderPage';
+import { CustomizationPage } from './pages/theming/CustomizationPage';
 import { ComponentStylesPage } from './pages/theming/ComponentStylesPage';
 import { DefaultPropsPage } from './pages/theming/DefaultPropsPage';
 import { DarkModePage } from './pages/theming/DarkModePage';
@@ -67,6 +69,7 @@ export const App: FunctionComponent = () => {
   const [mode, setMode] = useState<Mode>('light');
   const contentRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
+  const handleModeToggle = () => setMode(m => m === 'light' ? 'dark' : 'light');
 
   useEffect(() => {
     contentRef.current?.scrollTo(0, 0);
@@ -83,8 +86,9 @@ export const App: FunctionComponent = () => {
       }}
     >
       <ThemeProvider mode={mode}>
+        <ModeToggleContext.Provider value={handleModeToggle}>
         <Shell>
-          <Topbar mode={mode} onModeToggle={() => setMode(m => m === 'light' ? 'dark' : 'light')} />
+          <Topbar mode={mode} onModeToggle={handleModeToggle} />
           <Body>
             <Sidebar
               gettingStartedPages={gettingStartedPages}
@@ -98,6 +102,7 @@ export const App: FunctionComponent = () => {
                   <Route path="/getting-started/installation" element={<InstallationPage />} />
                   <Route path="/getting-started/quick-start" element={<QuickStartPage />} />
                   <Route path="/theming/theme-provider" element={<ThemeProviderPage />} />
+                  <Route path="/theming/customization" element={<CustomizationPage />} />
                   <Route path="/theming/dark-mode" element={<DarkModePage />} />
                   <Route path="/theming/component-styles" element={<ComponentStylesPage />} />
                   <Route path="/theming/default-props" element={<DefaultPropsPage />} />
@@ -113,6 +118,7 @@ export const App: FunctionComponent = () => {
             </Content>
           </Body>
         </Shell>
+        </ModeToggleContext.Provider>
       </ThemeProvider>
     </div>
   );

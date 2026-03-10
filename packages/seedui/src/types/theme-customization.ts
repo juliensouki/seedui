@@ -3,6 +3,7 @@ import { CSSObject } from 'styled-components';
 import {
   ButtonProps,
   CardProps,
+  DividerProps,
   IconButtonProps,
   InputProps,
   ModalProps,
@@ -10,6 +11,7 @@ import {
   SearchBarProps,
   StepperProps,
   TagProps,
+  TagSelectorProps,
   TextareaProps,
   TextProps,
   ToggleProps,
@@ -31,6 +33,7 @@ export type CustomComponentConfiguration<T> = {
 export interface CustomComponents {
   button?: CustomComponentConfiguration<ButtonProps>;
   card?: CustomComponentConfiguration<CardProps>;
+  divider?: CustomComponentConfiguration<DividerProps>;
   iconButton?: CustomComponentConfiguration<IconButtonProps>;
   input?: CustomComponentConfiguration<InputProps>;
   modal?: CustomComponentConfiguration<ModalProps>;
@@ -38,6 +41,7 @@ export interface CustomComponents {
   searchBar?: CustomComponentConfiguration<SearchBarProps>;
   stepper?: CustomComponentConfiguration<StepperProps>;
   tag?: CustomComponentConfiguration<TagProps>;
+  tagSelector?: CustomComponentConfiguration<TagSelectorProps>;
   text?: CustomComponentConfiguration<TextProps>;
   textarea?: CustomComponentConfiguration<TextareaProps>;
   toggle?: CustomComponentConfiguration<ToggleProps>;

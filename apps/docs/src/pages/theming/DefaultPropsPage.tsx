@@ -21,11 +21,10 @@ const Section = styled('section')(() => ({
 const Callout = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: '16px 20px',
+    padding: '14px 18px',
     borderRadius: 8,
-    borderLeft: `3px solid ${theme.colors.info[500]}`,
     backgroundColor: isLight ? theme.colors.info[100] : theme.colors.info[900],
-    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+    color: isLight ? theme.colors.info[800] : theme.colors.info[200],
     fontSize: 14,
     marginBottom: 16,
     lineHeight: 1.6,
@@ -33,7 +32,7 @@ const Callout = styled('div')(({ theme }) => {
       fontSize: 13,
       padding: '2px 6px',
       borderRadius: 4,
-      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
+      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
       fontFamily: "'SF Mono', 'Fira Code', monospace",
     },
   };
@@ -54,7 +53,7 @@ const Th = styled('th')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     textAlign: 'left' as const,
-    padding: '10px 0px',
+    padding: '10px 16px 10px 0',
     fontWeight: 600,
     fontSize: 12,
     textTransform: 'uppercase' as const,
@@ -67,7 +66,7 @@ const Th = styled('th')(({ theme }) => {
 const Td = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: `${theme.spacing(2)}px 0`,
+    padding: `${theme.spacing(2)}px 16px ${theme.spacing(2)}px 0`,
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
@@ -80,7 +79,6 @@ const tocItems = [
   { id: 'section-multiple-components', label: 'Multiple components' },
   { id: 'section-priority-order', label: 'Priority order' },
   { id: 'section-combining-with-styles', label: 'Combining with styles' },
-  { id: 'section-supported-components', label: 'Supported components' },
 ];
 
 export const DefaultPropsPage: FunctionComponent = () => {
@@ -129,10 +127,7 @@ const theme: ThemeCustomization = {
 function App() {
   return (
     <ThemeProvider mode="light" theme={theme}>
-      {/* This button will be large, outlined, and secondary by default */}
       <Button>Save</Button>
-
-      {/* Instance props override global defaults */}
       <Button size="sm" variant="filled">Cancel</Button>
     </ThemeProvider>
   );
@@ -220,16 +215,13 @@ function App() {
         <CodeBlock code={`const theme: ThemeCustomization = {
   components: {
     button: {
-      // Set default prop values
       defaultProps: {
         size: 'lg',
         variant: 'filled',
       },
-      // Apply styles to all buttons
       styles: {
         borderRadius: '999px',
       },
-      // Apply styles conditionally based on props
       conditionalStyles: [
         {
           condition: (props) => props.disabled === true,
@@ -241,18 +233,6 @@ function App() {
 };`} />
       </Section>
 
-      <Section id="section-supported-components">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Supported components</Text>
-        <Text variant="p" style={{ marginBottom: 12 }}>
-          All seedui components that accept props support global default overrides:
-        </Text>
-        <Text variant="p" style={{ lineHeight: 2 }}>
-          <code>button</code> <code>card</code> <code>iconButton</code> <code>input</code>{' '}
-          <code>modal</code> <code>popover</code> <code>searchBar</code> <code>select</code>{' '}
-          <code>stepper</code> <code>tag</code> <code>text</code> <code>textarea</code>{' '}
-          <code>toggle</code> <code>tooltip</code>
-        </Text>
-      </Section>
       <PageNavigation />
       </MainContent>
 

@@ -1,5 +1,10 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import { FunctionComponent, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
+
+import { SeedContextType } from '../../types';
+import { SeedContext } from '../ThemeProvider/context';
+import { applyCustomStyles } from '../../utils/custom-styles';
+import { StyledComponentsPrefix } from '../../types/internal';
 
 export interface DividerProps {
   /** Displays a vertical separator */
@@ -14,32 +19,36 @@ export interface DividerProps {
   childrenSpacing?: number;
 }
 
-const NoTextDivider = styled.div<{
-  vertical: boolean;
-  width?: number | string;
-  height?: number | string;
-  spacing: number;
-}>(({ theme, vertical, width, height, spacing }) => ({
-  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[800],
-  width: vertical ? 1 : width || '100%',
-  height: vertical ? height || '100%' : 1,
-  margin: vertical ? `0 ${spacing}px` : `${spacing}px 0`,
-}));
+const NoTextDivider = applyCustomStyles(
+  styled.div<StyledComponentsPrefix<{
+    vertical: boolean;
+    width?: number | string;
+    height?: number | string;
+    spacing: number;
+  }>>(({ theme, $vertical, $width, $height, $spacing }) => ({
+    backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[800],
+    width: $vertical ? 1 : $width || '100%',
+    height: $vertical ? $height || '100%' : 1,
+    margin: $vertical ? `0 ${$spacing}px` : `${$spacing}px 0`,
+  })),
+);
 
-const DividerContainer = styled.div<{
-  vertical: boolean;
-  width?: number | string;
-  height?: number | string;
-  spacing: number;
-}>(({ vertical, width, height, spacing }) => ({
-  display: 'flex',
-  flexDirection: vertical ? 'column' : 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: vertical ? 'fit-content' : width || '100%',
-  height: vertical ? height || '100%' : 'auto',
-  margin: vertical ? `0 ${spacing}px` : `${spacing}px 0`,
-}));
+const DividerContainer = applyCustomStyles(
+  styled.div<StyledComponentsPrefix<{
+    vertical: boolean;
+    width?: number | string;
+    height?: number | string;
+    spacing: number;
+  }>>(({ $vertical, $width, $height, $spacing }) => ({
+    display: 'flex',
+    flexDirection: $vertical ? 'column' : 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: $vertical ? 'fit-content' : $width || '100%',
+    height: $vertical ? $height || '100%' : 'auto',
+    margin: $vertical ? `0 ${$spacing}px` : `${$spacing}px 0`,
+  })),
+);
 
 const Line = styled.div<{ vertical: boolean }>(({ theme, vertical }) => ({
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[800],
@@ -74,13 +83,16 @@ export const Divider: FunctionComponent<DividerProps & HTMLAttributes<HTMLDivEle
   childrenSpacing = 12,
   ...divProps
 }) => {
+  const { customizations } = useContext<SeedContextType>(SeedContext);
+
   if (!children) {
     return (
       <NoTextDivider
-        vertical={vertical}
-        width={width}
-        height={height}
-        spacing={spacing}
+        $vertical={vertical}
+        $width={width}
+        $height={height}
+        $spacing={spacing}
+        $customizations={customizations.components?.divider}
         data-testid="divider-no-children"
         {...divProps}
       />
@@ -89,10 +101,11 @@ export const Divider: FunctionComponent<DividerProps & HTMLAttributes<HTMLDivEle
 
   return (
     <DividerContainer
-      vertical={vertical}
-      width={width}
-      height={height}
-      spacing={spacing}
+      $vertical={vertical}
+      $width={width}
+      $height={height}
+      $spacing={spacing}
+      $customizations={customizations.components?.divider}
       data-testid="divider-with-children-main-container"
       {...divProps}
     >

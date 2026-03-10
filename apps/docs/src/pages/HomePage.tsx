@@ -1,17 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  styled,
-  Text,
-  Divider,
-  Button,
-  Input,
-  Tag,
-  Toggle,
-  SearchBar,
-  Textarea,
-  useTheme,
-} from '@seedui-react/seedui';
+import { styled, Text, Divider, Button, Input, Tag, Toggle, SearchBar, Textarea, useTheme } from '@seedui-react/seedui';
 import { GithubIcon } from 'lucide-react';
 
 const Section = styled('section')(() => ({
@@ -42,7 +31,6 @@ const FeatureCard = styled('div')(({ theme }) => {
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
   };
 });
-
 
 const FeatureDescription = styled(Text)(({ theme }) => ({
   color: theme.colors.neutral[500],
@@ -96,8 +84,7 @@ const WallFade = styled('div')(({ theme }) => {
   };
 });
 
-const ComponentWallWrapper = styled('div')(() => ({
-}));
+const ComponentWallWrapper = styled('div')(() => ({}));
 
 const ScrollContainer = styled('div')(() => ({
   display: 'flex',
@@ -316,12 +303,16 @@ const WallContent: FunctionComponent = () => {
         <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 16 }}>
           <AvatarLg style={{ backgroundColor: theme.colors.primary[500] }}>JD</AvatarLg>
           <div style={{ flex: 1 }}>
-            <Text variant="h6" style={{ lineHeight: 1.2 }}>Jane Doe</Text>
+            <Text variant="h6" style={{ lineHeight: 1.2 }}>
+              Jane Doe
+            </Text>
             <Text variant="caption" style={{ color: theme.colors.neutral[400], marginTop: 2 }}>
               Senior Product Designer
             </Text>
           </div>
-          <Tag color="success" size="md">Online</Tag>
+          <Tag color="success" size="md">
+            Online
+          </Tag>
         </div>
         <Divider spacing={0} />
         <div style={{ display: 'flex', gap: 16, padding: '14px 0 2px' }}>
@@ -334,8 +325,12 @@ const WallContent: FunctionComponent = () => {
             <StatLabel>Projects</StatLabel>
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'flex-end', gap: 6 }}>
-            <Button variant="filled" color="primary" size="md">Message</Button>
-            <Button variant="transparent" color="neutral" size="md">Follow</Button>
+            <Button variant="filled" color="primary" size="md">
+              Message
+            </Button>
+            <Button variant="transparent" color="neutral" size="md">
+              Follow
+            </Button>
           </div>
         </div>
       </MiniCard>
@@ -345,7 +340,9 @@ const WallContent: FunctionComponent = () => {
         <MiniLabel>Preferences</MiniLabel>
         <SettingRow>
           <div>
-            <Text variant="small" style={{ fontWeight: 500 }}>Push notifications</Text>
+            <Text variant="small" style={{ fontWeight: 500 }}>
+              Push notifications
+            </Text>
             <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
               Receive alerts on your device
             </Text>
@@ -354,7 +351,9 @@ const WallContent: FunctionComponent = () => {
         </SettingRow>
         <SettingRow>
           <div>
-            <Text variant="small" style={{ fontWeight: 500 }}>Dark mode</Text>
+            <Text variant="small" style={{ fontWeight: 500 }}>
+              Dark mode
+            </Text>
             <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
               Use dark color scheme
             </Text>
@@ -363,7 +362,9 @@ const WallContent: FunctionComponent = () => {
         </SettingRow>
         <SettingRow>
           <div>
-            <Text variant="small" style={{ fontWeight: 500 }}>Auto-save</Text>
+            <Text variant="small" style={{ fontWeight: 500 }}>
+              Auto-save
+            </Text>
             <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
               Save changes automatically
             </Text>
@@ -375,22 +376,36 @@ const WallContent: FunctionComponent = () => {
       {/* ── Project card ── */}
       <MiniCard>
         <MiniLabel>Projects</MiniLabel>
-        <SearchBar placeholder="Search projects..." value={search} onChange={(e) => setSearch(e.target.value)} width="100%" />
+        <SearchBar
+          placeholder="Search projects..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          width="100%"
+        />
         <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {[
             { name: 'Design System', status: 'Active', color: theme.colors.success[500] },
             { name: 'Mobile App', status: 'In review', color: theme.colors.warning[500] },
             { name: 'API v2', status: 'Draft', color: theme.colors.neutral[400] },
           ].map((p) => (
-            <div key={p.name} style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '8px 12px', borderRadius: 8,
-              backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-            }}>
+            <div
+              key={p.name}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '8px 12px',
+                borderRadius: 8,
+                backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+              }}
+            >
               <Text variant="small" style={{ fontWeight: 500 }}>
-                <StatusDot $color={p.color} />{p.name}
+                <StatusDot $color={p.color} />
+                {p.name}
               </Text>
-              <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>{p.status}</Text>
+              <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
+                {p.status}
+              </Text>
             </div>
           ))}
         </div>
@@ -399,13 +414,29 @@ const WallContent: FunctionComponent = () => {
       {/* ── Invite team member ── */}
       <MiniCard>
         <MiniLabel>Invite team member</MiniLabel>
-        <Input placeholder="colleague@company.com" value={email} onChange={(e) => setEmail(e.target.value)} label="Email" width="100%" />
+        <Input
+          placeholder="colleague@company.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          label="Email"
+          width="100%"
+        />
         <div style={{ marginTop: 10 }}>
-          <Input placeholder="Editor" value={role} onChange={(e) => setRole(e.target.value)} label="Role" width="100%" />
+          <Input
+            placeholder="Editor"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            label="Role"
+            width="100%"
+          />
         </div>
         <div style={{ display: 'flex', gap: 8, marginTop: 14, justifyContent: 'flex-end' }}>
-          <Button variant="transparent" color="neutral" size="md">Cancel</Button>
-          <Button variant="filled" color="primary" size="md">Send Invite</Button>
+          <Button variant="transparent" color="neutral" size="md">
+            Cancel
+          </Button>
+          <Button variant="filled" color="primary" size="md">
+            Send Invite
+          </Button>
         </div>
       </MiniCard>
 
@@ -414,20 +445,34 @@ const WallContent: FunctionComponent = () => {
         <MiniLabel>Recent activity</MiniLabel>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {[
-            { initials: 'AL', name: 'Alice', action: 'updated the design tokens', time: '2m ago', bg: theme.colors.primary[500] },
+            {
+              initials: 'AL',
+              name: 'Alice',
+              action: 'updated the design tokens',
+              time: '2m ago',
+              bg: theme.colors.primary[500],
+            },
             { initials: 'BK', name: 'Bob', action: 'pushed to main', time: '15m ago', bg: theme.colors.success[500] },
             { initials: 'CM', name: 'Carol', action: 'left a comment', time: '1h ago', bg: theme.colors.warning[500] },
           ].map((item) => (
-            <div key={item.initials} style={{
-              display: 'flex', gap: 10, alignItems: 'center', padding: '8px 10px', borderRadius: 8,
-            }}>
+            <div
+              key={item.initials}
+              style={{
+                display: 'flex',
+                gap: 10,
+                alignItems: 'center',
+                padding: '8px 10px',
+                borderRadius: 8,
+              }}
+            >
               <AvatarSm style={{ backgroundColor: item.bg }}>{item.initials}</AvatarSm>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <Text variant="small" style={{ fontWeight: 500 }}>
-                  {item.name}{' '}
-                  <span style={{ fontWeight: 400, color: theme.colors.neutral[500] }}>{item.action}</span>
+                  {item.name} <span style={{ fontWeight: 400, color: theme.colors.neutral[500] }}>{item.action}</span>
                 </Text>
-                <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>{item.time}</Text>
+                <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+                  {item.time}
+                </Text>
               </div>
             </div>
           ))}
@@ -439,7 +484,9 @@ const WallContent: FunctionComponent = () => {
             <AvatarStackItem $color={theme.colors.success[500]}>BK</AvatarStackItem>
             <AvatarStackItem $color={theme.colors.warning[500]}>CM</AvatarStackItem>
           </AvatarStack>
-          <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>3 team members</Text>
+          <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
+            3 team members
+          </Text>
         </div>
       </MiniCard>
 
@@ -453,10 +500,19 @@ const WallContent: FunctionComponent = () => {
             </Tag>
           ))}
         </Row>
-        <Textarea placeholder="Describe your feedback..." value={feedback} onChange={(e) => setFeedback(e.target.value)} width="100%" />
+        <Textarea
+          placeholder="Describe your feedback..."
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+          width="100%"
+        />
         <div style={{ display: 'flex', gap: 8, marginTop: 12, justifyContent: 'flex-end' }}>
-          <Button variant="transparent" color="neutral" size="md">Clear</Button>
-          <Button variant="filled" color="primary" size="md">Submit</Button>
+          <Button variant="transparent" color="neutral" size="md">
+            Clear
+          </Button>
+          <Button variant="filled" color="primary" size="md">
+            Submit
+          </Button>
         </div>
       </MiniCard>
 
@@ -464,18 +520,25 @@ const WallContent: FunctionComponent = () => {
       <MiniCard style={{ gridColumn: 'span 2' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <MiniLabel style={{ marginBottom: 0 }}>Checkout</MiniLabel>
-          <Tag color="info" size="md">Step 3 of 4</Tag>
+          <Tag color="info" size="md">
+            Step 3 of 4
+          </Tag>
         </div>
         <StepperMini>
           {['Cart', 'Shipping', 'Payment', 'Confirmation'].map((label, i) => (
             <>
               <StepItem key={label}>
                 <StepDot $active={i === 2} $done={i < 2} $color={theme.colors.primary[500]} />
-                <Text variant="caption" style={{
-                  fontSize: 10,
-                  color: i <= 2 ? theme.colors.primary[500] : theme.colors.neutral[400],
-                  fontWeight: i === 2 ? 600 : 400,
-                }}>{label}</Text>
+                <Text
+                  variant="caption"
+                  style={{
+                    fontSize: 10,
+                    color: i <= 2 ? theme.colors.primary[500] : theme.colors.neutral[400],
+                    fontWeight: i === 2 ? 600 : 400,
+                  }}
+                >
+                  {label}
+                </Text>
               </StepItem>
               {i < 3 && <StepLine $done={i < 2} $color={theme.colors.primary[500]} />}
             </>
@@ -483,8 +546,12 @@ const WallContent: FunctionComponent = () => {
         </StepperMini>
         <Divider spacing={10} />
         <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-          <Button variant="transparent" color="neutral" size="md">Back</Button>
-          <Button variant="filled" color="primary" size="md">Continue to Payment</Button>
+          <Button variant="transparent" color="neutral" size="md">
+            Back
+          </Button>
+          <Button variant="filled" color="primary" size="md">
+            Continue to Payment
+          </Button>
         </div>
       </MiniCard>
 
@@ -492,27 +559,47 @@ const WallContent: FunctionComponent = () => {
       <MiniCard>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <MiniLabel style={{ marginBottom: 0 }}>Notifications</MiniLabel>
-          <Tag color="error" size="sm">3 new</Tag>
+          <Tag color="error" size="sm">
+            3 new
+          </Tag>
         </div>
         <NotifItem>
-          <AvatarSm style={{ backgroundColor: theme.colors.info[500], width: 28, height: 28, fontSize: 11 }}>DR</AvatarSm>
+          <AvatarSm style={{ backgroundColor: theme.colors.info[500], width: 28, height: 28, fontSize: 11 }}>
+            DR
+          </AvatarSm>
           <div style={{ flex: 1 }}>
-            <Text variant="small" style={{ fontWeight: 500 }}>Design review requested</Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>David wants your feedback on the new layout</Text>
+            <Text variant="small" style={{ fontWeight: 500 }}>
+              Design review requested
+            </Text>
+            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+              David wants your feedback on the new layout
+            </Text>
           </div>
         </NotifItem>
         <NotifItem>
-          <AvatarSm style={{ backgroundColor: theme.colors.success[500], width: 28, height: 28, fontSize: 11 }}>CI</AvatarSm>
+          <AvatarSm style={{ backgroundColor: theme.colors.success[500], width: 28, height: 28, fontSize: 11 }}>
+            CI
+          </AvatarSm>
           <div style={{ flex: 1 }}>
-            <Text variant="small" style={{ fontWeight: 500 }}>Build passed</Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>All 47 tests passed on main</Text>
+            <Text variant="small" style={{ fontWeight: 500 }}>
+              Build passed
+            </Text>
+            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+              All 47 tests passed on main
+            </Text>
           </div>
         </NotifItem>
         <NotifItem>
-          <AvatarSm style={{ backgroundColor: theme.colors.warning[500], width: 28, height: 28, fontSize: 11 }}>PM</AvatarSm>
+          <AvatarSm style={{ backgroundColor: theme.colors.warning[500], width: 28, height: 28, fontSize: 11 }}>
+            PM
+          </AvatarSm>
           <div style={{ flex: 1 }}>
-            <Text variant="small" style={{ fontWeight: 500 }}>Sprint ends tomorrow</Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>2 tasks still in progress</Text>
+            <Text variant="small" style={{ fontWeight: 500 }}>
+              Sprint ends tomorrow
+            </Text>
+            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+              2 tasks still in progress
+            </Text>
           </div>
         </NotifItem>
       </MiniCard>
@@ -537,8 +624,12 @@ const WallContent: FunctionComponent = () => {
         ].map((item) => (
           <div key={item.label} style={{ marginBottom: 10 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-              <Text variant="caption" style={{ fontWeight: 500 }}>{item.label}</Text>
-              <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>{item.pct}%</Text>
+              <Text variant="caption" style={{ fontWeight: 500 }}>
+                {item.label}
+              </Text>
+              <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
+                {item.pct}%
+              </Text>
             </div>
             <ProgressBar>
               <ProgressFill $width={item.pct} $color={item.color} />
@@ -546,7 +637,9 @@ const WallContent: FunctionComponent = () => {
           </div>
         ))}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 4 }}>
-          <Button variant="filled" color="primary" size="md">Upgrade Plan</Button>
+          <Button variant="filled" color="primary" size="md">
+            Upgrade Plan
+          </Button>
         </div>
       </MiniCard>
 
@@ -554,7 +647,9 @@ const WallContent: FunctionComponent = () => {
       <MiniCard style={{ gridColumn: 'span 2' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <MiniLabel style={{ marginBottom: 0 }}>Team</MiniLabel>
-          <Button variant="filled" color="primary" size="md">Add Member</Button>
+          <Button variant="filled" color="primary" size="md">
+            Add Member
+          </Button>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           {[
@@ -563,14 +658,28 @@ const WallContent: FunctionComponent = () => {
             { initials: 'BK', name: 'Bob', role: 'Backend', bg: theme.colors.success[500] },
             { initials: 'CM', name: 'Carol', role: 'PM', bg: theme.colors.warning[500] },
           ].map((m) => (
-            <div key={m.initials} style={{
-              flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-              padding: '14px 8px', borderRadius: 10,
-              backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-            }}>
+            <div
+              key={m.initials}
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 6,
+                padding: '14px 8px',
+                borderRadius: 10,
+                backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+              }}
+            >
               <AvatarSm style={{ backgroundColor: m.bg, width: 38, height: 38, fontSize: 13 }}>{m.initials}</AvatarSm>
-              <Text variant="small" style={{ fontWeight: 500 }}>{m.name}</Text>
-              <div><Tag color="neutral" size="sm">{m.role}</Tag></div>
+              <Text variant="small" style={{ fontWeight: 500 }}>
+                {m.name}
+              </Text>
+              <div>
+                <Tag color="neutral" size="sm">
+                  {m.role}
+                </Tag>
+              </div>
             </div>
           ))}
         </div>
@@ -593,11 +702,16 @@ export const HomePage: FunctionComponent = () => {
               A simple and elegant React component library that's endlessly customizable.
             </Text>
             <Text variant="p" style={{ marginTop: 16, lineHeight: 1.7, color: theme.colors.neutral[500] }}>
-              Everything you need to craft polished applications, internal tools, and
-              delightful user experiences — designed to get out of your way.
+              Everything you need to craft polished applications, internal tools, and delightful user experiences —
+              designed to get out of your way.
             </Text>
             <div style={{ display: 'flex', gap: 10, marginTop: 24 }}>
-              <Button variant="filled" color="primary" size="md" onClick={() => navigate('/getting-started/installation')}>
+              <Button
+                variant="filled"
+                color="primary"
+                size="md"
+                onClick={() => navigate('/getting-started/installation')}
+              >
                 How to install
               </Button>
               <Button variant="transparent" color="neutral" size="md">
@@ -621,49 +735,61 @@ export const HomePage: FunctionComponent = () => {
       <Divider spacing={0} style={{ marginBottom: 28 }} />
 
       <Section>
-        <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>Why seedui</Text>
+        <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>
+          Why seedui
+        </Text>
         <FeatureGrid>
           <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Design Token System</Text>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Design Token System
+            </Text>
             <FeatureDescription>
-              A comprehensive set of tokens for colors, typography, spacing, border radius,
-              box shadows, and breakpoints. Every value is consistent and overridable.
+              A comprehensive set of tokens for colors, typography, spacing, border radius, box shadows, and
+              breakpoints. Every value is consistent and overridable.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Fully Themeable</Text>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Fully Themeable
+            </Text>
             <FeatureDescription>
-              Customize the entire look and feel through the ThemeProvider. Override design tokens,
-              set global default props, and apply conditional styles to any component.
+              Customize the entire look and feel through the ThemeProvider. Override design tokens, set global default
+              props, and apply conditional styles to any component.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Dark Mode</Text>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Dark Mode
+            </Text>
             <FeatureDescription>
-              Built-in light and dark mode support. All components and tokens adapt automatically
-              when you switch modes — no extra configuration needed.
+              Built-in light and dark mode support. All components and tokens adapt automatically when you switch modes.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Styled Components</Text>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Styled Components
+            </Text>
             <FeatureDescription>
-              Built on styled-components with full TypeScript support. Use the re-exported{' '}
-              <code>styled</code> and <code>useTheme</code> utilities to build custom components
-              that access your theme.
+              Built on styled-components with full TypeScript support. Use the re-exported <code>styled</code> and{' '}
+              <code>useTheme</code> utilities to build custom components that access your theme.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>TypeScript First</Text>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              TypeScript First
+            </Text>
             <FeatureDescription>
-              Every component, token, and theme configuration is fully typed. Get autocompletion
-              and type safety for props, style overrides, and conditional style conditions.
+              Every component, token, and theme configuration is fully typed. Get autocompletion and type safety for
+              props, style overrides, and conditional style conditions.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>Component Customization</Text>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Component Customization
+            </Text>
             <FeatureDescription>
-              Go beyond props — apply global CSS overrides and conditional styles that react to
-              component props and theme values, all from a single configuration object.
+              Go beyond props — apply global CSS overrides and conditional styles that react to component props and
+              theme values, all from a single configuration object.
             </FeatureDescription>
           </FeatureCard>
         </FeatureGrid>
