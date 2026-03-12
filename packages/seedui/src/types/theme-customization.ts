@@ -1,6 +1,8 @@
 import { CSSObject } from 'styled-components';
 
 import {
+  AvatarProps,
+  AvatarStackProps,
   ButtonProps,
   CardProps,
   DividerProps,
@@ -8,7 +10,9 @@ import {
   InputProps,
   ModalProps,
   PopoverProps,
+  ProgressBarProps,
   SearchBarProps,
+  SkeletonProps,
   StepperProps,
   TagProps,
   TagSelectorProps,
@@ -31,6 +35,8 @@ export type CustomComponentConfiguration<T> = {
 };
 
 export interface CustomComponents {
+  avatar?: CustomComponentConfiguration<AvatarProps>;
+  avatarStack?: CustomComponentConfiguration<AvatarStackProps>;
   button?: CustomComponentConfiguration<ButtonProps>;
   card?: CustomComponentConfiguration<CardProps>;
   divider?: CustomComponentConfiguration<DividerProps>;
@@ -38,7 +44,9 @@ export interface CustomComponents {
   input?: CustomComponentConfiguration<InputProps>;
   modal?: CustomComponentConfiguration<ModalProps>;
   popover?: CustomComponentConfiguration<PopoverProps>;
+  progressBar?: CustomComponentConfiguration<ProgressBarProps>;
   searchBar?: CustomComponentConfiguration<SearchBarProps>;
+  skeleton?: CustomComponentConfiguration<SkeletonProps>;
   stepper?: CustomComponentConfiguration<StepperProps>;
   tag?: CustomComponentConfiguration<TagProps>;
   tagSelector?: CustomComponentConfiguration<TagSelectorProps>;

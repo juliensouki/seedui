@@ -265,6 +265,49 @@ const TooltipSchema: FunctionComponent = () => (
   </SchemaWrapper>
 );
 
+const CirclePlaceholder = styled('div')<{ $size?: number }>(({ theme, $size = 48 }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    width: $size,
+    height: $size,
+    borderRadius: '50%',
+    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[900],
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 11,
+    fontWeight: 600,
+    fontFamily: "'JetBrains Mono Variable', 'JetBrains Mono', monospace",
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
+    flexShrink: 0,
+  };
+});
+
+const AvatarSchema: FunctionComponent = () => (
+  <SchemaWrapper>
+    <Box>
+      <BoxLabel>RootDiv</BoxLabel>
+      <Row>
+        <CirclePlaceholder>img</CirclePlaceholder>
+      </Row>
+    </Box>
+  </SchemaWrapper>
+);
+
+const AvatarStackSchema: FunctionComponent = () => (
+  <SchemaWrapper>
+    <Box>
+      <BoxLabel>RootDiv</BoxLabel>
+      <div style={{ display: 'flex' }}>
+        <CirclePlaceholder style={{ zIndex: 3 }}>AB</CirclePlaceholder>
+        <CirclePlaceholder style={{ zIndex: 2, marginLeft: -14 }}>CD</CirclePlaceholder>
+        <CirclePlaceholder style={{ zIndex: 1, marginLeft: -14 }}>+N</CirclePlaceholder>
+      </div>
+    </Box>
+  </SchemaWrapper>
+);
+
 const ButtonSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
@@ -376,11 +419,34 @@ const PopoverSchema: FunctionComponent = () => (
   </SchemaWrapper>
 );
 
+const ProgressBarSchema: FunctionComponent = () => (
+  <SchemaWrapper>
+    <Box>
+      <BoxLabel>RootDiv / TrackDiv</BoxLabel>
+      <Box $dashed style={{ width: '60%' }}>
+        <BoxLabel>BarDiv</BoxLabel>
+        <Placeholder>fill</Placeholder>
+      </Box>
+    </Box>
+  </SchemaWrapper>
+);
+
+const SkeletonSchema: FunctionComponent = () => (
+  <SchemaWrapper>
+    <Box>
+      <BoxLabel>RootDiv</BoxLabel>
+      <Placeholder $grow>animated placeholder</Placeholder>
+    </Box>
+  </SchemaWrapper>
+);
+
 /* ------------------------------------------------------------------ */
 /*  Registry                                                           */
 /* ------------------------------------------------------------------ */
 
 const schemas: Record<string, FunctionComponent> = {
+  Avatar: AvatarSchema,
+  AvatarStack: AvatarStackSchema,
   Button: ButtonSchema,
   IconButton: IconButtonSchema,
   Card: CardSchema,
@@ -389,7 +455,9 @@ const schemas: Record<string, FunctionComponent> = {
   Input: InputSchema,
   Modal: ModalSchema,
   Popover: PopoverSchema,
+  ProgressBar: ProgressBarSchema,
   Select: SelectSchema,
+  Skeleton: SkeletonSchema,
   Stepper: StepperSchema,
   Tag: TagSchema,
   TagSelector: TagSelectorSchema,
