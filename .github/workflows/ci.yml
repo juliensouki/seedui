@@ -19,8 +19,5 @@ jobs:
       - name: Build Library
         run: yarn build:package:seedui
 
-      - name: Build Sandbox App
-        run: yarn build:app:sandbox
-
       - name: Lint
         run: yarn lint
