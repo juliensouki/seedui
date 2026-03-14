@@ -36,7 +36,7 @@ export interface PopoverProps {
   content: ReactNode;
   closeOnOutsideClick?: boolean;
   closeOnEscape?: boolean;
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
     triggerDiv?: HTMLAttributes<HTMLDivElement>;
     popoverDiv?: HTMLAttributes<HTMLDivElement>;
@@ -56,7 +56,7 @@ const defaultProps: PopoverProps = {
   content: <></>,
   closeOnOutsideClick: true,
   closeOnEscape: true,
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
     triggerDiv: {},
     popoverDiv: {},
@@ -106,7 +106,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       content,
       closeOnOutsideClick,
       closeOnEscape,
-      htmlAttributes: {
+      elementProps: {
         rootDiv: rootDivHTMLAttributes,
         triggerDiv: triggerDivHTMLAttributes,
         popoverDiv: popoverDivHTMLAttributes,

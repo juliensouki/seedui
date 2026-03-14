@@ -36,8 +36,8 @@ export const selectDoc: ComponentDoc = {
     { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the select.' },
   ],
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootContainerProps', cssClass: '.select-root' },
-    { name: 'Select container', htmlAttribute: 'selectContainerProps', cssClass: '.select-container' },
+    { name: 'Root', htmlAttribute: 'elementProps.rootDiv', cssClass: '.select-root' },
+    { name: 'Select container', htmlAttribute: 'elementProps.selectContainerDiv', cssClass: '.select-container' },
     { name: 'Input', htmlAttribute: 'inputProps', cssClass: '—' },
     { name: 'Arrow', htmlAttribute: '—', cssClass: '.select-arrow-container' },
     { name: 'Menu', htmlAttribute: '—', cssClass: '.select-menu-container' },

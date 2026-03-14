@@ -21,7 +21,7 @@ export interface TagProps {
   size?: TagSize;
   removable?: boolean;
   onRemove?: () => void;
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
   forwardProps?: {
@@ -36,7 +36,7 @@ const defaultProps: TagProps = {
   removable: false,
   onRemove: undefined,
   children: '',
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
   },
   forwardProps: {
@@ -45,7 +45,7 @@ const defaultProps: TagProps = {
 };
 
 const TagDiv = applyCustomStyles(
-  styled.div<Required<TagProps>>((props) => {
+  styled.div<{ color: TagColor; size: TagSize; $removable: boolean }>((props) => {
     const theme = props.theme;
     const color = props.color;
 
@@ -98,7 +98,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
       size,
       removable,
       onRemove,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      elementProps: { rootDiv: rootDivHTMLAttributes } = {},
       forwardProps: { text: textProps } = {},
       className,
       children,
@@ -112,9 +112,9 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
       <TagDiv
         color={color}
         size={size}
-        removable={removable}
+        $removable={removable}
         ref={forwardedRef}
-        className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
+        className={joinClasses(className, rootDivHTMLAttributes?.className)}
         $customizations={customizations.components?.tag}
         {...rootDivHTMLAttributes}
       >

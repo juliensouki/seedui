@@ -1,147 +1,64 @@
-# seedui Audit — 2026-03-03
+# seedui Audit — 2026-03-15
 
 ## Bugs
 
-### 1. `joinClasses` called with duplicate arguments — 4 components
-- `Tag.tsx:117` — `joinClasses(className, className, ...)`
-- `Textarea.tsx:119` — `joinClasses(className, className, ...)`
-- `Input.tsx:229` — `joinClasses(className, className, ...)`
-- `Tooltip.tsx:200` — `joinClasses(className, className, ...)`
+### 1. Custom theme colors ignore dark mode
+`theme-service.ts:116` — `generateCustomColors` is called without the `mode` parameter, so custom color overrides always resolve against light mode tokens. The `boxShadow` call on line 115 correctly passes `mode`.
 
-`className` is passed twice in all four. This produces doubled class names in the DOM.
+### 2. ResizeObserver memory leak in Tooltip
+`Tooltip.tsx:179-183` — Two `ResizeObserver` instances are created every time the effect runs but never disconnected. The `useEffect` has no cleanup return, so observers leak on every re-render triggered by `direction` or `text` changes.
 
-### 2. `TagSelector` references `searchBar` customization key instead of its own
-- `TagSelector.tsx:126` reads `customizations?.components?.searchBar?.defaultProps`
-- `TagSelector.tsx:162` uses `$customizations={customizations.components?.searchBar}`
-- `TagSelector` has no entry in `CustomComponents` type — it borrows SearchBar's config, so consumers can't customize it independently.
+### 3. `setDefaultColors` mutates its input
+`color-service.ts:36-41` — Directly mutates `colors[color].default = values[600]` on the passed-in object. If the same semantic colors object is reused elsewhere (e.g. cached default themes), the mutation bleeds across.
 
-### 3. `TagSelector` uses deprecated `onKeyPress`
-`onKeyPress` was deprecated in React 17+ and removed in React 19. Should be `onKeyDown`.
+### 4. `as any` casts on DOM event listeners
+`Modal.tsx:198` and `Popover.tsx:242,263` — React's `KeyboardEvent` is cast to `any` to satisfy `addEventListener`. Should use the global DOM `KeyboardEvent` type instead.
 
----
-
-## Props API Inconsistencies
-
-### 4. `Select` uses a completely different HTML attributes pattern
-Every other component uses `htmlAttributes?: { rootDiv?: HTMLAttributes<...> }`. Select uses flat props: `rootContainerProps` and `selectContainerProps`.
-
-### 5. `SelectProps` is never exported
-`Select/index.ts` exports `Select` but not `SelectProps`. Consumers can't type their own wrappers.
-
-### 6. `TagSelector` types its props as `any`
-```ts
-forwardProps?: { labelTextProps?: any }
-htmlAttributes?: { rootDiv?: any }
-```
-Every other component properly types these as `TextPropsAndAttributes` and `HTMLAttributes<HTMLDivElement>`.
-
-### 7. `Toggle` defines `size` as inline string union instead of using `Sizes` type
-```ts
-size?: 'sm' | 'md' | 'lg'  // Toggle
-size?: ButtonSizes           // Button (derived from Sizes)
-size?: TagSize               // Tag (derived from Sizes)
-```
-If `Sizes` ever changes, Toggle won't follow along.
-
-### 8. Components without `htmlAttributes` — no way to pass native HTML attributes
-- `SearchBar` — only exposes `className`
-- `Stepper` — only exposes `className`
-- `Divider` — spreads `...divProps` directly (extends `HTMLAttributes`)
-- `Text` — spreads `...allHTMLAttributes` directly (extends `HTMLAttributes`)
-
-Divider and Text use a "spread everything" pattern; SearchBar and Stepper offer almost nothing. Neither matches the `htmlAttributes` pattern used by the rest.
+### 5. Variable shadow in `joinClasses`
+`classes.ts:2` — The `.filter((classes) => ...)` callback parameter shadows the outer `classes` rest parameter. Not breaking, but confusing and should be renamed.
 
 ---
 
-## `forwardRef` / `displayName` Inconsistencies
+## Type Issues
 
-### 9. Three public components skip `forwardRef`
-- `Divider` — `React.FC`
-- `Select` — `React.FC`
-- `ThemeProvider` — `React.FC`
+### 6. Text `forwardedRef` type mismatch
+`Text.tsx:77-80` — The outer generic declares `forwardRef<HTMLParagraphElement, ...>` but the inner callback types it as `ForwardedRef<HTMLDivElement>`.
 
-Every other public component uses `forwardRef`.
-
-### 10. Missing `displayName` on public components
-- `Divider`
-- `ThemeProvider`
-
-These won't show meaningful names in React DevTools.
+### 7. Divider doesn't use `getDefaultProps`
+`Divider.tsx:79` — Only component that uses manual default parameter syntax instead of `getDefaultProps`. This means global customization `defaultProps` for Divider are silently ignored.
 
 ---
 
-## Export / File Inconsistencies
+## Accessibility
 
-### 11. Four different export styles across component `index.ts` files
-- **Style A** (most): `export { Foo, type FooProps } from './Foo'`
-- **Style B** (Button): `export * from './Button'`
-- **Style C** (SearchBar): import then re-export — drops the `type` keyword on `SearchBarProps`
-- **Style D** (Modal, Toggle): separate `export { X }` and `export type { Y }` lines
+### 8. Divider lacks `role="separator"`
+Renders plain `<div>` elements. Should use `role="separator"` (or `<hr>`) for screen readers.
 
-### 12. `Stepper/index.tsx` uses `.tsx` extension
-Every other barrel file is `.ts`. No JSX exists in this file.
+### 9. SearchBar icon has no accessible label
+`SearchBar.tsx:115-128` — The search icon SVG has no `aria-label` or `role="img"` with a title, making it invisible to screen readers.
 
-### 13. Stale `Popover2` in `dist/`
-`dist/` contains `Popover2/Popover2.d.ts` but there's no corresponding source.
+### 10. ProgressBar missing `aria-label`
+`ProgressBar.tsx:115-118` — Has `role="progressbar"` and `aria-valuenow`, but no `aria-label` or `aria-labelledby` to identify what it represents.
 
 ---
 
-## Dark Mode Gaps
+## Consistency
 
-### 14. `SearchBar` hardcodes light-mode background
-```ts
-backgroundColor: theme.colors.neutral.white
-```
-No dark mode branch. Input and Textarea both do `isLight ? neutral.white : neutral[700]`.
+### 11. Divider still uses spread-everything pattern
+Every other component uses `elementProps` for inner element access. Divider extends `HTMLAttributes` and spreads `...divProps`. This is the only component with this pattern.
 
-### 15. `TagSelector` has the same problem
-Its `InputContainer` also hardcodes `theme.colors.neutral.white`.
+### 12. Token export style mismatch
+`tokens/colors/*/primitives/` — `white.ts` and `black.ts` use `export default`, while all other color files use named `export const`. Inconsistent across both light and dark token sets.
 
----
-
-## Dead / Unused Code
-
-### 16. `IconButton` has three unused state variables
-```ts
-const [_isFocused, setIsFocused] = useState(false);
-const [_isActive, setIsActive] = useState(false);
-const [_isClicking, setIsClicking] = useState(false);
-```
-States are set but never read — leftover scaffolding causing unnecessary re-renders.
-
-### 17. `FocusRing` is dead code
-Defined in `_internal/`, never imported by any component, not exported from `components/index.ts`.
+### 13. `SelectMenu` not wrapped with `applyCustomStyles`
+`Select.tsx:161` — `SelectDiv` and `SelectContainer` are wrapped, but `SelectMenu` is not, so custom `styles` from the customization config won't apply to the dropdown menu.
 
 ---
 
-## Minor / Stylistic
+## Minor
 
-### 18. `Select` customization has double-nested key path
-`customizations?.components?.select?.select?.defaultProps` — the only component with nested customization. Every other component is `customizations?.components?.{name}?.defaultProps`.
+### 14. Modal `body.style.overflow` cleanup
+`Modal.tsx:204-214` — Always resets `overflow` to `''` on unmount, even if another component (or another Modal) set it. Could stomp on other overflow managers.
 
-### 19. Mixed padding notation in `Modal`
-- `ModalHeader`: `` padding: `${theme.spacing[200]}px ${theme.spacing[200]}px` `` (template string, redundant repeated value)
-- `ModalContent`: `padding: theme.spacing[200]` (raw number, relies on implicit `px`)
-
-The codebase otherwise always uses explicit `${value}px`.
-
-### 20. `Modal` applies `$customizations` to 4 inner styled components
-All point to `customizations.components?.modal`. Any custom `styles` override hits Overlay, ModalContainer, ModalHeader, and ModalContent simultaneously. Every other component applies it to just the root element.
-
-### 21. `Loader` uses template literal CSS
-Every other component uses object notation. Loader and ExpandArrow are the outliers.
-
----
-
-## Standardization Recommendations
-
-| Concern | Recommendation |
-|---|---|
-| HTML attributes API | Adopt `htmlAttributes` pattern everywhere (fix Select, SearchBar, Stepper, Divider, Text) |
-| `forwardRef` | Add to Divider, Select |
-| `displayName` | Add to Divider, ThemeProvider |
-| Export style | Pick one pattern (Style A is cleanest) and use it everywhere |
-| Size/Color types | Always derive from shared `Sizes`/`Colors` types |
-| Dark mode | Audit every hardcoded color for light/dark branching |
-| `any` types | Replace with proper types in TagSelector |
-| Customization keys | Give TagSelector its own key, fix Select double-nesting |
+### 15. Object spread in loop in `custom-styles.ts`
+`utils/custom-styles.ts:19` — `result = { ...result, ...remove$(key, value) }` creates a new object each iteration. Minor performance concern for components with many props.

@@ -44,24 +44,30 @@ const StepWrapper = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({
   };
 });
 
-const StepCircle = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ theme, $isActive }) => ({
-  width: 18,
-  height: 18,
-  borderRadius: '50%',
-  flexShrink: 0,
-  backgroundColor: $isActive ? theme.colors.primary.default : theme.colors.neutral[300],
-  color: $isActive ? theme.colors.neutral.white : theme.colors.neutral[600],
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 2,
-  position: 'relative',
-}));
+const StepCircle = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ theme, $isActive }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    width: 18,
+    height: 18,
+    borderRadius: '50%',
+    flexShrink: 0,
+    backgroundColor: $isActive ? theme.colors.primary.default : isLight ? theme.colors.neutral[300] : theme.colors.neutral[600],
+    color: $isActive ? theme.colors.neutral.white : isLight ? theme.colors.neutral[600] : theme.colors.neutral[300],
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+    position: 'relative',
+  };
+});
 
 const StepLabel = styled(Text)(({ theme, $isActive }: StyledProps<{ $isActive: boolean }>) => {
+  const isLight = theme.mode === 'light';
   return {
-    color: $isActive ? theme.colors.neutral.black : theme.colors.neutral[400],
-    fontSize: theme.typography.caption.responsive.desktop.fontSize,
+    color: $isActive
+      ? isLight ? theme.colors.neutral.black : theme.colors.neutral.white
+      : theme.colors.neutral[400],
+    fontSize: theme.typography.caption.fontSize,
     textAlign: 'center',
     [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
       display: $isActive ? 'block' : 'none',
@@ -79,7 +85,7 @@ const StepLabelContainer = styled.div(({ theme }) => {
 });
 
 const CheckIconStyled = styled.svg(({ theme }) => ({
-  color: theme.colors.neutral[400],
+  color: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[500],
   marginLeft: theme.spacing(2),
   marginRight: theme.spacing(2),
   [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
@@ -89,14 +95,8 @@ const CheckIconStyled = styled.svg(({ theme }) => ({
 }));
 
 const StepNumberText = styled(Text)(({ theme }: StyledProps<StepperProps>) => ({
-  fontSize: theme.typography.small.responsive.desktop.fontSize,
+  fontSize: theme.typography.small.fontSize,
   color: 'inherit',
-  [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
-    fontSize: theme.typography.small.responsive.tablet.fontSize,
-  },
-  [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
-    fontSize: theme.typography.small.responsive.mobile.fontSize,
-  },
 }));
 
 const CheckIcon: FunctionComponent<{ size?: number }> = ({ size = 12 }) => (

@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, createContext, useEffect, useRef, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, styled, colors, Mode } from '@seedui-react/seedui';
 import { componentDocs, categoryOrder } from './data/components';
@@ -21,6 +21,12 @@ import { SpacingPage } from './pages/tokens/SpacingPage';
 import { BorderRadiusPage } from './pages/tokens/BorderRadiusPage';
 import { BoxShadowPage } from './pages/tokens/BoxShadowPage';
 import { BreakpointsPage } from './pages/tokens/BreakpointsPage';
+
+export const MobileMenuContext = createContext<{
+  isOpen: boolean;
+  toggle: () => void;
+  close: () => void;
+}>({ isOpen: false, toggle: () => {}, close: () => {} });
 
 const Shell = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -47,6 +53,9 @@ const Content = styled('main')(({ theme }) => {
     overflow: 'auto',
     padding: 40,
     backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[800],
+    [theme.breakpoints.down('md')]: {
+      padding: 20,
+    },
   };
 });
 
@@ -67,19 +76,35 @@ const componentGroups = categoryOrder.map((category) => ({
 
 export const App: FunctionComponent = () => {
   const [mode, setMode] = useState<Mode>('light');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
   const handleModeToggle = () => setMode(m => m === 'light' ? 'dark' : 'light');
 
+  const mobileMenuValue = {
+    isOpen: mobileMenuOpen,
+    toggle: () => setMobileMenuOpen(prev => !prev),
+    close: () => setMobileMenuOpen(false),
+  };
+
+  // Close mobile menu on navigation
   useEffect(() => {
+    setMobileMenuOpen(false);
     contentRef.current?.scrollTo(0, 0);
   }, [pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
 
   return (
     <div
       style={{
         width: '100%',
         height: '100vh',
+        overflow: 'hidden',
         backgroundColor: mode === 'light'
           ? colors.light.semantic.neutral[100]
           : colors.dark.semantic.neutral[900],
@@ -87,6 +112,7 @@ export const App: FunctionComponent = () => {
     >
       <ThemeProvider mode={mode}>
         <ModeToggleContext.Provider value={handleModeToggle}>
+        <MobileMenuContext.Provider value={mobileMenuValue}>
         <Shell>
           <Topbar mode={mode} onModeToggle={handleModeToggle} />
           <Body>
@@ -118,6 +144,7 @@ export const App: FunctionComponent = () => {
             </Content>
           </Body>
         </Shell>
+        </MobileMenuContext.Provider>
         </ModeToggleContext.Provider>
       </ThemeProvider>
     </div>

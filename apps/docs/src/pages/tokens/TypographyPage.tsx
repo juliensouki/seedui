@@ -74,9 +74,8 @@ export const TypographyPage: FunctionComponent = () => {
         <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Variants</Text>
         {variants.map((variant) => {
           const config = theme.typography[variant];
-          const desktop = config.responsive.desktop;
-          const tablet = config.responsive.tablet;
-          const mobile = config.responsive.mobile;
+          const tablet = config.responsive?.tablet;
+          const mobile = config.responsive?.mobile;
           return (
             <VariantRow key={variant}>
               <Text variant={variant}>
@@ -86,8 +85,16 @@ export const TypographyPage: FunctionComponent = () => {
                 <span><MetaLabel>font:</MetaLabel> {config.fontFamily}</span>
                 <span><MetaLabel>weight:</MetaLabel> {config.fontWeight}</span>
                 <span><MetaLabel>letter-spacing:</MetaLabel> {config.letterSpacing}</span>
-                <span><MetaLabel>size:</MetaLabel> {desktop.fontSize} <MetaLabel>(tablet: {tablet.fontSize}, mobile: {mobile.fontSize})</MetaLabel></span>
-                <span><MetaLabel>line-height:</MetaLabel> {desktop.lineHeight} <MetaLabel>(tablet: {tablet.lineHeight}, mobile: {mobile.lineHeight})</MetaLabel></span>
+                <span><MetaLabel>size:</MetaLabel> {config.fontSize}{(tablet?.fontSize || mobile?.fontSize) && <MetaLabel> (
+                  {tablet?.fontSize && <>tablet: {tablet.fontSize}</>}
+                  {tablet?.fontSize && mobile?.fontSize && ', '}
+                  {mobile?.fontSize && <>mobile: {mobile.fontSize}</>}
+                )</MetaLabel>}</span>
+                <span><MetaLabel>line-height:</MetaLabel> {config.lineHeight}{(tablet?.lineHeight || mobile?.lineHeight) && <MetaLabel> (
+                  {tablet?.lineHeight && <>tablet: {tablet.lineHeight}</>}
+                  {tablet?.lineHeight && mobile?.lineHeight && ', '}
+                  {mobile?.lineHeight && <>mobile: {mobile.lineHeight}</>}
+                )</MetaLabel>}</span>
               </MetaGrid>
             </VariantRow>
           );

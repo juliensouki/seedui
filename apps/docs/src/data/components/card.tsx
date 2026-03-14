@@ -3,7 +3,7 @@ import { ComponentDoc } from './types';
 
 function CardExample() {
   return (
-    <Card htmlAttributes={{ rootDiv: { style: { padding: '16px 20px', maxWidth: 320 } } }}>
+    <Card elementProps={{ rootDiv: { style: { padding: '16px 20px', maxWidth: 320 } } }}>
       <Text variant="h6">Card Title</Text>
       <Text variant="p" style={{ marginTop: 8 }}>This is some card content.</Text>
     </Card>

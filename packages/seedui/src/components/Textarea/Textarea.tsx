@@ -20,7 +20,7 @@ export interface TextareaProps {
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
     textarea?: HTMLAttributes<HTMLTextAreaElement>;
   };
@@ -35,7 +35,7 @@ const defaultProps: TextareaProps = {
   forwardProps: {
     labelTextProps: {},
   },
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
     textarea: {},
   },
@@ -57,7 +57,7 @@ const TextareaElement = applyCustomStyles(
       padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
 
       fontFamily: theme.typography.p.fontFamily,
-      fontSize: theme.typography.p.responsive.desktop.fontSize,
+      fontSize: theme.typography.p.fontSize,
 
       resize: !$isResizable ? 'none' : undefined,
 
@@ -100,7 +100,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
       isResizable = true,
       forwardProps,
       className,
-      htmlAttributes,
+      elementProps,
     } = getDefaultProps<TextareaProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.textarea?.defaultProps,
@@ -108,15 +108,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
     });
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width}>
         <TextareaElement
-          {...htmlAttributes.textarea}
+          {...elementProps.textarea}
           ref={forwardedRef}
           disabled={disabled}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className={joinClasses(className, className, htmlAttributes?.textarea?.className)}
+          className={joinClasses(className, elementProps?.textarea?.className)}
           $customizations={customizations.components?.textarea}
           $isResizable={isResizable}
         />

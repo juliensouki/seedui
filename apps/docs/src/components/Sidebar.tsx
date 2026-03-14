@@ -1,10 +1,13 @@
-import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { styled } from '@seedui-react/seedui';
+import { ChangeEvent, FunctionComponent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { styled, IconButton, SearchBar } from '@seedui-react/seedui';
+import { GithubIcon, FigmaIcon } from 'lucide-react';
 import { ComponentCategory } from '../data/components';
-import { NavPage, ThemeCategory } from '../data/navigation';
+import { allPages, NavPage, ThemeCategory } from '../data/navigation';
+import { MobileMenuContext } from '../App';
 
-const Nav = styled('nav')(({ theme }) => {
+
+const Nav = styled('nav')<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 260,
@@ -13,6 +16,85 @@ const Nav = styled('nav')(({ theme }) => {
     backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
     overflowY: 'auto' as const,
     padding: '16px 0',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      overflow: 'hidden',
+      width: '100%',
+      padding: 0,
+      paddingTop: 12,
+      position: 'fixed' as const,
+      top: 56,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      borderRight: 'none',
+      zIndex: 100,
+      transform: $mobileOpen ? 'translateX(0)' : 'translateX(-100%)',
+      transition: 'transform 0.25s ease',
+    },
+  };
+});
+
+const MobileSearch = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+      padding: '0 12px 12px',
+      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+      marginBottom: 8,
+    },
+  };
+});
+
+const SearchResultList = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column' as const,
+  marginTop: 8,
+}));
+
+const SearchResultItem = styled('button')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'block',
+    width: '100%',
+    padding: '8px 10px',
+    border: 'none',
+    background: 'none',
+    textAlign: 'left' as const,
+    fontFamily: 'inherit',
+    fontSize: 14,
+    cursor: 'pointer',
+    borderRadius: 6,
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
+    '&:hover': {
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    },
+  };
+});
+
+const NavContent = styled('div')(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    flex: 1,
+    overflowY: 'auto' as const,
+    padding: '8px 0',
+  },
+}));
+
+const MobileFooter = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 4,
+      padding: '12px 20px',
+      flexShrink: 0,
+      borderTop: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    },
   };
 });
 
@@ -163,6 +245,8 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
   componentGroups,
 }) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const [mobileSearch, setMobileSearch] = useState('');
 
   // Compute which keys need to be open for a given path
   const getKeysForPath = useCallback((path: string): string[] => {
@@ -217,13 +301,50 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
     });
   }, [pathname, getKeysForPath]);
 
+  const { isOpen: mobileOpen, close: closeMobile } = useContext(MobileMenuContext);
+
+  const mobileSearchResults = useMemo(() => {
+    const q = mobileSearch.toLowerCase().trim();
+    if (!q) return [];
+    return allPages.filter((p) => p.name.toLowerCase().includes(q)).slice(0, 8);
+  }, [mobileSearch]);
+
+  const handleMobileSearchSelect = (path: string) => {
+    navigate(path);
+    setMobileSearch('');
+    closeMobile();
+  };
+
+  // Clear search when menu closes
+  useEffect(() => {
+    if (!mobileOpen) setMobileSearch('');
+  }, [mobileOpen]);
+
   const isOpen = (key: string) => !!openState[key];
 
   const toggle = (key: string) =>
     setOpenState((prev) => ({ ...prev, [key]: !prev[key] }));
 
   return (
-    <Nav>
+    <Nav $mobileOpen={mobileOpen}>
+      <MobileSearch>
+        <SearchBar
+          value={mobileSearch}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setMobileSearch(e.target.value)}
+          placeholder="Search docs..."
+          hideButton
+        />
+        {mobileSearchResults.length > 0 && (
+          <SearchResultList>
+            {mobileSearchResults.map((page) => (
+              <SearchResultItem key={page.path} onClick={() => handleMobileSearchSelect(page.path)}>
+                {page.name}
+              </SearchResultItem>
+            ))}
+          </SearchResultList>
+        )}
+      </MobileSearch>
+      <NavContent>
       {gettingStartedPages.length > 0 && (
         <div>
           <SectionHeader onClick={() => toggle('getting-started')}>
@@ -307,6 +428,25 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
           </SectionLinks>
         </div>
       )}
+      </NavContent>
+      <MobileFooter>
+        <IconButton
+          variant="transparent"
+          color="neutral"
+          size="sm"
+          onClick={() => window.open('https://github.com', '_blank')}
+        >
+          <GithubIcon size={18} />
+        </IconButton>
+        <IconButton
+          variant="transparent"
+          color="neutral"
+          size="sm"
+          onClick={() => window.open('https://figma.com', '_blank')}
+        >
+          <FigmaIcon size={18} />
+        </IconButton>
+      </MobileFooter>
     </Nav>
   );
 };

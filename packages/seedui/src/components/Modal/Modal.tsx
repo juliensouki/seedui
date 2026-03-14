@@ -29,7 +29,7 @@ export interface ModalProps {
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   width?: string | number;
-  htmlAttributes?: {
+  elementProps?: {
     overlayDiv?: HTMLAttributes<HTMLDivElement>;
     modalDiv?: HTMLAttributes<HTMLDivElement>;
     headerDiv?: HTMLAttributes<HTMLDivElement>;
@@ -45,7 +45,7 @@ const defaultProps: ModalProps = {
   closeOnOverlayClick: true,
   closeOnEscape: true,
   width: 500,
-  htmlAttributes: {
+  elementProps: {
     overlayDiv: {},
     modalDiv: {},
     headerDiv: {},
@@ -116,12 +116,12 @@ const ModalHeader = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(2)}px`,
   };
 });
 
 const ModalContent = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
-  padding: theme.spacing(2),
+  padding: `${theme.spacing(2)}px`,
   overflowY: 'auto',
   flex: 1,
 }));
@@ -170,7 +170,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
       closeOnOverlayClick,
       closeOnEscape,
       width,
-      htmlAttributes: {
+      elementProps: {
         overlayDiv: overlayDivHTMLAttributes,
         modalDiv: modalDivHTMLAttributes,
         headerDiv: headerDivHTMLAttributes,
@@ -234,14 +234,12 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
           ref={forwardedRef || modalRef}
           $width={width}
           $isOpen={isOpen}
-          $customizations={customizations.components?.modal}
           className={joinClasses(className, modalDivHTMLAttributes?.className)}
           onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
           {(title || showCloseButton) && (
             <ModalHeader
               {...headerDivHTMLAttributes}
-              $customizations={customizations.components?.modal}
               className={joinClasses(headerDivHTMLAttributes?.className)}
             >
               {title && (
@@ -266,7 +264,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
           )}
           <ModalContent
             {...contentDivHTMLAttributes}
-            $customizations={customizations.components?.modal}
             className={joinClasses(contentDivHTMLAttributes?.className)}
           >
             {children}

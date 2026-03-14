@@ -9,7 +9,7 @@ export type ButtonSizes = Exclude<Sizes, 'xs' | 'xl'>;
 export type ButtonType = 'button' | 'reset' | 'submit';
 
 export interface ButtonBaseProps {
-  htmlAttributes?: {
+  elementProps?: {
     rootButton?: Exclude<HTMLAttributes<HTMLButtonElement>, 'disabled' | 'onClick'>;
   };
   isLoading?: boolean;

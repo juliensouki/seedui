@@ -46,18 +46,20 @@ const TextFactory = (variant: TextVariants) => {
           : theme.colors.neutral.white,
 
       margin: 0,
-      fontSize: theme.typography[$variant].responsive.desktop.fontSize,
-      lineHeight: theme.typography[$variant].responsive.desktop.lineHeight,
+      fontSize: theme.typography[$variant].fontSize,
+      lineHeight: theme.typography[$variant].lineHeight,
       marginBottom: $bottomSpacing ? '0.4em' : 0,
 
-      [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
-        fontSize: theme.typography[$variant].responsive.tablet.fontSize,
-        lineHeight: theme.typography[$variant].responsive.tablet.lineHeight,
-      },
-      [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
-        fontSize: theme.typography[$variant].responsive.mobile.fontSize,
-        lineHeight: theme.typography[$variant].responsive.mobile.lineHeight,
-      },
+      ...(theme.typography[$variant].responsive?.tablet && {
+        [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
+          ...theme.typography[$variant].responsive.tablet,
+        },
+      }),
+      ...(theme.typography[$variant].responsive?.mobile && {
+        [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
+          ...theme.typography[$variant].responsive.mobile,
+        },
+      }),
     }),
   );
 };

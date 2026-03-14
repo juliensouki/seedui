@@ -12,6 +12,7 @@ import {
   PopoverProps,
   ProgressBarProps,
   SearchBarProps,
+  SelectProps,
   SkeletonProps,
   StepperProps,
   TagProps,
@@ -54,8 +55,7 @@ export interface CustomComponents {
   textarea?: CustomComponentConfiguration<TextareaProps>;
   toggle?: CustomComponentConfiguration<ToggleProps>;
   tooltip?: CustomComponentConfiguration<TooltipProps>;
-  select?: {
-    select?: CustomComponentConfiguration<MenuItemProps>;
+  select?: CustomComponentConfiguration<SelectProps> & {
     menuItem?: CustomComponentConfiguration<MenuItemProps>;
   };
 }
@@ -64,8 +64,10 @@ export type CustomTypographyResponsiveConfig = Partial<{
   fontFamily: string;
   fontWeight: string | number;
   letterSpacing: string;
+  fontSize: number | string;
+  lineHeight: number | string;
   responsive: Partial<
-    Record<'desktop' | 'tablet' | 'mobile', Partial<{ fontSize: number | string; lineHeight: number | string }>>
+    Record<'tablet' | 'mobile', Partial<{ fontSize: number | string; lineHeight: number | string }>>
   >;
 }>;
 

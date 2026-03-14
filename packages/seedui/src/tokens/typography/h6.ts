@@ -4,18 +4,9 @@ export const h6Styles: TypographyConfig = {
   fontFamily: 'Inter Variable',
   fontWeight: 600,
   letterSpacing: 'normal',
+  fontSize: '1rem',
+  lineHeight: '1.375rem',
   responsive: {
-    desktop: {
-      fontSize: '1rem',
-      lineHeight: '1.375rem',
-    },
-    tablet: {
-      fontSize: '0.875rem',
-      lineHeight: '1.25rem',
-    },
-    mobile: {
-      fontSize: '0.875rem',
-      lineHeight: '1.25rem',
-    },
+    tablet: { fontSize: '0.875rem', lineHeight: '1.25rem' },
   },
 };

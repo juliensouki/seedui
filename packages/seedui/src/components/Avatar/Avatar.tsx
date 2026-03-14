@@ -21,7 +21,7 @@ export interface AvatarProps {
   name?: string;
   size?: AvatarSize;
   color?: AvatarColor;
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
     img?: ImgHTMLAttributes<HTMLImageElement>;
   };
@@ -42,7 +42,7 @@ const fontSizeMap: Record<AvatarSize, number> = {
 const defaultProps: AvatarProps = {
   size: 'md',
   color: 'primary',
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
     img: {},
   },
@@ -102,7 +102,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps & InternalProps>(
       name,
       size,
       color,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes, img: imgHTMLAttributes } = {},
+      elementProps: { rootDiv: rootDivHTMLAttributes, img: imgHTMLAttributes } = {},
       className,
     } = getDefaultProps<AvatarProps & InternalProps>({
       providedProps: props,

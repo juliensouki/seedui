@@ -88,7 +88,7 @@ export const App: FunctionComponent = () => {
         </div>
         <ComponentName variant="h6">Card</ComponentName>
         <div>
-          <Card htmlAttributes={{ rootDiv: { style: { padding: '8px 16px' } } }}>
+          <Card elementProps={{ rootDiv: { style: { padding: '8px 16px' } } }}>
             <Text>This is a card.</Text>
           </Card>
         </div>

@@ -70,13 +70,13 @@ const spacingFactors = [0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
 const usageCode = `const theme = useTheme();
 
 <div style={{ display: 'flex', gap: theme.spacing(2), alignItems: 'center', flexWrap: 'wrap' }}>
-  <Card htmlAttributes={{ rootDiv: { style: { padding: theme.spacing(1) } } }}>
+  <Card elementProps={{ rootDiv: { style: { padding: theme.spacing(1) } } }}>
     padding: spacing(1)
   </Card>
-  <Card htmlAttributes={{ rootDiv: { style: { padding: theme.spacing(2) } } }}>
+  <Card elementProps={{ rootDiv: { style: { padding: theme.spacing(2) } } }}>
     padding: spacing(2)
   </Card>
-  <Card htmlAttributes={{ rootDiv: { style: { padding: theme.spacing(4) } } }}>
+  <Card elementProps={{ rootDiv: { style: { padding: theme.spacing(4) } } }}>
     padding: spacing(4)
   </Card>
 </div>`;

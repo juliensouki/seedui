@@ -1,8 +1,9 @@
-import { ChangeEvent, FunctionComponent, useMemo, useState } from 'react';
+import { ChangeEvent, FunctionComponent, useContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled, Toggle, Mode, Popover, Text, Tag, IconButton, SearchBar, useTheme } from '@seedui-react/seedui';
-import { MoonIcon, GithubIcon, FigmaIcon } from 'lucide-react';
+import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from '../data/navigation';
+import { MobileMenuContext } from '../App';
 
 const Bar = styled('header')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -15,8 +16,26 @@ const Bar = styled('header')(({ theme }) => {
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
     backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
     flexShrink: 0,
+    zIndex: 110,
+    position: 'relative' as const,
   };
 });
+
+const MenuButton = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.down('md')]: {
+    display: 'flex',
+    alignItems: 'center',
+    marginRight: 4,
+  },
+}));
+
+const DesktopOnly = styled('div')(({ theme }) => ({
+  display: 'contents',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
 
 const RightSection = styled('div')(() => ({
   display: 'flex',
@@ -89,6 +108,7 @@ interface TopbarProps {
 export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { isOpen: mobileMenuOpen, toggle: toggleMobileMenu } = useContext(MobileMenuContext);
   const [search, setSearch] = useState('');
   const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -124,6 +144,16 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
   return (
     <Bar>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <MenuButton>
+          <IconButton
+            variant="transparent"
+            color="neutral"
+            size="sm"
+            onClick={toggleMobileMenu}
+          >
+            {mobileMenuOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
+          </IconButton>
+        </MenuButton>
         <img
           src="/logo-black.svg"
           alt="seedui"
@@ -135,56 +165,60 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
         <Tag color="neutral" size="sm">docs</Tag>
       </div>
       <RightSection>
-        <IconButton
-          variant="transparent"
-          color="neutral"
-          size="sm"
-          htmlAttributes={{ rootButton: { onClick: () => window.open('https://github.com', '_blank') } }}
-        >
-          <GithubIcon size={18} />
-        </IconButton>
-        <IconButton
-          variant="transparent"
-          color="neutral"
-          size="sm"
-          htmlAttributes={{ rootButton: { onClick: () => window.open('https://figma.com', '_blank') } }}
-        >
-          <FigmaIcon size={18} />
-        </IconButton>
-        <VerticalDivider style={{ margin: '0 8px' }} />
-        <Popover
-          isOpen={popoverOpen}
-          onClose={() => setPopoverOpen(false)}
-          verticalAlignment="bottom"
-          horizontalAlignment="center"
-          content={
-            <ResultList>
-              {groupedResults.length > 0 ? (
-                groupedResults.map((group) => (
-                  <div key={group.section}>
-                    <SectionLabel>{group.section}</SectionLabel>
-                    {group.pages.map((page) => (
-                      <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
-                        <Text variant="p">{page.name}</Text>
-                      </ResultItem>
-                    ))}
-                  </div>
-                ))
-              ) : (
-                <NoResults variant="p">No results found</NoResults>
-              )}
-            </ResultList>
-          }
-        >
-          <SearchBar
-            value={search}
-            onChange={handleChange}
-            placeholder="Search docs..."
-            width={260}
-            hideButton
-          />
-        </Popover>
-        <VerticalDivider style={{ margin: '0 8px' }} />
+        <DesktopOnly>
+          <IconButton
+            variant="transparent"
+            color="neutral"
+            size="sm"
+            onClick={() => window.open('https://github.com', '_blank')}
+          >
+            <GithubIcon size={18} />
+          </IconButton>
+          <IconButton
+            variant="transparent"
+            color="neutral"
+            size="sm"
+            onClick={() => window.open('https://figma.com', '_blank')}
+          >
+            <FigmaIcon size={18} />
+          </IconButton>
+          <VerticalDivider style={{ margin: '0 8px' }} />
+        </DesktopOnly>
+        <DesktopOnly>
+          <Popover
+            isOpen={popoverOpen}
+            onClose={() => setPopoverOpen(false)}
+            verticalAlignment="bottom"
+            horizontalAlignment="center"
+            content={
+              <ResultList>
+                {groupedResults.length > 0 ? (
+                  groupedResults.map((group) => (
+                    <div key={group.section}>
+                      <SectionLabel>{group.section}</SectionLabel>
+                      {group.pages.map((page) => (
+                        <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
+                          <Text variant="p">{page.name}</Text>
+                        </ResultItem>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  <NoResults variant="p">No results found</NoResults>
+                )}
+              </ResultList>
+            }
+          >
+            <SearchBar
+              value={search}
+              onChange={handleChange}
+              placeholder="Search docs..."
+              width={260}
+              hideButton
+            />
+          </Popover>
+          <VerticalDivider style={{ margin: '0 8px' }} />
+        </DesktopOnly>
         <ThemeToggle>
           <MoonIcon size={16} />
           <Toggle checked={mode === 'dark'} onChange={onModeToggle} size="sm" />

@@ -66,13 +66,13 @@ const tocItems = [
 const usageCode = `const theme = useTheme();
 
 <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
-  <Card htmlAttributes={{ rootDiv: { style: { boxShadow: theme.boxShadow[1], padding: 16 } } }}>
+  <Card elementProps={{ rootDiv: { style: { boxShadow: theme.boxShadow[1], padding: 16 } } }}>
     boxShadow[1]
   </Card>
-  <Card htmlAttributes={{ rootDiv: { style: { boxShadow: theme.boxShadow[3], padding: 16 } } }}>
+  <Card elementProps={{ rootDiv: { style: { boxShadow: theme.boxShadow[3], padding: 16 } } }}>
     boxShadow[3]
   </Card>
-  <Card htmlAttributes={{ rootDiv: { style: { boxShadow: theme.boxShadow[5], padding: 16 } } }}>
+  <Card elementProps={{ rootDiv: { style: { boxShadow: theme.boxShadow[5], padding: 16 } } }}>
     boxShadow[5]
   </Card>
 </div>`;

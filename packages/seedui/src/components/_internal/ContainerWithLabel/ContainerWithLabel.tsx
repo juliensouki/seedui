@@ -14,7 +14,7 @@ interface ContainerWithLabelProps {
   label?: string;
   width?: string | number;
   children: ReactNode;
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
   forwardProps?: {
@@ -26,7 +26,7 @@ export const ContainerWithLabel: FunctionComponent<ContainerWithLabelProps> = ({
   label,
   children,
   width,
-  htmlAttributes: { rootDiv } = {},
+  elementProps: { rootDiv } = {},
   forwardProps: { labelTextProps } = {},
 }) => {
   if (label) {

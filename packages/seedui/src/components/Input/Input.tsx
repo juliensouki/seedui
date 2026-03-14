@@ -38,7 +38,7 @@ export interface InputProps {
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
     inputContainerDiv?: HTMLAttributes<HTMLDivElement>;
     input?: HTMLAttributes<HTMLInputElement>;
@@ -53,7 +53,7 @@ const defaultProps: InputProps = {
   inputValidation: undefined,
   width: 200,
   inputIcon: { icon: null, placement: 'left' },
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
     inputContainerDiv: {},
     input: {},
@@ -136,7 +136,7 @@ const InputElement = applyCustomStyles(
       color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
       fontFamily: theme.typography.p.fontFamily,
-      fontSize: theme.typography.p.responsive.desktop.fontSize,
+      fontSize: theme.typography.p.fontSize,
 
       '&::placeholder': {
         color: theme.colors.neutral[400],
@@ -197,7 +197,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
       width,
       inputIcon,
       forwardProps,
-      htmlAttributes,
+      elementProps,
       type,
       className,
       inputValidation,
@@ -216,23 +216,23 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
     }, [value, inputValidation]);
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
-        <InputContainer {...htmlAttributes.inputContainerDiv} $iconPlacement={iconPlacement}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width}>
+        <InputContainer {...elementProps.inputContainerDiv} $iconPlacement={iconPlacement}>
           <InputElement
-            {...htmlAttributes.input}
+            {...elementProps.input}
             ref={forwardedRef}
             disabled={disabled}
             value={value}
             type={type}
             onChange={onChange}
             placeholder={placeholder}
-            className={joinClasses(className, className, htmlAttributes?.input?.className)}
+            className={joinClasses(className, elementProps?.input?.className)}
             $iconPlacement={icon ? iconPlacement : undefined}
             $isValidated={isValidated}
             $customizations={customizations.components?.input}
           />
           {icon && (
-            <IconContainer {...htmlAttributes.iconContainerDiv} $placement={iconPlacement}>
+            <IconContainer {...elementProps.iconContainerDiv} $placement={iconPlacement}>
               {icon}
             </IconContainer>
           )}

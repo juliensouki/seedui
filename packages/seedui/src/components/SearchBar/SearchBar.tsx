@@ -134,7 +134,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
           disabled={disabled}
           inputValidation={inputValidation}
           width="100%"
-          htmlAttributes={{
+          elementProps={{
             input: {
               style: {
                 padding: 'unset',

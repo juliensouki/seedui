@@ -54,11 +54,18 @@ export interface BoxShadow {
   5: string;
 }
 
+export interface TypographyResponsiveOverride {
+  fontSize?: number | string;
+  lineHeight?: number | string;
+}
+
 export interface TypographyConfig {
   fontFamily: string;
   fontWeight: string | number;
   letterSpacing: string;
-  responsive: Record<'desktop' | 'tablet' | 'mobile', { fontSize: number | string; lineHeight: number | string }>;
+  fontSize: number | string;
+  lineHeight: number | string;
+  responsive?: Partial<Record<'tablet' | 'mobile', TypographyResponsiveOverride>>;
 }
 
 export type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';

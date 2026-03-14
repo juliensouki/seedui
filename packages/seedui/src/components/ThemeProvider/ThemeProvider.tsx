@@ -47,3 +47,5 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
     </SCThemeProvider>
   );
 };
+
+ThemeProvider.displayName = 'ThemeProvider';

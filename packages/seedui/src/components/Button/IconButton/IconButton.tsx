@@ -1,13 +1,11 @@
 import {
   ForwardedRef,
   forwardRef,
-  KeyboardEvent,
   MouseEvent,
   ReactNode,
   useContext,
   useImperativeHandle,
   useRef,
-  useState,
 } from 'react';
 import styled from 'styled-components';
 
@@ -59,7 +57,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       disabled,
       size,
       className,
-      htmlAttributes: { rootButton: rootButtonHTMLAttributes },
+      elementProps: { rootButton: rootButtonHTMLAttributes },
       children,
     } = getDefaultProps<IconButtonProps & InternalProps>({
       providedProps: props,
@@ -67,9 +65,6 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       defaultProps: defaultProps as IconButtonProps,
     });
 
-    const [_isFocused, setIsFocused] = useState<boolean>(false);
-    const [_isActive, setIsActive] = useState<boolean>(false);
-    const [_isClicking, setIsClicking] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const IconButtonComponent = componentsMap[variant][color];
 
@@ -87,34 +82,10 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       event.currentTarget.blur();
     };
 
-    const handleKeyEvent = (event: KeyboardEvent<HTMLButtonElement>): void => {
-      if (event.key === ' ') {
-        if (event.type === 'keydown') {
-          setIsActive(true);
-        } else if (event.type === 'keyup') {
-          setIsActive(false);
-        }
-      }
-    };
-
-    const handleMouseEvent = (event: MouseEvent<HTMLButtonElement>): void => {
-      if (event.type === 'mousedown') {
-        setIsClicking(true);
-      } else if (event.type === 'mouseup') {
-        setIsClicking(false);
-      }
-    };
-
     return (
       <IconButtonComponent
         {...rootButtonHTMLAttributes}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onKeyDown={handleKeyEvent}
-        onKeyUp={handleKeyEvent}
         onClick={preventFocusOnClick}
-        onMouseDown={handleMouseEvent}
-        onMouseUp={handleMouseEvent}
         color={color}
         disabled={disabled}
         size={size}

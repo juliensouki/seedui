@@ -12,24 +12,27 @@ export interface TypographyService {
 
 export const typographyServiceFactory = (): TypographyService => {
   const mergeStyles = (a: TypographyConfig, b: CustomTypographyResponsiveConfig | undefined): TypographyConfig => {
-    return {
+    const merged: TypographyConfig = {
       ...a,
       ...b,
-      responsive: {
-        desktop: {
-          ...a.responsive.desktop,
-          ...b?.responsive?.desktop,
-        },
-        tablet: {
-          ...a.responsive.tablet,
-          ...b?.responsive?.tablet,
-        },
-        mobile: {
-          ...a.responsive.mobile,
-          ...b?.responsive?.mobile,
-        },
-      },
+      fontSize: b?.fontSize ?? a.fontSize,
+      lineHeight: b?.lineHeight ?? a.lineHeight,
     };
+
+    if (a.responsive || b?.responsive) {
+      merged.responsive = {
+        ...a.responsive,
+        ...b?.responsive,
+        ...(a.responsive?.tablet || b?.responsive?.tablet
+          ? { tablet: { ...a.responsive?.tablet, ...b?.responsive?.tablet } }
+          : {}),
+        ...(a.responsive?.mobile || b?.responsive?.mobile
+          ? { mobile: { ...a.responsive?.mobile, ...b?.responsive?.mobile } }
+          : {}),
+      };
+    }
+
+    return merged;
   };
 
   return {

@@ -149,7 +149,7 @@ export const ComponentPage: FunctionComponent = () => {
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Anatomy</Text>
           <Text variant="p" style={{ opacity: 0.7, lineHeight: 1.6, marginBottom: 20 }}>
             The diagram below shows the internal structure of the component. Each part can be customized
-            either through the <code>htmlAttributes</code> prop or by targeting its CSS class.
+            either through the <code>elementProps</code> prop or by targeting its CSS class.
           </Text>
           <ComponentSchema name={doc.name} />
           {anatomy.length > 0 && (
@@ -157,7 +157,7 @@ export const ComponentPage: FunctionComponent = () => {
               <thead>
                 <tr>
                   <AnatomyTh>Part</AnatomyTh>
-                  <AnatomyTh>htmlAttributes key</AnatomyTh>
+                  <AnatomyTh>elementProps key</AnatomyTh>
                   <AnatomyTh>CSS class</AnatomyTh>
                 </tr>
               </thead>

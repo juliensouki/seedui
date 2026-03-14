@@ -27,17 +27,17 @@ const getButtonStyles = (
   theme: Theme,
 ): Record<ButtonSizes, { fontSize: string | number; borderRadius: number; padding: string }> => ({
   sm: {
-    fontSize: theme.typography.small.responsive.desktop.fontSize,
+    fontSize: theme.typography.small.fontSize,
     borderRadius: theme.borderRadius(3),
     padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
   },
   md: {
-    fontSize: theme.typography.p.responsive.desktop.fontSize,
+    fontSize: theme.typography.p.fontSize,
     borderRadius: theme.borderRadius(4),
     padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
   },
   lg: {
-    fontSize: theme.typography.p.responsive.desktop.fontSize,
+    fontSize: theme.typography.p.fontSize,
     borderRadius: theme.borderRadius(5),
     padding: `${theme.spacing(1.5)}px ${theme.spacing(2)}px`,
   },
@@ -76,7 +76,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type,
       isLoading,
       className,
-      htmlAttributes: { rootButton: rootButtonHTMLAttributes },
+      elementProps: { rootButton: rootButtonHTMLAttributes },
       children,
     } = getDefaultProps<ButtonProps & InternalProps>({
       providedProps: props,

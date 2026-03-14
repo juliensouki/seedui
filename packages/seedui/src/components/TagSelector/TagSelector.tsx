@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useContext, useState, KeyboardEvent } from 'react';
+import { ForwardedRef, forwardRef, HTMLAttributes, useContext, useState, KeyboardEvent } from 'react';
 import styled from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
@@ -8,7 +8,7 @@ import { SeedContextType } from '../../types';
 import { Input } from '../Input';
 import { StyledComponentsPrefix, InternalProps, StyledProps } from '../../types/internal';
 import { Button } from '../Button';
-import { Text } from '../Text';
+import { Text, TextPropsAndAttributes } from '../Text';
 import { Tag } from '../Tag';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 
@@ -25,10 +25,10 @@ export interface TagSelectorProps {
   buttonLabel?: string;
   className?: string;
   forwardProps?: {
-    labelTextProps?: any;
+    labelTextProps?: TextPropsAndAttributes;
   };
-  htmlAttributes?: {
-    rootDiv?: any;
+  elementProps?: {
+    rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
 }
 
@@ -46,7 +46,7 @@ const defaultProps: TagSelectorProps = {
   forwardProps: {
     labelTextProps: {},
   },
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
   },
 };
@@ -57,21 +57,24 @@ const TagSelectorContainer = styled.div<StyledComponentsPrefix<{}>>(({ theme }) 
   gap: theme.spacing(0.25),
 }));
 
-const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean }>>(({ theme, $isFocused }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: theme.colors.neutral.white,
-  padding: theme.spacing(0.5),
-  borderRadius: theme.borderRadius(4),
-  border: `1px solid ${theme.colors.neutral[200]}`,
-  gap: '8px',
+const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean }>>(({ theme, $isFocused }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+    padding: theme.spacing(0.5),
+    borderRadius: theme.borderRadius(4),
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[500]}`,
+    gap: '8px',
 
-  ...($isFocused && {
-    outline: `2px solid ${theme.colors.primary[300]}`,
-    outlineOffset: 1,
-    borderColor: theme.colors.primary.default,
-  }),
-}));
+    ...($isFocused && {
+      outline: `2px solid ${theme.colors.primary[300]}`,
+      outlineOffset: 1,
+      borderColor: theme.colors.primary.default,
+    }),
+  };
+});
 
 const TagInput = styled(Input)({
   borderRadius: 'unset',
@@ -120,7 +123,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       className,
       buttonLabel,
       forwardProps,
-      htmlAttributes,
+      elementProps,
     } = getDefaultProps<TagSelectorProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.tagSelector?.defaultProps,
@@ -143,7 +146,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       onRemoveTag?.(tagToRemove);
     };
 
-    const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         e.preventDefault();
         handleAddTag();
@@ -158,8 +161,8 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       disabled || !inputValue.trim() || tags.includes(inputValue.trim()) || (maxTags ? tags.length >= maxTags : false);
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
-        <TagSelectorContainer className={joinClasses(className)} $customizations={customizations.components?.searchBar}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width}>
+        <TagSelectorContainer className={joinClasses(className)} $customizations={customizations.components?.tagSelector}>
           <InputContainer $isFocused={isFocused}>
             <TagInput
               ref={forwardedRef}
@@ -169,7 +172,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
               disabled={disabled}
               inputValidation={inputValidation}
               width="100%"
-              htmlAttributes={{
+              elementProps={{
                 input: {
                   style: {
                     paddingTop: 0,
@@ -177,7 +180,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
                   },
                   onFocus: () => setIsFocused(true),
                   onBlur: () => setIsFocused(false),
-                  onKeyPress: handleKeyPress,
+                  onKeyDown: handleKeyDown,
                 },
               }}
             />

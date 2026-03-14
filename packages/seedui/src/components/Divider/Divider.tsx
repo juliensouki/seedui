@@ -1,4 +1,4 @@
-import { FunctionComponent, HTMLAttributes, useContext } from 'react';
+import { ForwardedRef, forwardRef, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
 
 import { SeedContextType } from '../../types';
@@ -74,46 +74,47 @@ const ChildrenContainer = styled.div<{
 }));
 
 /** Displays a separator. Can be either horizontal (default) or vertical. Can also have text in the middle. */
-export const Divider: FunctionComponent<DividerProps & HTMLAttributes<HTMLDivElement>> = ({
-  vertical = false,
-  children,
-  width,
-  height,
-  spacing = 15,
-  childrenSpacing = 12,
-  ...divProps
-}) => {
-  const { customizations } = useContext<SeedContextType>(SeedContext);
+export const Divider = forwardRef<HTMLDivElement, DividerProps & HTMLAttributes<HTMLDivElement>>(
+  (
+    { vertical = false, children, width, height, spacing = 15, childrenSpacing = 12, ...divProps },
+    forwardedRef: ForwardedRef<HTMLDivElement>,
+  ) => {
+    const { customizations } = useContext<SeedContextType>(SeedContext);
 
-  if (!children) {
+    if (!children) {
+      return (
+        <NoTextDivider
+          ref={forwardedRef}
+          $vertical={vertical}
+          $width={width}
+          $height={height}
+          $spacing={spacing}
+          $customizations={customizations.components?.divider}
+          data-testid="divider-no-children"
+          {...divProps}
+        />
+      );
+    }
+
     return (
-      <NoTextDivider
+      <DividerContainer
+        ref={forwardedRef}
         $vertical={vertical}
         $width={width}
         $height={height}
         $spacing={spacing}
         $customizations={customizations.components?.divider}
-        data-testid="divider-no-children"
+        data-testid="divider-with-children-main-container"
         {...divProps}
-      />
+      >
+        <Line vertical={vertical} data-testid="left-divider" />
+        <ChildrenContainer vertical={vertical} childrenSpacing={childrenSpacing}>
+          {children}
+        </ChildrenContainer>
+        <Line vertical={vertical} data-testid="right-divider" />
+      </DividerContainer>
     );
-  }
+  },
+);
 
-  return (
-    <DividerContainer
-      $vertical={vertical}
-      $width={width}
-      $height={height}
-      $spacing={spacing}
-      $customizations={customizations.components?.divider}
-      data-testid="divider-with-children-main-container"
-      {...divProps}
-    >
-      <Line vertical={vertical} data-testid="left-divider" />
-      <ChildrenContainer vertical={vertical} childrenSpacing={childrenSpacing}>
-        {children}
-      </ChildrenContainer>
-      <Line vertical={vertical} data-testid="right-divider" />
-    </DividerContainer>
-  );
-};
+Divider.displayName = 'Divider';

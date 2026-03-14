@@ -71,17 +71,17 @@ const usageCode = `const theme = useTheme();
 
 <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
   <Button
-    htmlAttributes={{ rootButton: { style: { borderRadius: theme.borderRadius(2) } } }}
+    elementProps={{ rootButton: { style: { borderRadius: theme.borderRadius(2) } } }}
   >
     borderRadius(2)
   </Button>
   <Button
-    htmlAttributes={{ rootButton: { style: { borderRadius: theme.borderRadius(6) } } }}
+    elementProps={{ rootButton: { style: { borderRadius: theme.borderRadius(6) } } }}
   >
     borderRadius(6)
   </Button>
   <Button
-    htmlAttributes={{ rootButton: { style: { borderRadius: theme.borderRadius('full') } } }}
+    elementProps={{ rootButton: { style: { borderRadius: theme.borderRadius('full') } } }}
   >
     borderRadius('full')
   </Button>

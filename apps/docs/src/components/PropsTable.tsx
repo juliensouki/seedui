@@ -10,6 +10,9 @@ const Table = styled('table')(({ theme }) => {
     fontSize: 14,
     fontFamily: 'inherit',
     color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
   };
 });
 
@@ -65,37 +68,102 @@ const DefaultCode = styled('code')(({ theme }) => ({
   color: theme.colors.neutral[500],
 }));
 
+/* Mobile card layout */
+const CardList = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.down('md')]: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: 12,
+  },
+}));
+
+const Card = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    padding: 14,
+    borderRadius: theme.borderRadius(3),
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    fontSize: 14,
+    lineHeight: 1.5,
+    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+  };
+});
+
+const CardHeader = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexWrap: 'wrap' as const,
+  gap: 8,
+  marginBottom: 6,
+}));
+
+const CardLabel = styled('span')(({ theme }) => ({
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: 'uppercase' as const,
+  letterSpacing: '0.04em',
+  color: theme.colors.neutral[400],
+}));
+
+const CardDescription = styled('div')(({ theme }) => ({
+  color: theme.colors.neutral[500],
+  fontSize: 13,
+  marginTop: 4,
+}));
+
 interface PropsTableProps {
   props: PropDef[];
 }
 
 export const PropsTable: FunctionComponent<PropsTableProps> = ({ props }) => {
   return (
-    <Table>
-      <thead>
-        <tr>
-          <Th>Name</Th>
-          <Th>Type</Th>
-          <Th>Default</Th>
-          <Th>Description</Th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.map((p) => (
-          <tr key={p.name}>
-            <Td>
-              <PropName>{p.name}</PropName>
-            </Td>
-            <Td>
-              <TypeCode>{p.type}</TypeCode>
-            </Td>
-            <Td>
-              <DefaultCode>{p.default}</DefaultCode>
-            </Td>
-            <Td>{p.description}</Td>
+    <>
+      <Table>
+        <thead>
+          <tr>
+            <Th>Name</Th>
+            <Th>Type</Th>
+            <Th>Default</Th>
+            <Th>Description</Th>
           </tr>
+        </thead>
+        <tbody>
+          {props.map((p) => (
+            <tr key={p.name}>
+              <Td>
+                <PropName>{p.name}</PropName>
+              </Td>
+              <Td>
+                <TypeCode>{p.type}</TypeCode>
+              </Td>
+              <Td>
+                <DefaultCode>{p.default}</DefaultCode>
+              </Td>
+              <Td>{p.description}</Td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      <CardList>
+        {props.map((p) => (
+          <Card key={p.name}>
+            <CardHeader>
+              <PropName>{p.name}</PropName>
+              <TypeCode>{p.type}</TypeCode>
+            </CardHeader>
+            {p.default && (
+              <div>
+                <CardLabel>Default: </CardLabel>
+                <DefaultCode>{p.default}</DefaultCode>
+              </div>
+            )}
+            {p.description && (
+              <CardDescription>{p.description}</CardDescription>
+            )}
+          </Card>
         ))}
-      </tbody>
-    </Table>
+      </CardList>
+    </>
   );
 };

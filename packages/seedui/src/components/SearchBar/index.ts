@@ -1,3 +1,1 @@
-import { SearchBar, type SearchBarProps } from './SearchBar';
-
-export { SearchBar, SearchBarProps };
+export { SearchBar, type SearchBarProps } from './SearchBar';

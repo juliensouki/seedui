@@ -11,7 +11,7 @@ import { SeedContext } from '../ThemeProvider/context';
 export type CardVariants = 'default' | 'outlined';
 
 export interface CardProps {
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
   children?: ReactNode;
@@ -20,7 +20,7 @@ export interface CardProps {
 
 const defaultProps: CardProps = {
   variant: 'default',
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
   },
 };
@@ -49,7 +49,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
     const {
       variant,
       className,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      elementProps: { rootDiv: rootDivHTMLAttributes } = {},
       children,
     } = getDefaultProps<CardProps & InternalProps>({
       providedProps: props,

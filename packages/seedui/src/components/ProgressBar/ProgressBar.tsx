@@ -18,7 +18,7 @@ export interface ProgressBarProps {
   height?: string | number;
   color?: ProgressBarColor;
   disableAnimation?: boolean;
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
     trackDiv?: HTMLAttributes<HTMLDivElement>;
     barDiv?: HTMLAttributes<HTMLDivElement>;
@@ -30,7 +30,7 @@ const defaultProps: ProgressBarProps = {
   height: 8,
   color: 'primary',
   disableAnimation: false,
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
     trackDiv: {},
     barDiv: {},
@@ -92,7 +92,7 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps & Interna
       color,
       disableAnimation,
       className,
-      htmlAttributes: {
+      elementProps: {
         rootDiv: rootDivHTMLAttributes,
         trackDiv: trackDivHTMLAttributes,
         barDiv: barDivHTMLAttributes,

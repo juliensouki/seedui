@@ -1,13 +1,15 @@
 import {
   cloneElement,
   FocusEventHandler,
-  FunctionComponent,
+  ForwardedRef,
+  forwardRef,
   HTMLAttributes,
   InputHTMLAttributes,
   KeyboardEventHandler,
   MouseEventHandler,
   RefObject,
   useId,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -39,11 +41,12 @@ export interface SelectProps {
   menuHeight?: string | number;
   noOptionMessage?: string;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
-  ref?: RefObject<HTMLDivElement>;
   activeItemStyle?: SelectActiveItemStyle;
   disabled?: boolean;
-  rootContainerProps?: HTMLAttributes<HTMLDivElement>;
-  selectContainerProps?: HTMLAttributes<HTMLDivElement>;
+  elementProps?: {
+    rootDiv?: HTMLAttributes<HTMLDivElement>;
+    selectContainerDiv?: HTMLAttributes<HTMLDivElement>;
+  };
 }
 
 const defaultProps: SelectProps = {
@@ -53,6 +56,10 @@ const defaultProps: SelectProps = {
   activeItemStyle: { fontWeight: 'bold' },
   options: [],
   onChange: () => {},
+  elementProps: {
+    rootDiv: {},
+    selectContainerDiv: {},
+  },
 };
 
 const SelectDiv = applyCustomStyles(
@@ -120,7 +127,7 @@ const SelectInput = styled.input(({ theme }) => ({
   overflow: 'hidden',
   padding: 0,
   fontFamily: theme.typography.p.fontFamily,
-  fontSize: theme.typography.p.responsive.desktop.fontSize,
+  fontSize: theme.typography.p.fontSize,
 
   '::selection': {
     background: 'transparent',
@@ -146,7 +153,7 @@ const SelectDisplay = styled.div(({ theme }) => ({
   overflow: 'hidden',
   padding: 0,
   fontFamily: theme.typography.p.fontFamily,
-  fontSize: theme.typography.p.responsive.desktop.fontSize,
+  fontSize: theme.typography.p.fontSize,
   display: 'flex',
   alignItems: 'center',
 }));
@@ -186,7 +193,8 @@ const SelectMenu = styled.div<{ $menuHeight: string | number }>(({ theme, $menuH
   },
 }));
 
-export const Select: FunctionComponent<SelectProps & InternalProps> = (props) => {
+export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
+  (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
   const { customizations } = useContext<SeedContextType>(SeedContext);
   const {
     options,
@@ -197,23 +205,27 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
     width,
     menuHeight,
     noOptionMessage,
-    ref,
     inputProps,
     activeItemStyle,
     disabled,
-    rootContainerProps,
-    selectContainerProps,
+    elementProps: {
+      rootDiv: rootDivHTMLAttributes,
+      selectContainerDiv: selectContainerDivHTMLAttributes,
+    },
   } = getDefaultProps<SelectProps & InternalProps>({
     providedProps: props,
     defaultProps,
-    globalDefaultProps: customizations?.components?.select?.select?.defaultProps,
+    globalDefaultProps: customizations?.components?.select?.defaultProps,
   });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItemInMenu, setActiveItemInMenu] = useState<number>(0);
   const menuItemsRefs = useRef<Map<number, HTMLDivElement>>();
   const inputRef = useRef<HTMLInputElement | HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const skipOpenOnceRef = useRef<boolean>(false);
+
+  useImperativeHandle(forwardedRef, () => containerRef.current as HTMLDivElement);
 
   const uniqueId = useId();
 
@@ -295,11 +307,11 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
 
   return (
     <SelectDiv
-      {...rootContainerProps}
-      ref={ref}
+      {...rootDivHTMLAttributes}
+      ref={containerRef}
       $width={width}
       $customizations={customizations.components?.select}
-      className={joinClasses('select-root', rootContainerProps?.className)}
+      className={joinClasses('select-root', rootDivHTMLAttributes?.className)}
     >
       {label && (
         <Text variant="caption" className={labelClassName} style={{ marginBottom: 4, ...labelStyle }}>
@@ -308,7 +320,7 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
       )}
 
       <SelectContainer
-        {...selectContainerProps}
+        {...selectContainerDivHTMLAttributes}
         onFocus={handleContainerFocus}
         onBlur={handleContainerBlur}
         onKeyDown={handleKeyboard}
@@ -316,7 +328,7 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
         $isFocused={isMenuOpen}
         $disabled={disabled}
         $customizations={customizations.components?.select}
-        className={joinClasses('select-container', selectContainerProps?.className)}
+        className={joinClasses('select-container', selectContainerDivHTMLAttributes?.className)}
       >
         {activeItem?.icon && (
           <div style={{ display: 'flex', alignItems: 'center', paddingRight: 6 }}>
@@ -389,6 +401,6 @@ export const Select: FunctionComponent<SelectProps & InternalProps> = (props) =>
       </SelectContainer>
     </SelectDiv>
   );
-};
+});
 
 Select.displayName = 'Select';

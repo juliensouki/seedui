@@ -5,16 +5,18 @@ import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
-import { SeedContextType } from '../../types';
+import { SeedContextType, Sizes } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
+
+export type ToggleSize = Extract<Sizes, 'sm' | 'md' | 'lg'>;
 
 export interface ToggleProps {
   checked: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   disabled?: boolean;
   label?: string;
-  size?: 'sm' | 'md' | 'lg';
-  htmlAttributes?: {
+  size?: ToggleSize;
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
     label?: HTMLAttributes<HTMLLabelElement>;
     input?: HTMLAttributes<HTMLInputElement>;
@@ -25,14 +27,14 @@ const defaultProps: ToggleProps = {
   checked: false,
   disabled: false,
   size: 'md',
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
     label: {},
     input: {},
   },
 };
 
-const getToggleSizes = () => ({
+const getToggleSizes = (): Record<ToggleSize, { width: number; height: number; thumbSize: number; thumbOffset: number }> => ({
   sm: {
     width: 36,
     height: 20,
@@ -68,14 +70,14 @@ const ToggleLabel = applyCustomStyles(
     cursor: $disabled ? 'not-allowed' : 'pointer',
     userSelect: 'none',
     fontFamily: theme.typography.p.fontFamily,
-    fontSize: theme.typography.p.responsive.desktop.fontSize,
+    fontSize: theme.typography.p.fontSize,
     color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
     opacity: $disabled ? 0.5 : 1,
   })),
 );
 
 const ToggleInput = applyCustomStyles(
-  styled.input<StyledComponentsPrefix<{ size: 'sm' | 'md' | 'lg'; checked: boolean }>>(({ theme, $size, $checked }) => {
+  styled.input<StyledComponentsPrefix<{ size: ToggleSize; checked: boolean }>>(({ theme, $size, $checked }) => {
     const isLight = theme.mode === 'light';
     const sizes = getToggleSizes();
     const { width, height, thumbSize, thumbOffset } = sizes[$size];
@@ -147,7 +149,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps & InternalProps>(
       disabled,
       label,
       size,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes, label: labelHTMLAttributes, input: inputHTMLAttributes },
+      elementProps: { rootDiv: rootDivHTMLAttributes, label: labelHTMLAttributes, input: inputHTMLAttributes },
       className,
     } = getDefaultProps<ToggleProps & InternalProps>({
       providedProps: props,

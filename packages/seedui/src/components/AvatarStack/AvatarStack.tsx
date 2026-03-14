@@ -17,7 +17,7 @@ export interface AvatarStackProps {
   size?: AvatarStackSize;
   direction?: AvatarStackDirection;
   children: ReactElement<AvatarProps> | ReactElement<AvatarProps>[];
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
 }
@@ -38,7 +38,7 @@ const defaultProps: AvatarStackProps = {
   size: 'md',
   direction: 'left',
   children: [] as unknown as ReactElement<AvatarProps>,
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
   },
 };
@@ -86,7 +86,7 @@ export const AvatarStack = forwardRef<HTMLDivElement, AvatarStackProps & Interna
       size,
       direction,
       children,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      elementProps: { rootDiv: rootDivHTMLAttributes } = {},
       className,
     } = getDefaultProps<AvatarStackProps & InternalProps>({
       providedProps: props,

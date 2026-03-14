@@ -11,7 +11,7 @@ import { SeedContext } from '../ThemeProvider/context';
 export type SkeletonVariant = 'text' | 'circular' | 'rectangular' | 'rounded';
 
 export interface SkeletonProps {
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
   variant?: SkeletonVariant;
@@ -23,7 +23,7 @@ export interface SkeletonProps {
 const defaultProps: SkeletonProps = {
   variant: 'text',
   animation: 'pulse',
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
   },
 };
@@ -111,7 +111,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps & InternalProps
       height,
       animation,
       className,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      elementProps: { rootDiv: rootDivHTMLAttributes } = {},
     } = getDefaultProps<SkeletonProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.skeleton?.defaultProps,

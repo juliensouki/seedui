@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled, Text, Divider, Button, Input, Tag, Toggle, SearchBar, Textarea, useTheme } from '@seedui-react/seedui';
 import { GithubIcon } from 'lucide-react';
@@ -295,6 +295,22 @@ const WallContent: FunctionComponent = () => {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('Editor');
   const [feedback, setFeedback] = useState('');
+  const [feedbackTag, setFeedbackTag] = useState('Feature');
+  const [checkoutStep, setCheckoutStep] = useState(2);
+  const [inviteSent, setInviteSent] = useState(false);
+
+  const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+  const projects = [
+    { name: 'Design System', status: 'Active', color: theme.colors.success[500] },
+    { name: 'Mobile App', status: 'In review', color: theme.colors.warning[500] },
+    { name: 'API v2', status: 'Draft', color: theme.colors.neutral[400] },
+  ];
+  const filteredProjects = projects.filter(
+    (p) => p.name.toLowerCase().includes(search.toLowerCase()) || p.status.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const stepLabels = ['Cart', 'Shipping', 'Payment', 'Confirmation'];
 
   return (
     <ComponentWall>
@@ -315,7 +331,7 @@ const WallContent: FunctionComponent = () => {
           </Tag>
         </div>
         <Divider spacing={0} />
-        <div style={{ display: 'flex', gap: 16, padding: '14px 0 2px' }}>
+        <div style={{ display: 'flex', gap: 16, padding: '14px 0 10px' }}>
           <div>
             <StatValue>128</StatValue>
             <StatLabel>Contributions</StatLabel>
@@ -324,14 +340,14 @@ const WallContent: FunctionComponent = () => {
             <StatValue>14</StatValue>
             <StatLabel>Projects</StatLabel>
           </div>
-          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'flex-end', gap: 6 }}>
-            <Button variant="filled" color="primary" size="md">
-              Message
-            </Button>
-            <Button variant="transparent" color="neutral" size="md">
-              Follow
-            </Button>
-          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 6 }}>
+          <Button variant="filled" color="primary" size="md" elementProps={{ rootButton: { style: { flex: 1 } } }}>
+            Message
+          </Button>
+          <Button variant="transparent" color="neutral" size="md" elementProps={{ rootButton: { style: { flex: 1 } } }}>
+            Follow
+          </Button>
         </div>
       </MiniCard>
 
@@ -383,31 +399,33 @@ const WallContent: FunctionComponent = () => {
           width="100%"
         />
         <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {[
-            { name: 'Design System', status: 'Active', color: theme.colors.success[500] },
-            { name: 'Mobile App', status: 'In review', color: theme.colors.warning[500] },
-            { name: 'API v2', status: 'Draft', color: theme.colors.neutral[400] },
-          ].map((p) => (
-            <div
-              key={p.name}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '8px 12px',
-                borderRadius: 8,
-                backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-              }}
-            >
-              <Text variant="small" style={{ fontWeight: 500 }}>
-                <StatusDot $color={p.color} />
-                {p.name}
-              </Text>
-              <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
-                {p.status}
-              </Text>
-            </div>
-          ))}
+          {filteredProjects.length === 0 ? (
+            <Text variant="caption" style={{ color: theme.colors.neutral[400], textAlign: 'center', padding: '12px 0' }}>
+              No projects found
+            </Text>
+          ) : (
+            filteredProjects.map((p) => (
+              <div
+                key={p.name}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '8px 12px',
+                  borderRadius: 8,
+                  backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+                }}
+              >
+                <Text variant="small" style={{ fontWeight: 500 }}>
+                  <StatusDot $color={p.color} />
+                  {p.name}
+                </Text>
+                <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
+                  {p.status}
+                </Text>
+              </div>
+            ))
+          )}
         </div>
       </MiniCard>
 
@@ -420,6 +438,7 @@ const WallContent: FunctionComponent = () => {
           onChange={(e) => setEmail(e.target.value)}
           label="Email"
           width="100%"
+          inputValidation={(v) => isValidEmail(v)}
         />
         <div style={{ marginTop: 10 }}>
           <Input
@@ -430,11 +449,37 @@ const WallContent: FunctionComponent = () => {
             width="100%"
           />
         </div>
+        {inviteSent && (
+          <Text variant="caption" style={{ color: theme.colors.success[500], marginTop: 8 }}>
+            Invite sent successfully!
+          </Text>
+        )}
         <div style={{ display: 'flex', gap: 8, marginTop: 14, justifyContent: 'flex-end' }}>
-          <Button variant="transparent" color="neutral" size="md">
+          <Button
+            variant="transparent"
+            color="neutral"
+            size="md"
+            onClick={() => {
+              setEmail('');
+              setRole('Editor');
+              setInviteSent(false);
+            }}
+          >
             Cancel
           </Button>
-          <Button variant="filled" color="primary" size="md">
+          <Button
+            variant="filled"
+            color="primary"
+            size="md"
+            onClick={() => {
+              if (isValidEmail(email)) {
+                setInviteSent(true);
+                setTimeout(() => setInviteSent(false), 2000);
+                setEmail('');
+                setRole('Editor');
+              }
+            }}
+          >
             Send Invite
           </Button>
         </div>
@@ -495,7 +540,12 @@ const WallContent: FunctionComponent = () => {
         <MiniLabel>Feedback</MiniLabel>
         <Row style={{ gap: 6, marginBottom: 12 }}>
           {['Bug', 'Feature', 'Improvement', 'Other'].map((label) => (
-            <Tag key={label} color={label === 'Feature' ? 'primary' : 'neutral'} size="md">
+            <Tag
+              key={label}
+              color={feedbackTag === label ? 'primary' : 'neutral'}
+              size="md"
+              elementProps={{ rootDiv: { style: { cursor: 'pointer' }, onClick: () => setFeedbackTag(label) } }}
+            >
               {label}
             </Tag>
           ))}
@@ -507,7 +557,15 @@ const WallContent: FunctionComponent = () => {
           width="100%"
         />
         <div style={{ display: 'flex', gap: 8, marginTop: 12, justifyContent: 'flex-end' }}>
-          <Button variant="transparent" color="neutral" size="md">
+          <Button
+            variant="transparent"
+            color="neutral"
+            size="md"
+            onClick={() => {
+              setFeedback('');
+              setFeedbackTag('Feature');
+            }}
+          >
             Clear
           </Button>
           <Button variant="filled" color="primary" size="md">
@@ -521,36 +579,46 @@ const WallContent: FunctionComponent = () => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <MiniLabel style={{ marginBottom: 0 }}>Checkout</MiniLabel>
           <Tag color="info" size="md">
-            Step 3 of 4
+            {`Step ${checkoutStep + 1} of ${stepLabels.length}`}
           </Tag>
         </div>
         <StepperMini>
-          {['Cart', 'Shipping', 'Payment', 'Confirmation'].map((label, i) => (
-            <>
-              <StepItem key={label}>
-                <StepDot $active={i === 2} $done={i < 2} $color={theme.colors.primary[500]} />
+          {stepLabels.map((label, i) => (
+            <React.Fragment key={label}>
+              <StepItem>
+                <StepDot $active={i === checkoutStep} $done={i < checkoutStep} $color={theme.colors.primary[500]} />
                 <Text
                   variant="caption"
                   style={{
                     fontSize: 10,
-                    color: i <= 2 ? theme.colors.primary[500] : theme.colors.neutral[400],
-                    fontWeight: i === 2 ? 600 : 400,
+                    color: i <= checkoutStep ? theme.colors.primary[500] : theme.colors.neutral[400],
+                    fontWeight: i === checkoutStep ? 600 : 400,
                   }}
                 >
                   {label}
                 </Text>
               </StepItem>
-              {i < 3 && <StepLine $done={i < 2} $color={theme.colors.primary[500]} />}
-            </>
+              {i < stepLabels.length - 1 && <StepLine $done={i < checkoutStep} $color={theme.colors.primary[500]} />}
+            </React.Fragment>
           ))}
         </StepperMini>
         <Divider spacing={10} />
         <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-          <Button variant="transparent" color="neutral" size="md">
+          <Button
+            variant="transparent"
+            color="neutral"
+            size="md"
+            onClick={() => setCheckoutStep((s) => Math.max(0, s - 1))}
+          >
             Back
           </Button>
-          <Button variant="filled" color="primary" size="md">
-            Continue to Payment
+          <Button
+            variant="filled"
+            color="primary"
+            size="md"
+            onClick={() => setCheckoutStep((s) => Math.min(stepLabels.length - 1, s + 1))}
+          >
+            {checkoutStep === stepLabels.length - 1 ? 'Place Order' : `Continue to ${stepLabels[checkoutStep + 1]}`}
           </Button>
         </div>
       </MiniCard>

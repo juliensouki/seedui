@@ -10,13 +10,16 @@ interface TableOfContentsProps {
   items: TocItem[];
 }
 
-const Nav = styled('nav')(() => ({
+const Nav = styled('nav')(({ theme }) => ({
   position: 'sticky' as const,
   top: 40,
   width: 180,
   flexShrink: 0,
   alignSelf: 'flex-start' as const,
   marginLeft: 40,
+  [theme.breakpoints.down('lg')]: {
+    display: 'none',
+  },
 }));
 
 const Inner = styled('div')(({ theme }) => {

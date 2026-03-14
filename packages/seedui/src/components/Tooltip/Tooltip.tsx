@@ -24,7 +24,7 @@ export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 export interface TooltipProps {
   text: string;
   direction?: TooltipDirection;
-  htmlAttributes?: {
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
     childrenWrapperDiv?: HTMLAttributes<HTMLDivElement>;
     tooltipSpan?: HTMLAttributes<HTMLSpanElement>;
@@ -40,7 +40,7 @@ type TooltipSpanProps = StyledComponentsPrefix<Required<TooltipProps> & { toolti
 const defaultProps: TooltipProps = {
   text: '',
   direction: 'top',
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
     childrenWrapperDiv: {},
     tooltipSpan: {},
@@ -139,7 +139,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
     const {
       text,
       direction,
-      htmlAttributes: {
+      elementProps: {
         rootDiv: rootDivHTMLAttributes,
         childrenWrapperDiv: childrenWrapperDivHTMLAttributes,
         tooltipSpan: tooltipSpanHTMLAttributes,
@@ -197,7 +197,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           $tooltipTop={tooltipTop}
           $direction={direction}
           $customizations={customizations.components?.tooltip}
-          className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
+          className={joinClasses(className, rootDivHTMLAttributes?.className)}
           {...tooltipSpanHTMLAttributes}
         >
           <TooltipText variant="caption" {...textProps}>

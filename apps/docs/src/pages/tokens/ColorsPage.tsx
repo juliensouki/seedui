@@ -123,12 +123,12 @@ const usageExampleCode = `const theme = useTheme();
 
 <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
   <Button
-    htmlAttributes={{ rootButton: { style: { backgroundColor: theme.colors.success[500] } } }}
+    elementProps={{ rootButton: { style: { backgroundColor: theme.colors.success[500] } } }}
   >
     Success 500
   </Button>
   <Button
-    htmlAttributes={{ rootButton: { style: { backgroundColor: theme.colors.error[300] } } }}
+    elementProps={{ rootButton: { style: { backgroundColor: theme.colors.error[300] } } }}
   >
     Error 300
   </Button>
