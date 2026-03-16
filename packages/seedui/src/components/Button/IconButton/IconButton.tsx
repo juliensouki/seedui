@@ -34,8 +34,8 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
   return {
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
     borderRadius: '100%',
-    aspectRatio: '1',
     padding: size === 'sm' ? theme.spacing(1) : theme.spacing(1.5),
 
     '& svg': {
