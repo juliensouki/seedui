@@ -195,212 +195,212 @@ const SelectMenu = styled.div<{ $menuHeight: string | number }>(({ theme, $menuH
 
 export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
-  const { customizations } = useContext<SeedContextType>(SeedContext);
-  const {
-    options,
-    value,
-    label: { text: label, className: labelClassName, style: labelStyle } = {},
-    onChange,
-    placeholder,
-    width,
-    menuHeight,
-    noOptionMessage,
-    inputProps,
-    activeItemStyle,
-    disabled,
-    elementProps: {
-      rootDiv: rootDivHTMLAttributes,
-      selectContainerDiv: selectContainerDivHTMLAttributes,
-    },
-  } = getDefaultProps<SelectProps & InternalProps>({
-    providedProps: props,
-    defaultProps,
-    globalDefaultProps: customizations?.components?.select?.defaultProps,
-  });
+    const { customizations } = useContext<SeedContextType>(SeedContext);
+    const {
+      options,
+      value,
+      label: { text: label, className: labelClassName, style: labelStyle } = {},
+      onChange,
+      placeholder,
+      width,
+      menuHeight,
+      noOptionMessage,
+      inputProps,
+      activeItemStyle,
+      disabled,
+      elementProps: {
+        rootDiv: rootDivHTMLAttributes,
+        selectContainerDiv: selectContainerDivHTMLAttributes,
+      },
+    } = getDefaultProps<SelectProps & InternalProps>({
+      providedProps: props,
+      defaultProps,
+      globalDefaultProps: customizations?.components?.select?.defaultProps,
+    });
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeItemInMenu, setActiveItemInMenu] = useState<number>(0);
-  const menuItemsRefs = useRef<Map<number, HTMLDivElement>>();
-  const inputRef = useRef<HTMLInputElement | HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const skipOpenOnceRef = useRef<boolean>(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [activeItemInMenu, setActiveItemInMenu] = useState<number>(0);
+    const menuItemsRefs = useRef<Map<number, HTMLDivElement>>();
+    const inputRef = useRef<HTMLInputElement | HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const skipOpenOnceRef = useRef<boolean>(false);
 
-  useImperativeHandle(forwardedRef, () => containerRef.current as HTMLDivElement);
+    useImperativeHandle(forwardedRef, () => containerRef.current as HTMLDivElement);
 
-  const uniqueId = useId();
+    const uniqueId = useId();
 
-  const activeItem = useMemo<SelectOption | undefined>(
-    () => options.find((i) => i.value === value) || undefined,
-    [options, value],
-  );
+    const activeItem = useMemo<SelectOption | undefined>(
+      () => options.find((i) => i.value === value) || undefined,
+      [options, value],
+    );
 
-  const buildRefMap = () => {
-    if (!menuItemsRefs.current) menuItemsRefs.current = new Map();
-    return menuItemsRefs.current;
-  };
+    const buildRefMap = () => {
+      if (!menuItemsRefs.current) menuItemsRefs.current = new Map();
+      return menuItemsRefs.current;
+    };
 
-  const handleItemClick = (value: string | null) => {
-    onChange(value);
-    setIsMenuOpen(false);
-  };
+    const handleItemClick = (value: string | null) => {
+      onChange(value);
+      setIsMenuOpen(false);
+    };
 
-  const handleContainerFocus: FocusEventHandler<HTMLDivElement> = (e) => {
-    if (skipOpenOnceRef.current) {
-      skipOpenOnceRef.current = false;
-      return;
-    }
-    const targetId = (e.target as HTMLElement)?.id;
-    if (targetId === `${uniqueId}-select-input`) {
+    const handleContainerFocus: FocusEventHandler<HTMLDivElement> = (e) => {
+      if (skipOpenOnceRef.current) {
+        skipOpenOnceRef.current = false;
+        return;
+      }
+      const targetId = (e.target as HTMLElement)?.id;
+      if (targetId === `${uniqueId}-select-input`) {
+        setActiveItemInMenu(0);
+        setIsMenuOpen(true);
+      }
+    };
+
+    const handleContainerBlur: FocusEventHandler<HTMLDivElement> = (e) => {
+      const next = e.relatedTarget as Node | null;
+      if (next && e.currentTarget.contains(next)) return;
+      setIsMenuOpen(false);
+    };
+
+    const handleArrowClick: MouseEventHandler = (e) => {
+      setIsMenuOpen((prev) => {
+        if (prev) {
+          skipOpenOnceRef.current = true;
+          inputRef.current?.blur();
+          return false;
+        } else {
+          inputRef.current?.focus();
+          return true;
+        }
+      });
+      e.stopPropagation();
+    };
+
+    const handleContainerMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
+      if (disabled) return;
+      const target = e.target as HTMLElement;
+      if (target.closest('.select-arrow-container')) return;
+      if (target.closest('.select-menu-container')) return;
+      inputRef.current?.focus();
       setActiveItemInMenu(0);
       setIsMenuOpen(true);
-    }
-  };
+    };
 
-  const handleContainerBlur: FocusEventHandler<HTMLDivElement> = (e) => {
-    const next = e.relatedTarget as Node | null;
-    if (next && e.currentTarget.contains(next)) return;
-    setIsMenuOpen(false);
-  };
-
-  const handleArrowClick: MouseEventHandler = (e) => {
-    setIsMenuOpen((prev) => {
-      if (prev) {
-        skipOpenOnceRef.current = true;
-        inputRef.current?.blur();
-        return false;
-      } else {
-        inputRef.current?.focus();
-        return true;
+    const handleKeyboard: KeyboardEventHandler = (e) => {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!isMenuOpen) setIsMenuOpen(true);
+        setActiveItemInMenu((i) => (i === 0 ? options.length - 1 : i - 1));
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (!isMenuOpen) setIsMenuOpen(true);
+        setActiveItemInMenu((i) => (i === options.length - 1 ? 0 : i + 1));
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const newValue = options[activeItemInMenu]?.value;
+        handleItemClick(newValue);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsMenuOpen(false);
       }
-    });
-    e.stopPropagation();
-  };
+    };
 
-  const handleContainerMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
-    if (disabled) return;
-    const target = e.target as HTMLElement;
-    if (target.closest('.select-arrow-container')) return;
-    if (target.closest('.select-menu-container')) return;
-    inputRef.current?.focus();
-    setActiveItemInMenu(0);
-    setIsMenuOpen(true);
-  };
-
-  const handleKeyboard: KeyboardEventHandler = (e) => {
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (!isMenuOpen) setIsMenuOpen(true);
-      setActiveItemInMenu((i) => (i === 0 ? options.length - 1 : i - 1));
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (!isMenuOpen) setIsMenuOpen(true);
-      setActiveItemInMenu((i) => (i === options.length - 1 ? 0 : i + 1));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      const newValue = options[activeItemInMenu]?.value;
-      handleItemClick(newValue);
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      setIsMenuOpen(false);
-    }
-  };
-
-  return (
-    <SelectDiv
-      {...rootDivHTMLAttributes}
-      ref={containerRef}
-      $width={width}
-      $customizations={customizations.components?.select}
-      className={joinClasses('select-root', rootDivHTMLAttributes?.className)}
-    >
-      {label && (
-        <Text variant="caption" className={labelClassName} style={{ marginBottom: 4, ...labelStyle }}>
-          {label}
-        </Text>
-      )}
-
-      <SelectContainer
-        {...selectContainerDivHTMLAttributes}
-        onFocus={handleContainerFocus}
-        onBlur={handleContainerBlur}
-        onKeyDown={handleKeyboard}
-        onMouseDown={handleContainerMouseDown}
-        $isFocused={isMenuOpen}
-        $disabled={disabled}
+    return (
+      <SelectDiv
+        {...rootDivHTMLAttributes}
+        ref={containerRef}
+        $width={width}
         $customizations={customizations.components?.select}
-        className={joinClasses('select-container', selectContainerDivHTMLAttributes?.className)}
+        className={joinClasses('select-root', rootDivHTMLAttributes?.className)}
       >
-        {activeItem?.icon && (
-          <div style={{ display: 'flex', alignItems: 'center', paddingRight: 6 }}>
-            {cloneElement(activeItem.icon, { style: { ...optionIconStyles } })}
-          </div>
+        {label && (
+          <Text variant="caption" className={labelClassName} style={{ marginBottom: 4, ...labelStyle }}>
+            {label}
+          </Text>
         )}
 
-        {typeof activeItem?.label === 'string' ? (
-          <SelectInput
-            {...inputProps}
-            placeholder={placeholder}
-            value={activeItem?.value === null ? '' : activeItem?.label || ''}
-            readOnly
-            disabled={disabled}
-            ref={inputRef as RefObject<HTMLInputElement>}
-            id={`${uniqueId}-select-input`}
-          />
-        ) : (
-          <SelectDisplay
-            id={`${uniqueId}-select-input`}
-            ref={inputRef as RefObject<HTMLDivElement>}
-            tabIndex={disabled ? -1 : 0}
-            role="combobox"
-            aria-expanded={isMenuOpen}
-            aria-haspopup="listbox"
-          >
-            {!activeItem || activeItem.value === null ? (
-              <span style={{ color: 'inherit', opacity: 0.5 }}>{placeholder}</span>
-            ) : (
-              activeItem.label
-            )}
-          </SelectDisplay>
-        )}
+        <SelectContainer
+          {...selectContainerDivHTMLAttributes}
+          onFocus={handleContainerFocus}
+          onBlur={handleContainerBlur}
+          onKeyDown={handleKeyboard}
+          onMouseDown={handleContainerMouseDown}
+          $isFocused={isMenuOpen}
+          $disabled={disabled}
+          $customizations={customizations.components?.select}
+          className={joinClasses('select-container', selectContainerDivHTMLAttributes?.className)}
+        >
+          {activeItem?.icon && (
+            <div style={{ display: 'flex', alignItems: 'center', paddingRight: 6 }}>
+              {cloneElement(activeItem.icon, { style: { ...optionIconStyles } })}
+            </div>
+          )}
 
-        <SelectArrowContainer className="select-arrow-container">
-          <ExpandArrow
-            isExpanded={isMenuOpen}
-            id={`${uniqueId}-select-arrow`}
-            tabIndex={-1}
-            onClick={handleArrowClick}
-          />
-        </SelectArrowContainer>
+          {typeof activeItem?.label === 'string' ? (
+            <SelectInput
+              {...inputProps}
+              placeholder={placeholder}
+              value={activeItem?.value === null ? '' : activeItem?.label || ''}
+              readOnly
+              disabled={disabled}
+              ref={inputRef as RefObject<HTMLInputElement>}
+              id={`${uniqueId}-select-input`}
+            />
+          ) : (
+            <SelectDisplay
+              id={`${uniqueId}-select-input`}
+              ref={inputRef as RefObject<HTMLDivElement>}
+              tabIndex={disabled ? -1 : 0}
+              role="combobox"
+              aria-expanded={isMenuOpen}
+              aria-haspopup="listbox"
+            >
+              {!activeItem || activeItem.value === null ? (
+                <span style={{ color: 'inherit', opacity: 0.5 }}>{placeholder}</span>
+              ) : (
+                activeItem.label
+              )}
+            </SelectDisplay>
+          )}
 
-        {isMenuOpen && (
-          <SelectMenu
-            $menuHeight={menuHeight}
-            $customizations={customizations.components?.select}
-            className="select-menu-container"
-          >
-            {options.length === 0 ? (
-              <MenuItem option={{ label: noOptionMessage, value: null }} index={0} />
-            ) : (
-              options.map((option, index) => (
-                <MenuItem
-                  key={index}
-                  option={option}
-                  index={index}
-                  buildRefMap={buildRefMap}
-                  isHighlighted={index === activeItemInMenu}
-                  isActive={value === option.value && option.value !== null}
-                  handleItemClick={handleItemClick}
-                  selectUniqueId={uniqueId}
-                  onHover={(i: number) => setActiveItemInMenu(i)}
-                  activeItemStyle={activeItemStyle}
-                />
-              ))
-            )}
-          </SelectMenu>
-        )}
-      </SelectContainer>
-    </SelectDiv>
-  );
-});
+          <SelectArrowContainer className="select-arrow-container">
+            <ExpandArrow
+              isExpanded={isMenuOpen}
+              id={`${uniqueId}-select-arrow`}
+              tabIndex={-1}
+              onClick={handleArrowClick}
+            />
+          </SelectArrowContainer>
+
+          {isMenuOpen && (
+            <SelectMenu
+              $menuHeight={menuHeight}
+              $customizations={customizations.components?.select}
+              className="select-menu-container"
+            >
+              {options.length === 0 ? (
+                <MenuItem option={{ label: noOptionMessage, value: null }} index={0} />
+              ) : (
+                options.map((option, index) => (
+                  <MenuItem
+                    key={index}
+                    option={option}
+                    index={index}
+                    buildRefMap={buildRefMap}
+                    isHighlighted={index === activeItemInMenu}
+                    isActive={value === option.value && option.value !== null}
+                    handleItemClick={handleItemClick}
+                    selectUniqueId={uniqueId}
+                    onHover={(i: number) => setActiveItemInMenu(i)}
+                    activeItemStyle={activeItemStyle}
+                  />
+                ))
+              )}
+            </SelectMenu>
+          )}
+        </SelectContainer>
+      </SelectDiv>
+    );
+  });
 
 Select.displayName = 'Select';

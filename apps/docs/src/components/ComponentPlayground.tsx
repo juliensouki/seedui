@@ -299,7 +299,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   }, []);
 
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(editorCodeRef.current);
+    void navigator.clipboard.writeText(editorCodeRef.current);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, []);

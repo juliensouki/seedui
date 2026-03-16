@@ -63,53 +63,53 @@ export const TypographyPage: FunctionComponent = () => {
   return (
     <PageLayout>
       <MainContent>
-      <Text variant="h3" as="h1">Typography</Text>
-      <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        Typography variants with responsive sizing for desktop, tablet, and mobile.
-      </Text>
-
-      <Divider spacing={28} />
-
-      <Section id="variants">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Variants</Text>
-        {variants.map((variant) => {
-          const config = theme.typography[variant];
-          const tablet = config.responsive?.tablet;
-          const mobile = config.responsive?.mobile;
-          return (
-            <VariantRow key={variant}>
-              <Text variant={variant}>
-                {variant} — The quick brown fox jumps over the lazy dog
-              </Text>
-              <MetaGrid>
-                <span><MetaLabel>font:</MetaLabel> {config.fontFamily}</span>
-                <span><MetaLabel>weight:</MetaLabel> {config.fontWeight}</span>
-                <span><MetaLabel>letter-spacing:</MetaLabel> {config.letterSpacing}</span>
-                <span><MetaLabel>size:</MetaLabel> {config.fontSize}{(tablet?.fontSize || mobile?.fontSize) && <MetaLabel> (
-                  {tablet?.fontSize && <>tablet: {tablet.fontSize}</>}
-                  {tablet?.fontSize && mobile?.fontSize && ', '}
-                  {mobile?.fontSize && <>mobile: {mobile.fontSize}</>}
-                )</MetaLabel>}</span>
-                <span><MetaLabel>line-height:</MetaLabel> {config.lineHeight}{(tablet?.lineHeight || mobile?.lineHeight) && <MetaLabel> (
-                  {tablet?.lineHeight && <>tablet: {tablet.lineHeight}</>}
-                  {tablet?.lineHeight && mobile?.lineHeight && ', '}
-                  {mobile?.lineHeight && <>mobile: {mobile.lineHeight}</>}
-                )</MetaLabel>}</span>
-              </MetaGrid>
-            </VariantRow>
-          );
-        })}
-      </Section>
-
-      <Section id="usage">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-        <Text variant="p" style={{ marginBottom: 16 }}>
-          Use the <code>Text</code> component with a <code>variant</code> prop.
-          All variants are responsive and adapt to the current breakpoint automatically.
+        <Text variant="h3" as="h1">Typography</Text>
+        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+          Typography variants with responsive sizing for desktop, tablet, and mobile.
         </Text>
-        <ComponentPlayground code={usageCode} />
-      </Section>
-      <PageNavigation />
+
+        <Divider spacing={28} />
+
+        <Section id="variants">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Variants</Text>
+          {variants.map((variant) => {
+            const config = theme.typography[variant];
+            const tablet = config.responsive?.tablet;
+            const mobile = config.responsive?.mobile;
+            return (
+              <VariantRow key={variant}>
+                <Text variant={variant}>
+                  {variant} — The quick brown fox jumps over the lazy dog
+                </Text>
+                <MetaGrid>
+                  <span><MetaLabel>font:</MetaLabel> {config.fontFamily}</span>
+                  <span><MetaLabel>weight:</MetaLabel> {config.fontWeight}</span>
+                  <span><MetaLabel>letter-spacing:</MetaLabel> {config.letterSpacing}</span>
+                  <span><MetaLabel>size:</MetaLabel> {config.fontSize}{(tablet?.fontSize || mobile?.fontSize) && <MetaLabel> (
+                    {tablet?.fontSize && <>tablet: {tablet.fontSize}</>}
+                    {tablet?.fontSize && mobile?.fontSize && ', '}
+                    {mobile?.fontSize && <>mobile: {mobile.fontSize}</>}
+                    )</MetaLabel>}</span>
+                  <span><MetaLabel>line-height:</MetaLabel> {config.lineHeight}{(tablet?.lineHeight || mobile?.lineHeight) && <MetaLabel> (
+                    {tablet?.lineHeight && <>tablet: {tablet.lineHeight}</>}
+                    {tablet?.lineHeight && mobile?.lineHeight && ', '}
+                    {mobile?.lineHeight && <>mobile: {mobile.lineHeight}</>}
+                    )</MetaLabel>}</span>
+                </MetaGrid>
+              </VariantRow>
+            );
+          })}
+        </Section>
+
+        <Section id="usage">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+          <Text variant="p" style={{ marginBottom: 16 }}>
+            Use the <code>Text</code> component with a <code>variant</code> prop.
+            All variants are responsive and adapt to the current breakpoint automatically.
+          </Text>
+          <ComponentPlayground code={usageCode} />
+        </Section>
+        <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

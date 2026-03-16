@@ -84,35 +84,35 @@ export const BoxShadowPage: FunctionComponent = () => {
   return (
     <PageLayout>
       <MainContent>
-      <Text variant="h3" as="h1">Box Shadow</Text>
-      <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        Elevation levels for creating depth and visual hierarchy.
-      </Text>
-
-      <Divider spacing={28} />
-
-      <Section id="levels">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Levels</Text>
-        <Text variant="p" style={{ marginBottom: 16 }}>
-          Access via <code>theme.boxShadow[1]</code> through <code>theme.boxShadow[5]</code>.
+        <Text variant="h3" as="h1">Box Shadow</Text>
+        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+          Elevation levels for creating depth and visual hierarchy.
         </Text>
-        <Grid>
-          {entries.map(([level, shadow]) => (
-            <ShadowCard key={level} style={{ boxShadow: shadow as string }}>
-              <Label>Level {level}</Label>
-              <ShadowValue>{shadow as string}</ShadowValue>
-            </ShadowCard>
-          ))}
-        </Grid>
-      </Section>
-      <Section id="usage">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-        <Text variant="p" style={{ marginBottom: 16 }}>
-          Access box shadow via <code>useTheme()</code> or styled-components theme injection.
-        </Text>
-        <ComponentPlayground code={usageCode} />
-      </Section>
-      <PageNavigation />
+
+        <Divider spacing={28} />
+
+        <Section id="levels">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Levels</Text>
+          <Text variant="p" style={{ marginBottom: 16 }}>
+            Access via <code>theme.boxShadow[1]</code> through <code>theme.boxShadow[5]</code>.
+          </Text>
+          <Grid>
+            {entries.map(([level, shadow]) => (
+              <ShadowCard key={level} style={{ boxShadow: shadow as string }}>
+                <Label>Level {level}</Label>
+                <ShadowValue>{shadow as string}</ShadowValue>
+              </ShadowCard>
+            ))}
+          </Grid>
+        </Section>
+        <Section id="usage">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+          <Text variant="p" style={{ marginBottom: 16 }}>
+            Access box shadow via <code>useTheme()</code> or styled-components theme injection.
+          </Text>
+          <ComponentPlayground code={usageCode} />
+        </Section>
+        <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

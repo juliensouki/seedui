@@ -56,7 +56,7 @@ const getToggleSizes = (): Record<ToggleSize, { width: number; height: number; t
 });
 
 const ToggleContainer = applyCustomStyles(
-  styled.div<StyledComponentsPrefix<{}>>(() => ({
+  styled.div<StyledComponentsPrefix<Record<string, never>>>(() => ({
     display: 'inline-flex',
     alignItems: 'center',
     gap: 8,

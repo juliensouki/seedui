@@ -48,7 +48,7 @@ export const CodeBlock: FunctionComponent<CodeBlockProps> = ({ code, language = 
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(code.trim());
+    void navigator.clipboard.writeText(code.trim());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [code]);

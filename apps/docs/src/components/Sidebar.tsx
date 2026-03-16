@@ -4,7 +4,7 @@ import { styled, IconButton, SearchBar } from '@seedui-react/seedui';
 import { GithubIcon, FigmaIcon } from 'lucide-react';
 import { ComponentCategory } from '../data/components';
 import { allPages, NavPage, ThemeCategory } from '../data/navigation';
-import { MobileMenuContext } from '../App';
+import { MobileMenuContext } from './MobileMenuContext';
 
 
 const Nav = styled('nav')<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => {
@@ -177,7 +177,6 @@ const CategoryGroup = styled('div')(() => ({
 }));
 
 const CategoryHeader = styled('button')(({ theme }) => {
-  const isLight = theme.mode === 'light';
   return {
     display: 'flex',
     alignItems: 'center',
@@ -345,89 +344,89 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
         )}
       </MobileSearch>
       <NavContent>
-      {gettingStartedPages.length > 0 && (
-        <div>
-          <SectionHeader onClick={() => toggle('getting-started')}>
-            Getting Started
-            <Chevron $open={isOpen('getting-started')}>&#8250;</Chevron>
-          </SectionHeader>
-          <SectionLinks $open={isOpen('getting-started')}>
-            <div>
-              <LinkList>
-                {gettingStartedPages.map((page) => (
-                  <StyledLink key={page.path} to={page.path} end={page.path === '/'}>
-                    {page.name}
-                  </StyledLink>
+        {gettingStartedPages.length > 0 && (
+          <div>
+            <SectionHeader onClick={() => toggle('getting-started')}>
+              Getting Started
+              <Chevron $open={isOpen('getting-started')}>&#8250;</Chevron>
+            </SectionHeader>
+            <SectionLinks $open={isOpen('getting-started')}>
+              <div>
+                <LinkList>
+                  {gettingStartedPages.map((page) => (
+                    <StyledLink key={page.path} to={page.path} end={page.path === '/'}>
+                      {page.name}
+                    </StyledLink>
+                  ))}
+                </LinkList>
+              </div>
+            </SectionLinks>
+          </div>
+        )}
+
+        {themeGroups.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <SectionHeader onClick={() => toggle('theme')}>
+              Theme
+              <Chevron $open={isOpen('theme')}>&#8250;</Chevron>
+            </SectionHeader>
+            <SectionLinks $open={isOpen('theme')}>
+              <div>
+                {themeGroups.map((group) => (
+                  <CategoryGroup key={group.category}>
+                    <CategoryHeader onClick={() => toggle(`theme-${group.category}`)}>
+                      {group.category}
+                      <SmallChevron $open={isOpen(`theme-${group.category}`)}>&#8250;</SmallChevron>
+                    </CategoryHeader>
+                    <SectionLinks $open={isOpen(`theme-${group.category}`)}>
+                      <div>
+                        <CategoryLinks>
+                          {group.pages.map((page) => (
+                            <CategoryLink key={page.path} to={page.path}>
+                              {page.name}
+                            </CategoryLink>
+                          ))}
+                        </CategoryLinks>
+                      </div>
+                    </SectionLinks>
+                  </CategoryGroup>
                 ))}
-              </LinkList>
-            </div>
-          </SectionLinks>
-        </div>
-      )}
+              </div>
+            </SectionLinks>
+          </div>
+        )}
 
-      {themeGroups.length > 0 && (
-        <div style={{ marginTop: 16 }}>
-          <SectionHeader onClick={() => toggle('theme')}>
-            Theme
-            <Chevron $open={isOpen('theme')}>&#8250;</Chevron>
-          </SectionHeader>
-          <SectionLinks $open={isOpen('theme')}>
-            <div>
-              {themeGroups.map((group) => (
-                <CategoryGroup key={group.category}>
-                  <CategoryHeader onClick={() => toggle(`theme-${group.category}`)}>
-                    {group.category}
-                    <SmallChevron $open={isOpen(`theme-${group.category}`)}>&#8250;</SmallChevron>
-                  </CategoryHeader>
-                  <SectionLinks $open={isOpen(`theme-${group.category}`)}>
-                    <div>
-                      <CategoryLinks>
-                        {group.pages.map((page) => (
-                          <CategoryLink key={page.path} to={page.path}>
-                            {page.name}
-                          </CategoryLink>
-                        ))}
-                      </CategoryLinks>
-                    </div>
-                  </SectionLinks>
-                </CategoryGroup>
-              ))}
-            </div>
-          </SectionLinks>
-        </div>
-      )}
-
-      {componentGroups.length > 0 && (
-        <div style={{ marginTop: 16 }}>
-          <SectionHeader onClick={() => toggle('components')}>
-            Components
-            <Chevron $open={isOpen('components')}>&#8250;</Chevron>
-          </SectionHeader>
-          <SectionLinks $open={isOpen('components')}>
-            <div>
-              {componentGroups.map((group) => (
-                <CategoryGroup key={group.category}>
-                  <CategoryHeader onClick={() => toggle(`cat-${group.category}`)}>
-                    {group.category}
-                    <SmallChevron $open={isOpen(`cat-${group.category}`)}>&#8250;</SmallChevron>
-                  </CategoryHeader>
-                  <SectionLinks $open={isOpen(`cat-${group.category}`)}>
-                    <div>
-                      <CategoryLinks>
-                        {group.names.map((name) => (
-                          <CategoryLink key={name} to={`/components/${name}`}>
-                            {name}
-                          </CategoryLink>
-                        ))}
-                      </CategoryLinks>
-                    </div>
-                  </SectionLinks>
-                </CategoryGroup>
-              ))}
-            </div>
-          </SectionLinks>
-        </div>
-      )}
+        {componentGroups.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <SectionHeader onClick={() => toggle('components')}>
+              Components
+              <Chevron $open={isOpen('components')}>&#8250;</Chevron>
+            </SectionHeader>
+            <SectionLinks $open={isOpen('components')}>
+              <div>
+                {componentGroups.map((group) => (
+                  <CategoryGroup key={group.category}>
+                    <CategoryHeader onClick={() => toggle(`cat-${group.category}`)}>
+                      {group.category}
+                      <SmallChevron $open={isOpen(`cat-${group.category}`)}>&#8250;</SmallChevron>
+                    </CategoryHeader>
+                    <SectionLinks $open={isOpen(`cat-${group.category}`)}>
+                      <div>
+                        <CategoryLinks>
+                          {group.names.map((name) => (
+                            <CategoryLink key={name} to={`/components/${name}`}>
+                              {name}
+                            </CategoryLink>
+                          ))}
+                        </CategoryLinks>
+                      </div>
+                    </SectionLinks>
+                  </CategoryGroup>
+                ))}
+              </div>
+            </SectionLinks>
+          </div>
+        )}
       </NavContent>
       <MobileFooter>
         <IconButton

@@ -47,4 +47,9 @@ export default tseslint.config(eslint.configs.recommended, tseslint.configs.reco
       },
     ],
   },
+}, {
+  files: ['**/data/**/*.tsx'],
+  rules: {
+    'react-refresh/only-export-components': 'off',
+  },
 });

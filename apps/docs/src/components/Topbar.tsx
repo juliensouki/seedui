@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { styled, Toggle, Mode, Popover, Text, Tag, IconButton, SearchBar, useTheme } from '@seedui-react/seedui';
 import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from '../data/navigation';
-import { MobileMenuContext } from '../App';
+import { MobileMenuContext } from './MobileMenuContext';
 
 const Bar = styled('header')(({ theme }) => {
   const isLight = theme.mode === 'light';

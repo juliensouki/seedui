@@ -1,0 +1,39 @@
+import { cardDoc as doc } from '../../../data/components/card';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../components/mdx/ComponentParts';
+import { ComponentPlayground } from '../../../components/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+Card is a surface container that groups related content and actions. Use it to visually separate sections of a page — for example, dashboard widgets, product listings, or settings panels. The default variant provides a subtle elevated look, while the outlined variant uses a border for a flatter appearance. Cards work well as clickable surfaces when combined with an onClick handler for navigation or selection patterns.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Default variant
+
+The default card has a subtle background and shadow, giving it a slightly elevated look that works well for dashboard widgets and content panels.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Outlined variant
+
+The outlined variant uses a border instead of a shadow for a flatter appearance. It works well when you want clear boundaries without depth.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

@@ -7,7 +7,6 @@ import {
   useEffect,
   useRef,
   MouseEvent,
-  KeyboardEvent,
 } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
@@ -111,7 +110,7 @@ const ModalContainer = applyCustomStyles(
   }),
 );
 
-const ModalHeader = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => {
+const ModalHeader = styled.div<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => {
   return {
     display: 'flex',
     alignItems: 'center',
@@ -120,13 +119,13 @@ const ModalHeader = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => {
   };
 });
 
-const ModalContent = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
+const ModalContent = styled.div<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => ({
   padding: `${theme.spacing(2)}px`,
   overflowY: 'auto',
   flex: 1,
 }));
 
-const CloseButton = styled.button<StyledComponentsPrefix<{}>>(({ theme }) => {
+const CloseButton = styled.button<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => {
   const isLight = theme.mode === 'light';
 
   return {
@@ -195,9 +194,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
         }
       };
 
-      document.addEventListener('keydown', handleEscape as any);
+      document.addEventListener('keydown', handleEscape);
       return () => {
-        document.removeEventListener('keydown', handleEscape as any);
+        document.removeEventListener('keydown', handleEscape);
       };
     }, [isOpen, closeOnEscape, onClose]);
 

@@ -1,10 +1,11 @@
-import { FunctionComponent, createContext, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, styled, colors, Mode } from '@seedui-react/seedui';
 import { componentDocs, categoryOrder } from './data/components';
 import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from './data/navigation';
 import { Topbar } from './components/Topbar';
 import { ModeToggleContext } from './components/ModeContext';
+import { MobileMenuContext } from './components/MobileMenuContext';
 import { Sidebar } from './components/Sidebar';
 import { HomePage } from './pages/HomePage';
 import { ComponentPage } from './pages/ComponentPage';
@@ -22,11 +23,6 @@ import { BorderRadiusPage } from './pages/tokens/BorderRadiusPage';
 import { BoxShadowPage } from './pages/tokens/BoxShadowPage';
 import { BreakpointsPage } from './pages/tokens/BreakpointsPage';
 
-export const MobileMenuContext = createContext<{
-  isOpen: boolean;
-  toggle: () => void;
-  close: () => void;
-}>({ isOpen: false, toggle: () => {}, close: () => {} });
 
 const Shell = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -112,39 +108,39 @@ export const App: FunctionComponent = () => {
     >
       <ThemeProvider mode={mode}>
         <ModeToggleContext.Provider value={handleModeToggle}>
-        <MobileMenuContext.Provider value={mobileMenuValue}>
-        <Shell>
-          <Topbar mode={mode} onModeToggle={handleModeToggle} />
-          <Body>
-            <Sidebar
-              gettingStartedPages={gettingStartedPages}
-              themeGroups={themeGroups}
-              componentGroups={componentGroups}
-            />
-            <Content ref={contentRef}>
-              <Inner>
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/getting-started/installation" element={<InstallationPage />} />
-                  <Route path="/getting-started/quick-start" element={<QuickStartPage />} />
-                  <Route path="/theming/theme-provider" element={<ThemeProviderPage />} />
-                  <Route path="/theming/customization" element={<CustomizationPage />} />
-                  <Route path="/theming/dark-mode" element={<DarkModePage />} />
-                  <Route path="/theming/component-styles" element={<ComponentStylesPage />} />
-                  <Route path="/theming/default-props" element={<DefaultPropsPage />} />
-                  <Route path="/tokens/colors" element={<ColorsPage />} />
-                  <Route path="/tokens/typography" element={<TypographyPage />} />
-                  <Route path="/tokens/spacing" element={<SpacingPage />} />
-                  <Route path="/tokens/border-radius" element={<BorderRadiusPage />} />
-                  <Route path="/tokens/box-shadow" element={<BoxShadowPage />} />
-                  <Route path="/tokens/breakpoints" element={<BreakpointsPage />} />
-                  <Route path="/components/:name" element={<ComponentPage />} />
-                </Routes>
-              </Inner>
-            </Content>
-          </Body>
-        </Shell>
-        </MobileMenuContext.Provider>
+          <MobileMenuContext.Provider value={mobileMenuValue}>
+            <Shell>
+              <Topbar mode={mode} onModeToggle={handleModeToggle} />
+              <Body>
+                <Sidebar
+                  gettingStartedPages={gettingStartedPages}
+                  themeGroups={themeGroups}
+                  componentGroups={componentGroups}
+                />
+                <Content ref={contentRef}>
+                  <Inner>
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/getting-started/installation" element={<InstallationPage />} />
+                      <Route path="/getting-started/quick-start" element={<QuickStartPage />} />
+                      <Route path="/theming/theme-provider" element={<ThemeProviderPage />} />
+                      <Route path="/theming/customization" element={<CustomizationPage />} />
+                      <Route path="/theming/dark-mode" element={<DarkModePage />} />
+                      <Route path="/theming/component-styles" element={<ComponentStylesPage />} />
+                      <Route path="/theming/default-props" element={<DefaultPropsPage />} />
+                      <Route path="/tokens/colors" element={<ColorsPage />} />
+                      <Route path="/tokens/typography" element={<TypographyPage />} />
+                      <Route path="/tokens/spacing" element={<SpacingPage />} />
+                      <Route path="/tokens/border-radius" element={<BorderRadiusPage />} />
+                      <Route path="/tokens/box-shadow" element={<BoxShadowPage />} />
+                      <Route path="/tokens/breakpoints" element={<BreakpointsPage />} />
+                      <Route path="/components/:name" element={<ComponentPage />} />
+                    </Routes>
+                  </Inner>
+                </Content>
+              </Body>
+            </Shell>
+          </MobileMenuContext.Provider>
         </ModeToggleContext.Provider>
       </ThemeProvider>
     </div>

@@ -87,55 +87,55 @@ export const SpacingPage: FunctionComponent = () => {
   return (
     <PageLayout>
       <MainContent>
-      <Text variant="h3" as="h1">Spacing</Text>
-      <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        A function-based spacing scale using an 8px base unit.
-      </Text>
-
-      <Divider spacing={28} />
-
-      <Section id="scale">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
-        <Text variant="p" style={{ marginBottom: 16 }}>
-          Access via <code>theme.spacing(factor)</code> — returns the pixel value as a number (base &times; factor).
-          Any numeric factor is supported.
+        <Text variant="h3" as="h1">Spacing</Text>
+        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+          A function-based spacing scale using an 8px base unit.
         </Text>
-        {spacingFactors.map((factor) => {
-          const px = theme.spacing(factor);
-          return (
-            <TokenRow key={factor}>
-              <TokenName>spacing({factor})</TokenName>
-              <TokenValue>{px}px</TokenValue>
-              <Bar style={{ width: Math.max(2, px) }} />
-            </TokenRow>
-          );
-        })}
-        <TokenRow key="ellipsis">
-          <TokenName>...</TokenName>
-          <TokenValue />
-          <span />
-        </TokenRow>
-        {(() => {
-          const px = theme.spacing(18);
-          return (
-            <TokenRow key={18}>
-              <TokenName>spacing(18)</TokenName>
-              <TokenValue>{px}px</TokenValue>
-              <Bar style={{ width: Math.max(2, px) }} />
-            </TokenRow>
-          );
-        })()}
-      </Section>
 
-      <Section id="usage">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-        <Text variant="p" style={{ marginBottom: 16 }}>
-          Access spacing via <code>useTheme()</code> or styled-components theme injection.
-          The function returns a raw number — append <code>px</code> when used in string templates.
-        </Text>
-        <ComponentPlayground code={usageCode} />
-      </Section>
-      <PageNavigation />
+        <Divider spacing={28} />
+
+        <Section id="scale">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
+          <Text variant="p" style={{ marginBottom: 16 }}>
+            Access via <code>theme.spacing(factor)</code> — returns the pixel value as a number (base &times; factor).
+            Any numeric factor is supported.
+          </Text>
+          {spacingFactors.map((factor) => {
+            const px = theme.spacing(factor);
+            return (
+              <TokenRow key={factor}>
+                <TokenName>spacing({factor})</TokenName>
+                <TokenValue>{px}px</TokenValue>
+                <Bar style={{ width: Math.max(2, px) }} />
+              </TokenRow>
+            );
+          })}
+          <TokenRow key="ellipsis">
+            <TokenName>...</TokenName>
+            <TokenValue />
+            <span />
+          </TokenRow>
+          {(() => {
+            const px = theme.spacing(18);
+            return (
+              <TokenRow key={18}>
+                <TokenName>spacing(18)</TokenName>
+                <TokenValue>{px}px</TokenValue>
+                <Bar style={{ width: Math.max(2, px) }} />
+              </TokenRow>
+            );
+          })()}
+        </Section>
+
+        <Section id="usage">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+          <Text variant="p" style={{ marginBottom: 16 }}>
+            Access spacing via <code>useTheme()</code> or styled-components theme injection.
+            The function returns a raw number — append <code>px</code> when used in string templates.
+          </Text>
+          <ComponentPlayground code={usageCode} />
+        </Section>
+        <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

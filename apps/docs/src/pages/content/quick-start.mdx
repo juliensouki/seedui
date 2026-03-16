@@ -1,0 +1,74 @@
+import { Button } from '@seedui-react/seedui';
+import { ExampleContainer } from '../../components/ExampleContainer';
+
+export const meta = {
+  title: 'Quick Start',
+  description: 'Render your first seedui component in under a minute.',
+  toc: [
+    { id: 'section-minimal-example', label: 'A minimal example' },
+    { id: 'section-styled', label: 'Using styled' },
+    { id: 'section-use-theme', label: 'Using useTheme' },
+  ],
+};
+
+<section id="section-minimal-example">
+## A minimal example
+
+After installing and wrapping your app in `ThemeProvider`, you can use any seedui component:
+
+```tsx
+import { ThemeProvider, Button } from '@seedui-react/seedui';
+
+function App() {
+  return (
+    <ThemeProvider mode="light">
+      <Button onClick={() => alert('Hello seedui!')}>
+        Click me
+      </Button>
+    </ThemeProvider>
+  );
+}
+```
+
+Here's what the example above looks like when rendered:
+
+<ExampleContainer>
+  <Button onClick={() => alert('Hello seedui!')}>Click me</Button>
+</ExampleContainer>
+</section>
+
+<section id="section-styled">
+## Using the styled utility
+
+seedui re-exports styled-components' `styled` function with full theme typing.
+Use it to create custom styled elements that access the theme:
+
+```tsx
+import { styled } from '@seedui-react/seedui';
+
+const Container = styled('div')(({ theme }) => ({
+  padding: theme.spacing(3),
+  backgroundColor: theme.colors.primary[100],
+  borderRadius: theme.borderRadius(4),
+}));
+```
+</section>
+
+<section id="section-use-theme">
+## Using the useTheme hook
+
+Access theme values directly in your components with `useTheme`:
+
+```tsx
+import { useTheme } from '@seedui-react/seedui';
+
+function MyComponent() {
+  const theme = useTheme();
+  return (
+    <div style={{ color: theme.colors.primary[600] }}>
+      Themed content
+    </div>
+  );
+}
+```
+</section>

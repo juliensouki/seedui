@@ -7,14 +7,6 @@ const Section = styled('section')(() => ({
   marginBottom: 40,
 }));
 
-const SectionTitle = styled(Text)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.colors.neutral[500],
-  fontSize: 12,
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  marginBottom: 12,
-}));
 
 const FeatureGrid = styled('div')(() => ({
   display: 'grid',
@@ -767,7 +759,7 @@ export const HomePage: FunctionComponent = () => {
           <div>
             <Text variant="h1">seedui</Text>
             <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-              A simple and elegant React component library that's endlessly customizable.
+              A simple and elegant React component library that&apos;s endlessly customizable.
             </Text>
             <Text variant="p" style={{ marginTop: 16, lineHeight: 1.7, color: theme.colors.neutral[500] }}>
               Everything you need to craft polished applications, internal tools, and delightful user experiences —

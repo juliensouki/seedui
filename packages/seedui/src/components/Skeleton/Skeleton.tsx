@@ -37,15 +37,15 @@ const SkeletonDiv = applyCustomStyles(
 
       const borderRadius = (() => {
         switch ($variant) {
-          case 'circular':
-            return '50%';
-          case 'rectangular':
-            return 0;
-          case 'rounded':
-            return theme.borderRadius(2);
-          case 'text':
-          default:
-            return theme.borderRadius(1);
+        case 'circular':
+          return '50%';
+        case 'rectangular':
+          return 0;
+        case 'rounded':
+          return theme.borderRadius(2);
+        case 'text':
+        default:
+          return theme.borderRadius(1);
         }
       })();
 

@@ -108,7 +108,7 @@ export const themeServiceFactory = ({
           };
         })(),
         borderRadius: customTheme.borderRadius
-          ? (factor: number | 'full') => (factor === 'full' ? 9999 : customTheme.borderRadius! * (factor as number))
+          ? (factor: number | 'full') => (factor === 'full' ? 9999 : customTheme.borderRadius! * (factor))
           : defaultTheme.borderRadius,
         spacing: spacingService.generateCustomSpacing(customTheme.spacing || 8),
         typography: typographyService.generateCustomTypography(customTheme.typography),

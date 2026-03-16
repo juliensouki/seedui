@@ -93,41 +93,41 @@ export const BorderRadiusPage: FunctionComponent = () => {
   return (
     <PageLayout>
       <MainContent>
-      <Text variant="h3" as="h1">Border Radius</Text>
-      <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
-        A function-based border radius scale using a 2px base unit.
-      </Text>
-
-      <Divider spacing={28} />
-
-      <Section id="scale">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
-        <Text variant="p" style={{ marginBottom: 16 }}>
-          Access via <code>theme.borderRadius(factor)</code> — returns the pixel value as a number
-          (base &times; factor). Use <code>'full'</code> for pill/circle shapes (9999px).
+        <Text variant="h3" as="h1">Border Radius</Text>
+        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+          A function-based border radius scale using a 2px base unit.
         </Text>
-        <Grid>
-          {radiusFactors.map((factor) => {
-            const px = theme.borderRadius(factor);
-            return (
-              <Sample key={String(factor)}>
-                <Box style={{ borderRadius: px }} />
-                <Label>{typeof factor === 'string' ? `'${factor}'` : factor}</Label>
-                <Value>{px}px</Value>
-              </Sample>
-            );
-          })}
-        </Grid>
-      </Section>
 
-      <Section id="usage">
-        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-        <Text variant="p" style={{ marginBottom: 16 }}>
-          Access border radius via <code>useTheme()</code> or styled-components theme injection.
-        </Text>
-        <ComponentPlayground code={usageCode} />
-      </Section>
-      <PageNavigation />
+        <Divider spacing={28} />
+
+        <Section id="scale">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
+          <Text variant="p" style={{ marginBottom: 16 }}>
+            Access via <code>theme.borderRadius(factor)</code> — returns the pixel value as a number
+            (base &times; factor). Use <code>&apos;full&apos;</code> for pill/circle shapes (9999px).
+          </Text>
+          <Grid>
+            {radiusFactors.map((factor) => {
+              const px = theme.borderRadius(factor);
+              return (
+                <Sample key={String(factor)}>
+                  <Box style={{ borderRadius: px }} />
+                  <Label>{typeof factor === 'string' ? `'${factor}'` : factor}</Label>
+                  <Value>{px}px</Value>
+                </Sample>
+              );
+            })}
+          </Grid>
+        </Section>
+
+        <Section id="usage">
+          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+          <Text variant="p" style={{ marginBottom: 16 }}>
+            Access border radius via <code>useTheme()</code> or styled-components theme injection.
+          </Text>
+          <ComponentPlayground code={usageCode} />
+        </Section>
+        <PageNavigation />
       </MainContent>
 
       <TableOfContents items={tocItems} />

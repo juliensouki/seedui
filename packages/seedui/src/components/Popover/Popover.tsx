@@ -10,7 +10,6 @@ import {
   useLayoutEffect,
   useRef,
   MouseEvent,
-  KeyboardEvent,
 } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { useTheme } from 'styled-components';
@@ -43,7 +42,7 @@ export interface PopoverProps {
   };
 }
 
-type PopoverContainerProps = StyledComponentsPrefix<{}>;
+type PopoverContainerProps = StyledComponentsPrefix<Record<string, never>>;
 
 const defaultProps: PopoverProps = {
   isOpen: false,
@@ -124,15 +123,13 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
 
     useImperativeHandle(forwardedRef, () => triggerRef.current as HTMLDivElement);
 
-    const computePopoverMargin = (): number => spacing ?? theme.spacing(1);
-
     const calculateAndApplyPosition = useCallback(() => {
       if (!triggerRef.current || !popoverRef.current) {
         return;
       }
 
       const triggerRect = triggerRef.current.getBoundingClientRect();
-      const margin = computePopoverMargin();
+      const margin = spacing ?? theme.spacing(1);
 
       let top = 0;
       let left = 0;
@@ -145,14 +142,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       // Calculate vertical position
       if (isAboveOrBelow) {
         switch (verticalAlignment) {
-          case 'top':
-            top = triggerRect.top - margin;
-            translateY = '-100%';
-            break;
-          case 'bottom':
-            top = triggerRect.bottom + margin;
-            translateY = '0';
-            break;
+        case 'top':
+          top = triggerRect.top - margin;
+          translateY = '-100%';
+          break;
+        case 'bottom':
+          top = triggerRect.bottom + margin;
+          translateY = '0';
+          break;
         }
       } else {
         top = triggerRect.top + triggerRect.height / 2;
@@ -162,33 +159,33 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       // Calculate horizontal position
       if (isAboveOrBelow) {
         switch (horizontalAlignment) {
-          case 'left':
-            left = triggerRect.left;
-            translateX = '0';
-            break;
-          case 'right':
-            left = triggerRect.right;
-            translateX = '-100%';
-            break;
-          case 'center':
-            left = triggerRect.left + triggerRect.width / 2;
-            translateX = '-50%';
-            break;
+        case 'left':
+          left = triggerRect.left;
+          translateX = '0';
+          break;
+        case 'right':
+          left = triggerRect.right;
+          translateX = '-100%';
+          break;
+        case 'center':
+          left = triggerRect.left + triggerRect.width / 2;
+          translateX = '-50%';
+          break;
         }
       } else {
         switch (horizontalAlignment) {
-          case 'left':
-            left = triggerRect.left - margin;
-            translateX = '-100%';
-            break;
-          case 'right':
-            left = triggerRect.right + margin;
-            translateX = '0';
-            break;
-          case 'center':
-            left = triggerRect.left + triggerRect.width / 2;
-            translateX = '-50%';
-            break;
+        case 'left':
+          left = triggerRect.left - margin;
+          translateX = '-100%';
+          break;
+        case 'right':
+          left = triggerRect.right + margin;
+          translateX = '0';
+          break;
+        case 'center':
+          left = triggerRect.left + triggerRect.width / 2;
+          translateX = '-50%';
+          break;
         }
       }
 
@@ -198,7 +195,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       popoverRef.current.style.transform = `translate(${translateX}, ${translateY})`;
       popoverRef.current.style.visibility = 'visible';
       popoverRef.current.style.opacity = '1';
-    }, [verticalAlignment, horizontalAlignment, spacing, theme.spacing]);
+    }, [verticalAlignment, horizontalAlignment, spacing, theme]);
 
     useLayoutEffect(() => {
       if (!isOpen) {
@@ -233,22 +230,22 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
     useEffect(() => {
       if (!isOpen || !closeOnEscape) return;
 
-      const handleEscape = (event: KeyboardEvent) => {
+      const handleEscape = (event: globalThis.KeyboardEvent) => {
         if (event.key === 'Escape') {
           onClose();
         }
       };
 
-      document.addEventListener('keydown', handleEscape as any);
+      document.addEventListener('keydown', handleEscape);
       return () => {
-        document.removeEventListener('keydown', handleEscape as any);
+        document.removeEventListener('keydown', handleEscape);
       };
     }, [isOpen, closeOnEscape, onClose]);
 
     useEffect(() => {
       if (!isOpen || !closeOnOutsideClick) return;
 
-      const handleClickOutside = (event: MouseEvent) => {
+      const handleClickOutside = (event: globalThis.MouseEvent) => {
         if (
           popoverRef.current &&
           triggerRef.current &&
@@ -260,12 +257,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       };
 
       const timeoutId = setTimeout(() => {
-        document.addEventListener('mousedown', handleClickOutside as any);
+        document.addEventListener('mousedown', handleClickOutside);
       }, 0);
 
       return () => {
         clearTimeout(timeoutId);
-        document.removeEventListener('mousedown', handleClickOutside as any);
+        document.removeEventListener('mousedown', handleClickOutside);
       };
     }, [isOpen, closeOnOutsideClick, onClose]);
 

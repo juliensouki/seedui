@@ -175,7 +175,7 @@ export const ColorsPage: FunctionComponent = () => {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const copyToClipboard = useCallback((key: string, value: string) => {
-    navigator.clipboard.writeText(value);
+    void navigator.clipboard.writeText(value);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey((prev) => (prev === key ? null : prev)), 1200);
   }, []);

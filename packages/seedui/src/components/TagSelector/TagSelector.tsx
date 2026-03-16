@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, HTMLAttributes, useContext, useState, KeyboardEvent } from 'react';
+import { ChangeEvent, ForwardedRef, forwardRef, HTMLAttributes, useContext, useState, KeyboardEvent } from 'react';
 import styled from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
@@ -51,7 +51,7 @@ const defaultProps: TagSelectorProps = {
   },
 };
 
-const TagSelectorContainer = styled.div<StyledComponentsPrefix<{}>>(({ theme }) => ({
+const TagSelectorContainer = styled.div<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(0.25),
@@ -153,7 +153,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       }
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
     };
 

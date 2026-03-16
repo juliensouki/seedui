@@ -116,7 +116,7 @@ interface PropsTableProps {
   props: PropDef[];
 }
 
-export const PropsTable: FunctionComponent<PropsTableProps> = ({ props }) => {
+export const PropsTable: FunctionComponent<PropsTableProps> = ({ props: items }) => {
   return (
     <>
       <Table>
@@ -129,7 +129,7 @@ export const PropsTable: FunctionComponent<PropsTableProps> = ({ props }) => {
           </tr>
         </thead>
         <tbody>
-          {props.map((p) => (
+          {items.map((p) => (
             <tr key={p.name}>
               <Td>
                 <PropName>{p.name}</PropName>
@@ -146,7 +146,7 @@ export const PropsTable: FunctionComponent<PropsTableProps> = ({ props }) => {
         </tbody>
       </Table>
       <CardList>
-        {props.map((p) => (
+        {items.map((p) => (
           <Card key={p.name}>
             <CardHeader>
               <PropName>{p.name}</PropName>

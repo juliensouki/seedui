@@ -1,0 +1,45 @@
+import { tagSelectorDoc as doc } from '../../../data/components/tag-selector';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../components/mdx/ComponentParts';
+import { ComponentPlayground } from '../../../components/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+TagSelector is an input that lets users build a list of tags by typing and pressing Enter. Use it for tagging systems, skill selectors, keyword inputs, or any field where users need to enter multiple free-form values. Each tag appears as a removable chip, and the maxTags prop can enforce an upper limit. It combines the functionality of Input and Tag into a single, cohesive control.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Basic tag selector
+
+Type a value and press Enter to add a tag. Click the remove button on any tag to delete it.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### With label
+
+Add a label to provide context about what kind of tags the user should enter.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Max tags limit
+
+Use maxTags to cap the number of tags a user can add. The input disables once the limit is reached.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />
