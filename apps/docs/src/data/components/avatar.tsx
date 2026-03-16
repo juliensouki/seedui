@@ -20,8 +20,8 @@ export const avatarDoc: ComponentDoc = {
     { name: 'src', type: 'string', default: '—', description: 'Image URL to display.' },
     { name: 'alt', type: 'string', default: 'name or "avatar"', description: 'Alt text for the image.' },
     { name: 'name', type: 'string', default: '—', description: 'User name. Used to generate initials when no src is provided.' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Avatar size.' },
-    { name: 'color', type: "'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'", default: "'primary'", description: 'Background color scheme for non-image avatars.' },
+    { name: 'size', type: "'sm' | 'md' | 'lg' | number", default: "'md'", description: 'Avatar size. Use a preset or pass a number for a custom pixel size.' },
+    { name: 'color', type: "'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'", default: "'neutral'", description: 'Background color scheme for non-image avatars.' },
   ],
   example: AvatarExample,
   code: `<Avatar src="https://i.pravatar.cc/150?img=1" name="Jane Doe" />
@@ -52,11 +52,12 @@ export const avatarDoc: ComponentDoc = {
     },
     {
       title: 'Sizes',
-      description: 'Use sm for dense layouts, md for general use, and lg for profile pages or headers.',
+      description: 'Use sm for dense layouts, md for general use, lg for profile pages, or pass a number for a custom pixel size.',
       code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
   <Avatar name="JD" size="sm" />
   <Avatar name="JD" size="md" />
   <Avatar name="JD" size="lg" />
+  <Avatar name="JD" size={60} />
 </div>`,
     },
     {

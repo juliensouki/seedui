@@ -21,7 +21,7 @@ export const avatarStackDoc: ComponentDoc = {
   props: [
     { name: 'children', type: 'ReactElement<AvatarProps> | ReactElement<AvatarProps>[]', default: '—', description: 'Avatar components to display. Required.' },
     { name: 'max', type: 'number', default: '—', description: 'Maximum number of avatars to show. Overflow displays as "+N".' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Size applied to all avatars in the stack.' },
+    { name: 'size', type: "'sm' | 'md' | 'lg' | number", default: "'md'", description: 'Size applied to all avatars in the stack. Pass a number for a custom pixel size.' },
     { name: 'direction', type: "'left' | 'right'", default: "'left'", description: 'Which side appears on top. "left" puts the first avatar on top, "right" puts the last on top.' },
   ],
   example: AvatarStackExample,

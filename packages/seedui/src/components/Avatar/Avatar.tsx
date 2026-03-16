@@ -9,7 +9,7 @@ import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
 import { Text } from '../Text';
 
-export type AvatarSize = Extract<Sizes, 'sm' | 'md' | 'lg'>;
+export type AvatarSize = Extract<Sizes, 'sm' | 'md' | 'lg'> | number;
 export type AvatarColor = keyof Pick<
   SemanticColors,
   'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'
@@ -27,21 +27,27 @@ export interface AvatarProps {
   };
 }
 
-const sizeMap: Record<AvatarSize, number> = {
+const sizeMap: Record<string, number> = {
   sm: 32,
   md: 40,
   lg: 48,
 };
 
-const fontSizeMap: Record<AvatarSize, number> = {
+const fontSizeMap: Record<string, number> = {
   sm: 12,
   md: 14,
   lg: 18,
 };
 
+const resolveSize = (size: AvatarSize): number =>
+  typeof size === 'number' ? size : sizeMap[size];
+
+const resolveFontSize = (size: AvatarSize): number =>
+  typeof size === 'number' ? Math.round(size * 0.35) : fontSizeMap[size];
+
 const defaultProps: AvatarProps = {
   size: 'md',
-  color: 'primary',
+  color: 'neutral',
   elementProps: {
     rootDiv: {},
     img: {},
@@ -58,7 +64,7 @@ const AvatarRoot = applyCustomStyles(
   styled.div<Required<Pick<AvatarProps, 'size' | 'color'>>>((props) => {
     const theme = props.theme;
     const color = props.color;
-    const size = sizeMap[props.size];
+    const size = resolveSize(props.size);
 
     return {
       display: 'inline-flex',
@@ -122,11 +128,11 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps & InternalProps>(
         {src ? (
           <AvatarImage src={src} alt={alt ?? name ?? 'avatar'} {...imgHTMLAttributes} />
         ) : name ? (
-          <AvatarInitials style={{ fontSize: fontSizeMap[size] }}>{getInitials(name)}</AvatarInitials>
+          <AvatarInitials style={{ fontSize: resolveFontSize(size) }}>{getInitials(name)}</AvatarInitials>
         ) : (
           <svg
-            width={fontSizeMap[size] + 4}
-            height={fontSizeMap[size] + 4}
+            width={resolveFontSize(size) + 4}
+            height={resolveFontSize(size) + 4}
             viewBox="0 0 24 24"
             fill="currentColor"
           >

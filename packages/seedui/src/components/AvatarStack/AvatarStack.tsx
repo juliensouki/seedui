@@ -9,7 +9,7 @@ import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
 import { Avatar, AvatarProps } from '../Avatar';
 
-export type AvatarStackSize = Extract<Sizes, 'sm' | 'md' | 'lg'>;
+export type AvatarStackSize = Extract<Sizes, 'sm' | 'md' | 'lg'> | number;
 export type AvatarStackDirection = 'left' | 'right';
 
 export interface AvatarStackProps {
@@ -22,17 +22,23 @@ export interface AvatarStackProps {
   };
 }
 
-const sizeMap: Record<AvatarStackSize, number> = {
+const sizeMap: Record<string, number> = {
   sm: 32,
   md: 40,
   lg: 48,
 };
 
-const overlapMap: Record<AvatarStackSize, number> = {
+const overlapMap: Record<string, number> = {
   sm: -10,
   md: -12,
   lg: -14,
 };
+
+const resolveStackSize = (size: AvatarStackSize): number =>
+  typeof size === 'number' ? size : sizeMap[size];
+
+const resolveOverlap = (size: AvatarStackSize): number =>
+  typeof size === 'number' ? Math.round(size * -0.3) : overlapMap[size];
 
 const defaultProps: AvatarStackProps = {
   size: 'md',
@@ -97,7 +103,7 @@ export const AvatarStack = forwardRef<HTMLDivElement, AvatarStackProps & Interna
     const childArray = Children.toArray(children) as ReactElement<AvatarProps>[];
     const visibleAvatars = max && max < childArray.length ? childArray.slice(0, max) : childArray;
     const overflowCount = max && max < childArray.length ? childArray.length - max : 0;
-    const overlap = overlapMap[size];
+    const overlap = resolveOverlap(size);
     const totalItems = visibleAvatars.length + (overflowCount > 0 ? 1 : 0);
     const isLeft = direction === 'left';
 
@@ -115,7 +121,7 @@ export const AvatarStack = forwardRef<HTMLDivElement, AvatarStackProps & Interna
         ))}
         {overflowCount > 0 && (
           <StackItem $overlap={overlap} $zIndex={isLeft ? 0 : totalItems}>
-            <OverflowAvatar $size={sizeMap[size]}>+{overflowCount}</OverflowAvatar>
+            <OverflowAvatar $size={resolveStackSize(size)}>+{overflowCount}</OverflowAvatar>
           </StackItem>
         )}
       </StackRoot>
