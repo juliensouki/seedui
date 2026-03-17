@@ -34,8 +34,7 @@ const overlapMap: Record<string, number> = {
   lg: -14,
 };
 
-const resolveStackSize = (size: AvatarStackSize): number =>
-  typeof size === 'number' ? size : sizeMap[size];
+const resolveStackSize = (size: AvatarStackSize): number => (typeof size === 'number' ? size : sizeMap[size]);
 
 const resolveOverlap = (size: AvatarStackSize): number =>
   typeof size === 'number' ? Math.round(size * -0.3) : overlapMap[size];
@@ -60,7 +59,7 @@ const StackItem = styled.div<{ $overlap: number; $zIndex: number }>((props) => {
   const isLight = props.theme.mode === 'light';
   return {
     marginLeft: props.$overlap,
-    border: `2px solid ${isLight ? props.theme.colors.neutral.white : props.theme.colors.neutral[100]}`,
+    border: `2px solid ${isLight ? props.theme.colors.neutral.white : props.theme.colors.neutral[200]}`,
     borderRadius: props.theme.borderRadius('full'),
     lineHeight: 0,
     zIndex: props.$zIndex,

@@ -10,7 +10,7 @@ const SchemaWrapper = styled('div')(({ theme }) => {
   return {
     padding: 32,
     borderRadius: 12,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     display: 'flex',
     flexDirection: 'column',
     gap: 16,
@@ -24,9 +24,7 @@ const Box = styled('div')<{ $dashed?: boolean }>(({ theme, $dashed }) => {
     border: `1.5px ${$dashed ? 'dashed' : 'solid'} ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
     borderRadius: 8,
     padding: 16,
-    backgroundColor: isLight
-      ? 'rgba(255,255,255,0.5)'
-      : 'rgba(255,255,255,0.03)',
+    backgroundColor: isLight ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.03)',
   };
 });
 
@@ -67,7 +65,7 @@ const Placeholder = styled('div')<{ $grow?: boolean }>(({ theme, $grow }) => {
     justifyContent: 'center',
     padding: '10px 14px',
     borderRadius: 6,
-    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
     fontSize: 11,
     fontWeight: 600,
     fontFamily: "'JetBrains Mono Variable', 'JetBrains Mono', monospace",
@@ -88,7 +86,16 @@ const SearchBarSchema: FunctionComponent = () => (
         <Box $dashed>
           <BoxLabel>IconWrapper</BoxLabel>
           <Placeholder>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <circle cx="11" cy="11" r="7" />
               <line x1="15.95" y1="15.95" x2="20.5" y2="20.5" />
             </svg>
