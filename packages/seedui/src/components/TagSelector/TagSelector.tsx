@@ -62,7 +62,7 @@ const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean }
   return {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
     padding: theme.spacing(0.5),
     borderRadius: theme.borderRadius(4),
     border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[500]}`,

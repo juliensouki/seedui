@@ -30,8 +30,8 @@ const Shell = styled('div')(({ theme }) => {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[900],
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[900],
     fontFamily: "'Inter Variable', Inter, -apple-system, BlinkMacSystemFont, sans-serif",
   };
 });
@@ -48,7 +48,7 @@ const Content = styled('main')(({ theme }) => {
     flex: 1,
     overflow: 'auto',
     padding: 40,
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[800],
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
     [theme.breakpoints.down('md')]: {
       padding: 20,
     },
@@ -101,9 +101,10 @@ export const App: FunctionComponent = () => {
         width: '100%',
         height: '100vh',
         overflow: 'hidden',
+        colorScheme: mode === 'dark' ? 'dark' : undefined,
         backgroundColor: mode === 'light'
           ? colors.light.semantic.neutral[100]
-          : colors.dark.semantic.neutral[900],
+          : colors.dark.semantic.neutral[100],
       }}
     >
       <ThemeProvider mode={mode}>

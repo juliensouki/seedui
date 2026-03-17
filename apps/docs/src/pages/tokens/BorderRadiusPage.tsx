@@ -32,7 +32,7 @@ const Sample = styled('div')(({ theme }) => {
     alignItems: 'center',
     gap: 8,
     padding: 16,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     borderRadius: 8,
   };
 });
@@ -40,7 +40,7 @@ const Sample = styled('div')(({ theme }) => {
 const Box = styled('div')(({ theme }) => ({
   width: 56,
   height: 56,
-  backgroundColor: theme.colors.primary[400],
+  backgroundColor: theme.mode === 'light' ? theme.colors.primary[400] : theme.colors.primary.default,
   overflow: 'hidden',
 }));
 
@@ -49,16 +49,19 @@ const Label = styled('span')(({ theme }) => {
   return {
     fontSize: 12,
     fontFamily: "'SF Mono', 'Fira Code', monospace",
-    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
+    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[800],
     textAlign: 'center' as const,
   };
 });
 
-const Value = styled('span')(({ theme }) => ({
-  fontSize: 11,
-  fontFamily: "'SF Mono', 'Fira Code', monospace",
-  color: theme.colors.neutral[500],
-}));
+const Value = styled('span')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    fontSize: 11,
+    fontFamily: "'SF Mono', 'Fira Code', monospace",
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+  };
+});
 
 const tocItems = [
   { id: 'scale', label: 'Scale' },
@@ -94,7 +97,7 @@ export const BorderRadiusPage: FunctionComponent = () => {
     <PageLayout>
       <MainContent>
         <Text variant="h3" as="h1">Border Radius</Text>
-        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
           A function-based border radius scale using a 2px base unit.
         </Text>
 

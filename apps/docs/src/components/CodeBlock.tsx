@@ -8,7 +8,7 @@ const Wrapper = styled('div')(() => ({
 }));
 
 const Pre = styled('pre')(({ theme }) => ({
-  backgroundColor: theme.colors.neutral[900],
+  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[200],
   padding: '20px 48px 20px 20px',
   borderRadius: 8,
   fontSize: 13,
@@ -18,26 +18,29 @@ const Pre = styled('pre')(({ theme }) => ({
   margin: 0,
 }));
 
-const CopyButton = styled('button')(({ theme }) => ({
-  position: 'absolute',
-  top: 14,
-  right: 14,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 32,
-  height: 32,
-  borderRadius: 6,
-  border: 'none',
-  cursor: 'pointer',
-  backgroundColor: 'transparent',
-  color: theme.colors.neutral[400],
-  transition: 'color 0.15s, background-color 0.15s',
-  '&:hover': {
-    backgroundColor: theme.colors.neutral[800],
-    color: theme.colors.neutral[200],
-  },
-}));
+const CopyButton = styled('button')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 32,
+    height: 32,
+    borderRadius: 6,
+    border: 'none',
+    cursor: 'pointer',
+    backgroundColor: 'transparent',
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[600],
+    transition: 'color 0.15s, background-color 0.15s',
+    '&:hover': {
+      backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+      color: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
+    },
+  };
+});
 
 interface CodeBlockProps {
   code: string;

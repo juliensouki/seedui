@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode } from 'react';
-import { styled, Text, Divider } from '@seedui-react/seedui';
+import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { MDXProvider } from '@mdx-js/react';
 import { TableOfContents } from '../TableOfContents';
 import { PageNavigation } from '../PageNavigation';
@@ -31,11 +31,13 @@ const MainContent = styled('div')(() => ({
 }));
 
 export const MDXPageLayout: FunctionComponent<MDXPageLayoutProps> = ({ title, description, toc, children }) => {
+  const theme = useTheme();
+  const isLight = theme.mode === 'light';
   return (
     <PageLayout>
       <MainContent>
         <Text variant="h3" as="h1">{title}</Text>
-        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>{description}</Text>
+        <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
         <Divider spacing={28} />
         <MDXProvider components={mdxComponents}>
           {children}

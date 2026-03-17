@@ -87,7 +87,7 @@ const ModalContainer = applyCustomStyles(
       width: typeof $width === 'number' ? `${$width}px` : $width,
       maxWidth: '90vw',
       maxHeight: '90vh',
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
       borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[3],
       display: 'flex',
@@ -137,11 +137,11 @@ const CloseButton = styled.button<StyledComponentsPrefix<Record<string, never>>>
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: theme.borderRadius(2),
-    color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[400],
+    color: theme.colors.neutral[600],
     transition: 'background-color 0.15s ease-in-out, color 0.15s ease-in-out',
 
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
       color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,
     },
 

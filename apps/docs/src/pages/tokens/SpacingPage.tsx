@@ -26,7 +26,7 @@ const TokenRow = styled('div')(({ theme }) => {
     alignItems: 'center',
     gap: 16,
     padding: '8px 0',
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     '&:last-child': {
       borderBottom: 'none',
     },
@@ -39,24 +39,27 @@ const TokenName = styled('span')(({ theme }) => {
     width: 100,
     fontSize: 13,
     fontFamily: "'SF Mono', 'Fira Code', monospace",
-    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
+    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[800],
     flexShrink: 0,
   };
 });
 
-const TokenValue = styled('span')(({ theme }) => ({
-  width: 50,
-  fontSize: 12,
-  fontFamily: "'SF Mono', 'Fira Code', monospace",
-  color: theme.colors.neutral[500],
-  flexShrink: 0,
-  textAlign: 'right',
-}));
+const TokenValue = styled('span')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    width: 50,
+    fontSize: 12,
+    fontFamily: "'SF Mono', 'Fira Code', monospace",
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    flexShrink: 0,
+    textAlign: 'right',
+  };
+});
 
 const Bar = styled('div')(({ theme }) => ({
   height: 12,
   borderRadius: 3,
-  backgroundColor: theme.colors.primary[400],
+  backgroundColor: theme.mode === 'light' ? theme.colors.primary[400] : theme.colors.primary.default,
   transition: 'width 0.2s',
 }));
 
@@ -88,7 +91,7 @@ export const SpacingPage: FunctionComponent = () => {
     <PageLayout>
       <MainContent>
         <Text variant="h3" as="h1">Spacing</Text>
-        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
           A function-based spacing scale using an 8px base unit.
         </Text>
 

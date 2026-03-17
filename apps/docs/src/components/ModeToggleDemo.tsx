@@ -11,11 +11,11 @@ const ModeToggleRow = styled('div')(({ theme }) => {
     gap: 10,
     padding: '16px 20px',
     borderRadius: 8,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     marginBottom: 12,
     fontSize: 13,
-    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
+    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[700],
   };
 });
 

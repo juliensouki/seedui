@@ -36,16 +36,19 @@ const PaletteNameText = styled('span')(({ theme }) => {
   return {
     fontSize: 14,
     fontWeight: 600,
-    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
+    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[800],
     textTransform: 'capitalize' as const,
   };
 });
 
-const PrimitiveBadge = styled('span')(({ theme }) => ({
-  fontSize: 12,
-  fontFamily: "'SF Mono', 'Fira Code', monospace",
-  color: theme.colors.neutral[500],
-}));
+const PrimitiveBadge = styled('span')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    fontSize: 12,
+    fontFamily: "'SF Mono', 'Fira Code', monospace",
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+  };
+});
 
 /* ── Swatch grid ── */
 
@@ -86,6 +89,7 @@ const SwatchCard = styled('div')(({ theme }) => ({
 
 const SwatchColor = styled('div')(() => ({
   height: 52,
+  borderRadius: '8px 8px 0 0',
 }));
 
 const SwatchInfo = styled('div')(({ theme }) => {
@@ -94,8 +98,8 @@ const SwatchInfo = styled('div')(({ theme }) => {
     padding: '6px 8px',
     fontSize: 12,
     fontFamily: "'SF Mono', 'Fira Code', monospace",
-    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[800],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     lineHeight: 1.4,
     display: 'flex',
     justifyContent: 'space-between',
@@ -140,7 +144,8 @@ const ColorPalette: FunctionComponent<{
   palette: Record<number, string>;
   copiedKey: string | null;
   onCopy: (key: string, value: string) => void;
-}> = ({ semantic, primitive, palette, copiedKey, onCopy }) => (
+  isDark: boolean;
+}> = ({ semantic, primitive, palette, copiedKey, onCopy, isDark }) => (
   <PaletteBlock>
     <PaletteHeader>
       <PaletteNameText>{semantic}</PaletteNameText>
@@ -158,7 +163,7 @@ const ColorPalette: FunctionComponent<{
             title={`Click to copy ${color}`}
             onClick={() => onCopy(key, color)}
           >
-            <SwatchColor style={{ backgroundColor: color }} />
+            <SwatchColor style={{ backgroundColor: color, boxShadow: isDark && semantic === 'neutral' && shade === 100 ? 'inset 0 0 0 1px rgba(255,255,255,0.08)' : undefined }} />
             <SwatchInfo>
               <span style={{ fontWeight: 600 }}>{shade}</span>
               <span>{isCopied ? 'Copied!' : color}</span>
@@ -184,7 +189,7 @@ export const ColorsPage: FunctionComponent = () => {
     <PageLayout>
       <MainContent>
         <Text variant="h3" as="h1">Colors</Text>
-        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
           Each semantic color maps to a primitive palette.
           Use semantic names in components so colors stay consistent when customized.
           Click any swatch to copy its hex value.
@@ -199,6 +204,7 @@ export const ColorsPage: FunctionComponent = () => {
               key={semantic}
               semantic={semantic}
               primitive={primitive}
+              isDark={theme.mode === 'dark'}
               palette={theme.colors[semantic] as unknown as Record<number, string>}
               copiedKey={copiedKey}
               onCopy={copyToClipboard}
@@ -208,7 +214,7 @@ export const ColorsPage: FunctionComponent = () => {
 
         <Section id="usage">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-          <Text variant="p" style={{ opacity: 0.7, marginBottom: 12, lineHeight: 1.6 }}>
+          <Text variant="p" style={{ color: theme.mode === 'light' ? undefined : theme.colors.neutral[800], marginBottom: 12, lineHeight: 1.6 }}>
             Access semantic colors via <code>useTheme()</code> or through the <code>theme</code> object
             injected in <code>styled()</code> components. Use <code>theme.colors.[name][shade]</code> to
             reference any color from the palette.

@@ -12,8 +12,8 @@ const Nav = styled('nav')<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => 
   return {
     width: 260,
     flexShrink: 0,
-    borderRight: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
+    borderRight: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
     overflowY: 'auto' as const,
     padding: '16px 0',
     [theme.breakpoints.down('md')]: {
@@ -43,7 +43,7 @@ const MobileSearch = styled('div')(({ theme }) => {
     [theme.breakpoints.down('md')]: {
       display: 'block',
       padding: '0 12px 12px',
-      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+      borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
       marginBottom: 8,
     },
   };
@@ -68,9 +68,9 @@ const SearchResultItem = styled('button')(({ theme }) => {
     fontSize: 14,
     cursor: 'pointer',
     borderRadius: 6,
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[900],
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     },
   };
 });
@@ -93,7 +93,7 @@ const MobileFooter = styled('div')(({ theme }) => {
       gap: 4,
       padding: '12px 20px',
       flexShrink: 0,
-      borderTop: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+      borderTop: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     },
   };
 });
@@ -106,16 +106,16 @@ const SectionHeader = styled('button')(({ theme }) => {
     justifyContent: 'space-between',
     width: '100%',
     padding: '0 20px',
-    marginBottom: 4,
+    marginBottom: 6,
     border: 'none',
     background: 'none',
     cursor: 'pointer',
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,
     fontSize: 14,
     fontWeight: 700,
     fontFamily: 'inherit',
     '&:hover': {
-      color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
+      color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[700],
     },
   };
 });
@@ -147,7 +147,7 @@ const LinkList = styled('div')(() => ({
   padding: '0 10px',
   display: 'flex',
   flexDirection: 'column' as const,
-  gap: 1,
+  gap: 2,
 }));
 
 const StyledLink = styled(NavLink)(({ theme }) => {
@@ -158,25 +158,26 @@ const StyledLink = styled(NavLink)(({ theme }) => {
     borderRadius: 6,
     fontSize: 14,
     fontFamily: 'inherit',
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[900],
     textDecoration: 'none',
     transition: 'background 0.15s, color 0.15s',
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     },
     '&.active': {
-      color: isLight ? theme.colors.primary[600] : theme.colors.primary[400],
-      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary[900],
+      color: isLight ? theme.colors.primary[600] : theme.colors.neutral.white,
+      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary.default,
       fontWeight: 500,
     },
   };
 });
 
 const CategoryGroup = styled('div')(() => ({
-  margin: '4px 20px 0 28px',
+  margin: '8px 20px 0 28px',
 }));
 
 const CategoryHeader = styled('button')(({ theme }) => {
+  const isLight = theme.mode === 'light';
   return {
     display: 'flex',
     alignItems: 'center',
@@ -188,12 +189,12 @@ const CategoryHeader = styled('button')(({ theme }) => {
     cursor: 'pointer',
     fontSize: 11,
     fontWeight: 600,
-    color: theme.colors.neutral[400],
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[700],
     fontFamily: 'inherit',
     textTransform: 'uppercase' as const,
     letterSpacing: '0.05em',
     '&:hover': {
-      color: theme.colors.neutral[400],
+      color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
     },
   };
 });
@@ -203,7 +204,7 @@ const CategoryLinks = styled('div')(({ theme }) => {
   return {
     marginLeft: 6,
     paddingLeft: 6,
-    borderLeft: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    borderLeft: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     display: 'flex',
     flexDirection: 'column' as const,
     gap: 2,
@@ -218,15 +219,15 @@ const CategoryLink = styled(NavLink)(({ theme }) => {
     borderRadius: 4,
     fontSize: 14,
     fontFamily: 'inherit',
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[100],
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[900],
     textDecoration: 'none',
     transition: 'background 0.15s, color 0.15s',
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     },
     '&.active': {
-      color: isLight ? theme.colors.primary[600] : theme.colors.primary[400],
-      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary[900],
+      color: isLight ? theme.colors.primary[600] : theme.colors.neutral.white,
+      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary.default,
       fontWeight: 500,
     },
   };
@@ -365,7 +366,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
         )}
 
         {themeGroups.length > 0 && (
-          <div style={{ marginTop: 16 }}>
+          <div style={{ marginTop: 20 }}>
             <SectionHeader onClick={() => toggle('theme')}>
               Theme
               <Chevron $open={isOpen('theme')}>&#8250;</Chevron>
@@ -397,7 +398,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
         )}
 
         {componentGroups.length > 0 && (
-          <div style={{ marginTop: 16 }}>
+          <div style={{ marginTop: 20 }}>
             <SectionHeader onClick={() => toggle('components')}>
               Components
               <Chevron $open={isOpen('components')}>&#8250;</Chevron>

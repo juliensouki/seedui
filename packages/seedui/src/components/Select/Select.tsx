@@ -74,7 +74,7 @@ const SelectDiv = applyCustomStyles(
 const SelectContainer = applyCustomStyles(
   styled.div<{ $isFocused: boolean; $disabled?: boolean }>(({ theme, $isFocused, $disabled }) => {
     const isLight = theme.mode === 'light';
-    const baseColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[700];
+    const baseColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[300];
     const activeColor = theme.colors.primary.default;
     const textColor = isLight ? theme.colors.neutral[900] : theme.colors.neutral.white;
 
@@ -86,10 +86,10 @@ const SelectContainer = applyCustomStyles(
       backgroundColor: $disabled
         ? isLight
           ? theme.colors.neutral[100]
-          : theme.colors.neutral[800]
+          : theme.colors.neutral[200]
         : isLight
         ? theme.colors.neutral.white
-        : theme.colors.neutral[900],
+        : theme.colors.neutral[100],
       color: textColor,
       padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
       paddingRight: 0,
@@ -174,8 +174,8 @@ const SelectMenu = styled.div<{ $menuHeight: string | number }>(({ theme, $menuH
   maxHeight: typeof $menuHeight === 'number' ? `${$menuHeight}px` : $menuHeight,
   overflowY: 'auto',
   borderRadius: theme.borderRadius(2),
-  backgroundColor: theme.mode === 'light' ? theme.colors.neutral.white : theme.colors.neutral[900],
-  border: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+  backgroundColor: theme.mode === 'light' ? theme.colors.neutral.white : theme.colors.neutral[100],
+  border: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
   boxShadow: theme.boxShadow[1],
   boxSizing: 'border-box',
   padding: 4,

@@ -50,7 +50,7 @@ const ProgressBarRoot = applyCustomStyles(
       width: '100%',
       height: resolvedHeight,
       borderRadius: theme.borderRadius('full'),
-      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
+      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
       overflow: 'hidden',
       boxSizing: 'border-box',
     };

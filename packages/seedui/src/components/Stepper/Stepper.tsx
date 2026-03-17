@@ -51,8 +51,8 @@ const StepCircle = styled.div<StyledComponentsPrefix<{ isActive: boolean }>>(({ 
     height: 18,
     borderRadius: '50%',
     flexShrink: 0,
-    backgroundColor: $isActive ? theme.colors.primary.default : isLight ? theme.colors.neutral[300] : theme.colors.neutral[600],
-    color: $isActive ? theme.colors.neutral.white : isLight ? theme.colors.neutral[600] : theme.colors.neutral[300],
+    backgroundColor: $isActive ? theme.colors.primary.default : isLight ? theme.colors.neutral[300] : theme.colors.neutral[400],
+    color: $isActive ? theme.colors.neutral.white : isLight ? theme.colors.neutral[600] : theme.colors.neutral[700],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -66,7 +66,7 @@ const StepLabel = styled(Text)(({ theme, $isActive }: StyledProps<{ $isActive: b
   return {
     color: $isActive
       ? isLight ? theme.colors.neutral.black : theme.colors.neutral.white
-      : theme.colors.neutral[400],
+      : isLight ? theme.colors.neutral[400] : theme.colors.neutral[600],
     fontSize: theme.typography.caption.fontSize,
     textAlign: 'center',
     [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {

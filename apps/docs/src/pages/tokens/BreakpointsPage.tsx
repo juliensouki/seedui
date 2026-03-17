@@ -25,7 +25,7 @@ const Table = styled('table')(({ theme }) => {
     borderCollapse: 'collapse' as const,
     fontSize: 14,
     fontFamily: 'inherit',
-    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[800],
   };
 });
 
@@ -38,8 +38,8 @@ const Th = styled('th')(({ theme }) => {
     fontSize: 12,
     textTransform: 'uppercase' as const,
     letterSpacing: '0.04em',
-    color: theme.colors.neutral[500],
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
   };
 });
 
@@ -47,7 +47,7 @@ const Td = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `${theme.spacing(2)}px 16px ${theme.spacing(2)}px 0`,
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
   };
@@ -98,7 +98,7 @@ export const BreakpointsPage: FunctionComponent = () => {
     <PageLayout>
       <MainContent>
         <Text variant="h3" as="h1">Breakpoints</Text>
-        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
           Responsive breakpoints for adapting layouts across screen sizes.
         </Text>
 

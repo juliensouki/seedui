@@ -14,7 +14,7 @@ export const getPrimaryFilledButtonStyles = (theme: Theme) => ({
   },
 
   '&:active': {
-    backgroundColor: theme.colors.primary[800],
+    backgroundColor: theme.mode === 'light' ? theme.colors.primary[800] : theme.colors.primary.default,
   },
 
   '& svg': {

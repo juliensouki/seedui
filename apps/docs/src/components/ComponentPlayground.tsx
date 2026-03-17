@@ -185,7 +185,7 @@ const Wrapper = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     borderRadius: 8,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     overflow: 'hidden' as const,
   };
 });
@@ -194,15 +194,15 @@ const PreviewPane = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: 24,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     minHeight: 60,
   };
 });
 
 const CodePane = styled('div')(({ theme }) => ({
   position: 'relative',
-  borderTop: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-  backgroundColor: theme.colors.neutral[900],
+  borderTop: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[200],
 
   '& .code-editor': {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
@@ -220,27 +220,30 @@ const CodePane = styled('div')(({ theme }) => ({
   },
 }));
 
-const CopyButton = styled('button')(({ theme }) => ({
-  position: 'absolute',
-  top: 8,
-  right: 8,
-  zIndex: 2,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 32,
-  height: 32,
-  borderRadius: 6,
-  border: 'none',
-  cursor: 'pointer',
-  backgroundColor: 'transparent',
-  color: theme.colors.neutral[400],
-  transition: 'color 0.15s, background-color 0.15s',
-  '&:hover': {
-    backgroundColor: theme.colors.neutral[800],
-    color: theme.colors.neutral[200],
-  },
-}));
+const CopyButton = styled('button')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    zIndex: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 32,
+    height: 32,
+    borderRadius: 6,
+    border: 'none',
+    cursor: 'pointer',
+    backgroundColor: 'transparent',
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
+    transition: 'color 0.15s, background-color 0.15s',
+    '&:hover': {
+      backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+      color: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
+    },
+  };
+});
 
 const ErrorBar = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';

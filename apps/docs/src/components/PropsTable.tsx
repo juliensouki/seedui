@@ -9,7 +9,7 @@ const Table = styled('table')(({ theme }) => {
     borderCollapse: 'collapse' as const,
     fontSize: 14,
     fontFamily: 'inherit',
-    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[800],
     [theme.breakpoints.down('md')]: {
       display: 'none',
     },
@@ -25,8 +25,8 @@ const Th = styled('th')(({ theme }) => {
     fontSize: 12,
     textTransform: 'uppercase' as const,
     letterSpacing: '0.04em',
-    color: theme.colors.neutral[500],
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
   };
 });
 
@@ -34,7 +34,7 @@ const Td = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `${theme.spacing(2)}px 0`,
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
   };
@@ -46,7 +46,7 @@ const PropName = styled('code')(({ theme }) => {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
     fontSize: 13,
     fontWeight: 500,
-    color: isLight ? theme.colors.primary[600] : theme.colors.primary[400],
+    color: isLight ? theme.colors.primary[600] : theme.colors.primary.default,
   };
 });
 
@@ -55,18 +55,21 @@ const TypeCode = styled('code')(({ theme }) => {
   return {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
     fontSize: 12,
-    color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[400],
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[800],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     padding: '2px 6px',
     borderRadius: 4,
   };
 });
 
-const DefaultCode = styled('code')(({ theme }) => ({
-  fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
-  fontSize: 12,
-  color: theme.colors.neutral[500],
-}));
+const DefaultCode = styled('code')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
+    fontSize: 12,
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+  };
+});
 
 /* Mobile card layout */
 const CardList = styled('div')(({ theme }) => ({
@@ -83,10 +86,10 @@ const Card = styled('div')(({ theme }) => {
   return {
     padding: 14,
     borderRadius: theme.borderRadius(3),
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     fontSize: 14,
     lineHeight: 1.5,
-    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+    color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[800],
   };
 });
 
@@ -98,19 +101,25 @@ const CardHeader = styled('div')(() => ({
   marginBottom: 6,
 }));
 
-const CardLabel = styled('span')(({ theme }) => ({
-  fontSize: 11,
-  fontWeight: 600,
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.04em',
-  color: theme.colors.neutral[400],
-}));
+const CardLabel = styled('span')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    fontSize: 11,
+    fontWeight: 600,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.04em',
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
+  };
+});
 
-const CardDescription = styled('div')(({ theme }) => ({
-  color: theme.colors.neutral[500],
-  fontSize: 13,
-  marginTop: 4,
-}));
+const CardDescription = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    fontSize: 13,
+    marginTop: 4,
+  };
+});
 
 interface PropsTableProps {
   props: PropDef[];

@@ -41,7 +41,7 @@ const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boole
       display: 'flex',
       alignItems: 'center',
       width: $width,
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
       padding: $hideButton
         ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px`
         : `${theme.spacing(0.5)}px`,
@@ -86,7 +86,7 @@ const IconWrapper = styled.div(({ theme }) => {
     '& svg': {
       width: 18,
       height: 18,
-      color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[300],
+      color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[700],
     },
   };
 });

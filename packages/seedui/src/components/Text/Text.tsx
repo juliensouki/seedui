@@ -40,7 +40,7 @@ const TextFactory = (variant: TextVariants) => {
       letterSpacing: theme.typography[$variant].letterSpacing,
       color:
         tag === 'p' && theme.mode === 'dark'
-          ? theme.colors.neutral[100]
+          ? theme.colors.neutral[900]
           : theme.mode === 'light'
           ? theme.colors.neutral.black
           : theme.colors.neutral.white,

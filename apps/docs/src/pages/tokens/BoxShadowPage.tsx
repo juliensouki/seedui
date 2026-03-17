@@ -35,7 +35,7 @@ const ShadowCard = styled('div')(({ theme }) => {
     gap: 12,
     padding: 24,
     borderRadius: 12,
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
     height: 120,
   };
 });
@@ -45,18 +45,21 @@ const Label = styled('span')(({ theme }) => {
   return {
     fontSize: 13,
     fontFamily: "'SF Mono', 'Fira Code', monospace",
-    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[300],
+    color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[800],
   };
 });
 
-const ShadowValue = styled('span')(({ theme }) => ({
-  fontSize: 10,
-  fontFamily: "'SF Mono', 'Fira Code', monospace",
-  color: theme.colors.neutral[500],
-  textAlign: 'center' as const,
-  lineHeight: 1.4,
-  wordBreak: 'break-all' as const,
-}));
+const ShadowValue = styled('span')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    fontSize: 10,
+    fontFamily: "'SF Mono', 'Fira Code', monospace",
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    textAlign: 'center' as const,
+    lineHeight: 1.4,
+    wordBreak: 'break-all' as const,
+  };
+});
 
 const tocItems = [
   { id: 'levels', label: 'Levels' },
@@ -85,7 +88,7 @@ export const BoxShadowPage: FunctionComponent = () => {
     <PageLayout>
       <MainContent>
         <Text variant="h3" as="h1">Box Shadow</Text>
-        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
           Elevation levels for creating depth and visual hierarchy.
         </Text>
 

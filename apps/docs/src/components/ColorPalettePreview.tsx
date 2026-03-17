@@ -6,8 +6,8 @@ const PreviewBox = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     borderRadius: 8,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     padding: 20,
     marginBottom: 12,
   };
@@ -25,7 +25,7 @@ const PaletteLabel = styled('span')(({ theme }) => {
   return {
     fontSize: 12,
     fontWeight: 600,
-    color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[400],
+    color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[800],
     marginBottom: 6,
     display: 'block',
     textTransform: 'capitalize' as const,

@@ -22,26 +22,32 @@ const VariantRow = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: '20px 0',
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     '&:last-child': {
       borderBottom: 'none',
     },
   };
 });
 
-const MetaGrid = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  gap: '4px 20px',
-  marginTop: 8,
-  fontSize: 12,
-  color: theme.colors.neutral[500],
-  fontFamily: "'SF Mono', 'Fira Code', monospace",
-}));
+const MetaGrid = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'flex',
+    flexWrap: 'wrap' as const,
+    gap: '4px 20px',
+    marginTop: 8,
+    fontSize: 12,
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    fontFamily: "'SF Mono', 'Fira Code', monospace",
+  };
+});
 
-const MetaLabel = styled('span')(({ theme }) => ({
-  color: theme.colors.neutral[400],
-}));
+const MetaLabel = styled('span')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
+  };
+});
 
 const variants = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'caption', 'small'] as const;
 
@@ -64,7 +70,7 @@ export const TypographyPage: FunctionComponent = () => {
     <PageLayout>
       <MainContent>
         <Text variant="h3" as="h1">Typography</Text>
-        <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
           Typography variants with responsive sizing for desktop, tablet, and mobile.
         </Text>
 

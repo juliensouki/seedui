@@ -48,10 +48,10 @@ const TextareaElement = applyCustomStyles(
     return {
       width: '100%',
       borderRadius: theme.borderRadius(4),
-      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
       boxSizing: 'border-box',
 
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
       color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
       padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
@@ -62,11 +62,11 @@ const TextareaElement = applyCustomStyles(
       resize: !$isResizable ? 'none' : undefined,
 
       '&::placeholder': {
-        color: theme.colors.neutral[400],
+        color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[600],
       },
 
       '&:hover': {
-        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
       },
 
       '&:focus': {
@@ -76,8 +76,8 @@ const TextareaElement = applyCustomStyles(
       },
 
       '&:disabled': {
-        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
 
         '&::placeholder': {
           color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],

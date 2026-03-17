@@ -50,11 +50,11 @@ const TagDiv = applyCustomStyles(
     const color = props.color;
 
     const darkNeutralColors = {
-      backgroundColor: theme.colors.neutral[600],
-      color: theme.colors.neutral[200],
+      backgroundColor: theme.colors.neutral[400],
+      color: theme.colors.neutral[800],
     };
     const commonColors = {
-      color: color === 'neutral' ? theme.colors.neutral[800] : theme.colors[color][600],
+      color: color === 'neutral' ? theme.colors.neutral[600] : theme.colors[color][600],
       backgroundColor: theme.colors[color][200],
     };
 

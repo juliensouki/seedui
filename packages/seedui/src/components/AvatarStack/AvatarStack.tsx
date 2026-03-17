@@ -56,17 +56,20 @@ const StackRoot = applyCustomStyles(
   }),
 );
 
-const StackItem = styled.div<{ $overlap: number; $zIndex: number }>((props) => ({
-  marginLeft: props.$overlap,
-  border: `2px solid ${props.theme.colors.neutral.white}`,
-  borderRadius: props.theme.borderRadius('full'),
-  lineHeight: 0,
-  zIndex: props.$zIndex,
+const StackItem = styled.div<{ $overlap: number; $zIndex: number }>((props) => {
+  const isLight = props.theme.mode === 'light';
+  return {
+    marginLeft: props.$overlap,
+    border: `2px solid ${isLight ? props.theme.colors.neutral.white : props.theme.colors.neutral[100]}`,
+    borderRadius: props.theme.borderRadius('full'),
+    lineHeight: 0,
+    zIndex: props.$zIndex,
 
-  '&:first-child': {
-    marginLeft: 0,
-  },
-}));
+    '&:first-child': {
+      marginLeft: 0,
+    },
+  };
+});
 
 const OverflowAvatar = styled.div<{ $size: number }>((props) => ({
   display: 'inline-flex',
@@ -75,8 +78,8 @@ const OverflowAvatar = styled.div<{ $size: number }>((props) => ({
   width: props.$size,
   height: props.$size,
   borderRadius: props.theme.borderRadius('full'),
-  backgroundColor: props.theme.colors.neutral[300],
-  color: props.theme.colors.neutral[700],
+  backgroundColor: props.theme.mode === 'light' ? props.theme.colors.neutral[300] : props.theme.colors.neutral[700],
+  color: props.theme.mode === 'light' ? props.theme.colors.neutral[700] : props.theme.colors.neutral[300],
   fontSize: props.$size * 0.35,
   fontWeight: 600,
   userSelect: 'none',

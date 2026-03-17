@@ -69,7 +69,7 @@ const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPl
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.colors.neutral[300],
+    backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[700],
     borderTopRightRadius: $placement === 'left' ? 0 : 'inherit',
     borderBottomRightRadius: $placement === 'left' ? 0 : 'inherit',
     borderTopLeftRadius: $placement === 'right' ? 0 : 'inherit',
@@ -130,23 +130,23 @@ const InputElement = applyCustomStyles(
       borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
       borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
       borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
-      border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[400]}`,
+      border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[600]}`,
 
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
       color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
       fontFamily: theme.typography.p.fontFamily,
       fontSize: theme.typography.p.fontSize,
 
       '&::placeholder': {
-        color: theme.colors.neutral[400],
+        color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[600],
       },
 
       '&:hover': {
-        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
 
         [`& + ${IconContainer}`]: {
-          backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+          backgroundColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
         },
       },
 
@@ -164,8 +164,8 @@ const InputElement = applyCustomStyles(
       },
 
       '&:disabled': {
-        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
 
         '&::placeholder': {
           color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],

@@ -13,8 +13,8 @@ const Bar = styled('header')(({ theme }) => {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '0 24px 0 20px',
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
     flexShrink: 0,
     zIndex: 110,
     position: 'relative' as const,
@@ -48,7 +48,7 @@ const VerticalDivider = styled('div')(({ theme }) => {
   return {
     width: 1,
     height: 20,
-    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
+    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
   };
 });
 
@@ -70,7 +70,7 @@ const ResultList = styled('div')(({ theme }) => ({
 
 const SectionLabel = styled('div')(({ theme }) => ({
   padding: '8px 14px 4px',
-  color: theme.colors.neutral[400],
+  color: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[600],
   fontSize: 11,
   fontWeight: 600,
   textTransform: 'uppercase' as const,
@@ -90,14 +90,14 @@ const ResultItem = styled('button')(({ theme }) => {
     fontFamily: 'inherit',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[700],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[300],
     },
   };
 });
 
 const NoResults = styled(Text)(({ theme }) => ({
   padding: '12px 14px',
-  color: theme.colors.neutral[400],
+  color: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[600],
 }));
 
 interface TopbarProps {
@@ -161,7 +161,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
           width={24}
           style={mode === 'dark' ? { filter: 'invert(1)' } : undefined}
         />
-        <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', fontFamily: theme.typography.h1.fontFamily }}>seedui</span>
+        <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', fontFamily: theme.typography.h1.fontFamily, color: mode === 'dark' ? '#fff' : undefined }}>seedui</span>
         <Tag color="neutral" size="sm">docs</Tag>
       </div>
       <RightSection>

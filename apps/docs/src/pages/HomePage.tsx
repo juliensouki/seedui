@@ -19,16 +19,19 @@ const FeatureCard = styled('div')(({ theme }) => {
   return {
     padding: '20px 24px',
     borderRadius: 10,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
   };
 });
 
-const FeatureDescription = styled(Text)(({ theme }) => ({
-  color: theme.colors.neutral[500],
-  fontSize: 14,
-  lineHeight: 1.5,
-}));
+const FeatureDescription = styled(Text)(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    fontSize: 14,
+    lineHeight: 1.5,
+  };
+});
 
 /* ── Hero layout ── */
 
@@ -72,7 +75,7 @@ const WallFade = styled('div')(({ theme }) => {
     pointerEvents: 'none' as const,
     background: isLight
       ? 'linear-gradient(to right, #ffffff, #ffffff00)'
-      : `linear-gradient(to right, ${theme.colors.neutral[800]}, ${theme.colors.neutral[800]}00)`,
+      : `linear-gradient(to right, ${theme.colors.neutral[100]}, ${theme.colors.neutral[100]}00)`,
   };
 });
 
@@ -102,23 +105,26 @@ const MiniCard = styled('div')(({ theme }) => {
   return {
     padding: '20px',
     borderRadius: 12,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[900],
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
     boxShadow: isLight
       ? '0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04)'
       : '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15)',
   };
 });
 
-const MiniLabel = styled('span')(({ theme }) => ({
-  fontSize: 11,
-  fontWeight: 600,
-  color: theme.colors.neutral[400],
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.04em',
-  display: 'block',
-  marginBottom: 12,
-}));
+const MiniLabel = styled('span')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    fontSize: 11,
+    fontWeight: 600,
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.04em',
+    display: 'block',
+    marginBottom: 12,
+  };
+});
 
 const Row = styled('div')(() => ({
   display: 'flex',
@@ -133,7 +139,7 @@ const SettingRow = styled('div')(({ theme }) => {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '10px 0',
-    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[800]}`,
+    borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]}`,
     '&:last-child': { borderBottom: 'none', paddingBottom: 0 },
     '&:first-child': { paddingTop: 0 },
   };
@@ -189,11 +195,14 @@ const StatValue = styled(Text)(() => ({
   lineHeight: 1,
 }));
 
-const StatLabel = styled(Text)(({ theme }) => ({
-  fontSize: 12,
-  color: theme.colors.neutral[400],
-  marginTop: 4,
-}));
+const StatLabel = styled(Text)(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    fontSize: 12,
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
+    marginTop: 4,
+  };
+});
 
 const StatusDot = styled('span')<{ $color: string }>(({ $color }) => ({
   display: 'inline-block',
@@ -212,7 +221,7 @@ const NotifItem = styled('div')(({ theme }) => {
     alignItems: 'flex-start',
     padding: '10px 12px',
     borderRadius: 8,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     marginBottom: 6,
     '&:last-child': { marginBottom: 0 },
   };
@@ -223,7 +232,7 @@ const ProgressBar = styled('div')(({ theme }) => {
   return {
     height: 6,
     borderRadius: 3,
-    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
+    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
     overflow: 'hidden',
   };
 });
@@ -259,8 +268,9 @@ const StepDot = styled('div')<{ $active: boolean; $done: boolean; $color: string
       height: 12,
       borderRadius: '50%',
       flexShrink: 0,
-      backgroundColor: filled ? $color : isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
+      backgroundColor: filled ? $color : isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
       boxShadow: $active ? `0 0 0 3px ${$color}33` : 'none',
+      transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
     };
   },
 );
@@ -271,7 +281,21 @@ const StepLine = styled('div')<{ $done: boolean; $color: string }>(({ $done, $co
     flex: 1,
     height: 2,
     marginTop: 5,
-    backgroundColor: $done ? $color : isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
+    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
+    borderRadius: 1,
+    overflow: 'hidden' as const,
+    position: 'relative' as const,
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      width: $done ? '100%' : '0%',
+      backgroundColor: $color,
+      borderRadius: 1,
+      transition: 'width 0.4s ease',
+    },
   };
 });
 
@@ -314,7 +338,7 @@ const WallContent: FunctionComponent = () => {
             <Text variant="h6" style={{ lineHeight: 1.2 }}>
               Jane Doe
             </Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], marginTop: 2 }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], marginTop: 2 }}>
               Senior Product Designer
             </Text>
           </div>
@@ -351,7 +375,7 @@ const WallContent: FunctionComponent = () => {
             <Text variant="small" style={{ fontWeight: 500 }}>
               Push notifications
             </Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], fontSize: 11 }}>
               Receive alerts on your device
             </Text>
           </div>
@@ -362,7 +386,7 @@ const WallContent: FunctionComponent = () => {
             <Text variant="small" style={{ fontWeight: 500 }}>
               Dark mode
             </Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], fontSize: 11 }}>
               Use dark color scheme
             </Text>
           </div>
@@ -373,7 +397,7 @@ const WallContent: FunctionComponent = () => {
             <Text variant="small" style={{ fontWeight: 500 }}>
               Auto-save
             </Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], fontSize: 11 }}>
               Save changes automatically
             </Text>
           </div>
@@ -392,7 +416,7 @@ const WallContent: FunctionComponent = () => {
         />
         <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {filteredProjects.length === 0 ? (
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], textAlign: 'center', padding: '12px 0' }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], textAlign: 'center', padding: '12px 0' }}>
               No projects found
             </Text>
           ) : (
@@ -405,14 +429,14 @@ const WallContent: FunctionComponent = () => {
                   justifyContent: 'space-between',
                   padding: '8px 12px',
                   borderRadius: 8,
-                  backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+                  backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
                 }}
               >
                 <Text variant="small" style={{ fontWeight: 500 }}>
                   <StatusDot $color={p.color} />
                   {p.name}
                 </Text>
-                <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
+                <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800] }}>
                   {p.status}
                 </Text>
               </div>
@@ -505,9 +529,9 @@ const WallContent: FunctionComponent = () => {
               <AvatarSm style={{ backgroundColor: item.bg }}>{item.initials}</AvatarSm>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <Text variant="small" style={{ fontWeight: 500 }}>
-                  {item.name} <span style={{ fontWeight: 400, color: theme.colors.neutral[500] }}>{item.action}</span>
+                  {item.name} <span style={{ fontWeight: 400, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{item.action}</span>
                 </Text>
-                <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+                <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], fontSize: 11 }}>
                   {item.time}
                 </Text>
               </div>
@@ -521,7 +545,7 @@ const WallContent: FunctionComponent = () => {
             <AvatarStackItem $color={theme.colors.success[500]}>BK</AvatarStackItem>
             <AvatarStackItem $color={theme.colors.warning[500]}>CM</AvatarStackItem>
           </AvatarStack>
-          <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
+          <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800] }}>
             3 team members
           </Text>
         </div>
@@ -583,8 +607,9 @@ const WallContent: FunctionComponent = () => {
                   variant="caption"
                   style={{
                     fontSize: 10,
-                    color: i <= checkoutStep ? theme.colors.primary[500] : theme.colors.neutral[400],
+                    color: i <= checkoutStep ? theme.colors.primary[500] : (isLight ? theme.colors.neutral[400] : theme.colors.neutral[800]),
                     fontWeight: i === checkoutStep ? 600 : 400,
+                    transition: 'color 0.3s ease, font-weight 0.3s ease',
                   }}
                 >
                   {label}
@@ -631,7 +656,7 @@ const WallContent: FunctionComponent = () => {
             <Text variant="small" style={{ fontWeight: 500 }}>
               Design review requested
             </Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], fontSize: 11 }}>
               David wants your feedback on the new layout
             </Text>
           </div>
@@ -644,7 +669,7 @@ const WallContent: FunctionComponent = () => {
             <Text variant="small" style={{ fontWeight: 500 }}>
               Build passed
             </Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], fontSize: 11 }}>
               All 47 tests passed on main
             </Text>
           </div>
@@ -657,7 +682,7 @@ const WallContent: FunctionComponent = () => {
             <Text variant="small" style={{ fontWeight: 500 }}>
               Sprint ends tomorrow
             </Text>
-            <Text variant="caption" style={{ color: theme.colors.neutral[400], fontSize: 11 }}>
+            <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800], fontSize: 11 }}>
               2 tasks still in progress
             </Text>
           </div>
@@ -687,7 +712,7 @@ const WallContent: FunctionComponent = () => {
               <Text variant="caption" style={{ fontWeight: 500 }}>
                 {item.label}
               </Text>
-              <Text variant="caption" style={{ color: theme.colors.neutral[400] }}>
+              <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800] }}>
                 {item.pct}%
               </Text>
             </div>
@@ -728,7 +753,7 @@ const WallContent: FunctionComponent = () => {
                 gap: 6,
                 padding: '14px 8px',
                 borderRadius: 10,
-                backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
+                backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
               }}
             >
               <AvatarSm style={{ backgroundColor: m.bg, width: 38, height: 38, fontSize: 13 }}>{m.initials}</AvatarSm>
@@ -750,6 +775,7 @@ const WallContent: FunctionComponent = () => {
 
 export const HomePage: FunctionComponent = () => {
   const theme = useTheme();
+  const isLight = theme.mode === 'light';
   const navigate = useNavigate();
 
   return (
@@ -758,10 +784,10 @@ export const HomePage: FunctionComponent = () => {
         <HeroLeft>
           <div>
             <Text variant="h1">seedui</Text>
-            <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>
+            <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral.white }}>
               A simple and elegant React component library that&apos;s endlessly customizable.
             </Text>
-            <Text variant="p" style={{ marginTop: 16, lineHeight: 1.7, color: theme.colors.neutral[500] }}>
+            <Text variant="p" style={{ marginTop: 16, lineHeight: 1.7, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>
               Everything you need to craft polished applications, internal tools, and delightful user experiences —
               designed to get out of your way.
             </Text>

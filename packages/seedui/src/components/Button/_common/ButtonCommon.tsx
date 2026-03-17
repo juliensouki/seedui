@@ -42,11 +42,11 @@ export const ButtonCommon = styled.button((props) => {
     },
 
     '&:disabled': {
-      backgroundColor: theme.colors.neutral[200],
-      color: theme.colors.neutral[300],
+      backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[800],
+      color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[700],
 
       '& svg': {
-        color: theme.colors.neutral[300],
+        color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[700],
       },
     },
   };

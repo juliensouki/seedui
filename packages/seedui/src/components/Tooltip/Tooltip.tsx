@@ -59,7 +59,7 @@ const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
   const isLight = theme.mode === 'light';
 
   return {
-    backgroundColor: isLight ? theme.colors.neutral[900] : theme.colors.neutral[400],
+    backgroundColor: isLight ? theme.colors.neutral[900] : theme.colors.neutral[600],
     color: theme.colors.neutral.white,
     position: 'absolute',
     visibility: 'hidden',

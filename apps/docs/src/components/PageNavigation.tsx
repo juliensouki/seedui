@@ -22,26 +22,29 @@ const NavLink = styled(Link)(({ theme }) => {
     alignItems: 'center',
     gap: 6,
     textDecoration: 'none',
-    color: isLight ? theme.colors.primary[600] : theme.colors.primary[400],
+    color: isLight ? theme.colors.primary[600] : theme.colors.primary.default,
     fontSize: 14,
     fontWeight: 500,
     transition: 'color 0.15s',
     '&:hover': {
-      color: isLight ? theme.colors.primary[700] : theme.colors.primary[300],
+      color: isLight ? theme.colors.primary[700] : theme.colors.primary[700],
     },
   };
 });
 
-const Label = styled(Text)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 2,
-  fontSize: 11,
-  color: theme.colors.neutral[400],
-  textTransform: 'uppercase',
-  letterSpacing: '0.05em',
-  fontWeight: 600,
-}));
+const Label = styled(Text)(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 2,
+    fontSize: 11,
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
+    fontWeight: 600,
+  };
+});
 
 const Side = styled('div')(() => ({
   display: 'flex',

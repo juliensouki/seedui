@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode } from 'react';
-import { styled, Text, Divider, IconButton } from '@seedui-react/seedui';
+import { styled, Text, Divider, IconButton, useTheme } from '@seedui-react/seedui';
 import { FigmaIcon, GithubIcon } from 'lucide-react';
 import { MDXProvider } from '@mdx-js/react';
 import { TableOfContents } from '../TableOfContents';
@@ -34,13 +34,15 @@ const tocItems = [
 ];
 
 export const ComponentMDXLayout: FunctionComponent<ComponentMDXLayoutProps> = ({ name, description, children }) => {
+  const theme = useTheme();
+  const isLight = theme.mode === 'light';
   return (
     <PageLayout>
       <MainContent>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
             <Text variant="h3" as="h1">{name}</Text>
-            <Text variant="p" style={{ marginTop: 8, opacity: 0.7 }}>{description}</Text>
+            <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
           </div>
           <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
             <IconButton variant="transparent" color="neutral" size="sm">

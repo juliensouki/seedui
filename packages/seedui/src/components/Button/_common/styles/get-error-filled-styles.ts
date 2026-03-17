@@ -14,7 +14,7 @@ export const getErrorFilledButtonStyles = (theme: Theme) => ({
   },
 
   '&:active': {
-    backgroundColor: theme.colors.error[800],
+    backgroundColor: theme.mode === 'light' ? theme.colors.error[800] : theme.colors.error.default,
   },
 
   '& svg': {

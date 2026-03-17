@@ -10,7 +10,7 @@ const StyledSection = styled('section')(() => ({
 const InlineCode = styled('code')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
+    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
     padding: '2px 6px',
     borderRadius: 4,
     fontSize: '0.9em',

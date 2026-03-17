@@ -5,11 +5,11 @@ export const getPrimaryTransparentButtonStyles = (theme: Theme) => ({
   color: theme.colors.primary.default,
 
   '&:hover': {
-    backgroundColor: theme.mode === 'light' ? theme.colors.primary[200] : theme.colors.primary[900],
+    backgroundColor: theme.mode === 'light' ? theme.colors.primary[200] : theme.colors.primary[200],
   },
 
   '&:active': {
-    backgroundColor: theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[700],
+    backgroundColor: theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[300],
   },
 
   '& svg': {

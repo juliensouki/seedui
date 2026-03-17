@@ -94,7 +94,7 @@ const ToggleInput = applyCustomStyles(
         ? theme.colors.primary.default
         : isLight
         ? theme.colors.neutral[300]
-        : theme.colors.neutral[600],
+        : theme.colors.neutral[400],
       border: 'none',
       outline: 'none',
       cursor: 'pointer',

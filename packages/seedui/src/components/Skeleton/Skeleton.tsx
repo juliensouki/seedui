@@ -32,8 +32,8 @@ const SkeletonDiv = applyCustomStyles(
   styled.div<StyledComponentsPrefix<Required<SkeletonProps>>>(
     ({ theme, $variant, $width, $height, $animation }) => {
       const isLight = theme.mode === 'light';
-      const bgColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[700];
-      const shimmerColor = isLight ? theme.colors.neutral[300] : theme.colors.neutral[600];
+      const bgColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[300];
+      const shimmerColor = isLight ? theme.colors.neutral[300] : theme.colors.neutral[400];
 
       const borderRadius = (() => {
         switch ($variant) {

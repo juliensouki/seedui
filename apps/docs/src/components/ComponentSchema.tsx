@@ -10,7 +10,7 @@ const SchemaWrapper = styled('div')(({ theme }) => {
   return {
     padding: 32,
     borderRadius: 12,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[900],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
     display: 'flex',
     flexDirection: 'column',
     gap: 16,
@@ -21,7 +21,7 @@ const Box = styled('div')<{ $dashed?: boolean }>(({ theme, $dashed }) => {
   const isLight = theme.mode === 'light';
   return {
     position: 'relative',
-    border: `1.5px ${$dashed ? 'dashed' : 'solid'} ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
+    border: `1.5px ${$dashed ? 'dashed' : 'solid'} ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
     borderRadius: 8,
     padding: 16,
     backgroundColor: isLight
@@ -39,8 +39,8 @@ const BoxLabel = styled('span')(({ theme }) => {
     fontSize: 11,
     fontWeight: 600,
     fontFamily: "'JetBrains Mono Variable', 'JetBrains Mono', monospace",
-    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[400],
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[900],
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
     padding: '0 6px',
     letterSpacing: '0.02em',
   };
@@ -67,11 +67,11 @@ const Placeholder = styled('div')<{ $grow?: boolean }>(({ theme, $grow }) => {
     justifyContent: 'center',
     padding: '10px 14px',
     borderRadius: 6,
-    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
+    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
     fontSize: 11,
     fontWeight: 600,
     fontFamily: "'JetBrains Mono Variable', 'JetBrains Mono', monospace",
-    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
     whiteSpace: 'nowrap',
   };
 });
@@ -271,15 +271,15 @@ const CirclePlaceholder = styled('div')<{ $size?: number }>(({ theme, $size = 48
     width: $size,
     height: $size,
     borderRadius: '50%',
-    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[900],
+    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 11,
     fontWeight: 600,
     fontFamily: "'JetBrains Mono Variable', 'JetBrains Mono', monospace",
-    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
     flexShrink: 0,
   };
 });

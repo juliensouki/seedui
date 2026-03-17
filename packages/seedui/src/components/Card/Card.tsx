@@ -32,12 +32,12 @@ const CardDiv = applyCustomStyles(
     return {
       display: 'block',
       width: 'fit-content',
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[800],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
       borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[1],
       border:
         $variant === 'outlined'
-          ? `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[600]}`
+          ? `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[400]}`
           : 'none',
     };
   }),

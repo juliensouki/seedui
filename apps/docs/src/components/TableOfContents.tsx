@@ -25,7 +25,7 @@ const Nav = styled('nav')(({ theme }) => ({
 const Inner = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    borderLeft: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[700]}`,
+    borderLeft: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     paddingLeft: 16,
   };
 });
@@ -34,7 +34,7 @@ const Indicator = styled('div')(({ theme }) => ({
   position: 'absolute',
   left: -17,
   width: 2,
-  backgroundColor: theme.colors.primary[500],
+  backgroundColor: theme.mode === 'light' ? theme.colors.primary[500] : theme.colors.primary.default,
   borderRadius: 2,
   transition: 'top 0.25s ease, height 0.25s ease',
 }));
@@ -49,22 +49,25 @@ const ItemList = styled('div')(() => ({
   position: 'relative',
 }));
 
-const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => ({
-  display: 'block',
-  width: '100%',
-  textAlign: 'left',
-  background: 'none',
-  border: 'none',
-  padding: '5px 0',
-  fontSize: 14,
-  cursor: 'pointer',
-  color: $active ? theme.colors.primary[500] : theme.colors.neutral[500],
-  fontWeight: $active ? 600 : 400,
-  transition: 'color 0.15s, font-weight 0.15s',
-  '&:hover': {
-    color: theme.colors.primary[500],
-  },
-}));
+const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'block',
+    width: '100%',
+    textAlign: 'left' as const,
+    background: 'none',
+    border: 'none',
+    padding: '5px 0',
+    fontSize: 14,
+    cursor: 'pointer',
+    color: $active ? (isLight ? theme.colors.primary[500] : theme.colors.primary.default) : isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    fontWeight: $active ? 600 : 400,
+    transition: 'color 0.15s, font-weight 0.15s',
+    '&:hover': {
+      color: isLight ? theme.colors.primary[500] : theme.colors.primary.default,
+    },
+  };
+});
 
 export const TableOfContents: FunctionComponent<TableOfContentsProps> = ({ items }) => {
   const [activeId, setActiveId] = useState(items[0]?.id ?? '');

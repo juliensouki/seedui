@@ -6,8 +6,8 @@ const CalloutBox = styled('div')(({ theme }) => {
   return {
     padding: '14px 18px',
     borderRadius: 8,
-    backgroundColor: isLight ? theme.colors.info[100] : theme.colors.info[900],
-    color: isLight ? theme.colors.info[800] : theme.colors.info[200],
+    backgroundColor: isLight ? theme.colors.info[100] : theme.colors.info[100],
+    color: isLight ? theme.colors.info[800] : theme.colors.info[800],
     fontSize: 14,
     marginBottom: 16,
     lineHeight: 1.6,
@@ -18,7 +18,7 @@ const CalloutBox = styled('div')(({ theme }) => {
       fontSize: 13,
       padding: '2px 6px',
       borderRadius: 4,
-      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[700],
+      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
       fontFamily: "'SF Mono', 'Fira Code', monospace",
     },
   };
