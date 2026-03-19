@@ -144,17 +144,20 @@ const ModalSchema: FunctionComponent = () => (
     <Box>
       <BoxLabel>Overlay</BoxLabel>
       <Box $dashed>
-        <BoxLabel>ModalContainer</BoxLabel>
+        <BoxLabel>Container</BoxLabel>
         <Col>
           <Box $dashed>
-            <BoxLabel>ModalHeader</BoxLabel>
+            <BoxLabel>Header</BoxLabel>
             <Row>
               <Placeholder $grow>Title</Placeholder>
-              <Placeholder>CloseButton</Placeholder>
+              <Box $dashed>
+                <BoxLabel>Close button</BoxLabel>
+                <Placeholder>✕</Placeholder>
+              </Box>
             </Row>
           </Box>
           <Box $dashed>
-            <BoxLabel>ModalContent</BoxLabel>
+            <BoxLabel>Content</BoxLabel>
             <Placeholder $grow>children</Placeholder>
           </Box>
         </Col>
@@ -201,28 +204,22 @@ const SelectSchema: FunctionComponent = () => (
 const StepperSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>StepperContainer</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Row>
         <Box $dashed>
-          <BoxLabel>StepWrapper</BoxLabel>
-          <Box $dashed>
-            <BoxLabel>StepLabelContainer</BoxLabel>
-            <Row>
-              <Placeholder>StepCircle</Placeholder>
-              <Placeholder>StepLabel</Placeholder>
-            </Row>
-          </Box>
+          <BoxLabel>Step</BoxLabel>
+          <Row>
+            <Placeholder>Step circle</Placeholder>
+            <Placeholder>Step label</Placeholder>
+          </Row>
         </Box>
         <Placeholder>›</Placeholder>
         <Box $dashed>
-          <BoxLabel>StepWrapper</BoxLabel>
-          <Box $dashed>
-            <BoxLabel>StepLabelContainer</BoxLabel>
-            <Row>
-              <Placeholder>StepCircle</Placeholder>
-              <Placeholder>StepLabel</Placeholder>
-            </Row>
-          </Box>
+          <BoxLabel>Step</BoxLabel>
+          <Row>
+            <Placeholder>Step circle</Placeholder>
+            <Placeholder>Step label</Placeholder>
+          </Row>
         </Box>
       </Row>
     </Box>
@@ -264,15 +261,15 @@ const TagSelectorSchema: FunctionComponent = () => (
 const TooltipSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>MainDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Col>
         <Box $dashed>
-          <BoxLabel>ChildrenWrapper</BoxLabel>
+          <BoxLabel>Trigger</BoxLabel>
           <Placeholder $grow>children</Placeholder>
         </Box>
         <Box $dashed>
-          <BoxLabel>TooltipComponent</BoxLabel>
-          <Placeholder $grow>TooltipText</Placeholder>
+          <BoxLabel>Tooltip</BoxLabel>
+          <Placeholder $grow>text</Placeholder>
         </Box>
       </Col>
     </Box>
@@ -301,9 +298,9 @@ const CirclePlaceholder = styled('div')<{ $size?: number }>(({ theme, $size = 48
 const AvatarSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Row>
-        <CirclePlaceholder>img</CirclePlaceholder>
+        <CirclePlaceholder>Image</CirclePlaceholder>
       </Row>
     </Box>
   </SchemaWrapper>
@@ -312,7 +309,7 @@ const AvatarSchema: FunctionComponent = () => (
 const AvatarStackSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <div style={{ display: 'flex' }}>
         <CirclePlaceholder style={{ zIndex: 3 }}>AB</CirclePlaceholder>
         <CirclePlaceholder style={{ zIndex: 2, marginLeft: -14 }}>CD</CirclePlaceholder>
@@ -343,7 +340,7 @@ const IconButtonSchema: FunctionComponent = () => (
 const CardSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Placeholder $grow>children</Placeholder>
     </Box>
   </SchemaWrapper>
@@ -351,19 +348,27 @@ const CardSchema: FunctionComponent = () => (
 
 const DividerSchema: FunctionComponent = () => (
   <SchemaWrapper>
-    <Row>
-      <Placeholder $grow>Line</Placeholder>
-    </Row>
+    <Box>
+      <BoxLabel>Root</BoxLabel>
+      <Row>
+        <Placeholder $grow>Line</Placeholder>
+        <Placeholder>Children</Placeholder>
+        <Placeholder $grow>Line</Placeholder>
+      </Row>
+    </Box>
   </SchemaWrapper>
 );
 
 const TagSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Row>
         <Placeholder $grow>children</Placeholder>
-        <Placeholder>RemoveButton</Placeholder>
+        <Box $dashed>
+          <BoxLabel>Remove button</BoxLabel>
+          <Placeholder>✕</Placeholder>
+        </Box>
       </Row>
     </Box>
   </SchemaWrapper>
@@ -372,7 +377,7 @@ const TagSchema: FunctionComponent = () => (
 const TextSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>TextElement</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Placeholder $grow>children</Placeholder>
     </Box>
   </SchemaWrapper>
@@ -414,14 +419,14 @@ const ToggleSchema: FunctionComponent = () => (
 const PopoverSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Col>
         <Box $dashed>
-          <BoxLabel>TriggerDiv</BoxLabel>
+          <BoxLabel>Trigger</BoxLabel>
           <Placeholder $grow>children</Placeholder>
         </Box>
         <Box $dashed>
-          <BoxLabel>PopoverDiv</BoxLabel>
+          <BoxLabel>Panel</BoxLabel>
           <Placeholder $grow>content</Placeholder>
         </Box>
       </Col>
@@ -432,10 +437,10 @@ const PopoverSchema: FunctionComponent = () => (
 const ProgressBarSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv / TrackDiv</BoxLabel>
+      <BoxLabel>Track</BoxLabel>
       <Box $dashed style={{ width: '60%' }}>
-        <BoxLabel>BarDiv</BoxLabel>
-        <Placeholder>fill</Placeholder>
+        <BoxLabel>Fill</BoxLabel>
+        <Placeholder>progress</Placeholder>
       </Box>
     </Box>
   </SchemaWrapper>
@@ -444,7 +449,7 @@ const ProgressBarSchema: FunctionComponent = () => (
 const SkeletonSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Placeholder $grow>animated placeholder</Placeholder>
     </Box>
   </SchemaWrapper>

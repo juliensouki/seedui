@@ -42,14 +42,18 @@ const shades = [100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 const colorsCustomization: ThemeCustomization = {
   colors: {
     light: {
-      primary: '#6366f1',
+      primary: '#e11d48',
       success: {
-        500: '#22c55e',
-        600: '#16a34a',
+        500: '#0ea5e9',
+        600: '#0284c7',
       },
     },
     dark: {
-      primary: '#818cf8',
+      primary: '#fb7185',
+      success: {
+        400: '#fb923c',
+        500: '#f97316',
+      },
     },
   },
 };

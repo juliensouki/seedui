@@ -14,8 +14,8 @@ function AvatarExample() {
 export const avatarDoc: ComponentDoc = {
   name: 'Avatar',
   category: 'Data Display',
-  description: 'A visual representation of a user or entity, displayed as an image, initials, or fallback icon.',
-  overview: 'Avatar displays a user representation as a circular element. It supports three display modes: an image when src is provided, initials derived from the name prop, or a generic person icon as the default fallback. Use the color prop to differentiate avatars by role or status, and the size prop to fit different layout contexts — xs for dense lists, md for general use, and xl for profile headers.',
+  description: 'Circular representation of a user, shown as an image, initials, or fallback icon.',
+  overview: 'Displays a user as a circle with an image, initials from the name prop, or a default icon. Supports multiple sizes and colors.',
   props: [
     { name: 'src', type: 'string', default: '—', description: 'Image URL to display.' },
     { name: 'alt', type: 'string', default: 'name or "avatar"', description: 'Alt text for the image.' },
@@ -28,8 +28,8 @@ export const avatarDoc: ComponentDoc = {
 <Avatar name="John Smith" color="success" />
 <Avatar color="info" />`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Image', htmlAttribute: 'img', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'avatar-root' },
+    { name: 'Image', htmlAttribute: 'image', cssClass: 'avatar-image' },
   ],
   usageExamples: [
     {

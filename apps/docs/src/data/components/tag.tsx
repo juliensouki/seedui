@@ -16,8 +16,8 @@ function TagExample() {
 export const tagDoc: ComponentDoc = {
   name: 'Tag',
   category: 'Data Display',
-  description: 'A small label for categorization with optional remove action.',
-  overview: 'Tag is a compact label used to categorize, label, or indicate status. Use it to display metadata like categories, statuses, or keywords alongside content. The color prop maps to semantic meanings — success for positive states, error for problems, warning for caution, and info for neutral highlights. Enable the removable prop when users need to dismiss or clear tags, such as in filter chips or selected values.',
+  description: 'Compact label for showing categories, statuses, or keywords.',
+  overview: 'A small colored badge for metadata like categories or statuses. Colors map to semantic meanings. Can be made removable for filter chips or selected values.',
   props: [
     { name: 'children', type: 'string', default: '—', description: 'Tag text content. Required.' },
     { name: 'color', type: "'primary' | 'secondary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'", default: "'primary'", description: 'Tag color scheme.' },
@@ -31,7 +31,8 @@ export const tagDoc: ComponentDoc = {
   Removable
 </Tag>`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'tag-root' },
+    { name: 'Remove button', htmlAttribute: 'removeButton', cssClass: 'tag-remove-button' },
   ],
   usageExamples: [
     {

@@ -1,5 +1,5 @@
 import { cardDoc as doc } from '../../../data/components/card';
-import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../components/mdx/ComponentParts';
+import { OverviewDemo, ImportSection, PropsSection } from '../../../components/mdx/ComponentParts';
 import { ComponentPlayground } from '../../../components/ComponentPlayground';
 
 export const meta = {
@@ -13,7 +13,7 @@ export const meta = {
 
 <OverviewDemo example={doc.example} />
 
-Card is a surface container that groups related content and actions. Use it to visually separate sections of a page — for example, dashboard widgets, product listings, or settings panels. The default variant provides a subtle elevated look, while the outlined variant uses a border for a flatter appearance. Cards work well as clickable surfaces when combined with an onClick handler for navigation or selection patterns.
+A wrapper that visually separates content sections. Available in default (elevated) and outlined (bordered) variants.
 </section>
 
 <ImportSection name={doc.name} />
@@ -33,7 +33,5 @@ The outlined variant uses a border instead of a shadow for a flatter appearance.
 
 <ComponentPlayground code={doc.usageExamples[1].code} />
 </section>
-
-<AnatomySection name={doc.name} anatomy={doc.anatomy} />
 
 <PropsSection props={doc.props} />

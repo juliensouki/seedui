@@ -18,7 +18,8 @@ export interface AvatarStackProps {
   direction?: AvatarStackDirection;
   children: ReactElement<AvatarProps> | ReactElement<AvatarProps>[];
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    overflow?: HTMLAttributes<HTMLDivElement>;
   };
 }
 
@@ -44,7 +45,8 @@ const defaultProps: AvatarStackProps = {
   direction: 'left',
   children: [] as unknown as ReactElement<AvatarProps>,
   elementProps: {
-    rootDiv: {},
+    root: {},
+    overflow: {},
   },
 };
 
@@ -94,7 +96,7 @@ export const AvatarStack = forwardRef<HTMLDivElement, AvatarStackProps & Interna
       size,
       direction,
       children,
-      elementProps: { rootDiv: rootDivHTMLAttributes } = {},
+      elementProps: { root: rootHTMLAttributes, overflow: overflowHTMLAttributes } = {},
       className,
     } = getDefaultProps<AvatarStackProps & InternalProps>({
       providedProps: props,
@@ -112,18 +114,18 @@ export const AvatarStack = forwardRef<HTMLDivElement, AvatarStackProps & Interna
     return (
       <StackRoot
         ref={forwardedRef}
-        className={joinClasses(className, rootDivHTMLAttributes?.className)}
+        className={joinClasses('avatar-stack-root', className, rootHTMLAttributes?.className)}
         $customizations={customizations.components?.avatarStack}
-        {...rootDivHTMLAttributes}
+        {...rootHTMLAttributes}
       >
         {visibleAvatars.map((child, index) => (
-          <StackItem key={index} $overlap={overlap} $zIndex={isLeft ? totalItems - index : index + 1}>
+          <StackItem key={index} $overlap={overlap} $zIndex={isLeft ? totalItems - index : index + 1} className="avatar-stack-item">
             <Avatar {...child.props} size={size} />
           </StackItem>
         ))}
         {overflowCount > 0 && (
-          <StackItem $overlap={overlap} $zIndex={isLeft ? 0 : totalItems}>
-            <OverflowAvatar $size={resolveStackSize(size)}>+{overflowCount}</OverflowAvatar>
+          <StackItem $overlap={overlap} $zIndex={isLeft ? 0 : totalItems} className="avatar-stack-item">
+            <OverflowAvatar {...overflowHTMLAttributes} $size={resolveStackSize(size)} className={joinClasses('avatar-stack-overflow', overflowHTMLAttributes?.className)}>+{overflowCount}</OverflowAvatar>
           </StackItem>
         )}
       </StackRoot>

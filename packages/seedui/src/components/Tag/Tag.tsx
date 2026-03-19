@@ -22,7 +22,8 @@ export interface TagProps {
   removable?: boolean;
   onRemove?: () => void;
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    removeButton?: HTMLAttributes<HTMLButtonElement>;
   };
   forwardProps?: {
     text?: TextPropsAndAttributes;
@@ -37,7 +38,8 @@ const defaultProps: TagProps = {
   onRemove: undefined,
   children: '',
   elementProps: {
-    rootDiv: {},
+    root: {},
+    removeButton: {},
   },
   forwardProps: {
     text: {},
@@ -98,7 +100,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
       size,
       removable,
       onRemove,
-      elementProps: { rootDiv: rootDivHTMLAttributes } = {},
+      elementProps: { root: rootHTMLAttributes, removeButton: removeButtonHTMLAttributes } = {},
       forwardProps: { text: textProps } = {},
       className,
       children,
@@ -114,15 +116,15 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
         size={size}
         $removable={removable}
         ref={forwardedRef}
-        className={joinClasses(className, rootDivHTMLAttributes?.className)}
+        className={joinClasses('tag-root', className, rootHTMLAttributes?.className)}
         $customizations={customizations.components?.tag}
-        {...rootDivHTMLAttributes}
+        {...rootHTMLAttributes}
       >
         <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>
           {children}
         </TagText>
         {removable && onRemove && (
-          <RemoveButton size="sm" color="neutral" onClick={onRemove} type="button">
+          <RemoveButton size="sm" color="neutral" onClick={onRemove} type="button" className={joinClasses('tag-remove-button', removeButtonHTMLAttributes?.className)} {...removeButtonHTMLAttributes}>
             <Text style={{ padding: 0, fontSize: 18 }}>×</Text>
           </RemoveButton>
         )}

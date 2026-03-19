@@ -1,5 +1,5 @@
 import { dividerDoc as doc } from '../../../data/components/divider';
-import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../components/mdx/ComponentParts';
+import { OverviewDemo, ImportSection, PropsSection, AnatomySection } from '../../../components/mdx/ComponentParts';
 import { ComponentPlayground } from '../../../components/ComponentPlayground';
 
 export const meta = {
@@ -13,7 +13,7 @@ export const meta = {
 
 <OverviewDemo example={doc.example} />
 
-Divider creates a visual separation between content sections. Use it to break up long pages, separate list items, or distinguish groups of related controls. It supports both horizontal and vertical orientations — horizontal dividers work well between stacked sections, while vertical dividers are useful inside flex layouts like toolbars or side-by-side panels. The spacing prop lets you control how much breathing room surrounds the line.
+A thin line to visually divide content. Supports horizontal and vertical orientations with adjustable spacing.
 </section>
 
 <ImportSection name={doc.name} />
@@ -33,11 +33,17 @@ A vertical divider separates side-by-side content inside a flex layout. Set a he
 
 <ComponentPlayground code={doc.usageExamples[1].code} />
 
+### With text
+
+Pass children to display a label between the two lines.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+
 ### Custom spacing
 
 Adjust the spacing prop to increase or decrease the breathing room around the divider.
 
-<ComponentPlayground code={doc.usageExamples[2].code} />
+<ComponentPlayground code={doc.usageExamples[3].code} />
 </section>
 
 <AnatomySection name={doc.name} anatomy={doc.anatomy} />

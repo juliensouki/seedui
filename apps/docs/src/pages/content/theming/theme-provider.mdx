@@ -1,4 +1,5 @@
 import { Table, Th, Td } from '../../../components/StyledTable';
+import { Text } from '@seedui-react/seedui';
 
 export const meta = {
   title: 'ThemeProvider',
@@ -70,7 +71,7 @@ function App() {
 
 seedui provides two ways to access theme values in your own components:
 
-### 1. The `useTheme` hook
+<Text variant="p" style={{ marginTop: 24, marginBottom: 4 }}>1. The `useTheme` hook</Text>
 
 ```tsx
 import { useTheme } from '@seedui-react/seedui';
@@ -81,7 +82,7 @@ function MyComponent() {
 }
 ```
 
-### 2. The `styled` utility
+<Text variant="p" style={{ marginTop: 24, marginBottom: 4 }}>2. The `styled` utility</Text>
 
 ```tsx
 import { styled } from '@seedui-react/seedui';

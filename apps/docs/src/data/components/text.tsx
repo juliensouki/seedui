@@ -17,8 +17,8 @@ function TextExample() {
 export const textDoc: ComponentDoc = {
   name: 'Text',
   category: 'Data Display',
-  description: 'A typography component supporting headings, paragraphs, and more.',
-  overview: 'Text is the foundational typography component for rendering any text content. It maps each variant to the appropriate semantic HTML element — h1 through h6 for headings, p for paragraphs, and span for caption and small text. Use it instead of raw HTML elements to ensure consistent font sizing, weight, and color across your application. The variant prop controls both the visual style and the underlying element, keeping your markup accessible by default.',
+  description: 'Renders text with consistent styling across headings, paragraphs, and captions.',
+  overview: 'The base component for all text content. Each variant maps to a semantic HTML element (h1–h6, p, span) with predefined styles.',
   props: [
     { name: 'variant', type: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small'", default: "'p'", description: 'Typography variant.' },
     { name: 'bottomSpacing', type: 'boolean', default: 'false', description: 'Add margin below the text.' },
@@ -28,9 +28,7 @@ export const textDoc: ComponentDoc = {
   code: `<Text variant="h1">Heading 1</Text>
 <Text variant="p">Paragraph text</Text>
 <Text variant="caption">Caption text</Text>`,
-  anatomy: [
-    { name: 'Root', htmlAttribute: '—', cssClass: '—' },
-  ],
+  anatomy: [],
   usageExamples: [
     {
       title: 'Headings',

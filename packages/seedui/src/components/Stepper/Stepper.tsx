@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, FunctionComponent, useContext } from 'react';
+import { ForwardedRef, forwardRef, FunctionComponent, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
@@ -12,11 +12,23 @@ export interface StepperProps {
   steps: string[];
   activeStep: number;
   className?: string;
+  elementProps?: {
+    root?: HTMLAttributes<HTMLDivElement>;
+    step?: HTMLAttributes<HTMLDivElement>;
+    stepCircle?: HTMLAttributes<HTMLDivElement>;
+    stepLabel?: HTMLAttributes<HTMLDivElement>;
+  };
 }
 
 const defaultProps: StepperProps = {
   steps: [],
   activeStep: 0,
+  elementProps: {
+    root: {},
+    step: {},
+    stepCircle: {},
+    stepLabel: {},
+  },
 };
 
 const StepperContainer = styled.div(({ theme }) => ({
@@ -139,7 +151,17 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
 
-    const { steps, activeStep, className } = getDefaultProps<StepperProps & InternalProps>({
+    const {
+      steps,
+      activeStep,
+      className,
+      elementProps: {
+        root: rootHTMLAttributes,
+        step: stepHTMLAttributes,
+        stepCircle: stepCircleHTMLAttributes,
+        stepLabel: stepLabelHTMLAttributes,
+      } = {},
+    } = getDefaultProps<StepperProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.stepper?.defaultProps,
       defaultProps,
@@ -148,20 +170,21 @@ export const Stepper = forwardRef<HTMLDivElement, StepperProps & InternalProps>(
     return (
       <StepperContainer
         ref={forwardedRef}
-        className={joinClasses(className)}
+        className={joinClasses('stepper-root', className, rootHTMLAttributes?.className)}
         $customizations={customizations.components?.stepper}
+        {...rootHTMLAttributes}
       >
         {steps.map((step, index) => {
           const isChecked = index + 1 < activeStep;
           const isActive = index + 1 === activeStep;
 
           return (
-            <StepWrapper key={index}>
+            <StepWrapper key={index} className={joinClasses('stepper-step', stepHTMLAttributes?.className)} {...stepHTMLAttributes}>
               <StepLabelContainer>
-                <StepCircle $isActive={isChecked || isActive}>
+                <StepCircle $isActive={isChecked || isActive} className={joinClasses('stepper-step-circle', stepCircleHTMLAttributes?.className)} {...stepCircleHTMLAttributes}>
                   {isChecked ? <CheckIcon /> : <StepNumberText>{index + 1}</StepNumberText>}
                 </StepCircle>
-                <StepLabel $isActive={isActive}>{step}</StepLabel>
+                <StepLabel $isActive={isActive} className={joinClasses('stepper-step-label', stepLabelHTMLAttributes?.className)} {...stepLabelHTMLAttributes}>{step}</StepLabel>
               </StepLabelContainer>
               {index < steps.length - 1 && <RightChevron size={14} />}
             </StepWrapper>

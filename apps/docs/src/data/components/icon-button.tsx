@@ -28,7 +28,7 @@ export const iconButtonDoc: ComponentDoc = {
     { name: 'children', type: 'ReactNode', default: '—', description: 'Icon element to render.' },
     {
       name: 'color',
-      type: "'primary' | 'secondary' | 'neutral' | 'error'",
+      type: "'primary' | 'neutral' | 'error'",
       default: "'primary'",
       description: 'Color scheme.',
     },

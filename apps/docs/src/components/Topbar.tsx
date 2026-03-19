@@ -90,7 +90,7 @@ const ResultItem = styled('button')(({ theme }) => {
     fontFamily: 'inherit',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[300],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[400],
     },
   };
 });
@@ -190,6 +190,11 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             onClose={() => setPopoverOpen(false)}
             verticalAlignment="bottom"
             horizontalAlignment="center"
+            elementProps={{
+              panel: {
+                style: mode === 'dark' ? { backgroundColor: theme.colors.neutral[300] } : undefined,
+              },
+            }}
             content={
               <ResultList>
                 {groupedResults.length > 0 ? (
@@ -215,6 +220,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
               placeholder="Search docs..."
               width={260}
               hideButton
+              style={mode === 'dark' ? { backgroundColor: theme.colors.neutral[400] } : undefined}
             />
           </Popover>
           <VerticalDivider style={{ margin: '0 8px' }} />

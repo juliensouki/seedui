@@ -12,9 +12,8 @@ function ProgressBarExample() {
 export const progressBarDoc: ComponentDoc = {
   name: 'ProgressBar',
   category: 'Data Display',
-  description: 'A horizontal bar that indicates the completion progress of a task or process.',
-  overview:
-    'ProgressBar displays a filled bar within a track to communicate progress toward a goal. Use it for file uploads, form completion, onboarding steps, or any workflow where the user benefits from knowing how far along a process is. It supports semantic colors and a customizable height.',
+  description: 'Horizontal bar that shows how far along a task or process is.',
+  overview: 'A filled bar inside a track that communicates progress. Supports semantic colors and adjustable height.',
   props: [
     {
       name: 'value',
@@ -44,8 +43,8 @@ export const progressBarDoc: ComponentDoc = {
   example: ProgressBarExample,
   code: `<ProgressBar value={60} />`,
   anatomy: [
-    { name: 'Root / Track', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Bar (fill)', htmlAttribute: 'barDiv', cssClass: '—' },
+    { name: 'Track', htmlAttribute: 'root', cssClass: 'progress-bar-track' },
+    { name: 'Fill', htmlAttribute: 'fill', cssClass: 'progress-bar-fill' },
   ],
   usageExamples: [
     {

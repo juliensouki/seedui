@@ -13,8 +13,8 @@ function CardExample() {
 export const cardDoc: ComponentDoc = {
   name: 'Card',
   category: 'Layout',
-  description: 'A container component with optional outline styling.',
-  overview: 'Card is a surface container that groups related content and actions. Use it to visually separate sections of a page — for example, dashboard widgets, product listings, or settings panels. The default variant provides a subtle elevated look, while the outlined variant uses a border for a flatter appearance. Cards work well as clickable surfaces when combined with an onClick handler for navigation or selection patterns.',
+  description: 'Surface container that groups related content together.',
+  overview: 'A wrapper that visually separates content sections. Available in default (elevated) and outlined (bordered) variants.',
   props: [
     { name: 'children', type: 'ReactNode', default: '—', description: 'Card content.' },
     { name: 'variant', type: "'default' | 'outlined'", default: "'default'", description: 'Visual style of the card.' },
@@ -24,9 +24,7 @@ export const cardDoc: ComponentDoc = {
   <Text variant="h6">Title</Text>
   <Text variant="p">Content goes here.</Text>
 </Card>`,
-  anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-  ],
+  anatomy: [],
   usageExamples: [
     {
       title: 'Default variant',

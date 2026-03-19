@@ -8,8 +8,8 @@ function StepperExample() {
 export const stepperDoc: ComponentDoc = {
   name: 'Stepper',
   category: 'Data Display',
-  description: 'A step indicator for multi-step flows.',
-  overview: 'Stepper visualizes progress through a multi-step process. Use it for wizards, onboarding flows, checkout processes, or any sequence where users need to see where they are and what comes next. It displays each step as a labeled node connected by a track line, with the active step highlighted. Pair it with your own step content and navigation logic to build complete multi-step experiences.',
+  description: 'Visual indicator showing progress through a sequence of steps.',
+  overview: 'Displays a row of labeled steps with the current one highlighted. Steps before the active one appear as completed.',
   props: [
     { name: 'steps', type: 'string[]', default: '—', description: 'Array of step labels. Required.' },
     { name: 'activeStep', type: 'number', default: '—', description: 'Zero-based index of the active step. Required.' },
@@ -20,10 +20,10 @@ export const stepperDoc: ComponentDoc = {
   activeStep={1}
 />`,
   anatomy: [
-    { name: 'Container', htmlAttribute: '—', cssClass: '—' },
-    { name: 'Step wrapper', htmlAttribute: '—', cssClass: '—' },
-    { name: 'Step circle', htmlAttribute: '—', cssClass: '—' },
-    { name: 'Step label', htmlAttribute: '—', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'stepper-root' },
+    { name: 'Step', htmlAttribute: 'step', cssClass: 'stepper-step' },
+    { name: 'Step circle', htmlAttribute: 'stepCircle', cssClass: 'stepper-step-circle' },
+    { name: 'Step label', htmlAttribute: 'stepLabel', cssClass: 'stepper-step-label' },
   ],
   usageExamples: [
     {

@@ -16,8 +16,8 @@ function AvatarStackExample() {
 export const avatarStackDoc: ComponentDoc = {
   name: 'AvatarStack',
   category: 'Data Display',
-  description: 'A group of overlapping avatars showing multiple users in a compact layout.',
-  overview: 'AvatarStack renders a set of Avatar components in an overlapping row. Use the max prop to limit the number of visible avatars — any overflow is shown as a "+N" badge. The size prop is applied uniformly across all avatars in the stack. This component is ideal for showing team members, collaborators, or participants in a space-efficient way.',
+  description: 'Group of overlapping avatars for showing multiple users compactly.',
+  overview: 'Renders avatars in an overlapping row. Use max to limit visible avatars — overflow shows as a "+N" badge.',
   props: [
     { name: 'children', type: 'ReactElement<AvatarProps> | ReactElement<AvatarProps>[]', default: '—', description: 'Avatar components to display. Required.' },
     { name: 'max', type: 'number', default: '—', description: 'Maximum number of avatars to show. Overflow displays as "+N".' },
@@ -33,7 +33,8 @@ export const avatarStackDoc: ComponentDoc = {
   <Avatar name="Pat Brown" color="info" />
 </AvatarStack>`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'avatar-stack-root' },
+    { name: 'Overflow', htmlAttribute: 'overflow', cssClass: 'avatar-stack-overflow' },
   ],
   usageExamples: [
     {

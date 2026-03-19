@@ -14,8 +14,8 @@ function DividerExample() {
 export const dividerDoc: ComponentDoc = {
   name: 'Divider',
   category: 'Layout',
-  description: 'A horizontal or vertical separator line.',
-  overview: 'Divider creates a visual separation between content sections. Use it to break up long pages, separate list items, or distinguish groups of related controls. It supports both horizontal and vertical orientations — horizontal dividers work well between stacked sections, while vertical dividers are useful inside flex layouts like toolbars or side-by-side panels. The spacing prop lets you control how much breathing room surrounds the line.',
+  description: 'Line that separates content sections horizontally or vertically.',
+  overview: 'A thin line to visually divide content. Supports horizontal and vertical orientations with adjustable spacing.',
   props: [
     { name: 'vertical', type: 'boolean', default: 'false', description: 'Render as a vertical line.' },
     { name: 'width', type: 'number | string', default: '—', description: 'Width (horizontal only).' },
@@ -27,7 +27,9 @@ export const dividerDoc: ComponentDoc = {
   code: `<Divider />
 <Divider vertical height={40} />`,
   anatomy: [
-    { name: 'Root', htmlAttribute: '—', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'divider-root' },
+    { name: 'Line', htmlAttribute: 'line', cssClass: 'divider-line' },
+    { name: 'Children', htmlAttribute: 'children', cssClass: 'divider-children' },
   ],
   usageExamples: [
     {
@@ -49,14 +51,25 @@ export const dividerDoc: ComponentDoc = {
 </div>`,
     },
     {
+      title: 'With text',
+      description: 'Pass children to display a label between the two lines.',
+      code: `<div style={{ maxWidth: 320 }}>
+  <Text variant="p">Section one</Text>
+  <Divider><Text variant="p">or</Text></Divider>
+  <Text variant="p">Section two</Text>
+</div>`,
+    },
+    {
       title: 'Custom spacing',
       description: 'Adjust the spacing prop to increase or decrease the breathing room around the divider.',
       code: `<div>
-  <Text variant="p">Tight spacing</Text>
+  <Text variant="p">spacing=8</Text>
   <Divider spacing={8} />
-  <Text variant="p">Wide spacing below</Text>
+  <Text variant="p">spacing=20 (default)</Text>
+  <Divider spacing={20} />
+  <Text variant="p">spacing=40</Text>
   <Divider spacing={40} />
-  <Text variant="p">After wide spacing</Text>
+  <Text variant="p">End</Text>
 </div>`,
     },
   ],

@@ -113,7 +113,7 @@ export const themeServiceFactory = ({
         spacing: spacingService.generateCustomSpacing(customTheme.spacing || 8),
         typography: typographyService.generateCustomTypography(customTheme.typography),
         boxShadow: boxShadowService.generateCustomBoxShadow(customTheme.boxShadow || { light: {}, dark: {} }, mode),
-        colors: colorService.generateCustomColors(customTheme.colors || {}),
+        colors: colorService.generateCustomColors(customTheme.colors || {}, mode),
       };
     },
   };

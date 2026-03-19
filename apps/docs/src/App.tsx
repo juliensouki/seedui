@@ -74,7 +74,8 @@ export const App: FunctionComponent = () => {
   const [mode, setMode] = useState<Mode>('light');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   const handleModeToggle = () => setMode(m => m === 'light' ? 'dark' : 'light');
 
   const mobileMenuValue = {
@@ -83,11 +84,38 @@ export const App: FunctionComponent = () => {
     close: () => setMobileMenuOpen(false),
   };
 
-  // Close mobile menu on navigation
+  // Close mobile menu on navigation and handle hash scrolling
   useEffect(() => {
     setMobileMenuOpen(false);
-    contentRef.current?.scrollTo(0, 0);
-  }, [pathname]);
+    const hash = location.hash.slice(1);
+    if (!hash) {
+      contentRef.current?.scrollTo(0, 0);
+      return;
+    }
+
+    const scrollToEl = () => {
+      const el = document.getElementById(hash);
+      const container = contentRef.current;
+      if (!el || !container) return false;
+      // How far the element is from the top of the container's visible area
+      const offset = el.getBoundingClientRect().top - container.getBoundingClientRect().top;
+      // Add that to current scroll position
+      container.scrollTop += offset - 16;
+      return true;
+    };
+
+    // Element might already exist (e.g. refresh)
+    if (scrollToEl()) return;
+
+    // Otherwise wait for it to appear in the DOM
+    const container = contentRef.current;
+    if (!container) return;
+    const observer = new MutationObserver(() => {
+      if (scrollToEl()) observer.disconnect();
+    });
+    observer.observe(container, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [location]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {

@@ -14,9 +14,8 @@ function SkeletonExample() {
 export const skeletonDoc: ComponentDoc = {
   name: 'Skeleton',
   category: 'Data Display',
-  description: 'A placeholder component that indicates content is loading.',
-  overview:
-    'Skeleton displays a placeholder preview of content before the actual data has loaded. It reduces perceived load time by giving users a visual hint of what to expect. Use it in place of spinners when the layout of the upcoming content is known — for example, text blocks, avatars, or card layouts. Skeletons support pulse and wave animations, and come in text, circular, rectangular, and rounded variants.',
+  description: 'Animated placeholder that previews content while it loads.',
+  overview: 'Shows a shimmering placeholder in place of content that hasn\'t loaded yet. Comes in text, circular, rectangular, and rounded variants with pulse or wave animations.',
   props: [
     {
       name: 'variant',
@@ -49,7 +48,7 @@ export const skeletonDoc: ComponentDoc = {
   <Skeleton variant="text" />
   <Skeleton variant="text" width="60%" />
 </div>`,
-  anatomy: [{ name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' }],
+  anatomy: [],
   usageExamples: [
     {
       title: 'Text placeholder',

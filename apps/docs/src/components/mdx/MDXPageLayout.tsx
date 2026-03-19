@@ -3,7 +3,7 @@ import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
 import { MDXProvider } from '@mdx-js/react';
 import { TableOfContents } from '../TableOfContents';
 import { PageNavigation } from '../PageNavigation';
-import { mdxComponents } from './MDXComponents';
+import { mdxComponents, SectionHeading } from './MDXComponents';
 
 interface TocItem {
   id: string;
@@ -36,7 +36,7 @@ export const MDXPageLayout: FunctionComponent<MDXPageLayoutProps> = ({ title, de
   return (
     <PageLayout>
       <MainContent>
-        <Text variant="h3" as="h1">{title}</Text>
+        <SectionHeading variant="h3" as="h1">{title}</SectionHeading>
         <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
         <Divider spacing={28} />
         <MDXProvider components={mdxComponents}>

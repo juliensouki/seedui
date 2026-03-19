@@ -4,6 +4,7 @@ import { CodeBlock } from '../CodeBlock';
 import { PropsTable } from '../PropsTable';
 import { ComponentSchema } from '../ComponentSchema';
 import { ComponentDemo } from '../ComponentDemo';
+import { SectionHeading } from './MDXComponents';
 import type { PropDef, AnatomyPart } from '../../data/components/types';
 
 const AnatomyTable = styled('table')(({ theme }) => {
@@ -62,7 +63,7 @@ export const OverviewDemo: FunctionComponent<{ example: FunctionComponent }> = (
 
 export const ImportSection: FunctionComponent<{ name: string }> = ({ name }) => (
   <section id="section-import">
-    <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Import</Text>
+    <SectionHeading id="section-import" style={{ marginBottom: 12 }}>Import</SectionHeading>
     <CodeBlock code={`import { ${name} } from '@seedui-react/seedui';`} />
   </section>
 );
@@ -70,7 +71,7 @@ export const ImportSection: FunctionComponent<{ name: string }> = ({ name }) => 
 export const AnatomySection: FunctionComponent<{ name: string; anatomy?: AnatomyPart[] }> = ({ name, anatomy = [] }) => {
   return (
     <section id="section-anatomy">
-      <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Anatomy</Text>
+      <SectionHeading id="section-anatomy" style={{ marginBottom: 12 }}>Anatomy</SectionHeading>
       <Text variant="p" style={{ marginBottom: 20 }}>
         The diagram below shows the internal structure of the component. Each part can be customized
         either through the <code>elementProps</code> prop or by targeting its CSS class.
@@ -102,7 +103,7 @@ export const AnatomySection: FunctionComponent<{ name: string; anatomy?: Anatomy
 
 export const PropsSection: FunctionComponent<{ props: PropDef[] }> = ({ props }) => (
   <section id="section-props">
-    <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Props</Text>
+    <SectionHeading id="section-props" style={{ marginBottom: 12 }}>Props</SectionHeading>
     <PropsTable props={props} />
   </section>
 );

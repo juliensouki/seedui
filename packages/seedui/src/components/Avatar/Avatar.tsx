@@ -22,8 +22,8 @@ export interface AvatarProps {
   size?: AvatarSize;
   color?: AvatarColor;
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    img?: ImgHTMLAttributes<HTMLImageElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    image?: ImgHTMLAttributes<HTMLImageElement>;
   };
 }
 
@@ -49,8 +49,8 @@ const defaultProps: AvatarProps = {
   size: 'md',
   color: 'neutral',
   elementProps: {
-    rootDiv: {},
-    img: {},
+    root: {},
+    image: {},
   },
 };
 
@@ -108,7 +108,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps & InternalProps>(
       name,
       size,
       color,
-      elementProps: { rootDiv: rootDivHTMLAttributes, img: imgHTMLAttributes } = {},
+      elementProps: { root: rootHTMLAttributes, image: imageHTMLAttributes } = {},
       className,
     } = getDefaultProps<AvatarProps & InternalProps>({
       providedProps: props,
@@ -121,12 +121,12 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps & InternalProps>(
         size={size}
         color={color}
         ref={forwardedRef}
-        className={joinClasses(className, rootDivHTMLAttributes?.className)}
+        className={joinClasses('avatar-root', className, rootHTMLAttributes?.className)}
         $customizations={customizations.components?.avatar}
-        {...rootDivHTMLAttributes}
+        {...rootHTMLAttributes}
       >
         {src ? (
-          <AvatarImage src={src} alt={alt ?? name ?? 'avatar'} {...imgHTMLAttributes} />
+          <AvatarImage src={src} alt={alt ?? name ?? 'avatar'} className={joinClasses('avatar-image', imageHTMLAttributes?.className)} {...imageHTMLAttributes} />
         ) : name ? (
           <AvatarInitials style={{ fontSize: resolveFontSize(size) }}>{getInitials(name)}</AvatarInitials>
         ) : (

@@ -12,8 +12,8 @@ function TooltipExample() {
 export const tooltipDoc: ComponentDoc = {
   name: 'Tooltip',
   category: 'Overlays',
-  description: 'A small floating label that appears on hover.',
-  overview: 'Tooltip displays a short text label when the user hovers over or focuses an element. Use it to provide additional context for icon buttons, truncated text, or any control where a brief explanation improves clarity. Tooltips appear after a short delay and disappear when the pointer leaves the target. For richer content like forms or lists, use Popover instead. The direction prop controls which side of the trigger the tooltip appears on.',
+  description: 'Short text label that appears on hover to explain an element.',
+  overview: 'Shows a brief text hint when hovering or focusing an element. For richer content, use Popover instead.',
   props: [
     { name: 'text', type: 'string', default: '—', description: 'Tooltip text content. Required.' },
     { name: 'direction', type: "'top' | 'right' | 'bottom' | 'left'", default: "'top'", description: 'Position relative to the child.' },
@@ -24,9 +24,9 @@ export const tooltipDoc: ComponentDoc = {
   <Text>Hover me</Text>
 </Tooltip>`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Children wrapper', htmlAttribute: 'childrenWrapperDiv', cssClass: '—' },
-    { name: 'Tooltip', htmlAttribute: 'tooltipSpan', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'tooltip-root' },
+    { name: 'Trigger', htmlAttribute: 'trigger', cssClass: 'tooltip-trigger' },
+    { name: 'Tooltip', htmlAttribute: 'tooltip', cssClass: 'tooltip-content' },
   ],
   usageExamples: [
     {
@@ -50,15 +50,15 @@ export const tooltipDoc: ComponentDoc = {
     {
       title: 'On icon buttons',
       description: 'Tooltips are especially useful on icon buttons where the action may not be immediately obvious from the icon alone.',
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <Tooltip text="Edit" direction="bottom">
+      code: `<div style={{ display: 'flex', gap: 8, paddingTop: 40 }}>
+  <Tooltip text="Edit" direction="top">
     <IconButton variant="transparent" color="neutral">
-      <GemIcon strokeWidth={1.8} />
+      <PencilIcon strokeWidth={1.8} />
     </IconButton>
   </Tooltip>
-  <Tooltip text="Settings" direction="bottom">
+  <Tooltip text="Settings" direction="top">
     <IconButton variant="transparent" color="neutral">
-      <GemIcon strokeWidth={1.8} />
+      <SettingsIcon strokeWidth={1.8} />
     </IconButton>
   </Tooltip>
 </div>`,

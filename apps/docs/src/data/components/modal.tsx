@@ -17,8 +17,8 @@ function ModalExample() {
 export const modalDoc: ComponentDoc = {
   name: 'Modal',
   category: 'Overlays',
-  description: 'An overlay dialog with title, content, and close behavior.',
-  overview: 'Modal presents content in a focused overlay that sits on top of the rest of the page. Use it for confirmations, forms, or any workflow that requires the user\'s full attention before continuing. It renders a backdrop that dims the underlying content and traps focus within the dialog for accessibility. Closing behavior is configurable — you can allow dismissal via the overlay click, the Escape key, or restrict it to the close button only for critical flows.',
+  description: 'Dialog that overlays the page and requires attention before continuing.',
+  overview: 'A focused overlay for confirmations, forms, or critical actions. Dims the background and traps focus. Dismissible via overlay click, Escape, or close button.',
   props: [
     { name: 'isOpen', type: 'boolean', default: '—', description: 'Controls visibility. Required.' },
     { name: 'onClose', type: '() => void', default: '—', description: 'Called when the modal should close. Required.' },
@@ -37,11 +37,11 @@ export const modalDoc: ComponentDoc = {
   <Text>Content here</Text>
 </Modal>`,
   anatomy: [
-    { name: 'Overlay', htmlAttribute: 'overlayDiv', cssClass: '—' },
-    { name: 'Modal container', htmlAttribute: 'modalDiv', cssClass: '—' },
-    { name: 'Header', htmlAttribute: 'headerDiv', cssClass: '—' },
-    { name: 'Content', htmlAttribute: 'contentDiv', cssClass: '—' },
-    { name: 'Close button', htmlAttribute: 'closeButton', cssClass: '—' },
+    { name: 'Overlay', htmlAttribute: 'overlay', cssClass: 'modal-overlay' },
+    { name: 'Container', htmlAttribute: 'container', cssClass: 'modal-container' },
+    { name: 'Header', htmlAttribute: 'header', cssClass: 'modal-header' },
+    { name: 'Content', htmlAttribute: 'content', cssClass: 'modal-content' },
+    { name: 'Close button', htmlAttribute: 'closeButton', cssClass: 'modal-close-button' },
   ],
   usageExamples: [
     {

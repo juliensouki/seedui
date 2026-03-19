@@ -29,10 +29,10 @@ export interface ModalProps {
   closeOnEscape?: boolean;
   width?: string | number;
   elementProps?: {
-    overlayDiv?: HTMLAttributes<HTMLDivElement>;
-    modalDiv?: HTMLAttributes<HTMLDivElement>;
-    headerDiv?: HTMLAttributes<HTMLDivElement>;
-    contentDiv?: HTMLAttributes<HTMLDivElement>;
+    overlay?: HTMLAttributes<HTMLDivElement>;
+    container?: HTMLAttributes<HTMLDivElement>;
+    header?: HTMLAttributes<HTMLDivElement>;
+    content?: HTMLAttributes<HTMLDivElement>;
     closeButton?: HTMLAttributes<HTMLButtonElement>;
   };
 }
@@ -45,10 +45,10 @@ const defaultProps: ModalProps = {
   closeOnEscape: true,
   width: 500,
   elementProps: {
-    overlayDiv: {},
-    modalDiv: {},
-    headerDiv: {},
-    contentDiv: {},
+    overlay: {},
+    container: {},
+    header: {},
+    content: {},
     closeButton: {},
   },
 };
@@ -170,10 +170,10 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
       closeOnEscape,
       width,
       elementProps: {
-        overlayDiv: overlayDivHTMLAttributes,
-        modalDiv: modalDivHTMLAttributes,
-        headerDiv: headerDivHTMLAttributes,
-        contentDiv: contentDivHTMLAttributes,
+        overlay: overlayHTMLAttributes,
+        container: containerHTMLAttributes,
+        header: headerHTMLAttributes,
+        content: contentHTMLAttributes,
         closeButton: closeButtonHTMLAttributes,
       },
       className,
@@ -222,24 +222,24 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
 
     const modalContent = (
       <Overlay
-        {...overlayDivHTMLAttributes}
+        {...overlayHTMLAttributes}
         $isOpen={isOpen}
         $customizations={customizations.components?.modal}
         onClick={handleOverlayClick}
-        className={joinClasses(className, overlayDivHTMLAttributes?.className)}
+        className={joinClasses('modal-overlay', className, overlayHTMLAttributes?.className)}
       >
         <ModalContainer
-          {...modalDivHTMLAttributes}
+          {...containerHTMLAttributes}
           ref={forwardedRef || modalRef}
           $width={width}
           $isOpen={isOpen}
-          className={joinClasses(className, modalDivHTMLAttributes?.className)}
+          className={joinClasses('modal-container', className, containerHTMLAttributes?.className)}
           onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
           {(title || showCloseButton) && (
             <ModalHeader
-              {...headerDivHTMLAttributes}
-              className={joinClasses(headerDivHTMLAttributes?.className)}
+              {...headerHTMLAttributes}
+              className={joinClasses('modal-header', headerHTMLAttributes?.className)}
             >
               {title && (
                 <Text variant="h6" style={{ margin: 0 }}>
@@ -252,7 +252,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
                   onClick={onClose}
                   type="button"
                   aria-label="Close modal"
-                  className={joinClasses(closeButtonHTMLAttributes?.className)}
+                  className={joinClasses('modal-close-button', closeButtonHTMLAttributes?.className)}
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M18 6L6 18M6 6l12 12" />
@@ -262,8 +262,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
             </ModalHeader>
           )}
           <ModalContent
-            {...contentDivHTMLAttributes}
-            className={joinClasses(contentDivHTMLAttributes?.className)}
+            {...contentHTMLAttributes}
+            className={joinClasses('modal-content', contentHTMLAttributes?.className)}
           >
             {children}
           </ModalContent>

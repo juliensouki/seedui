@@ -22,7 +22,7 @@ export const buttonDoc: ComponentDoc = {
     { name: 'children', type: 'ReactNode', default: '—', description: 'Button content.' },
     {
       name: 'color',
-      type: "'primary' | 'secondary' | 'neutral' | 'error'",
+      type: "'primary' | 'neutral' | 'error'",
       default: "'primary'",
       description: 'Color scheme of the button.',
     },
@@ -45,7 +45,6 @@ export const buttonDoc: ComponentDoc = {
         'Use the color prop to match the button to its intent. Primary for main actions, neutral for general-purpose, and error for destructive operations.',
       code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
   <Button color="primary">Primary</Button>
-  <Button color="secondary">Secondary</Button>
   <Button color="neutral">Neutral</Button>
   <Button color="error">Error</Button>
 </div>`,

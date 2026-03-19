@@ -19,8 +19,8 @@ function PopoverExample() {
 export const popoverDoc: ComponentDoc = {
   name: 'Popover',
   category: 'Overlays',
-  description: 'A floating content panel anchored to a trigger element.',
-  overview: 'Popover displays rich content in a floating panel anchored to a trigger element. Use it for contextual menus, secondary actions, or inline details that don\'t warrant a full modal. Unlike Tooltip, which shows only a short text label, Popover can contain any React content — buttons, forms, or lists. It supports configurable alignment and automatic positioning to stay within the viewport. For simple text hints on hover, use Tooltip instead.',
+  description: 'Floating panel anchored to a trigger element for contextual content.',
+  overview: 'Displays rich content in a floating panel next to a trigger. Can contain any content — buttons, forms, or lists. For simple text hints, use Tooltip instead.',
   props: [
     { name: 'isOpen', type: 'boolean', default: '—', description: 'Controls visibility. Required.' },
     { name: 'onClose', type: '() => void', default: '—', description: 'Called when popover should close. Required.' },
@@ -45,9 +45,9 @@ export const popoverDoc: ComponentDoc = {
   <Button onClick={() => setOpen(!open)}>Toggle</Button>
 </Popover>`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Trigger', htmlAttribute: 'triggerDiv', cssClass: '—' },
-    { name: 'Popover', htmlAttribute: 'popoverDiv', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'popover-root' },
+    { name: 'Trigger', htmlAttribute: 'trigger', cssClass: 'popover-trigger' },
+    { name: 'Panel', htmlAttribute: 'panel', cssClass: 'popover-panel' },
   ],
   usageExamples: [
     {

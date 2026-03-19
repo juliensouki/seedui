@@ -6,6 +6,7 @@ export interface NavPage {
   section?: string;
 }
 
+
 export const gettingStartedPages: NavPage[] = [
   { name: 'Overview', path: '/', section: 'Getting Started' },
   { name: 'Installation', path: '/getting-started/installation', section: 'Getting Started' },

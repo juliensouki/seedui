@@ -10,7 +10,7 @@ export interface ColorService {
 }
 
 export const colorServiceFactory = (): ColorService => {
-  const generateShades = (mainColor: string): SemanticColorShades | null => {
+  const generateShades = (mainColor: string, isDark: boolean): SemanticColorShades | null => {
     let shades: Partial<SemanticColorShades> = {};
     const hexColor = new TinyColor(mainColor);
 
@@ -21,12 +21,22 @@ export const colorServiceFactory = (): ColorService => {
     for (let i = 1; i < 10; i++) {
       let newColor;
 
-      if (i < 6) {
-        newColor = hexColor.clone().tint((6 - i) * 15);
-      } else if (i === 6) {
-        newColor = hexColor;
+      if (isDark) {
+        if (i < 6) {
+          newColor = hexColor.clone().shade((6 - i) * 15);
+        } else if (i === 6) {
+          newColor = hexColor;
+        } else {
+          newColor = hexColor.clone().tint((i - 6) * 15);
+        }
       } else {
-        newColor = hexColor.clone().shade((i - 6) * 15);
+        if (i < 6) {
+          newColor = hexColor.clone().tint((6 - i) * 15);
+        } else if (i === 6) {
+          newColor = hexColor;
+        } else {
+          newColor = hexColor.clone().shade((i - 6) * 15);
+        }
       }
       shades = { ...shades, [`${i}00`]: `#${newColor.toHex()}` };
     }
@@ -44,6 +54,7 @@ export const colorServiceFactory = (): ColorService => {
     generateCustomColors: (customColorsByMode, mode = 'light') => {
       if (!customColorsByMode || !customColorsByMode[mode]) return semantic[mode];
 
+      const isDark = mode === 'dark';
       const newColors: Partial<SemanticColors> = {};
       const customColors = customColorsByMode[mode];
 
@@ -54,7 +65,7 @@ export const colorServiceFactory = (): ColorService => {
           newColors[color] = defaultValue as SemanticColorShades & { white: string; black: string };
         } else {
           if (typeof customValue === 'string') {
-            const newShade = generateShades(customValue);
+            const newShade = generateShades(customValue, isDark);
             newColors[color] = (newShade || defaultValue) as SemanticColorShades & { white: string; black: string };
           } else if (typeof customValue === 'object') {
             newColors[color] = { ...defaultValue, ...customValue } as SemanticColorShades & {

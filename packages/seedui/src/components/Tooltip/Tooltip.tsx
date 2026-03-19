@@ -25,9 +25,9 @@ export interface TooltipProps {
   text: string;
   direction?: TooltipDirection;
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    childrenWrapperDiv?: HTMLAttributes<HTMLDivElement>;
-    tooltipSpan?: HTMLAttributes<HTMLSpanElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    trigger?: HTMLAttributes<HTMLDivElement>;
+    tooltip?: HTMLAttributes<HTMLSpanElement>;
   };
   forwardProps?: {
     text?: TextPropsAndAttributes;
@@ -41,9 +41,9 @@ const defaultProps: TooltipProps = {
   text: '',
   direction: 'top',
   elementProps: {
-    rootDiv: {},
-    childrenWrapperDiv: {},
-    tooltipSpan: {},
+    root: {},
+    trigger: {},
+    tooltip: {},
   },
   forwardProps: {
     text: {},
@@ -140,9 +140,9 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
       text,
       direction,
       elementProps: {
-        rootDiv: rootDivHTMLAttributes,
-        childrenWrapperDiv: childrenWrapperDivHTMLAttributes,
-        tooltipSpan: tooltipSpanHTMLAttributes,
+        root: rootHTMLAttributes,
+        trigger: triggerHTMLAttributes,
+        tooltip: tooltipHTMLAttributes,
       },
       className,
       forwardProps: { text: textProps },
@@ -187,8 +187,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
     const TooltipComponent = mapDirectionToTooltip[direction];
 
     return (
-      <MainDiv ref={forwardedRef} {...rootDivHTMLAttributes}>
-        <ChildrenWrapper ref={childrenContainerRef} {...childrenWrapperDivHTMLAttributes}>
+      <MainDiv ref={forwardedRef} className={joinClasses('tooltip-root', rootHTMLAttributes?.className)} {...rootHTMLAttributes}>
+        <ChildrenWrapper ref={childrenContainerRef} className={joinClasses('tooltip-trigger', triggerHTMLAttributes?.className)} {...triggerHTMLAttributes}>
           {children}
         </ChildrenWrapper>
         <TooltipComponent
@@ -197,8 +197,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           $tooltipTop={tooltipTop}
           $direction={direction}
           $customizations={customizations.components?.tooltip}
-          className={joinClasses(className, rootDivHTMLAttributes?.className)}
-          {...tooltipSpanHTMLAttributes}
+          className={joinClasses('tooltip-content', className, tooltipHTMLAttributes?.className)}
+          {...tooltipHTMLAttributes}
         >
           <TooltipText variant="caption" {...textProps}>
             {text}

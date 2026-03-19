@@ -19,9 +19,8 @@ export interface ProgressBarProps {
   color?: ProgressBarColor;
   disableAnimation?: boolean;
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    trackDiv?: HTMLAttributes<HTMLDivElement>;
-    barDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    fill?: HTMLAttributes<HTMLDivElement>;
   };
 }
 
@@ -31,9 +30,8 @@ const defaultProps: ProgressBarProps = {
   color: 'primary',
   disableAnimation: false,
   elementProps: {
-    rootDiv: {},
-    trackDiv: {},
-    barDiv: {},
+    root: {},
+    fill: {},
   },
 };
 
@@ -93,9 +91,8 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps & Interna
       disableAnimation,
       className,
       elementProps: {
-        rootDiv: rootDivHTMLAttributes,
-        trackDiv: trackDivHTMLAttributes,
-        barDiv: barDivHTMLAttributes,
+        root: rootHTMLAttributes,
+        fill: fillHTMLAttributes,
       } = {},
     } = getDefaultProps<ProgressBarProps & InternalProps>({
       providedProps: props,
@@ -107,22 +104,22 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps & Interna
 
     return (
       <ProgressBarRoot
-        {...rootDivHTMLAttributes}
+        {...rootHTMLAttributes}
         $height={height}
         $customizations={customizations.components?.progressBar}
-        className={joinClasses(className, rootDivHTMLAttributes?.className)}
+        className={joinClasses('progress-bar-track', className, rootHTMLAttributes?.className)}
         ref={forwardedRef}
         role="progressbar"
         aria-valuenow={clampedValue}
         aria-valuemin={0}
         aria-valuemax={100}
-        {...trackDivHTMLAttributes}
       >
         <ProgressBarFill
           $value={clampedValue}
           $color={color}
           $disableAnimation={disableAnimation}
-          {...barDivHTMLAttributes}
+          className={joinClasses('progress-bar-fill', fillHTMLAttributes?.className)}
+          {...fillHTMLAttributes}
         />
       </ProgressBarRoot>
     );

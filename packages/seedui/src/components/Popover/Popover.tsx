@@ -36,9 +36,9 @@ export interface PopoverProps {
   closeOnOutsideClick?: boolean;
   closeOnEscape?: boolean;
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    triggerDiv?: HTMLAttributes<HTMLDivElement>;
-    popoverDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    trigger?: HTMLAttributes<HTMLDivElement>;
+    panel?: HTMLAttributes<HTMLDivElement>;
   };
 }
 
@@ -56,9 +56,9 @@ const defaultProps: PopoverProps = {
   closeOnOutsideClick: true,
   closeOnEscape: true,
   elementProps: {
-    rootDiv: {},
-    triggerDiv: {},
-    popoverDiv: {},
+    root: {},
+    trigger: {},
+    panel: {},
   },
 };
 
@@ -106,9 +106,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       closeOnOutsideClick,
       closeOnEscape,
       elementProps: {
-        rootDiv: rootDivHTMLAttributes,
-        triggerDiv: triggerDivHTMLAttributes,
-        popoverDiv: popoverDivHTMLAttributes,
+        root: rootHTMLAttributes,
+        trigger: triggerHTMLAttributes,
+        panel: panelHTMLAttributes,
       },
       className,
     } = getDefaultProps<PopoverProps & InternalProps>({
@@ -277,14 +277,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
 
     const popoverContent = isOpen ? (
       <PopoverContainer
-        {...popoverDivHTMLAttributes}
+        {...panelHTMLAttributes}
         ref={popoverRef}
         $customizations={customizations.components?.popover}
-        className={joinClasses(className, popoverDivHTMLAttributes?.className)}
+        className={joinClasses('popover-panel', className, panelHTMLAttributes?.className)}
         style={{
           visibility: 'hidden',
           opacity: 0,
-          ...popoverDivHTMLAttributes?.style,
+          ...panelHTMLAttributes?.style,
         }}
         onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
@@ -294,12 +294,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
 
     return (
       <>
-        <RootDiv ref={forwardedRef || triggerRef} {...rootDivHTMLAttributes}>
+        <RootDiv ref={forwardedRef || triggerRef} className={joinClasses('popover-root', rootHTMLAttributes?.className)} {...rootHTMLAttributes}>
           <TriggerWrapper
-            {...triggerDivHTMLAttributes}
+            {...triggerHTMLAttributes}
             ref={triggerRef}
             onClick={handleTriggerClick}
-            className={joinClasses(triggerDivHTMLAttributes?.className)}
+            className={joinClasses('popover-trigger', triggerHTMLAttributes?.className)}
           >
             {children}
           </TriggerWrapper>
