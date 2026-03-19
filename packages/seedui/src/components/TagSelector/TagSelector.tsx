@@ -28,7 +28,11 @@ export interface TagSelectorProps {
     labelTextProps?: TextPropsAndAttributes;
   };
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    inputContainer?: HTMLAttributes<HTMLDivElement>;
+    input?: HTMLAttributes<HTMLInputElement>;
+    button?: HTMLAttributes<HTMLButtonElement>;
+    tagsContainer?: HTMLAttributes<HTMLDivElement>;
   };
 }
 
@@ -47,7 +51,11 @@ const defaultProps: TagSelectorProps = {
     labelTextProps: {},
   },
   elementProps: {
-    rootDiv: {},
+    root: {},
+    inputContainer: {},
+    input: {},
+    button: {},
+    tagsContainer: {},
   },
 };
 
@@ -67,6 +75,12 @@ const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean }
     borderRadius: theme.borderRadius(4),
     border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[500]}`,
     gap: '8px',
+
+    ...(!$isFocused && {
+      '&:hover': {
+        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+      },
+    }),
 
     ...($isFocused && {
       outline: `2px solid ${theme.colors.primary[300]}`,
@@ -161,9 +175,9 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
       disabled || !inputValue.trim() || tags.includes(inputValue.trim()) || (maxTags ? tags.length >= maxTags : false);
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width} className="tag-selector-root">
         <TagSelectorContainer className={joinClasses(className)} $customizations={customizations.components?.tagSelector}>
-          <InputContainer $isFocused={isFocused}>
+          <InputContainer {...elementProps.inputContainer} $isFocused={isFocused} className={joinClasses('tag-selector-input-container', elementProps?.inputContainer?.className)}>
             <TagInput
               ref={forwardedRef}
               value={inputValue}
@@ -172,11 +186,14 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
               disabled={disabled}
               inputValidation={inputValidation}
               width="100%"
+              className="tag-selector-input"
               elementProps={{
                 input: {
+                  ...elementProps.input,
                   style: {
                     paddingTop: 0,
                     paddingBottom: 0,
+                    ...elementProps.input?.style,
                   },
                   onFocus: () => setIsFocused(true),
                   onBlur: () => setIsFocused(false),
@@ -185,13 +202,13 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
               }}
             />
 
-            <AddButton onClick={handleAddTag} disabled={isAddDisabled}>
+            <AddButton onClick={handleAddTag} disabled={isAddDisabled} className={joinClasses('tag-selector-button', elementProps.button?.className)}>
               <Text style={{ color: 'white' }}>{buttonLabel}</Text>
             </AddButton>
           </InputContainer>
 
           {tags.length > 0 && (
-            <TagsContainer>
+            <TagsContainer {...elementProps.tagsContainer} className={joinClasses('tag-selector-tags-container', elementProps?.tagsContainer?.className)}>
               {tags.map((tag, index) => (
                 <Tag key={index} removable onRemove={() => handleRemoveTag(tag)}>
                   {tag}

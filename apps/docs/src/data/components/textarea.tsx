@@ -18,8 +18,8 @@ function TextareaExample() {
 export const textareaDoc: ComponentDoc = {
   name: 'Textarea',
   category: 'Inputs',
-  description: 'A multi-line text input with optional label and resize control.',
-  overview: 'Textarea is a multi-line text field for longer-form content such as messages, descriptions, comments, or notes. It shares the same label and styling conventions as Input for a consistent form experience. The isResizable prop controls whether users can drag to resize the field. Use Textarea when the expected input is more than a single line — for short values like names or emails, use Input instead.',
+  description: 'Multi-line field for entering longer text like messages, comments, or notes.',
+  overview: 'A multi-line text field that shares the same styling as Input. Can be made resizable. For single-line values, use Input instead.',
   props: [
     { name: 'value', type: 'string', default: '—', description: 'Controlled value. Required.' },
     { name: 'label', type: 'string', default: '—', description: 'Label text.' },
@@ -39,8 +39,8 @@ export const textareaDoc: ComponentDoc = {
   placeholder="Type here..."
 />`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Textarea', htmlAttribute: 'textarea', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'textarea-root' },
+    { name: 'Input', htmlAttribute: 'input', cssClass: 'textarea-input' },
   ],
   usageExamples: [
     {

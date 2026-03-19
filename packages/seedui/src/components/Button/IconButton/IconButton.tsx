@@ -11,7 +11,6 @@ import styled from 'styled-components';
 
 import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
-import { joinClasses } from '../../../utils/classes';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContextType } from '../../../types';
 import { SeedContext } from '../../ThemeProvider/context';
@@ -58,8 +57,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       disabled,
       size,
       className,
-      elementProps: { rootButton: rootButtonHTMLAttributes },
       children,
+      ...restProps
     } = getDefaultProps<IconButtonProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.iconButton?.defaultProps,
@@ -85,12 +84,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 
     return (
       <IconButtonComponent
-        {...rootButtonHTMLAttributes}
+        {...restProps}
         onClick={preventFocusOnClick}
         color={color}
         disabled={disabled}
         size={size}
-        className={joinClasses(className, rootButtonHTMLAttributes?.className)}
+        className={className}
         $customizations={customizations.components?.iconButton}
         ref={buttonRef}
       >

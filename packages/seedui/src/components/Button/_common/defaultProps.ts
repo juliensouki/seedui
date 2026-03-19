@@ -7,8 +7,5 @@ export const defaultProps: ButtonProps | IconButtonProps = {
   size: 'md',
   type: 'button',
   disabled: false,
-  elementProps: {
-    rootButton: {},
-  },
   onClick: undefined,
 };

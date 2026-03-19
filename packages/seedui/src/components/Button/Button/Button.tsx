@@ -14,7 +14,6 @@ import styled from 'styled-components';
 import { SeedContextType, Theme } from '../../../types';
 import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
-import { joinClasses } from '../../../utils/classes';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContext } from '../../ThemeProvider/context';
 import { Loader } from '../../_internal/Loader/Loader';
@@ -76,8 +75,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type,
       isLoading,
       className,
-      elementProps: { rootButton: rootButtonHTMLAttributes },
       children,
+      ...restProps
     } = getDefaultProps<ButtonProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.button?.defaultProps,
@@ -114,18 +113,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <ButtonComponent
-        {...rootButtonHTMLAttributes}
+        {...restProps}
         onClick={preventFocusOnClick}
         color={color}
         disabled={disabled}
         size={size}
         type={type}
-        className={joinClasses(className, rootButtonHTMLAttributes?.className)}
+        className={className}
         $customizations={customizations.components?.button}
         ref={innerRef}
         // lock dimensions when loading, merge with user-provided style
         style={{
-          ...rootButtonHTMLAttributes?.style,
+          ...restProps?.style,
           ...(isLoading && buttonSize.width && buttonSize.height
             ? {
               width: `${buttonSize.width}px`,

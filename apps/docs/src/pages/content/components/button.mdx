@@ -1,5 +1,5 @@
 import { buttonDoc as doc } from '../../../data/components/button';
-import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../components/mdx/ComponentParts';
+import { OverviewDemo, ImportSection, PropsSection } from '../../../components/mdx/ComponentParts';
 import { ComponentPlayground } from '../../../components/ComponentPlayground';
 
 export const meta = {
@@ -13,7 +13,7 @@ export const meta = {
 
 <OverviewDemo example={doc.example} />
 
-Button is the primary interactive element for triggering actions. Use it for form submissions, confirmations, navigation triggers, or any click-based interaction. Choose between filled and transparent variants to establish visual hierarchy — filled for primary actions and transparent for secondary or less prominent ones. Pair the color prop with the context: primary for main actions, neutral for general-purpose buttons, and error for destructive operations like deleting or cancelling.
+Buttons let people take actions like submitting a form, confirming a choice, or starting a new flow. They come in filled and transparent variants across primary, neutral, and error colors.
 </section>
 
 <ImportSection name={doc.name} />
@@ -41,7 +41,7 @@ Three sizes are available. Use small for dense UIs or inline actions, medium as 
 
 ### Loading state
 
-Set isLoading to show a spinner and disable interaction. Useful while waiting for an async operation like a form submission.
+Set <code>isLoading</code> to show a spinner and disable interaction. Useful while waiting for an async operation like a form submission.
 
 <ComponentPlayground code={doc.usageExamples[3].code} />
 
@@ -51,7 +51,5 @@ Disabled buttons are visually muted and ignore clicks. Use them to indicate that
 
 <ComponentPlayground code={doc.usageExamples[4].code} />
 </section>
-
-<AnatomySection name={doc.name} anatomy={doc.anatomy} />
 
 <PropsSection props={doc.props} />

@@ -16,8 +16,8 @@ function ToggleExample() {
 export const toggleDoc: ComponentDoc = {
   name: 'Toggle',
   category: 'Inputs',
-  description: 'A switch control for toggling between on and off states.',
-  overview: 'Toggle is a switch control for binary settings that take effect immediately, such as enabling notifications, dark mode, or feature flags. Unlike a checkbox — which typically requires a form submission — a toggle visually communicates that the change applies right away. It supports an optional label that appears next to the switch for context. Use the size prop to fit the toggle into dense toolbars or more spacious settings pages.',
+  description: 'Switch for turning a setting on or off.',
+  overview: 'A switch for binary settings that take effect immediately, like enabling notifications or dark mode. Supports an optional label and multiple sizes.',
   props: [
     { name: 'checked', type: 'boolean', default: '—', description: 'Whether the toggle is on. Required.' },
     { name: 'onChange', type: 'ChangeEventHandler', default: '—', description: 'Change handler.' },
@@ -34,9 +34,9 @@ export const toggleDoc: ComponentDoc = {
   label="Enable notifications"
 />`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Label', htmlAttribute: 'label', cssClass: '—' },
-    { name: 'Input', htmlAttribute: 'input', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'toggle-root' },
+    { name: 'Label', htmlAttribute: 'label', cssClass: 'toggle-label' },
+    { name: 'Input', htmlAttribute: 'input', cssClass: 'toggle-input' },
   ],
   usageExamples: [
     {

@@ -1,4 +1,4 @@
-import { cloneElement, FunctionComponent, useId, useContext, ReactElement, ReactNode } from 'react';
+import { cloneElement, FunctionComponent, HTMLAttributes, useId, useContext, ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { SeedContext } from '../ThemeProvider/context';
@@ -25,6 +25,7 @@ export interface MenuItemProps {
   onHover?: (index: number) => void;
   activeItemStyle?: SelectActiveItemStyle;
   className?: string;
+  htmlAttributes?: HTMLAttributes<HTMLDivElement>;
 }
 
 const MenuItemDiv = applyCustomStyles(
@@ -67,6 +68,7 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
   onHover,
   activeItemStyle,
   className,
+  htmlAttributes,
 }) => {
   const { customizations } = useContext<SeedContextType>(SeedContext);
   const uniqueId = useId();
@@ -79,11 +81,12 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
 
   return (
     <MenuItemDiv
+      {...htmlAttributes}
       $customizations={customizations.components?.select?.menuItem}
       $highlighted={isHighlighted}
       key={typeof option.label === 'string' ? option.label : uniqueId}
       id={option.value || selectUniqueId}
-      className={joinClasses('menu-item', className)}
+      className={joinClasses('select-menu-item', className, htmlAttributes?.className)}
       ref={(node: HTMLDivElement) => {
         if (index === undefined || !buildRefMap) return;
         const map = buildRefMap();

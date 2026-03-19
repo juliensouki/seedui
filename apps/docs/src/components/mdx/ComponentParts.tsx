@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { styled, Text, useTheme } from '@seedui-react/seedui';
+import { styled, Text } from '@seedui-react/seedui';
 import { CodeBlock } from '../CodeBlock';
 import { PropsTable } from '../PropsTable';
 import { ComponentSchema } from '../ComponentSchema';
@@ -68,12 +68,10 @@ export const ImportSection: FunctionComponent<{ name: string }> = ({ name }) => 
 );
 
 export const AnatomySection: FunctionComponent<{ name: string; anatomy?: AnatomyPart[] }> = ({ name, anatomy = [] }) => {
-  const theme = useTheme();
-  const isLight = theme.mode === 'light';
   return (
     <section id="section-anatomy">
       <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Anatomy</Text>
-      <Text variant="p" style={{ color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800], lineHeight: 1.6, marginBottom: 20 }}>
+      <Text variant="p" style={{ marginBottom: 20 }}>
         The diagram below shows the internal structure of the component. Each part can be customized
         either through the <code>elementProps</code> prop or by targeting its CSS class.
       </Text>

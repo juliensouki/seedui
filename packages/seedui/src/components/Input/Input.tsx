@@ -39,10 +39,11 @@ export interface InputProps {
     labelTextProps?: TextPropsAndAttributes;
   };
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    inputContainerDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    container?: HTMLAttributes<HTMLDivElement>;
     input?: HTMLAttributes<HTMLInputElement>;
-    iconContainerDiv?: HTMLAttributes<HTMLDivElement>;
+    iconContainer?: HTMLAttributes<HTMLDivElement>;
+    validationIcon?: HTMLAttributes<HTMLDivElement>;
   };
 }
 
@@ -54,10 +55,11 @@ const defaultProps: InputProps = {
   width: 200,
   inputIcon: { icon: null, placement: 'left' },
   elementProps: {
-    rootDiv: {},
-    inputContainerDiv: {},
+    root: {},
+    container: {},
     input: {},
-    iconContainerDiv: {},
+    iconContainer: {},
+    validationIcon: {},
   },
   forwardProps: {
     labelTextProps: {},
@@ -166,6 +168,7 @@ const InputElement = applyCustomStyles(
       '&:disabled': {
         backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
         borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
+        color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
 
         '&::placeholder': {
           color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
@@ -216,8 +219,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
     }, [value, inputValidation]);
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width}>
-        <InputContainer {...elementProps.inputContainerDiv} $iconPlacement={iconPlacement}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width} className="input-root">
+        <InputContainer {...elementProps.container} $iconPlacement={iconPlacement} className={joinClasses('input-container', elementProps?.container?.className)}>
           <InputElement
             {...elementProps.input}
             ref={forwardedRef}
@@ -226,18 +229,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
             type={type}
             onChange={onChange}
             placeholder={placeholder}
-            className={joinClasses(className, elementProps?.input?.className)}
+            className={joinClasses('input-field', className, elementProps?.input?.className)}
             $iconPlacement={icon ? iconPlacement : undefined}
             $isValidated={isValidated}
             $customizations={customizations.components?.input}
           />
           {icon && (
-            <IconContainer {...elementProps.iconContainerDiv} $placement={iconPlacement}>
+            <IconContainer {...elementProps.iconContainer} $placement={iconPlacement} className={joinClasses('input-icon-container', elementProps?.iconContainer?.className)}>
               {icon}
             </IconContainer>
           )}
           {isValidated && (
-            <ValidationIconContainer>
+            <ValidationIconContainer {...elementProps.validationIcon} className={joinClasses('input-validation-icon', elementProps?.validationIcon?.className)}>
               <ValidationIcon>
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />

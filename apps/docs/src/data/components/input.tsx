@@ -18,8 +18,8 @@ function InputExample() {
 export const inputDoc: ComponentDoc = {
   name: 'Input',
   category: 'Inputs',
-  description: 'A text input field with optional label, icon, and validation.',
-  overview: 'Input is a single-line text field for collecting user data such as names, emails, passwords, or any short-form text. It supports an optional label for context, an inline icon for visual cues, and a validation function that provides real-time feedback as the user types. Use the type prop to leverage native browser behavior for email, password, number, and other input types. For longer, multi-line content, use Textarea instead.',
+  description: 'Field for entering short text like names, emails, or passwords.',
+  overview: 'A single-line text field with support for labels, icons, and validation. For multi-line content, use Textarea instead.',
   props: [
     { name: 'value', type: 'string', default: '—', description: 'Controlled input value. Required.' },
     { name: 'label', type: 'string', default: '—', description: 'Label text above the input.' },
@@ -41,10 +41,11 @@ export const inputDoc: ComponentDoc = {
   placeholder="Enter your username"
 />`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Input container', htmlAttribute: 'inputContainerDiv', cssClass: '—' },
-    { name: 'Input', htmlAttribute: 'input', cssClass: '—' },
-    { name: 'Icon container', htmlAttribute: 'iconContainerDiv', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'input-root' },
+    { name: 'Container', htmlAttribute: 'container', cssClass: 'input-container' },
+    { name: 'Input', htmlAttribute: 'input', cssClass: 'input-field' },
+    { name: 'Icon container', htmlAttribute: 'iconContainer', cssClass: 'input-icon-container' },
+    { name: 'Validation icon', htmlAttribute: 'validationIcon', cssClass: 'input-validation-icon' },
   ],
   usageExamples: [
     {

@@ -17,8 +17,8 @@ function SearchBarExample() {
 export const searchBarDoc: ComponentDoc = {
   name: 'SearchBar',
   category: 'Inputs',
-  description: 'An input with a search button for filtering and querying.',
-  overview: 'SearchBar is a purpose-built input for search and filtering workflows. It combines a text field with a dedicated search button, signaling to users that the field is specifically for querying content. Use it for filtering lists, searching databases, or any find-as-you-type experience. The onSearch callback fires when the user clicks the button or presses Enter, while onChange fires on every keystroke for real-time filtering.',
+  description: 'Text field with a search button for filtering or querying content.',
+  overview: 'Combines a text field with a search button. Fires onSearch on button click or Enter, and onChange on every keystroke.',
   props: [
     { name: 'value', type: 'string', default: '—', description: 'Controlled input value. Required.' },
     { name: 'placeholder', type: 'string', default: '—', description: 'Placeholder text.' },
@@ -38,10 +38,10 @@ export const searchBarDoc: ComponentDoc = {
   placeholder="Search..."
 />`,
   anatomy: [
-    { name: 'Container', htmlAttribute: '—', cssClass: '—' },
-    { name: 'Search icon', htmlAttribute: '—', cssClass: '—' },
-    { name: 'Search input', htmlAttribute: '—', cssClass: '—' },
-    { name: 'Search button', htmlAttribute: '—', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'search-bar-root' },
+    { name: 'Icon', htmlAttribute: 'icon', cssClass: 'search-bar-icon' },
+    { name: 'Input', htmlAttribute: 'input', cssClass: 'search-bar-input' },
+    { name: 'Button', htmlAttribute: 'button', cssClass: 'search-bar-button' },
   ],
   usageExamples: [
     {

@@ -58,6 +58,11 @@ import {
   CloudRainIcon,
   CloudSnowIcon,
   WindIcon,
+  PencilIcon,
+  SettingsIcon,
+  SearchIcon,
+  TrashIcon,
+  ShareIcon,
 } from 'lucide-react';
 
 const liveScope = {
@@ -102,6 +107,11 @@ const liveScope = {
   CloudRainIcon,
   CloudSnowIcon,
   WindIcon,
+  PencilIcon,
+  SettingsIcon,
+  SearchIcon,
+  TrashIcon,
+  ShareIcon,
 };
 
 const highlighter = createHighlighterCoreSync({

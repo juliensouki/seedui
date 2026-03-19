@@ -18,8 +18,8 @@ function TagSelectorExample() {
 export const tagSelectorDoc: ComponentDoc = {
   name: 'TagSelector',
   category: 'Inputs',
-  description: 'An input for adding and removing tags.',
-  overview: 'TagSelector is an input that lets users build a list of tags by typing and pressing Enter. Use it for tagging systems, skill selectors, keyword inputs, or any field where users need to enter multiple free-form values. Each tag appears as a removable chip, and the maxTags prop can enforce an upper limit. It combines the functionality of Input and Tag into a single, cohesive control.',
+  description: 'Field for building a list of tags by typing and pressing Enter.',
+  overview: 'An input for creating a list of tags. Type a value and press Enter to add it. Each tag can be removed individually. Supports a maximum tag limit.',
   props: [
     { name: 'tags', type: 'string[]', default: '—', description: 'Current list of tags. Required.' },
     { name: 'onAddTag', type: '(tag: string) => void', default: '—', description: 'Called when a tag is added.' },
@@ -41,9 +41,11 @@ export const tagSelectorDoc: ComponentDoc = {
   placeholder="Add a tag..."
 />`,
   anatomy: [
-    { name: 'Root', htmlAttribute: 'rootDiv', cssClass: '—' },
-    { name: 'Input container', htmlAttribute: '—', cssClass: '—' },
-    { name: 'Tags container', htmlAttribute: '—', cssClass: '—' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'tag-selector-root' },
+    { name: 'Input container', htmlAttribute: 'inputContainer', cssClass: 'tag-selector-input-container' },
+    { name: 'Input', htmlAttribute: 'input', cssClass: 'tag-selector-input' },
+    { name: 'Button', htmlAttribute: 'button', cssClass: 'tag-selector-button' },
+    { name: 'Tags container', htmlAttribute: 'tagsContainer', cssClass: 'tag-selector-tags-container' },
   ],
   usageExamples: [
     {

@@ -44,8 +44,11 @@ export interface SelectProps {
   activeItemStyle?: SelectActiveItemStyle;
   disabled?: boolean;
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    selectContainerDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    container?: HTMLAttributes<HTMLDivElement>;
+    arrow?: HTMLAttributes<HTMLDivElement>;
+    menu?: HTMLAttributes<HTMLDivElement>;
+    menuItem?: HTMLAttributes<HTMLDivElement>;
   };
 }
 
@@ -57,8 +60,11 @@ const defaultProps: SelectProps = {
   options: [],
   onChange: () => {},
   elementProps: {
-    rootDiv: {},
-    selectContainerDiv: {},
+    root: {},
+    container: {},
+    arrow: {},
+    menu: {},
+    menuItem: {},
   },
 };
 
@@ -74,7 +80,7 @@ const SelectDiv = applyCustomStyles(
 const SelectContainer = applyCustomStyles(
   styled.div<{ $isFocused: boolean; $disabled?: boolean }>(({ theme, $isFocused, $disabled }) => {
     const isLight = theme.mode === 'light';
-    const baseColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[300];
+    const baseColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[600];
     const activeColor = theme.colors.primary.default;
     const textColor = isLight ? theme.colors.neutral[900] : theme.colors.neutral.white;
 
@@ -89,16 +95,26 @@ const SelectContainer = applyCustomStyles(
           : theme.colors.neutral[200]
         : isLight
         ? theme.colors.neutral.white
-        : theme.colors.neutral[100],
-      color: textColor,
+        : theme.colors.neutral[300],
+      color: $disabled
+        ? isLight
+          ? theme.colors.neutral[400]
+          : theme.colors.neutral[500]
+        : textColor,
       padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
       paddingRight: 0,
       cursor: $disabled ? 'not-allowed' : 'pointer',
 
-      outline: $isFocused ? `2px solid ${theme.colors.primary[200]}` : undefined,
+      outline: $isFocused ? `2px solid ${theme.colors.primary[300]}` : undefined,
       outlineOffset: $isFocused ? 1 : undefined,
       borderColor: theme.colors.primary.default,
       border: `1px solid ${$isFocused ? activeColor : baseColor}`,
+
+      ...(!$disabled && !$isFocused && {
+        '&:hover': {
+          borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+        },
+      }),
 
       '::selection': {
         background: 'transparent',
@@ -209,8 +225,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
       activeItemStyle,
       disabled,
       elementProps: {
-        rootDiv: rootDivHTMLAttributes,
-        selectContainerDiv: selectContainerDivHTMLAttributes,
+        root: rootHTMLAttributes,
+        container: containerHTMLAttributes,
+        arrow: arrowHTMLAttributes,
+        menu: menuHTMLAttributes,
+        menuItem: menuItemHTMLAttributes,
       },
     } = getDefaultProps<SelectProps & InternalProps>({
       providedProps: props,
@@ -279,8 +298,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
     const handleContainerMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
       if (disabled) return;
       const target = e.target as HTMLElement;
-      if (target.closest('.select-arrow-container')) return;
-      if (target.closest('.select-menu-container')) return;
+      if (target.closest('.select-arrow')) return;
+      if (target.closest('.select-menu')) return;
       inputRef.current?.focus();
       setActiveItemInMenu(0);
       setIsMenuOpen(true);
@@ -307,11 +326,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
 
     return (
       <SelectDiv
-        {...rootDivHTMLAttributes}
+        {...rootHTMLAttributes}
         ref={containerRef}
         $width={width}
         $customizations={customizations.components?.select}
-        className={joinClasses('select-root', rootDivHTMLAttributes?.className)}
+        className={joinClasses('select-root', rootHTMLAttributes?.className)}
       >
         {label && (
           <Text variant="caption" className={labelClassName} style={{ marginBottom: 4, ...labelStyle }}>
@@ -320,7 +339,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
         )}
 
         <SelectContainer
-          {...selectContainerDivHTMLAttributes}
+          {...containerHTMLAttributes}
           onFocus={handleContainerFocus}
           onBlur={handleContainerBlur}
           onKeyDown={handleKeyboard}
@@ -328,7 +347,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
           $isFocused={isMenuOpen}
           $disabled={disabled}
           $customizations={customizations.components?.select}
-          className={joinClasses('select-container', selectContainerDivHTMLAttributes?.className)}
+          className={joinClasses('select-container', containerHTMLAttributes?.className)}
         >
           {activeItem?.icon && (
             <div style={{ display: 'flex', alignItems: 'center', paddingRight: 6 }}>
@@ -363,7 +382,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
             </SelectDisplay>
           )}
 
-          <SelectArrowContainer className="select-arrow-container">
+          <SelectArrowContainer {...arrowHTMLAttributes} className={joinClasses('select-arrow', arrowHTMLAttributes?.className)}>
             <ExpandArrow
               isExpanded={isMenuOpen}
               id={`${uniqueId}-select-arrow`}
@@ -374,9 +393,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
 
           {isMenuOpen && (
             <SelectMenu
+              {...menuHTMLAttributes}
               $menuHeight={menuHeight}
               $customizations={customizations.components?.select}
-              className="select-menu-container"
+              className={joinClasses('select-menu', menuHTMLAttributes?.className)}
             >
               {options.length === 0 ? (
                 <MenuItem option={{ label: noOptionMessage, value: null }} index={0} />
@@ -393,6 +413,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
                     selectUniqueId={uniqueId}
                     onHover={(i: number) => setActiveItemInMenu(i)}
                     activeItemStyle={activeItemStyle}
+                    htmlAttributes={menuItemHTMLAttributes}
                   />
                 ))
               )}

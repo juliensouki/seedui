@@ -1,5 +1,5 @@
 import { iconButtonDoc as doc } from '../../../data/components/icon-button';
-import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../components/mdx/ComponentParts';
+import { OverviewDemo, ImportSection, PropsSection } from '../../../components/mdx/ComponentParts';
 import { ComponentPlayground } from '../../../components/ComponentPlayground';
 
 export const meta = {
@@ -13,7 +13,7 @@ export const meta = {
 
 <OverviewDemo example={doc.example} />
 
-IconButton is a compact button that renders a single icon without a text label. Use it for toolbar actions, inline controls, or anywhere space is limited and the icon alone communicates the action clearly. It shares the same variant and color system as Button, so you can mix both in the same UI while keeping a consistent look. Pair it with a Tooltip when the icon meaning might not be immediately obvious to all users.
+An icon-only alternative to Button, useful when space is tight or a label isn't needed. Shares the same variants and colors as Button. Pair with a Tooltip when the icon meaning isn't obvious.
 </section>
 
 <ImportSection name={doc.name} />
@@ -45,7 +45,5 @@ A disabled IconButton is visually muted and non-interactive. Use it when the act
 
 <ComponentPlayground code={doc.usageExamples[3].code} />
 </section>
-
-<AnatomySection name={doc.name} anatomy={doc.anatomy} />
 
 <PropsSection props={doc.props} />

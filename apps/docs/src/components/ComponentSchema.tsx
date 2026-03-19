@@ -81,10 +81,10 @@ const Placeholder = styled('div')<{ $grow?: boolean }>(({ theme, $grow }) => {
 const SearchBarSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>SearchBarContainer</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Row>
         <Box $dashed>
-          <BoxLabel>IconWrapper</BoxLabel>
+          <BoxLabel>Icon</BoxLabel>
           <Placeholder>
             <svg
               width="16"
@@ -102,11 +102,11 @@ const SearchBarSchema: FunctionComponent = () => (
           </Placeholder>
         </Box>
         <Box $dashed style={{ flex: 1 }}>
-          <BoxLabel>SearchInput</BoxLabel>
+          <BoxLabel>Input</BoxLabel>
           <Placeholder $grow>Search...</Placeholder>
         </Box>
         <Box $dashed>
-          <BoxLabel>SearchButton</BoxLabel>
+          <BoxLabel>Button</BoxLabel>
           <Placeholder>Search</Placeholder>
         </Box>
       </Row>
@@ -117,19 +117,19 @@ const SearchBarSchema: FunctionComponent = () => (
 const InputSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>ContainerWithLabel</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Col>
         <Placeholder>Label</Placeholder>
         <Box $dashed>
-          <BoxLabel>InputContainer</BoxLabel>
+          <BoxLabel>Container</BoxLabel>
           <Row>
             <Box $dashed>
-              <BoxLabel>IconContainer</BoxLabel>
+              <BoxLabel>Icon container</BoxLabel>
               <Placeholder>icon</Placeholder>
             </Box>
-            <Placeholder $grow>InputElement</Placeholder>
+            <Placeholder $grow>Input</Placeholder>
             <Box $dashed>
-              <BoxLabel>ValidationIcon</BoxLabel>
+              <BoxLabel>Validation icon</BoxLabel>
               <Placeholder>✓ / ✗</Placeholder>
             </Box>
           </Row>
@@ -166,25 +166,31 @@ const ModalSchema: FunctionComponent = () => (
 const SelectSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>SelectDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Col>
         <Placeholder>Label</Placeholder>
         <Box $dashed>
-          <BoxLabel>SelectContainer</BoxLabel>
+          <BoxLabel>Container</BoxLabel>
           <Row>
-            <Placeholder $grow>SelectDisplay</Placeholder>
+            <Placeholder>icon</Placeholder>
+            <Placeholder $grow>Display</Placeholder>
             <Box $dashed>
-              <BoxLabel>ArrowContainer</BoxLabel>
+              <BoxLabel>Arrow</BoxLabel>
               <Placeholder>▾</Placeholder>
             </Box>
           </Row>
         </Box>
         <Box $dashed>
-          <BoxLabel>SelectMenu</BoxLabel>
+          <BoxLabel>Menu</BoxLabel>
           <Col>
-            <Placeholder>MenuItem</Placeholder>
-            <Placeholder>MenuItem</Placeholder>
-            <Placeholder>MenuItem</Placeholder>
+            <Box $dashed>
+              <BoxLabel>Menu item</BoxLabel>
+              <Placeholder>option</Placeholder>
+            </Box>
+            <Box $dashed>
+              <BoxLabel>Menu item</BoxLabel>
+              <Placeholder>option</Placeholder>
+            </Box>
           </Col>
         </Box>
       </Col>
@@ -226,28 +232,29 @@ const StepperSchema: FunctionComponent = () => (
 const TagSelectorSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>ContainerWithLabel</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Col>
         <Placeholder>Label</Placeholder>
         <Box $dashed>
-          <BoxLabel>TagSelectorContainer</BoxLabel>
-          <Col>
-            <Box $dashed>
-              <BoxLabel>InputContainer</BoxLabel>
-              <Row>
-                <Placeholder $grow>TagInput</Placeholder>
-                <Placeholder>AddButton</Placeholder>
-              </Row>
+          <BoxLabel>Input container</BoxLabel>
+          <Row>
+            <Box $dashed style={{ flex: 1 }}>
+              <BoxLabel>Input</BoxLabel>
+              <Placeholder $grow>text</Placeholder>
             </Box>
             <Box $dashed>
-              <BoxLabel>TagsContainer</BoxLabel>
-              <Row>
-                <Placeholder>Tag</Placeholder>
-                <Placeholder>Tag</Placeholder>
-                <Placeholder>Tag</Placeholder>
-              </Row>
+              <BoxLabel>Button</BoxLabel>
+              <Placeholder>Add</Placeholder>
             </Box>
-          </Col>
+          </Row>
+        </Box>
+        <Box $dashed>
+          <BoxLabel>Tags container</BoxLabel>
+          <Row>
+            <Placeholder>Tag</Placeholder>
+            <Placeholder>Tag</Placeholder>
+            <Placeholder>Tag</Placeholder>
+          </Row>
         </Box>
       </Col>
     </Box>
@@ -374,11 +381,11 @@ const TextSchema: FunctionComponent = () => (
 const TextareaSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>ContainerWithLabel</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Col>
         <Placeholder>Label</Placeholder>
         <Box $dashed>
-          <BoxLabel>TextareaElement</BoxLabel>
+          <BoxLabel>Input</BoxLabel>
           <Placeholder $grow>text content</Placeholder>
         </Box>
       </Col>
@@ -389,15 +396,11 @@ const TextareaSchema: FunctionComponent = () => (
 const ToggleSchema: FunctionComponent = () => (
   <SchemaWrapper>
     <Box>
-      <BoxLabel>RootDiv</BoxLabel>
+      <BoxLabel>Root</BoxLabel>
       <Row>
         <Box $dashed>
           <BoxLabel>Input</BoxLabel>
-          <Placeholder>hidden checkbox</Placeholder>
-        </Box>
-        <Box $dashed>
-          <BoxLabel>Track</BoxLabel>
-          <Placeholder>Thumb</Placeholder>
+          <Placeholder>checkbox</Placeholder>
         </Box>
         <Box $dashed>
           <BoxLabel>Label</BoxLabel>

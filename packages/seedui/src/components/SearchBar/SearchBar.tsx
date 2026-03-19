@@ -1,4 +1,4 @@
-import { ChangeEventHandler, ForwardedRef, forwardRef, useContext, useState } from 'react';
+import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, useContext, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
@@ -20,6 +20,12 @@ export interface SearchBarProps {
   buttonLabel?: string;
   hideButton?: boolean;
   className?: string;
+  elementProps?: {
+    root?: HTMLAttributes<HTMLDivElement>;
+    icon?: HTMLAttributes<HTMLDivElement>;
+    input?: HTMLAttributes<HTMLInputElement>;
+    button?: HTMLAttributes<HTMLButtonElement>;
+  };
 }
 
 const defaultProps: SearchBarProps = {
@@ -34,21 +40,39 @@ const defaultProps: SearchBarProps = {
   hideButton: false,
 };
 
-const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; width?: string | number; hideButton?: boolean }>>(
-  ({ theme, $isFocused, $width, $hideButton }) => {
+const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; disabled?: boolean; width?: string | number; hideButton?: boolean }>>(
+  ({ theme, $isFocused, $disabled, $width, $hideButton }) => {
     const isLight = theme.mode === 'light';
     return {
       display: 'flex',
       alignItems: 'center',
       width: $width,
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
+      backgroundColor: $disabled
+        ? isLight
+          ? theme.colors.neutral[100]
+          : theme.colors.neutral[200]
+        : isLight
+        ? theme.colors.neutral.white
+        : theme.colors.neutral[300],
       padding: $hideButton
         ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px`
         : `${theme.spacing(0.5)}px`,
       borderRadius: theme.borderRadius(4),
-      border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[500]}`,
+      border: `1px solid ${$disabled
+        ? isLight
+          ? theme.colors.neutral[200]
+          : theme.colors.neutral[400]
+        : isLight
+        ? theme.colors.neutral[200]
+        : theme.colors.neutral[500]}`,
 
-      ...($isFocused && {
+      ...(!$disabled && !$isFocused && {
+        '&:hover': {
+          borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+        },
+      }),
+
+      ...($isFocused && !$disabled && {
         outline: `2px solid ${theme.colors.primary[300]}`,
         outlineOffset: 1,
         borderColor: theme.colors.primary.default,
@@ -97,7 +121,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const { spacing } = useTheme();
 
-    const { value, placeholder, disabled, inputValidation, width, onChange, onSearch, buttonLabel, hideButton, className } =
+    const { value, placeholder, disabled, inputValidation, width, onChange, onSearch, buttonLabel, hideButton, className, elementProps = {} } =
       getDefaultProps<SearchBarProps & InternalProps>({
         providedProps: props,
         globalDefaultProps: customizations?.components?.searchBar?.defaultProps,
@@ -106,13 +130,15 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
 
     return (
       <SearchBarContainer
-        className={joinClasses(className)}
+        {...elementProps.root}
+        className={joinClasses('search-bar-root', className, elementProps.root?.className)}
         $width={width}
         $customizations={customizations.components?.searchBar}
         $isFocused={isFocused}
+        $disabled={disabled}
         $hideButton={hideButton}
       >
-        <IconWrapper>
+        <IconWrapper {...elementProps.icon} className={joinClasses('search-bar-icon', elementProps.icon?.className)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -134,6 +160,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
           disabled={disabled}
           inputValidation={inputValidation}
           width="100%"
+          className="search-bar-input"
           elementProps={{
             input: {
               style: {
@@ -147,7 +174,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
         />
 
         {!hideButton && (
-          <SearchButton onClick={onSearch} disabled={disabled}>
+          <SearchButton onClick={onSearch} disabled={disabled} className="search-bar-button">
             {buttonLabel}
           </SearchButton>
         )}

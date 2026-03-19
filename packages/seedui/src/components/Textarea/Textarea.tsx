@@ -21,8 +21,8 @@ export interface TextareaProps {
     labelTextProps?: TextPropsAndAttributes;
   };
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    textarea?: HTMLAttributes<HTMLTextAreaElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
+    input?: HTMLAttributes<HTMLTextAreaElement>;
   };
   isResizable?: boolean;
 }
@@ -36,8 +36,8 @@ const defaultProps: TextareaProps = {
     labelTextProps: {},
   },
   elementProps: {
-    rootDiv: {},
-    textarea: {},
+    root: {},
+    input: {},
   },
 };
 
@@ -78,6 +78,7 @@ const TextareaElement = applyCustomStyles(
       '&:disabled': {
         backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
         borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
+        color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
 
         '&::placeholder': {
           color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
@@ -108,15 +109,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
     });
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width} className="textarea-root">
         <TextareaElement
-          {...elementProps.textarea}
+          {...elementProps.input}
           ref={forwardedRef}
           disabled={disabled}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className={joinClasses(className, elementProps?.textarea?.className)}
+          className={joinClasses('textarea-input', className, elementProps?.input?.className)}
           $customizations={customizations.components?.textarea}
           $isResizable={isResizable}
         />

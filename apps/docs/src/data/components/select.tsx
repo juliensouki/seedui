@@ -22,8 +22,8 @@ function SelectExample() {
 export const selectDoc: ComponentDoc = {
   name: 'Select',
   category: 'Inputs',
-  description: 'A dropdown select component with search filtering.',
-  overview: 'Select is a dropdown component for choosing a single value from a predefined list of options. It includes built-in search filtering, making it suitable for both short lists and longer option sets. Use it for form fields where the user must pick from a known set of values — such as country selectors, category pickers, or role assignments. Each option can include an optional icon for richer visual context. For free-form text entry, use Input instead.',
+  description: 'Dropdown for picking a single value from a list of options.',
+  overview: 'A dropdown for selecting one value from a list. Options can include icons. For free-form text, use Input instead.',
   props: [
     { name: 'options', type: 'SelectOption[]', default: '—', description: 'Array of { value, label, icon? }. Required.' },
     { name: 'onChange', type: '(value: string | null) => void', default: '—', description: 'Called when selection changes. Required.' },
@@ -36,11 +36,11 @@ export const selectDoc: ComponentDoc = {
     { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the select.' },
   ],
   anatomy: [
-    { name: 'Root', htmlAttribute: 'elementProps.rootDiv', cssClass: '.select-root' },
-    { name: 'Select container', htmlAttribute: 'elementProps.selectContainerDiv', cssClass: '.select-container' },
-    { name: 'Input', htmlAttribute: 'inputProps', cssClass: '—' },
-    { name: 'Arrow', htmlAttribute: '—', cssClass: '.select-arrow-container' },
-    { name: 'Menu', htmlAttribute: '—', cssClass: '.select-menu-container' },
+    { name: 'Root', htmlAttribute: 'root', cssClass: 'select-root' },
+    { name: 'Container', htmlAttribute: 'container', cssClass: 'select-container' },
+    { name: 'Arrow', htmlAttribute: 'arrow', cssClass: 'select-arrow' },
+    { name: 'Menu', htmlAttribute: 'menu', cssClass: 'select-menu' },
+    { name: 'Menu item', htmlAttribute: 'menuItem', cssClass: 'select-menu-item' },
   ],
   example: SelectExample,
   code: `const [value, setValue] = useState(null);

@@ -17,7 +17,7 @@ export interface ToggleProps {
   label?: string;
   size?: ToggleSize;
   elementProps?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
+    root?: HTMLAttributes<HTMLDivElement>;
     label?: HTMLAttributes<HTMLLabelElement>;
     input?: HTMLAttributes<HTMLInputElement>;
   };
@@ -28,7 +28,7 @@ const defaultProps: ToggleProps = {
   disabled: false,
   size: 'md',
   elementProps: {
-    rootDiv: {},
+    root: {},
     label: {},
     input: {},
   },
@@ -149,7 +149,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps & InternalProps>(
       disabled,
       label,
       size,
-      elementProps: { rootDiv: rootDivHTMLAttributes, label: labelHTMLAttributes, input: inputHTMLAttributes },
+      elementProps: { root: rootHTMLAttributes, label: labelHTMLAttributes, input: inputHTMLAttributes },
       className,
     } = getDefaultProps<ToggleProps & InternalProps>({
       providedProps: props,
@@ -159,15 +159,15 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps & InternalProps>(
 
     return (
       <ToggleContainer
-        {...rootDivHTMLAttributes}
+        {...rootHTMLAttributes}
         $customizations={customizations.components?.toggle}
-        className={joinClasses(className, rootDivHTMLAttributes?.className)}
+        className={joinClasses('toggle-root', className, rootHTMLAttributes?.className)}
       >
         <ToggleLabel
           {...labelHTMLAttributes}
           $disabled={disabled}
           $customizations={customizations.components?.toggle}
-          className={joinClasses(labelHTMLAttributes?.className)}
+          className={joinClasses('toggle-label', labelHTMLAttributes?.className)}
         >
           <ToggleInput
             {...inputHTMLAttributes}
@@ -180,7 +180,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps & InternalProps>(
             $size={size}
             $checked={checked}
             $customizations={customizations.components?.toggle}
-            className={joinClasses(inputHTMLAttributes?.className)}
+            className={joinClasses('toggle-input', inputHTMLAttributes?.className)}
             aria-checked={checked}
           />
           {label && <ToggleLabelText>{label}</ToggleLabelText>}
