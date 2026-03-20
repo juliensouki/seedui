@@ -20,7 +20,7 @@ export const cardDoc: ComponentDoc = {
     { name: 'variant', type: "'default' | 'outlined'", default: "'default'", description: 'Visual style of the card.' },
   ],
   example: CardExample,
-  code: `<Card variant="default">
+  code: `<Card variant="default" elementProps={{ rootDiv: { style: { padding: '16px 20px' } } }}>
   <Text variant="h6">Title</Text>
   <Text variant="p">Content goes here.</Text>
 </Card>`,
@@ -29,7 +29,7 @@ export const cardDoc: ComponentDoc = {
     {
       title: 'Default variant',
       description: 'The default card has a subtle background and shadow, giving it a slightly elevated look that works well for dashboard widgets and content panels.',
-      code: `<Card>
+      code: `<Card elementProps={{ rootDiv: { style: { padding: '16px 20px' } } }}>
   <Text variant="h6">Dashboard Widget</Text>
   <Text variant="p" style={{ marginTop: 8 }}>
     This card uses the default variant with a soft elevation.
@@ -39,7 +39,7 @@ export const cardDoc: ComponentDoc = {
     {
       title: 'Outlined variant',
       description: 'The outlined variant uses a border instead of a shadow for a flatter appearance. It works well when you want clear boundaries without depth.',
-      code: `<Card variant="outlined">
+      code: `<Card variant="outlined" elementProps={{ rootDiv: { style: { padding: '16px 20px' } } }}>
   <Text variant="h6">Settings Panel</Text>
   <Text variant="p" style={{ marginTop: 8 }}>
     This card uses the outlined variant with a border.

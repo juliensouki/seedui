@@ -1,19 +1,19 @@
 import { Children, FunctionComponent, isValidElement, MouseEvent, ReactNode, useState } from 'react';
 import { Text, Divider } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
-import { CodeBlock } from '../CodeBlock';
+import { CodeBlock } from '../content/CodeBlock';
 import { CheckIcon, LinkIcon } from 'lucide-react';
 
-const StyledSection = styled('section')(() => ({
-  marginBottom: 72,
+const StyledSection = styled('section')(({ theme }) => ({
+  marginBottom: theme.spacing(9),
 }));
 
 const InlineCode = styled('code')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
-    padding: '2px 6px',
-    borderRadius: 4,
+    padding: `${theme.spacing(0.25)}px ${theme.spacing(0.75)}px`,
+    borderRadius: theme.borderRadius(2),
     fontSize: '0.9em',
     fontFamily: "'SF Mono', 'Fira Code', monospace",
   };
@@ -31,7 +31,7 @@ const AnchorButton = styled('button')(({ theme }) => ({
   transition: 'opacity 0.2s ease',
   color: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral.white,
   cursor: 'pointer',
-  marginLeft: 8,
+  marginLeft: theme.spacing(1),
   verticalAlign: 'middle',
 }));
 
@@ -112,9 +112,9 @@ const p: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
   <Text variant="p" style={{ marginBottom: 22 }}>{children}</Text>
 );
 
-const CodeBlockWrapper = styled('div')(() => ({
-  marginTop: 12,
-  marginBottom: 28,
+const CodeBlockWrapper = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(1.5),
+  marginBottom: theme.spacing(3.5),
 }));
 
 const code: FunctionComponent<{ children?: string; className?: string }> = ({ children, className }) => {

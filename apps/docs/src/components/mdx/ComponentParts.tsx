@@ -1,10 +1,10 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Text } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
-import { CodeBlock } from '../CodeBlock';
-import { PropsTable } from '../PropsTable';
-import { ComponentSchema } from '../ComponentSchema';
-import { ComponentDemo } from '../ComponentDemo';
+import { CodeBlock } from '../content/CodeBlock';
+import { PropsTable } from '../content/PropsTable';
+import { ComponentSchema } from '../content/ComponentSchema';
+import { ComponentDemo } from '../content/ComponentDemo';
 import { SectionHeading } from './MDXComponents';
 import type { PropDef, AnatomyPart } from '../../docs/types';
 
@@ -13,9 +13,9 @@ const AnatomyTable = styled('table')(({ theme }) => {
   return {
     width: '100%',
     borderCollapse: 'collapse' as const,
-    fontSize: 14,
+    fontSize: theme.typography.p.fontSize,
     fontFamily: 'inherit',
-    marginTop: 20,
+    marginTop: theme.spacing(2.5),
     color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[800],
   };
 });
@@ -24,9 +24,9 @@ const AnatomyTh = styled('th')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     textAlign: 'left' as const,
-    padding: '10px 16px 10px 0',
+    padding: `${theme.spacing(1.25)}px ${theme.spacing(2)}px ${theme.spacing(1.25)}px 0`,
     fontWeight: 600,
-    fontSize: 12,
+    fontSize: theme.typography.caption.fontSize,
     textTransform: 'uppercase' as const,
     letterSpacing: '0.04em',
     color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
@@ -37,7 +37,7 @@ const AnatomyTh = styled('th')(({ theme }) => {
 const AnatomyTd = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: `${theme.spacing(2)}px 16px ${theme.spacing(2)}px 0`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(2)}px 0`,
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
@@ -48,11 +48,11 @@ const MonoCode = styled('code')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
-    fontSize: 12,
+    fontSize: theme.typography.caption.fontSize,
     color: isLight ? theme.colors.neutral[600] : theme.colors.neutral[800],
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
-    padding: '2px 6px',
-    borderRadius: 4,
+    padding: `${theme.spacing(0.25)}px ${theme.spacing(0.75)}px`,
+    borderRadius: theme.borderRadius(2),
   };
 });
 
@@ -64,7 +64,7 @@ export const OverviewDemo: FunctionComponent<{ example: FunctionComponent; previ
     : previewBgProp;
   useEffect(() => { setMounted(true); }, []);
   return (
-    <div style={{ marginBottom: 20 }}>
+    <div style={{ marginBottom: theme.spacing(2.5) }}>
       <ComponentDemo style={previewBg ? { backgroundColor: previewBg } : undefined}>{mounted ? <Example /> : null}</ComponentDemo>
     </div>
   );

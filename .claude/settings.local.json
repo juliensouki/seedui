@@ -41,7 +41,8 @@
       "Bash(find C:/Users/julie/Documents/Projects/seedui -maxdepth 3 -type f \\\\\\(-name jest.config.* -o -name vitest.config.* -o -name *.test.* -o -name *.spec.* \\\\\\) ! -path */node_modules/*)",
       "Bash(npx eslint:*)",
       "Bash(yarn run:*)",
-      "Bash(find \"C:\\\\Users\\\\julie\\\\Documents\\\\Projects\\\\seedui\\\\packages\\\\seedui\\\\src\\\\components\" -name \"*.tsx\" -exec grep -l \"styled\\\\.\" {})"
+      "Bash(find \"C:\\\\Users\\\\julie\\\\Documents\\\\Projects\\\\seedui\\\\packages\\\\seedui\\\\src\\\\components\" -name \"*.tsx\" -exec grep -l \"styled\\\\.\" {})",
+      "Bash(find C:UsersjulieDocumentsProjectsseedui/packages/seedui/src -type f -name *theme*)"
     ]
   }
 }

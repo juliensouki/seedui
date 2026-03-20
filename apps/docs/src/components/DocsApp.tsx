@@ -1,15 +1,15 @@
 import { FunctionComponent, useEffect, useState, useCallback, lazy, Suspense } from 'react';
-import { DocsShell } from './DocsShell';
-import { HomePage } from './HomePage';
+import { DocsShell } from './layout/DocsShell';
+import { HomePage } from '../docs/home/HomePage';
 import { MDXPageLayout } from './mdx/MDXPageLayout';
 import { ComponentMDXLayout } from './mdx/ComponentMDXLayout';
 import { componentDocs } from '../docs/components';
-import { ColorsPage } from './pages/tokens/ColorsPage';
-import { TypographyPage } from './pages/tokens/TypographyPage';
-import { SpacingPage } from './pages/tokens/SpacingPage';
-import { BorderRadiusPage } from './pages/tokens/BorderRadiusPage';
-import { BoxShadowPage } from './pages/tokens/BoxShadowPage';
-import { BreakpointsPage } from './pages/tokens/BreakpointsPage';
+import { ColorsPage } from '../docs/theme/colors/ColorsPage';
+import { TypographyPage } from '../docs/theme/typography/TypographyPage';
+import { SpacingPage } from '../docs/theme/spacing/SpacingPage';
+import { BorderRadiusPage } from '../docs/theme/border-radius/BorderRadiusPage';
+import { BoxShadowPage } from '../docs/theme/box-shadow/BoxShadowPage';
+import { BreakpointsPage } from '../docs/theme/breakpoints/BreakpointsPage';
 
 // MDX content imports (compiled as React components via @mdx-js/rollup)
 import InstallationContent, { meta as installationMeta } from '../docs/getting-started/installation/installation.mdx';

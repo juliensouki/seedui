@@ -3,8 +3,8 @@ import { Text, Divider, IconButton } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { FigmaIcon, GithubIcon } from 'lucide-react';
 import { MDXProvider } from '@mdx-js/react';
-import { TableOfContents } from '../TableOfContents';
-import { PageNavigation } from '../PageNavigation';
+import { TableOfContents } from '../layout/TableOfContents';
+import { PageNavigation } from '../layout/PageNavigation';
 import { mdxComponents, SectionHeading } from './MDXComponents';
 
 interface ComponentMDXLayoutProps {
@@ -19,11 +19,11 @@ const PageLayout = styled('div')(() => ({
   alignItems: 'flex-start',
 }));
 
-const MainContent = styled('div')(() => ({
+const MainContent = styled('div')(({ theme }) => ({
   flex: 1,
   minWidth: 0,
   '& section': {
-    marginBottom: 40,
+    marginBottom: theme.spacing(5),
   },
 }));
 
@@ -44,9 +44,9 @@ export const ComponentMDXLayout: FunctionComponent<ComponentMDXLayoutProps> = ({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
             <SectionHeading variant="h3" as="h1">{name}</SectionHeading>
-            <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
+            <Text variant="p" style={{ marginTop: theme.spacing(1), color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
           </div>
-          <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: theme.spacing(1), flexShrink: 0 }}>
             <IconButton variant="transparent" color="neutral" size="sm">
               <FigmaIcon size={16} strokeWidth={1.8} />
             </IconButton>
