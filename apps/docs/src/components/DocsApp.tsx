@@ -3,7 +3,7 @@ import { DocsShell } from './DocsShell';
 import { HomePage } from './HomePage';
 import { MDXPageLayout } from './mdx/MDXPageLayout';
 import { ComponentMDXLayout } from './mdx/ComponentMDXLayout';
-import { componentDocs } from '../data/components';
+import { componentDocs } from '../docs/components';
 import { ColorsPage } from './pages/tokens/ColorsPage';
 import { TypographyPage } from './pages/tokens/TypographyPage';
 import { SpacingPage } from './pages/tokens/SpacingPage';
@@ -12,16 +12,16 @@ import { BoxShadowPage } from './pages/tokens/BoxShadowPage';
 import { BreakpointsPage } from './pages/tokens/BreakpointsPage';
 
 // MDX content imports (compiled as React components via @mdx-js/rollup)
-import InstallationContent, { meta as installationMeta } from '../content/installation.mdx';
-import QuickStartContent, { meta as quickStartMeta } from '../content/quick-start.mdx';
-import ThemeProviderContent, { meta as themeProviderMeta } from '../content/theming/theme-provider.mdx';
-import CustomizationContent, { meta as customizationMeta } from '../content/theming/customization.mdx';
-import DarkModeContent, { meta as darkModeMeta } from '../content/theming/dark-mode.mdx';
-import ComponentStylesContent, { meta as componentStylesMeta } from '../content/theming/component-styles.mdx';
-import DefaultPropsContent, { meta as defaultPropsMeta } from '../content/theming/default-props.mdx';
+import InstallationContent, { meta as installationMeta } from '../docs/getting-started/installation/installation.mdx';
+import QuickStartContent, { meta as quickStartMeta } from '../docs/getting-started/quick-start/quick-start.mdx';
+import ThemeProviderContent, { meta as themeProviderMeta } from '../docs/theme/theme-provider/theme-provider.mdx';
+import CustomizationContent, { meta as customizationMeta } from '../docs/theme/customization/customization.mdx';
+import DarkModeContent, { meta as darkModeMeta } from '../docs/theme/dark-mode/dark-mode.mdx';
+import ComponentStylesContent, { meta as componentStylesMeta } from '../docs/theme/component-styles/component-styles.mdx';
+import DefaultPropsContent, { meta as defaultPropsMeta } from '../docs/theme/default-props/default-props.mdx';
 
 // Component MDX modules (eager load)
-const componentMdxModules = import.meta.glob('../content/components/*.mdx', { eager: true }) as Record<string, { default: FunctionComponent; meta?: any }>;
+const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { eager: true }) as Record<string, { default: FunctionComponent; meta?: any }>;
 
 interface DocsAppProps {
   initialPath: string;

@@ -1,0 +1,51 @@
+import { avatarStackDoc as doc } from './data';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../../components/mdx/ComponentParts';
+import { ComponentPlayground } from '../../../../components/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+Renders avatars in an overlapping row. Use max to limit visible avatars — overflow shows as a "+N" badge.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Basic stack
+
+Avatars overlap naturally. Each avatar receives a border to maintain visual separation.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### With overflow
+
+Set max to limit visible avatars. A "+N" indicator shows how many are hidden.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Sizes
+
+The size prop controls all avatars in the stack uniformly.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+
+### Direction
+
+Controls which avatar appears on top. "left" (default) puts the first avatar on top, "right" puts the last on top.
+
+<ComponentPlayground code={doc.usageExamples[3].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

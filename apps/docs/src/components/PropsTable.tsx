@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import styled from '@seedui-react/seedui/sc';
-import { PropDef } from '../data/components';
+import { PropDef } from '../docs/components';
 
 const Table = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';

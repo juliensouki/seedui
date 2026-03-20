@@ -1,8 +1,8 @@
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
 import { ThemeProvider, colors, Mode } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
-import { componentDocs, categoryOrder } from '../data/components';
-import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from '../data/navigation';
+import { componentDocs, categoryOrder } from '../docs/components';
+import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from '../docs/navigation';
 import { Topbar } from './Topbar';
 import { ModeToggleContext } from './ModeContext';
 import { MobileMenuContext } from './MobileMenuContext';
@@ -38,6 +38,10 @@ const Content = styled('main')(({ theme }) => {
     },
     '& code': {
       backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
+      fontFamily: "'SF Mono', 'Fira Code', 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace",
+      fontSize: '0.9em',
+      padding: '2px 6px',
+      borderRadius: 4,
     },
   };
 });
@@ -123,9 +127,9 @@ export const DocsShell: FunctionComponent<DocsShellProps> = ({ currentPath, chil
     if (root) root.style.visibility = 'visible';
     const bar = document.getElementById('page-progress');
     if (bar) {
-      bar.classList.remove('loading');
-      bar.classList.add('done');
-      setTimeout(() => bar.classList.add('hide'), 200);
+      bar.style.width = '100%';
+      bar.style.transition = 'width 0.15s ease';
+      setTimeout(() => { bar.style.opacity = '0'; bar.style.transition = 'opacity 0.3s ease'; }, 200);
       setTimeout(() => bar.remove(), 600);
     }
   }, []);

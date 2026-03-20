@@ -2,7 +2,7 @@ import { ChangeEvent, FunctionComponent, useContext, useEffect, useMemo, useStat
 import { Toggle, Mode, Popover, Text, Tag, IconButton, SearchBar } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
-import { allPages, NavPage } from '../data/navigation';
+import { allPages, NavPage } from '../docs/navigation';
 import { MobileMenuContext } from './MobileMenuContext';
 
 const Bar = styled('header')(({ theme }) => {

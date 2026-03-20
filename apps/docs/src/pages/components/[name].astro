@@ -1,7 +1,7 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { DocsApp } from '../../components/DocsApp';
-import { componentDocs } from '../../data/components';
+import { componentDocs } from '../../docs/components';
 
 export function getStaticPaths() {
   return componentDocs.map((doc) => ({

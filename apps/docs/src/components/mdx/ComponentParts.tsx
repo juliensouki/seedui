@@ -6,7 +6,7 @@ import { PropsTable } from '../PropsTable';
 import { ComponentSchema } from '../ComponentSchema';
 import { ComponentDemo } from '../ComponentDemo';
 import { SectionHeading } from './MDXComponents';
-import type { PropDef, AnatomyPart } from '../../data/components/types';
+import type { PropDef, AnatomyPart } from '../../docs/types';
 
 const AnatomyTable = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';

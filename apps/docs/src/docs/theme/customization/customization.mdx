@@ -1,0 +1,306 @@
+import { Table, Th, Td } from '../../../components/StyledTable';
+import { ColorPalettePreview } from '../../../components/ColorPalettePreview';
+import { ComponentPlayground } from '../../../components/ComponentPlayground';
+
+export const meta = {
+  title: 'Customization',
+  description: "Override any design token or component behavior through the ThemeProvider's theme prop.",
+  toc: [
+    { id: 'section-overview', label: 'Overview' },
+    { id: 'section-colors', label: 'Colors' },
+    { id: 'section-spacing', label: 'Spacing' },
+    { id: 'section-typography', label: 'Typography' },
+    { id: 'section-border-radius', label: 'Border Radius' },
+    { id: 'section-box-shadow', label: 'Box Shadow' },
+    { id: 'section-breakpoints', label: 'Breakpoints' },
+    { id: 'section-components', label: 'Components' },
+  ],
+};
+
+<section id="section-overview">
+## Overview
+
+The `ThemeCustomization` object lets you tailor seedui to match your design system.
+Pass it to the `theme` prop on `ThemeProvider` and every component in the
+tree will pick up your overrides.
+
+```tsx
+import { ThemeProvider, ThemeCustomization } from '@seedui-react/seedui';
+
+const myTheme: ThemeCustomization = {
+  colors: { light: { primary: '#6366f1' } },
+  spacing: 10,
+  typography: { h1: { fontFamily: '"Poppins", sans-serif' } },
+  borderRadius: 4,
+};
+
+function App() {
+  return (
+    <ThemeProvider mode="light" theme={myTheme}>
+      <YourApp />
+    </ThemeProvider>
+  );
+}
+```
+
+The full shape of the customization object:
+
+<Table>
+  <thead>
+    <tr>
+      <Th>Property</Th>
+      <Th>Type</Th>
+      <Th>Description</Th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <Td><code>colors</code></Td>
+      <Td><code>{'{ light?, dark? }'}</code></Td>
+      <Td>Override semantic colors per mode.</Td>
+    </tr>
+    <tr>
+      <Td><code>spacing</code></Td>
+      <Td><code>number</code></Td>
+      <Td>Base size in pixels for the spacing function (default: 8).</Td>
+    </tr>
+    <tr>
+      <Td><code>typography</code></Td>
+      <Td><code>CustomTypographyConfig</code></Td>
+      <Td>Override font family, weight, or responsive sizes for any variant.</Td>
+    </tr>
+    <tr>
+      <Td><code>borderRadius</code></Td>
+      <Td><code>number</code></Td>
+      <Td>Base size in pixels for the border-radius function (default: 2).</Td>
+    </tr>
+    <tr>
+      <Td><code>boxShadow</code></Td>
+      <Td><code>{'{ light?, dark? }'}</code></Td>
+      <Td>Override box-shadow elevation values per mode.</Td>
+    </tr>
+    <tr>
+      <Td><code>breakpoints</code></Td>
+      <Td><code>Partial&lt;Breakpoints&gt;</code></Td>
+      <Td>Override responsive breakpoint values.</Td>
+    </tr>
+    <tr>
+      <Td><code>components</code></Td>
+      <Td><code>CustomComponents</code></Td>
+      <Td>Per-component customization: default props, styles, and conditional styles.</Td>
+    </tr>
+  </tbody>
+</Table>
+</section>
+
+<section id="section-colors">
+## Colors
+
+Override semantic color palettes per mode. You can supply a single hex string for any palette
+and seedui will auto-generate all shades, or provide individual shade overrides for finer
+control.
+
+Available palettes: `primary`, `neutral`, `success`, `info`, `warning`, and `error`.
+
+<ComponentPlayground
+  preview={<ColorPalettePreview />}
+  code={`const myTheme: ThemeCustomization = {
+  colors: {
+    light: {
+      primary: '#e11d48',
+      success: {
+        500: '#0ea5e9',
+        600: '#0284c7',
+      },
+    },
+    dark: {
+      primary: '#fb7185',
+      success: {
+        400: '#fb923c',
+        500: '#f97316',
+      },
+    },
+  },
+};`} />
+
+For the `neutral` palette you can also override the `white` and `black` values alongside shade numbers.
+</section>
+
+<section id="section-spacing">
+## Spacing
+
+The `spacing` property sets the base size in pixels used by the `theme.spacing()` function. The default base is `8`, so `spacing(2)` returns `16`.
+
+```tsx
+const myTheme: ThemeCustomization = {
+  spacing: 10,
+};
+```
+</section>
+
+<section id="section-typography">
+## Typography
+
+Override font family, weight, letter spacing, or responsive sizes for any typography variant.
+Variants: `h1` – `h6`, `p`, `caption`, `small`.
+
+<Table>
+  <thead>
+    <tr>
+      <Th>Property</Th>
+      <Th>Type</Th>
+      <Th>Description</Th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <Td><code>fontFamily</code></Td>
+      <Td><code>string</code></Td>
+      <Td>CSS font-family value.</Td>
+    </tr>
+    <tr>
+      <Td><code>fontWeight</code></Td>
+      <Td><code>string | number</code></Td>
+      <Td>CSS font-weight value.</Td>
+    </tr>
+    <tr>
+      <Td><code>letterSpacing</code></Td>
+      <Td><code>string</code></Td>
+      <Td>CSS letter-spacing value.</Td>
+    </tr>
+    <tr>
+      <Td><code>responsive</code></Td>
+      <Td><code>{'{ desktop?, tablet?, mobile? }'}</code></Td>
+      <Td>Override <code>fontSize</code> and <code>lineHeight</code> per breakpoint.</Td>
+    </tr>
+  </tbody>
+</Table>
+
+```tsx
+const myTheme: ThemeCustomization = {
+  typography: {
+    h1: {
+      fontFamily: '"Poppins", sans-serif',
+      fontWeight: 800,
+      responsive: {
+        desktop: { fontSize: '3rem', lineHeight: 1.1 },
+        tablet:  { fontSize: '2.25rem' },
+        mobile:  { fontSize: '1.75rem' },
+      },
+    },
+    p: {
+      fontFamily: '"Lora", serif',
+    },
+  },
+};
+```
+</section>
+
+<section id="section-border-radius">
+## Border Radius
+
+The `borderRadius` property sets the base size in pixels used by the `theme.borderRadius()` function. The default base is `2`, so `borderRadius(4)` returns `8`. Passing `'full'` always returns `9999`.
+
+```tsx
+const myTheme: ThemeCustomization = {
+  borderRadius: 4,
+};
+```
+</section>
+
+<section id="section-box-shadow">
+## Box Shadow
+
+Override elevation shadow values independently for light and dark modes. Each mode accepts
+partial overrides of the shadow elevation keys.
+
+```tsx
+const myTheme: ThemeCustomization = {
+  boxShadow: {
+    light: {
+      1: '0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06)',
+      2: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)',
+    },
+    dark: {
+      1: '0 2px 8px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3)',
+      2: '0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2)',
+    },
+  },
+};
+```
+</section>
+
+<section id="section-breakpoints">
+## Breakpoints
+
+Override the pixel values for responsive breakpoints. The defaults are:
+
+<Table>
+  <thead>
+    <tr>
+      <Th>Key</Th>
+      <Th>Default</Th>
+      <Th>Description</Th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><Td><code>xs</code></Td><Td><code>450</code></Td><Td>Extra-small screens</Td></tr>
+    <tr><Td><code>sm</code></Td><Td><code>600</code></Td><Td>Small screens</Td></tr>
+    <tr><Td><code>md</code></Td><Td><code>960</code></Td><Td>Medium screens</Td></tr>
+    <tr><Td><code>lg</code></Td><Td><code>1200</code></Td><Td>Large screens</Td></tr>
+    <tr><Td><code>xl</code></Td><Td><code>1550</code></Td><Td>Extra-large screens</Td></tr>
+  </tbody>
+</Table>
+
+The semantic aliases `mobile` (`sm`), `tablet` (`md`),
+and `desktop` (`lg`) can also be remapped.
+
+```tsx
+const myTheme: ThemeCustomization = {
+  breakpoints: {
+    sm: 640,
+    md: 1024,
+    lg: 1280,
+    mobile: 'sm',
+    tablet: 'md',
+    desktop: 'lg',
+  },
+};
+```
+</section>
+
+<section id="section-components">
+## Components
+
+The `components` property lets you set default props, base styles, and conditional
+styles for any seedui component globally. Each component entry accepts:
+
+<Table>
+  <thead>
+    <tr>
+      <Th>Property</Th>
+      <Th>Type</Th>
+      <Th>Description</Th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <Td><code>defaultProps</code></Td>
+      <Td><code>Partial&lt;Props&gt;</code></Td>
+      <Td>Default prop values applied when the consumer doesn't specify them.</Td>
+    </tr>
+    <tr>
+      <Td><code>styles</code></Td>
+      <Td><code>CSSObject</code></Td>
+      <Td>Base style overrides applied to every instance of the component.</Td>
+    </tr>
+    <tr>
+      <Td><code>conditionalStyles</code></Td>
+      <Td><code>Array</code></Td>
+      <Td>An array of <code>{'{ condition, styles }'}</code> entries. Each <code>condition</code> receives <code>(props, theme)</code> and the styles are applied when it returns <code>true</code>.</Td>
+    </tr>
+  </tbody>
+</Table>
+
+All seedui components support global customization. For usage details and examples, see the [Component Styles](/theming/component-styles) and [Default Props](/theming/default-props) pages.
+</section>

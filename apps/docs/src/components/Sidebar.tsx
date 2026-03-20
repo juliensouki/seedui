@@ -2,8 +2,8 @@ import { ChangeEvent, FunctionComponent, useCallback, useContext, useEffect, use
 import { IconButton, SearchBar } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
 import { GithubIcon, FigmaIcon } from 'lucide-react';
-import { ComponentCategory } from '../data/components';
-import { allPages, NavPage, ThemeCategory } from '../data/navigation';
+import { ComponentCategory } from '../docs/components';
+import { allPages, NavPage, ThemeCategory } from '../docs/navigation';
 import { MobileMenuContext } from './MobileMenuContext';
 
 
