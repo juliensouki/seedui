@@ -2247,34 +2247,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@seedui-react/docs-astro@workspace:apps/docs-astro":
-  version: 0.0.0-use.local
-  resolution: "@seedui-react/docs-astro@workspace:apps/docs-astro"
-  dependencies:
-    "@astrojs/mdx": ^4.3.0
-    "@astrojs/react": ^4.2.0
-    "@fontsource-variable/inter": ^5.2.5
-    "@fontsource-variable/source-serif-4": ^5.2.5
-    "@mdx-js/react": ^3.1.1
-    "@mdx-js/rollup": ^3.1.1
-    "@seedui-react/seedui": "link:packages/seedui"
-    "@types/react": ^18.2.0
-    "@types/react-dom": ^18.2.15
-    astro: ^5.7.0
-    lucide-react: ^0.482.0
-    prism-react-renderer: ^2.4.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-live: ^4.1.8
-    react-simple-code-editor: ^0.14.1
-    remark-frontmatter: ^5.0.0
-    remark-mdx-frontmatter: ^5.2.0
-    shiki: ^4.0.2
-    styled-components: ^6.1.15
-    typescript: ^5.8.2
-  languageName: unknown
-  linkType: soft
-
 "@seedui-react/docs@workspace:apps/docs":
   version: 0.0.0-use.local
   resolution: "@seedui-react/docs@workspace:apps/docs"
