@@ -10,108 +10,23 @@ import {
   useContext,
 } from 'react';
 import { LiveProvider, LivePreview, LiveContext } from 'react-live';
-import { themes } from 'prism-react-renderer';
+import { themes, Highlight } from 'prism-react-renderer';
 import SimpleEditor from 'react-simple-code-editor';
 import { createHighlighterCoreSync } from 'shiki/core';
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 import tsx from 'shiki/langs/tsx.mjs';
 import darkPlus from 'shiki/themes/dark-plus.mjs';
-import {
-  Avatar,
-  AvatarStack,
-  Button,
-  Card,
-  Divider,
-  Input,
-  Modal,
-  Popover,
-  SearchBar,
-  Select,
-  Skeleton,
-  Stepper,
-  Tag,
-  TagSelector,
-  Text,
-  Textarea,
-  Toggle,
-  Tooltip,
-  IconButton,
-  ProgressBar,
-} from '@seedui-react/seedui';
+import * as seedui from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
-import {
-  CopyIcon,
-  CheckIcon,
-  GemIcon,
-  CreditCardIcon,
-  BuildingIcon,
-  WalletIcon,
-  SmartphoneIcon,
-  LandmarkIcon,
-  MailIcon,
-  PhoneIcon,
-  MapPinIcon,
-  GlobeIcon,
-  SunIcon,
-  MoonIcon,
-  CloudIcon,
-  CloudRainIcon,
-  CloudSnowIcon,
-  WindIcon,
-  PencilIcon,
-  SettingsIcon,
-  SearchIcon,
-  TrashIcon,
-  ShareIcon,
-} from 'lucide-react';
+import { CopyIcon, CheckIcon } from 'lucide-react';
 
-const liveScope = {
+const baseScope = {
   useState,
   useCallback,
   useMemo,
   styled,
   useTheme,
-  Avatar,
-  AvatarStack,
-  Button,
-  Card,
-  Divider,
-  Input,
-  Modal,
-  Popover,
-  ProgressBar,
-  SearchBar,
-  Select,
-  Skeleton,
-  Stepper,
-  Tag,
-  TagSelector,
-  Text,
-  Textarea,
-  Toggle,
-  Tooltip,
-  IconButton,
-  GemIcon,
-  CreditCardIcon,
-  BuildingIcon,
-  WalletIcon,
-  SmartphoneIcon,
-  LandmarkIcon,
-  MailIcon,
-  PhoneIcon,
-  MapPinIcon,
-  GlobeIcon,
-  SunIcon,
-  MoonIcon,
-  CloudIcon,
-  CloudRainIcon,
-  CloudSnowIcon,
-  WindIcon,
-  PencilIcon,
-  SettingsIcon,
-  SearchIcon,
-  TrashIcon,
-  ShareIcon,
+  ...seedui,
 };
 
 const highlighter = createHighlighterCoreSync({
@@ -122,9 +37,7 @@ const highlighter = createHighlighterCoreSync({
 
 function highlightCode(code: string): string {
   const html = highlighter.codeToHtml(code, { lang: 'tsx', theme: 'dark-plus' });
-  return html
-    .replace(/^<pre[^>]*><code[^>]*>/, '')
-    .replace(/<\/code><\/pre>$/, '');
+  return html.replace(/^<pre[^>]*><code[^>]*>/, '').replace(/<\/code><\/pre>$/, '');
 }
 
 function prepareCode(code: string): { code: string; noInline: boolean } {
@@ -157,9 +70,6 @@ render(<Demo />)`;
   return { code: wrapped, noInline: true };
 }
 
-// Keeps showing the last successfully rendered preview when LivePreview goes blank (error).
-// Works by snapshotting innerHTML when LivePreview has real content, and showing
-// the frozen snapshot via dangerouslySetInnerHTML when it goes empty.
 function StablePreview() {
   const { error, element } = useContext(LiveContext);
   const liveRef = useRef<HTMLDivElement>(null);
@@ -168,7 +78,6 @@ function StablePreview() {
 
   useLayoutEffect(() => {
     if (liveRef.current) {
-      // LivePreview renders a wrapper div. Check if it has actual content inside.
       const wrapper = liveRef.current.firstElementChild;
       if (wrapper && wrapper.childElementCount > 0) {
         snapshotRef.current = liveRef.current.innerHTML;
@@ -178,15 +87,10 @@ function StablePreview() {
 
   return (
     <>
-      <div
-        ref={liveRef}
-        style={hasError && snapshotRef.current ? { display: 'none' } : undefined}
-      >
+      <div ref={liveRef} style={hasError && snapshotRef.current ? { display: 'none' } : undefined}>
         <LivePreview />
       </div>
-      {hasError && snapshotRef.current && (
-        <div dangerouslySetInnerHTML={{ __html: snapshotRef.current }} />
-      )}
+      {hasError && snapshotRef.current && <div dangerouslySetInnerHTML={{ __html: snapshotRef.current }} />}
     </>
   );
 }
@@ -206,13 +110,12 @@ const PreviewPane = styled('div')(({ theme }) => {
   return {
     padding: theme.spacing(3),
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
-    minHeight: 60,
   };
 });
 
-const CodePane = styled('div')(({ theme }) => ({
+const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) => ({
   position: 'relative',
-  borderTop: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+  borderTop: $hasPreview ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}` : undefined,
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[100],
 
   '& .code-editor': {
@@ -229,6 +132,16 @@ const CodePane = styled('div')(({ theme }) => ({
     background: 'transparent !important',
     outline: 'none',
   },
+}));
+
+const ReadOnlyCode = styled('pre')(({ theme }) => ({
+  padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`,
+  fontSize: theme.typography.caption.fontSize,
+  lineHeight: 1.6,
+  fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
+  overflowX: 'auto',
+  margin: 0,
+  background: 'transparent',
 }));
 
 const CopyButton = styled('button')(({ theme }) => {
@@ -269,12 +182,10 @@ const ErrorBar = styled('div')(({ theme }) => {
   };
 });
 
-// Only show errors when the preview snapshot is also gone (i.e. never had a valid render)
 function LiveErrorBar() {
   const { error } = useContext(LiveContext);
   const snapshotExists = useRef(false);
 
-  // Once a valid render has happened, StablePreview holds a snapshot — suppress transient errors
   if (!error) snapshotExists.current = true;
   if (snapshotExists.current) return null;
 
@@ -282,28 +193,107 @@ function LiveErrorBar() {
 }
 
 interface ComponentPlaygroundProps {
-  code: string;
+  /** Code string to display. Omit for preview-only mode. */
+  code?: string;
+  /** Static preview content (bypasses react-live). */
   preview?: ReactNode;
+  /** Background for the preview pane. */
   previewBg?: 'contrast' | string;
+  /** Additional scope variables for react-live. */
+  scope?: Record<string, unknown>;
+  /** When true, shows code as read-only with syntax highlighting (no live editing). */
+  readOnly?: boolean;
+  /** Language for read-only syntax highlighting. */
+  language?: string;
 }
 
-export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = ({ code, preview, previewBg: previewBgProp }) => {
+export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = ({
+  code,
+  preview,
+  previewBg: previewBgProp,
+  scope,
+  readOnly,
+  language = 'tsx',
+}) => {
   const theme = useTheme();
-  const previewBg = previewBgProp === 'contrast'
-    ? (theme.mode === 'light' ? theme.colors.neutral.white : theme.colors.neutral[100])
-    : previewBgProp;
+  const previewBg =
+    previewBgProp === 'contrast'
+      ? theme.mode === 'light'
+        ? theme.colors.neutral.white
+        : theme.colors.neutral[100]
+      : previewBgProp;
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(() => {
+    if (code) {
+      void navigator.clipboard.writeText(code.trim());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }, [code]);
+
+  // Preview-only mode (no code)
+  if (!code) {
+    return (
+      <Wrapper>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
+          {preview}
+        </PreviewPane>
+      </Wrapper>
+    );
+  }
+
+  // Read-only code block mode
+  if (readOnly) {
+    return (
+      <Wrapper>
+        <CodePane>
+          <CopyButton style={{ top: '50%', transform: 'translateY(-50%)' }} onClick={handleCopy} title="Copy code">
+            {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+          </CopyButton>
+          <Highlight theme={themes.vsDark} code={code.trim()} language={language}>
+            {({ tokens, getLineProps, getTokenProps }) => (
+              <ReadOnlyCode>
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line })}>
+                    {line.map((token, j) => (
+                      <span key={j} {...getTokenProps({ token })} />
+                    ))}
+                  </div>
+                ))}
+              </ReadOnlyCode>
+            )}
+          </Highlight>
+        </CodePane>
+      </Wrapper>
+    );
+  }
+
+  // Live playground mode
+  return <LivePlayground code={code} preview={preview} previewBg={previewBg} scope={scope} />;
+};
+
+// Separated to avoid hooks running in read-only/preview-only paths
+const LivePlayground: FunctionComponent<{
+  code: string;
+  preview?: ReactNode;
+  previewBg?: string;
+  scope?: Record<string, unknown>;
+}> = ({ code, preview, previewBg, scope }) => {
+  const theme = useTheme();
   const initialPrepared = useMemo(() => prepareCode(code), [code]);
 
-  // The code fed to LiveProvider — only updated when new code compiles
   const [liveCode, setLiveCode] = useState(initialPrepared.code);
   const [noInline, setNoInline] = useState(initialPrepared.noInline);
   const [copied, setCopied] = useState(false);
   const editorCodeRef = useRef(code);
   const [editorCode, setEditorCode] = useState(code);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  // Sync state when the code prop changes (e.g. navigating between components)
   useEffect(() => {
     const prepared = prepareCode(code);
     setLiveCode(prepared.code);
@@ -326,13 +316,26 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
+  const hasPreview = !!preview || !preview; // always show preview pane for live mode
+
   if (!mounted) {
-    // SSR: show code text with reserved preview space to prevent layout shift
     return (
       <Wrapper>
         <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
-        <CodePane>
-          <pre className="code-editor" style={{ padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`, backgroundColor: 'transparent', color: '#D4D4D4', fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace", fontSize: 13, lineHeight: 1.6, margin: 0, whiteSpace: 'pre-wrap' }}>
+        <CodePane $hasPreview>
+          <pre
+            className="code-editor"
+            style={{
+              padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`,
+              backgroundColor: 'transparent',
+              color: '#D4D4D4',
+              fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
+              fontSize: 13,
+              lineHeight: 1.6,
+              margin: 0,
+              whiteSpace: 'pre-wrap',
+            }}
+          >
             <code>{code}</code>
           </pre>
         </CodePane>
@@ -344,7 +347,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
     return (
       <Wrapper>
         <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
-        <CodePane>
+        <CodePane $hasPreview>
           <CopyButton onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
@@ -361,12 +364,12 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   }
 
   return (
-    <LiveProvider code={liveCode} scope={liveScope} noInline={noInline} theme={themes.vsDark}>
+    <LiveProvider code={liveCode} scope={scope ? { ...baseScope, ...scope } : baseScope} noInline={noInline} theme={themes.vsDark}>
       <Wrapper>
         <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
           <StablePreview />
         </PreviewPane>
-        <CodePane>
+        <CodePane $hasPreview>
           <CopyButton onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>

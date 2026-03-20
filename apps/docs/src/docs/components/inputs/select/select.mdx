@@ -1,6 +1,7 @@
 import { selectDoc as doc } from './data';
-import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../../components/mdx/ComponentParts';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../../components/mdx/ComponentDocSections';
 import { ComponentPlayground } from '../../../../components/content/ComponentPlayground';
+import { CreditCardIcon, LandmarkIcon, WalletIcon, SmartphoneIcon } from 'lucide-react';
 
 export const meta = {
   name: doc.name,
@@ -37,7 +38,7 @@ Add a label above the select to give context about what the user is choosing.
 
 Each option can include an icon element for richer visual context. Pass any React element as the icon prop.
 
-<ComponentPlayground code={doc.usageExamples[2].code} />
+<ComponentPlayground code={doc.usageExamples[2].code} scope={{ CreditCardIcon, LandmarkIcon, WalletIcon, SmartphoneIcon }} />
 
 ### Disabled
 

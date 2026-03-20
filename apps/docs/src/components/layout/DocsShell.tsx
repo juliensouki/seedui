@@ -2,7 +2,7 @@ import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react
 import { ThemeProvider, colors, Mode } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
 import { componentDocs, categoryOrder } from '../../docs/components';
-import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from '../../docs/navigation';
+import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from './navigation';
 import { Topbar } from './Topbar';
 import { ModeToggleContext } from './ModeContext';
 import { MobileMenuContext } from './MobileMenuContext';

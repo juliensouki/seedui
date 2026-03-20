@@ -22,9 +22,9 @@ export interface IconButtonProps extends ButtonBaseProps {
 }
 
 const mapSizeToAttributes: Record<ButtonSizes, { iconSize: number }> = {
-  sm: { iconSize: 17 },
-  md: { iconSize: 22 },
-  lg: { iconSize: 30 },
+  sm: { iconSize: 16 },
+  md: { iconSize: 18 },
+  lg: { iconSize: 24 },
 };
 
 const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconButtonProps>>) => {
@@ -37,7 +37,7 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
     justifyContent: 'center',
     alignSelf: 'center',
     borderRadius: '100%',
-    padding: size === 'sm' ? theme.spacing(1) : theme.spacing(1.5),
+    padding: size === 'sm' ? theme.spacing(0.75) : size === 'md' ? theme.spacing(1) : theme.spacing(1.25),
 
     '& svg': {
       color: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
@@ -61,6 +61,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       size,
       className,
       children,
+      elementProps: _elementProps,
       ...restProps
     } = getDefaultProps<IconButtonProps & InternalProps>({
       providedProps: props,

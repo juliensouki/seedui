@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { SchemaWrapper, Box, BoxLabel, Placeholder } from '../../anatomy-shared';
+import { SchemaWrapper, Box, BoxLabel, Placeholder } from '../../../../components/anatomy/shared';
 
 const TextSchema: FunctionComponent = () => (
   <SchemaWrapper>

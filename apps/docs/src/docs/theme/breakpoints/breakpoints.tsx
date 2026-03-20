@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { Text, Divider } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { TableOfContents } from '../../../components/layout/TableOfContents';
-import { CodeBlock } from '../../../components/content/CodeBlock';
+import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 import { PageNavigation } from '../../../components/layout/PageNavigation';
 
 const PageLayout = styled('div')(() => ({
@@ -77,7 +77,7 @@ const usageCode = `const Container = styled('div')(({ theme }) => ({
   },
 }))`;
 
-export const BreakpointsPage: FunctionComponent = () => {
+export const Breakpoints: FunctionComponent = () => {
   const theme = useTheme();
   const bp = theme.breakpoints;
 
@@ -191,7 +191,7 @@ export const BreakpointsPage: FunctionComponent = () => {
             Use the helpers inside <code>styled</code> components or access breakpoint values
             via <code>useTheme()</code>.
           </Text>
-          <CodeBlock code={usageCode} />
+          <ComponentPlayground code={usageCode} readOnly />
         </Section>
 
         <PageNavigation />

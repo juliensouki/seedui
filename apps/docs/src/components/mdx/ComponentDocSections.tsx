@@ -1,10 +1,9 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Text } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
-import { CodeBlock } from '../content/CodeBlock';
+import styled from '@seedui-react/seedui/sc';
+import { ComponentPlayground } from '../content/ComponentPlayground';
 import { PropsTable } from '../content/PropsTable';
 import { ComponentSchema } from '../content/ComponentSchema';
-import { ComponentDemo } from '../content/ComponentDemo';
 import { SectionHeading } from './MDXComponents';
 import type { PropDef, AnatomyPart } from '../../docs/types';
 
@@ -56,16 +55,12 @@ const MonoCode = styled('code')(({ theme }) => {
   };
 });
 
-export const OverviewDemo: FunctionComponent<{ example: FunctionComponent; previewBg?: 'contrast' | string }> = ({ example: Example, previewBg: previewBgProp }) => {
+export const OverviewDemo: FunctionComponent<{ example: FunctionComponent; previewBg?: 'contrast' | string }> = ({ example: Example, previewBg }) => {
   const [mounted, setMounted] = useState(false);
-  const theme = useTheme();
-  const previewBg = previewBgProp === 'contrast'
-    ? (theme.mode === 'light' ? theme.colors.neutral.white : theme.colors.neutral[100])
-    : previewBgProp;
   useEffect(() => { setMounted(true); }, []);
   return (
-    <div style={{ marginBottom: theme.spacing(2.5) }}>
-      <ComponentDemo style={previewBg ? { backgroundColor: previewBg } : undefined}>{mounted ? <Example /> : null}</ComponentDemo>
+    <div style={{ marginBottom: 20 }}>
+      <ComponentPlayground preview={mounted ? <Example /> : null} previewBg={previewBg} />
     </div>
   );
 };
@@ -73,7 +68,7 @@ export const OverviewDemo: FunctionComponent<{ example: FunctionComponent; previ
 export const ImportSection: FunctionComponent<{ name: string }> = ({ name }) => (
   <section id="section-import">
     <SectionHeading id="section-import" style={{ marginBottom: 12 }}>Import</SectionHeading>
-    <CodeBlock code={`import { ${name} } from '@seedui-react/seedui';`} />
+    <ComponentPlayground code={`import { ${name} } from '@seedui-react/seedui';`} readOnly />
   </section>
 );
 

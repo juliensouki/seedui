@@ -67,7 +67,7 @@ const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boole
         ? theme.colors.neutral.white
         : theme.colors.neutral[300],
       padding: $hideButton
-        ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px`
+        ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px ${theme.spacing(1)}px ${theme.spacing(0.5)}px`
         : `${theme.spacing(0.5)}px`,
       borderRadius: theme.borderRadius(4),
       border: `1px solid ${$disabled

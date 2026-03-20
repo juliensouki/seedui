@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { SchemaWrapper, Box, BoxLabel, Row, Placeholder } from '../../anatomy-shared';
+import { SchemaWrapper, Box, BoxLabel, Row, Placeholder } from '../../../../components/anatomy/shared';
 
 const StepperSchema: FunctionComponent = () => (
   <SchemaWrapper>

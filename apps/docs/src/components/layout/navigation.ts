@@ -1,4 +1,4 @@
-import { componentDocs, categoryOrder } from './components';
+import { componentDocs, categoryOrder } from '../../docs/components';
 
 export interface NavPage {
   name: string;

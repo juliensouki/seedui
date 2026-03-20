@@ -20,7 +20,7 @@ export const tagDoc: ComponentDoc = {
   overview: 'A small colored badge for metadata like categories or statuses. Colors map to semantic meanings. Can be made removable for filter chips or selected values.',
   props: [
     { name: 'children', type: 'string', default: '—', description: 'Tag text content. Required.' },
-    { name: 'color', type: "'primary' | 'secondary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'", default: "'primary'", description: 'Tag color scheme.' },
+    { name: 'color', type: "'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'", default: "'primary'", description: 'Tag color scheme.' },
     { name: 'size', type: "'sm' | 'md'", default: "'md'", description: 'Tag size.' },
     { name: 'removable', type: 'boolean', default: 'false', description: 'Show a remove button.' },
     { name: 'onRemove', type: '() => void', default: '—', description: 'Called when remove is clicked.' },
@@ -40,7 +40,6 @@ export const tagDoc: ComponentDoc = {
       description: 'Each color maps to a semantic meaning. Use success for positive states, error for problems, warning for caution, and info for neutral highlights.',
       code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
   <Tag color="primary">Primary</Tag>
-  <Tag color="secondary">Secondary</Tag>
   <Tag color="neutral">Neutral</Tag>
   <Tag color="success">Success</Tag>
   <Tag color="info">Info</Tag>

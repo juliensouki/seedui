@@ -4,9 +4,7 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "apps/docs",
-    "apps/demo",
-    "apps/sandbox"
+    "apps/docs"
   ],
   "resolutions": {
     "@seedui-react/seedui": "workspace:packages/seedui"
@@ -30,10 +28,6 @@
   },
   "scripts": {
     "lint": "yarn workspaces foreach -A run lint",
-    "build:app:sandbox": "yarn workspace @seedui-react/sandbox run build",
-    "dev:app:sandbox": "yarn workspace @seedui-react/sandbox run dev",
-    "build:app:demo": "yarn workspace @seedui-react/demo run build",
-    "dev:app:demo": "yarn workspace @seedui-react/demo run dev",
     "build:app:docs": "yarn workspace @seedui-react/docs run build",
     "dev:app:docs": "yarn workspace @seedui-react/docs run dev",
     "preview:app:docs": "yarn workspace @seedui-react/docs run preview",

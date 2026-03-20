@@ -3,7 +3,7 @@ import { IconButton, SearchBar } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
 import { GithubIcon, FigmaIcon } from 'lucide-react';
 import { ComponentCategory } from '../../docs/components';
-import { allPages, NavPage, ThemeCategory } from '../../docs/navigation';
+import { allPages, NavPage, ThemeCategory } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
 
 

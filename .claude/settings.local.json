@@ -42,7 +42,12 @@
       "Bash(npx eslint:*)",
       "Bash(yarn run:*)",
       "Bash(find \"C:\\\\Users\\\\julie\\\\Documents\\\\Projects\\\\seedui\\\\packages\\\\seedui\\\\src\\\\components\" -name \"*.tsx\" -exec grep -l \"styled\\\\.\" {})",
-      "Bash(find C:UsersjulieDocumentsProjectsseedui/packages/seedui/src -type f -name *theme*)"
+      "Bash(find C:UsersjulieDocumentsProjectsseedui/packages/seedui/src -type f -name *theme*)",
+      "Bash(sed -i 's/export const ColorsPage/export const Colors/' apps/docs/src/docs/theme/colors/colors.tsx)",
+      "Bash(sed -i 's/export const TypographyPage/export const Typography/' apps/docs/src/docs/theme/typography/typography.tsx)",
+      "Bash(sed -i 's/export const SpacingPage/export const Spacing/' apps/docs/src/docs/theme/spacing/spacing.tsx)",
+      "Bash(sed -i 's/export const BorderRadiusPage/export const BorderRadius/' apps/docs/src/docs/theme/border-radius/border-radius.tsx)",
+      "Bash(sed -i 's/export const BoxShadowPage/export const BoxShadow/' apps/docs/src/docs/theme/box-shadow/box-shadow.tsx)"
     ]
   }
 }

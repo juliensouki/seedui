@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 import styled from '@seedui-react/seedui/sc';
-import { CodeBlock } from './CodeBlock';
+import { ComponentPlayground } from './ComponentPlayground';
 
 type PkgManager = 'yarn' | 'npm';
 
@@ -49,7 +49,7 @@ export const TabbedCode: FunctionComponent<{ commands: Record<PkgManager, string
         <PmButton $active={pm === 'yarn'} onClick={() => setPm('yarn')}>yarn</PmButton>
         <PmButton $active={pm === 'npm'} onClick={() => setPm('npm')}>npm</PmButton>
       </CodeToolbar>
-      <CodeBlock code={commands[pm]} language="bash" />
+      <ComponentPlayground code={commands[pm]} readOnly language="bash" />
     </TabbedCodeWrapper>
   );
 };

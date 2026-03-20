@@ -11,15 +11,16 @@ interface TocItem {
   label: string;
 }
 
-interface MDXPageLayoutProps {
+interface PageLayoutProps {
   title: string;
   description: string;
   toc: TocItem[];
   currentPath?: string;
+  headerActions?: ReactNode;
   children: ReactNode;
 }
 
-const PageLayout = styled('div')(() => ({
+const Layout = styled('div')(() => ({
   display: 'flex',
   alignItems: 'flex-start',
 }));
@@ -32,14 +33,23 @@ const MainContent = styled('div')(({ theme }) => ({
   },
 }));
 
-export const MDXPageLayout: FunctionComponent<MDXPageLayoutProps> = ({ title, description, toc, currentPath, children }) => {
+export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, description, toc, currentPath, headerActions, children }) => {
   const theme = useTheme();
   const isLight = theme.mode === 'light';
   return (
-    <PageLayout>
+    <Layout>
       <MainContent>
-        <SectionHeading variant="h3" as="h1">{title}</SectionHeading>
-        <Text variant="p" style={{ marginTop: theme.spacing(1), color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <SectionHeading variant="h3" as="h1">{title}</SectionHeading>
+            <Text variant="p" style={{ marginTop: theme.spacing(1), color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
+          </div>
+          {headerActions && (
+            <div style={{ display: 'flex', gap: theme.spacing(1), flexShrink: 0 }}>
+              {headerActions}
+            </div>
+          )}
+        </div>
         <Divider spacing={28} />
         <MDXProvider components={mdxComponents}>
           {children}
@@ -47,6 +57,6 @@ export const MDXPageLayout: FunctionComponent<MDXPageLayoutProps> = ({ title, de
         <PageNavigation currentPath={currentPath} />
       </MainContent>
       <TableOfContents items={toc} />
-    </PageLayout>
+    </Layout>
   );
 };

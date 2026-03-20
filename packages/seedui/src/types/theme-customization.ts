@@ -87,8 +87,8 @@ export interface CustomizedColors {
 export interface ThemeCustomization {
   components?: CustomComponents;
   breakpoints?: Partial<Breakpoints>;
-  borderRadius?: number; // base size in px (default: 2)
-  spacing?: number; // base size in px (default: 8)
+  borderRadius?: number;
+  spacing?: number;
   typography?: CustomTypographyConfig;
   boxShadow?: CustomBoxShadow;
   colors?: MultiMode<CustomizedColors>;

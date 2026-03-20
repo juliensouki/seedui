@@ -1,15 +1,16 @@
 import { FunctionComponent, useEffect, useState, useCallback, lazy, Suspense } from 'react';
+import { IconButton } from '@seedui-react/seedui';
+import { FigmaIcon, GithubIcon } from 'lucide-react';
 import { DocsShell } from './layout/DocsShell';
 import { HomePage } from '../docs/home/HomePage';
-import { MDXPageLayout } from './mdx/MDXPageLayout';
-import { ComponentMDXLayout } from './mdx/ComponentMDXLayout';
+import { PageLayout } from './mdx/PageLayout';
 import { componentDocs } from '../docs/components';
-import { ColorsPage } from '../docs/theme/colors/ColorsPage';
-import { TypographyPage } from '../docs/theme/typography/TypographyPage';
-import { SpacingPage } from '../docs/theme/spacing/SpacingPage';
-import { BorderRadiusPage } from '../docs/theme/border-radius/BorderRadiusPage';
-import { BoxShadowPage } from '../docs/theme/box-shadow/BoxShadowPage';
-import { BreakpointsPage } from '../docs/theme/breakpoints/BreakpointsPage';
+import { Colors } from '../docs/theme/colors/colors';
+import { Typography } from '../docs/theme/typography/typography';
+import { Spacing } from '../docs/theme/spacing/spacing';
+import { BorderRadius } from '../docs/theme/border-radius/border-radius';
+import { BoxShadow } from '../docs/theme/box-shadow/box-shadow';
+import { Breakpoints } from '../docs/theme/breakpoints/breakpoints';
 
 // MDX content imports (compiled as React components via @mdx-js/rollup)
 import InstallationContent, { meta as installationMeta } from '../docs/getting-started/installation/installation.mdx';
@@ -22,6 +23,25 @@ import DefaultPropsContent, { meta as defaultPropsMeta } from '../docs/theme/def
 
 // Component MDX modules (eager load)
 const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { eager: true }) as Record<string, { default: FunctionComponent; meta?: any }>;
+
+const componentToc = [
+  { id: 'section-overview', label: 'Overview' },
+  { id: 'section-import', label: 'Import' },
+  { id: 'section-usage', label: 'Usage' },
+  { id: 'section-anatomy', label: 'Anatomy' },
+  { id: 'section-props', label: 'Props' },
+];
+
+const componentHeaderActions = (
+  <>
+    <IconButton variant="transparent" color="neutral" size="md">
+      <FigmaIcon size={16} strokeWidth={1.8} />
+    </IconButton>
+    <IconButton variant="transparent" color="neutral" size="md">
+      <GithubIcon size={16} strokeWidth={1.8} />
+    </IconButton>
+  </>
+);
 
 interface DocsAppProps {
   initialPath: string;
@@ -37,16 +57,16 @@ function PageContent({ path }: { path: string }) {
   // Getting started
   if (p === '/getting-started/installation') {
     return (
-      <MDXPageLayout title={installationMeta.title} description={installationMeta.description} toc={installationMeta.toc} currentPath={p}>
+      <PageLayout title={installationMeta.title} description={installationMeta.description} toc={installationMeta.toc} currentPath={p}>
         <InstallationContent />
-      </MDXPageLayout>
+      </PageLayout>
     );
   }
   if (p === '/getting-started/quick-start') {
     return (
-      <MDXPageLayout title={quickStartMeta.title} description={quickStartMeta.description} toc={quickStartMeta.toc} currentPath={p}>
+      <PageLayout title={quickStartMeta.title} description={quickStartMeta.description} toc={quickStartMeta.toc} currentPath={p}>
         <QuickStartContent />
-      </MDXPageLayout>
+      </PageLayout>
     );
   }
 
@@ -61,20 +81,20 @@ function PageContent({ path }: { path: string }) {
   if (themingPages[p]) {
     const { Content, meta } = themingPages[p];
     return (
-      <MDXPageLayout title={meta.title} description={meta.description} toc={meta.toc} currentPath={p}>
+      <PageLayout title={meta.title} description={meta.description} toc={meta.toc} currentPath={p}>
         <Content />
-      </MDXPageLayout>
+      </PageLayout>
     );
   }
 
   // Tokens
   const tokenPages: Record<string, FunctionComponent> = {
-    '/tokens/colors': ColorsPage,
-    '/tokens/typography': TypographyPage,
-    '/tokens/spacing': SpacingPage,
-    '/tokens/border-radius': BorderRadiusPage,
-    '/tokens/box-shadow': BoxShadowPage,
-    '/tokens/breakpoints': BreakpointsPage,
+    '/tokens/colors': Colors,
+    '/tokens/typography': Typography,
+    '/tokens/spacing': Spacing,
+    '/tokens/border-radius': BorderRadius,
+    '/tokens/box-shadow': BoxShadow,
+    '/tokens/breakpoints': Breakpoints,
   };
   if (tokenPages[p]) {
     const TokenPage = tokenPages[p];
@@ -90,9 +110,15 @@ function PageContent({ path }: { path: string }) {
       const mdxKey = Object.keys(componentMdxModules).find((k) => k.includes(`/${kebab}.mdx`));
       const Content = mdxKey ? componentMdxModules[mdxKey].default : null;
       return (
-        <ComponentMDXLayout name={doc.name} description={doc.description} currentPath={p}>
+        <PageLayout
+          title={doc.name}
+          description={doc.description}
+          currentPath={p}
+          toc={componentToc}
+          headerActions={componentHeaderActions}
+        >
           {Content ? <Content /> : <p>Not found.</p>}
-        </ComponentMDXLayout>
+        </PageLayout>
       );
     }
   }

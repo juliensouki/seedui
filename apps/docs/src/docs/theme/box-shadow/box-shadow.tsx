@@ -81,7 +81,7 @@ const usageCode = `const theme = useTheme();
   </Card>
 </div>`;
 
-export const BoxShadowPage: FunctionComponent = () => {
+export const BoxShadow: FunctionComponent = () => {
   const theme = useTheme();
   const entries = Object.entries(theme.boxShadow);
 

@@ -64,7 +64,7 @@ const usageCode = `<div style={{ display: 'flex', flexDirection: 'column', gap: 
   <Text variant="small">Small text for fine print.</Text>
 </div>`;
 
-export const TypographyPage: FunctionComponent = () => {
+export const Typography: FunctionComponent = () => {
   const theme = useTheme();
 
   return (

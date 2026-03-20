@@ -1,7 +1,7 @@
 import { Children, FunctionComponent, isValidElement, MouseEvent, ReactNode, useState } from 'react';
 import { Text, Divider } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
-import { CodeBlock } from '../content/CodeBlock';
+import { ComponentPlayground } from '../content/ComponentPlayground';
 import { CheckIcon, LinkIcon } from 'lucide-react';
 
 const StyledSection = styled('section')(({ theme }) => ({
@@ -122,7 +122,7 @@ const code: FunctionComponent<{ children?: string; className?: string }> = ({ ch
   if (language) {
     return (
       <CodeBlockWrapper>
-        <CodeBlock code={(children ?? '').replace(/\n$/, '')} language={language} />
+        <ComponentPlayground code={(children ?? '').replace(/\n$/, '')} readOnly language={language} />
       </CodeBlockWrapper>
     );
   }

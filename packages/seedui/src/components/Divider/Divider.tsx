@@ -50,9 +50,9 @@ const DividerContainer = applyCustomStyles(
   })),
 );
 
-const Line = styled.div<{ vertical: boolean }>(({ theme, vertical }) => ({
+const Line = styled.div<{ $vertical: boolean }>(({ theme, $vertical }) => ({
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[400],
-  ...(vertical
+  ...($vertical
     ? {
       width: 1,
       height: '100%',
@@ -64,10 +64,10 @@ const Line = styled.div<{ vertical: boolean }>(({ theme, vertical }) => ({
 }));
 
 const ChildrenContainer = styled.div<{
-  vertical: boolean;
-  childrenSpacing: number;
-}>(({ vertical, childrenSpacing }) => ({
-  margin: vertical ? `${childrenSpacing}px 0` : `0 ${childrenSpacing}px`,
+  $vertical: boolean;
+  $childrenSpacing: number;
+}>(({ $vertical, $childrenSpacing }) => ({
+  margin: $vertical ? `${$childrenSpacing}px 0` : `0 ${$childrenSpacing}px`,
   '& > p': {
     whiteSpace: 'nowrap',
   },
@@ -107,11 +107,11 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps & HTMLAttributes<
         data-testid="divider-with-children-main-container"
         {...divProps}
       >
-        <Line vertical={vertical} data-testid="left-divider" />
-        <ChildrenContainer vertical={vertical} childrenSpacing={childrenSpacing}>
+        <Line $vertical={vertical} data-testid="left-divider" />
+        <ChildrenContainer $vertical={vertical} $childrenSpacing={childrenSpacing}>
           {children}
         </ChildrenContainer>
-        <Line vertical={vertical} data-testid="right-divider" />
+        <Line $vertical={vertical} data-testid="right-divider" />
       </DividerContainer>
     );
   },

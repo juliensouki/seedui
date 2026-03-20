@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { SchemaWrapper, Box, BoxLabel, CirclePlaceholder } from '../../anatomy-shared';
+import { SchemaWrapper, Box, BoxLabel, CirclePlaceholder } from '../../../../components/anatomy/shared';
 
 const AvatarStackSchema: FunctionComponent = () => (
   <SchemaWrapper>

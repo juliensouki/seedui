@@ -172,7 +172,7 @@ const ColorPalette: FunctionComponent<{
   </PaletteBlock>
 );
 
-export const ColorsPage: FunctionComponent = () => {
+export const Colors: FunctionComponent = () => {
   const theme = useTheme();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 

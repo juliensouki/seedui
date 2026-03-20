@@ -1,5 +1,5 @@
 import { Button } from '@seedui-react/seedui';
-import { ExampleContainer } from '../../../components/content/ExampleContainer';
+import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 
 export const meta = {
   title: 'Quick Start',
@@ -32,9 +32,7 @@ function App() {
 
 Here's what the example above looks like when rendered:
 
-<ExampleContainer>
-  <Button onClick={() => alert('Hello World!')}>Click me</Button>
-</ExampleContainer>
+<ComponentPlayground preview={<Button onClick={() => alert('Hello World!')}>Click me</Button>} />
 </section>
 
 <section id="section-styled">

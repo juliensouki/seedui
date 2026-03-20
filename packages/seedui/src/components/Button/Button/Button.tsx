@@ -30,17 +30,17 @@ const getButtonStyles = (
   sm: {
     fontSize: theme.typography.small.fontSize,
     borderRadius: theme.borderRadius(3),
-    padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
+    padding: `${theme.spacing(0.375)}px ${theme.spacing(0.875)}px`,
   },
   md: {
     fontSize: theme.typography.p.fontSize,
     borderRadius: theme.borderRadius(4),
-    padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
+    padding: `${theme.spacing(0.75)}px ${theme.spacing(1.25)}px`,
   },
   lg: {
     fontSize: theme.typography.p.fontSize,
     borderRadius: theme.borderRadius(5),
-    padding: `${theme.spacing(1.5)}px ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(1.25)}px ${theme.spacing(1.75)}px`,
   },
 });
 
@@ -79,6 +79,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading,
       className,
       children,
+      elementProps: _elementProps,
       ...restProps
     } = getDefaultProps<ButtonProps & InternalProps>({
       providedProps: props,

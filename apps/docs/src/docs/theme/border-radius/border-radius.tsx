@@ -91,7 +91,7 @@ const usageCode = `const theme = useTheme();
   </Button>
 </div>`;
 
-export const BorderRadiusPage: FunctionComponent = () => {
+export const BorderRadius: FunctionComponent = () => {
   const theme = useTheme();
 
   return (

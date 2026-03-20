@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { Text, Divider } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
-import { allPages } from '../../docs/navigation';
+import { allPages } from './navigation';
 
 const Wrapper = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(6),

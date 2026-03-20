@@ -85,7 +85,7 @@ const usageCode = `const theme = useTheme();
   </Card>
 </div>`;
 
-export const SpacingPage: FunctionComponent = () => {
+export const Spacing: FunctionComponent = () => {
   const theme = useTheme();
 
   return (
