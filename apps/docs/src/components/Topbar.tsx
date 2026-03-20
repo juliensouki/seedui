@@ -1,5 +1,4 @@
-import { ChangeEvent, FunctionComponent, useContext, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, FunctionComponent, useContext, useEffect, useMemo, useState } from 'react';
 import { styled, Toggle, Mode, Popover, Text, Tag, IconButton, SearchBar, useTheme } from '@seedui-react/seedui';
 import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from '../data/navigation';
@@ -107,10 +106,11 @@ interface TopbarProps {
 
 export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const { isOpen: mobileMenuOpen, toggle: toggleMobileMenu } = useContext(MobileMenuContext);
   const [search, setSearch] = useState('');
   const [popoverOpen, setPopoverOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   const groupedResults = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -136,7 +136,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
   };
 
   const handleSelect = (path: string) => {
-    navigate(path);
+    window.location.href = path;
     setSearch('');
     setPopoverOpen(false);
   };
@@ -185,44 +185,55 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
           <VerticalDivider style={{ margin: '0 8px' }} />
         </DesktopOnly>
         <DesktopOnly>
-          <Popover
-            isOpen={popoverOpen}
-            onClose={() => setPopoverOpen(false)}
-            verticalAlignment="bottom"
-            horizontalAlignment="center"
-            elementProps={{
-              panel: {
-                style: mode === 'dark' ? { backgroundColor: theme.colors.neutral[300] } : undefined,
-              },
-            }}
-            content={
-              <ResultList>
-                {groupedResults.length > 0 ? (
-                  groupedResults.map((group) => (
-                    <div key={group.section}>
-                      <SectionLabel>{group.section}</SectionLabel>
-                      {group.pages.map((page) => (
-                        <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
-                          <Text variant="p">{page.name}</Text>
-                        </ResultItem>
-                      ))}
-                    </div>
-                  ))
-                ) : (
-                  <NoResults variant="p">No results found</NoResults>
-                )}
-              </ResultList>
-            }
-          >
+          {mounted ? (
+            <Popover
+              isOpen={popoverOpen}
+              onClose={() => setPopoverOpen(false)}
+              verticalAlignment="bottom"
+              horizontalAlignment="center"
+              elementProps={{
+                panel: {
+                  style: mode === 'dark' ? { backgroundColor: theme.colors.neutral[300] } : undefined,
+                },
+              }}
+              content={
+                <ResultList>
+                  {groupedResults.length > 0 ? (
+                    groupedResults.map((group) => (
+                      <div key={group.section}>
+                        <SectionLabel>{group.section}</SectionLabel>
+                        {group.pages.map((page) => (
+                          <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
+                            <Text variant="p">{page.name}</Text>
+                          </ResultItem>
+                        ))}
+                      </div>
+                    ))
+                  ) : (
+                    <NoResults variant="p">No results found</NoResults>
+                  )}
+                </ResultList>
+              }
+            >
+              <SearchBar
+                value={search}
+                onChange={handleChange}
+                placeholder="Search docs..."
+                width={260}
+                hideButton
+                style={mode === 'dark' ? { backgroundColor: theme.colors.neutral[400] } : undefined}
+              />
+            </Popover>
+          ) : (
             <SearchBar
-              value={search}
-              onChange={handleChange}
+              value=""
+              onChange={() => {}}
               placeholder="Search docs..."
               width={260}
               hideButton
               style={mode === 'dark' ? { backgroundColor: theme.colors.neutral[400] } : undefined}
             />
-          </Popover>
+          )}
           <VerticalDivider style={{ margin: '0 8px' }} />
         </DesktopOnly>
         <ThemeToggle>

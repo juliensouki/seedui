@@ -1,0 +1,39 @@
+import { stepperDoc as doc } from '../../data/components/stepper';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../components/mdx/ComponentParts';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+Displays a row of labeled steps with the current one highlighted. Steps before the active one appear as completed.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Step progression
+
+Set activeStep to highlight the current step. Steps before it appear as completed, and steps after appear as upcoming.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Longer flows
+
+Stepper works with any number of steps. It scales horizontally to fit the available space.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

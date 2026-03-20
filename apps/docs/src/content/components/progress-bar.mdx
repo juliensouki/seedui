@@ -1,0 +1,57 @@
+import { progressBarDoc as doc } from '../../data/components/progress-bar';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../components/mdx/ComponentParts';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+A filled bar inside a track that communicates progress. Supports semantic colors and adjustable height.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Basic progress
+
+Show simple progress toward completion.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Custom heights
+
+Adjust the height to fit the visual weight needed.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Semantic colors
+
+Use color to communicate status — success for completion, warning for limits, error for failures.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+
+### Without animation
+
+Disable the shimmer effect for a static fill.
+
+<ComponentPlayground code={doc.usageExamples[3].code} />
+
+### Interactive progress
+
+Combine with state to create a dynamic progress indicator.
+
+<ComponentPlayground code={doc.usageExamples[4].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

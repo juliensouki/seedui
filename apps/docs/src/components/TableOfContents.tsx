@@ -72,7 +72,7 @@ const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => {
 export const TableOfContents: FunctionComponent<TableOfContentsProps> = ({ items }) => {
   const [activeId, setActiveId] = useState(items[0]?.id ?? '');
   const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0 });
-  const [isScrollable, setIsScrollable] = useState(false);
+  const [isScrollable, setIsScrollable] = useState(true); // default true to avoid SSR layout shift
   const itemListRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 

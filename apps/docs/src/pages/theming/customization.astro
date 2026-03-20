@@ -1,0 +1,10 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { DocsApp } from '../../components/DocsApp';
+
+const currentPath = Astro.url.pathname;
+---
+
+<DocsLayout>
+  <DocsApp client:load initialPath={currentPath} />
+</DocsLayout>

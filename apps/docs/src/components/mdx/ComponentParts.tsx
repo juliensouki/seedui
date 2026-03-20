@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { styled, Text } from '@seedui-react/seedui';
 import { CodeBlock } from '../CodeBlock';
 import { PropsTable } from '../PropsTable';
@@ -55,11 +55,15 @@ const MonoCode = styled('code')(({ theme }) => {
   };
 });
 
-export const OverviewDemo: FunctionComponent<{ example: FunctionComponent }> = ({ example: Example }) => (
-  <div style={{ marginBottom: 20 }}>
-    <ComponentDemo><Example /></ComponentDemo>
-  </div>
-);
+export const OverviewDemo: FunctionComponent<{ example: FunctionComponent }> = ({ example: Example }) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <ComponentDemo>{mounted ? <Example /> : null}</ComponentDemo>
+    </div>
+  );
+};
 
 export const ImportSection: FunctionComponent<{ name: string }> = ({ name }) => (
   <section id="section-import">

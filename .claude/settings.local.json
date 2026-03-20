@@ -24,7 +24,19 @@
       "Bash(yarn workspace:*)",
       "Bash(yarn eslint:*)",
       "Bash(yarn lint:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "WebFetch(domain:dev.seedui.dev)",
+      "Bash(for f:*)",
+      "Bash(do cp:*)",
+      "Bash(do sed:*)",
+      "Bash(cp C:/Users/julie/Documents/Projects/seedui/apps/docs/src/pages/content/components/*.mdx C:/Users/julie/Documents/Projects/seedui/apps/docs-astro/src/content/components/)",
+      "Bash(cp C:/Users/julie/Documents/Projects/seedui/apps/docs/src/pages/content/theming/*.mdx C:/Users/julie/Documents/Projects/seedui/apps/docs-astro/src/content/theming/)",
+      "Bash(find /c/Users/julie/Documents/Projects/seedui/packages/seedui -name *font* -o -name *style*)",
+      "Bash(find /c/Users/julie/Documents/Projects/seedui/apps/docs-astro -name astro.config.* -o -name package.json)",
+      "Bash(node -e \":*)",
+      "Bash(mv apps/docs apps/old-docs)",
+      "Bash(mv apps/docs-astro apps/docs)",
+      "Bash(tasklist)"
     ]
   }
 }

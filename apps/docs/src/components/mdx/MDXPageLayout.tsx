@@ -14,6 +14,7 @@ interface MDXPageLayoutProps {
   title: string;
   description: string;
   toc: TocItem[];
+  currentPath?: string;
   children: ReactNode;
 }
 
@@ -30,7 +31,7 @@ const MainContent = styled('div')(() => ({
   },
 }));
 
-export const MDXPageLayout: FunctionComponent<MDXPageLayoutProps> = ({ title, description, toc, children }) => {
+export const MDXPageLayout: FunctionComponent<MDXPageLayoutProps> = ({ title, description, toc, currentPath, children }) => {
   const theme = useTheme();
   const isLight = theme.mode === 'light';
   return (
@@ -42,7 +43,7 @@ export const MDXPageLayout: FunctionComponent<MDXPageLayoutProps> = ({ title, de
         <MDXProvider components={mdxComponents}>
           {children}
         </MDXProvider>
-        <PageNavigation />
+        <PageNavigation currentPath={currentPath} />
       </MainContent>
       <TableOfContents items={toc} />
     </PageLayout>

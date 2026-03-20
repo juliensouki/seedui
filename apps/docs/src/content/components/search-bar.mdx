@@ -1,0 +1,45 @@
+import { searchBarDoc as doc } from '../../data/components/search-bar';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../components/mdx/ComponentParts';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+Combines a text field with a search button. Fires onSearch on button click or Enter, and onChange on every keystroke.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Basic search
+
+A controlled search bar with a placeholder. The onChange fires on every keystroke for real-time filtering.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Custom button label
+
+Change the search button text with the buttonLabel prop to match your context.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Disabled
+
+A disabled search bar prevents interaction. Use it when search is temporarily unavailable.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

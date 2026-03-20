@@ -1,0 +1,51 @@
+import { selectDoc as doc } from '../../data/components/select';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../components/mdx/ComponentParts';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+A dropdown for selecting one value from a list. Options can include icons. For free-form text, use Input instead.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Basic select
+
+A controlled dropdown with a list of options. The built-in search lets users filter long lists by typing.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### With label
+
+Add a label above the select to give context about what the user is choosing.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### With icons
+
+Each option can include an icon element for richer visual context. Pass any React element as the icon prop.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+
+### Disabled
+
+A disabled select is non-interactive and visually muted.
+
+<ComponentPlayground code={doc.usageExamples[3].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

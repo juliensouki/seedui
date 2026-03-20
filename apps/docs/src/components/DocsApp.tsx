@@ -1,0 +1,173 @@
+import { FunctionComponent, useEffect, useState, useCallback, lazy, Suspense } from 'react';
+import { DocsShell } from './DocsShell';
+import { HomePage } from './HomePage';
+import { MDXPageLayout } from './mdx/MDXPageLayout';
+import { ComponentMDXLayout } from './mdx/ComponentMDXLayout';
+import { componentDocs } from '../data/components';
+import { ColorsPage } from './pages/tokens/ColorsPage';
+import { TypographyPage } from './pages/tokens/TypographyPage';
+import { SpacingPage } from './pages/tokens/SpacingPage';
+import { BorderRadiusPage } from './pages/tokens/BorderRadiusPage';
+import { BoxShadowPage } from './pages/tokens/BoxShadowPage';
+import { BreakpointsPage } from './pages/tokens/BreakpointsPage';
+
+// MDX content imports (compiled as React components via @mdx-js/rollup)
+import InstallationContent, { meta as installationMeta } from '../content/installation.mdx';
+import QuickStartContent, { meta as quickStartMeta } from '../content/quick-start.mdx';
+import ThemeProviderContent, { meta as themeProviderMeta } from '../content/theming/theme-provider.mdx';
+import CustomizationContent, { meta as customizationMeta } from '../content/theming/customization.mdx';
+import DarkModeContent, { meta as darkModeMeta } from '../content/theming/dark-mode.mdx';
+import ComponentStylesContent, { meta as componentStylesMeta } from '../content/theming/component-styles.mdx';
+import DefaultPropsContent, { meta as defaultPropsMeta } from '../content/theming/default-props.mdx';
+
+// Component MDX modules (eager load)
+const componentMdxModules = import.meta.glob('../content/components/*.mdx', { eager: true }) as Record<string, { default: FunctionComponent; meta?: any }>;
+
+interface DocsAppProps {
+  initialPath: string;
+}
+
+function PageContent({ path }: { path: string }) {
+  // Strip trailing slash for matching (except root)
+  const p = path === '/' ? '/' : path.replace(/\/$/, '');
+
+  // Home
+  if (p === '/') return <HomePage />;
+
+  // Getting started
+  if (p === '/getting-started/installation') {
+    return (
+      <MDXPageLayout title={installationMeta.title} description={installationMeta.description} toc={installationMeta.toc} currentPath={p}>
+        <InstallationContent />
+      </MDXPageLayout>
+    );
+  }
+  if (p === '/getting-started/quick-start') {
+    return (
+      <MDXPageLayout title={quickStartMeta.title} description={quickStartMeta.description} toc={quickStartMeta.toc} currentPath={p}>
+        <QuickStartContent />
+      </MDXPageLayout>
+    );
+  }
+
+  // Theming
+  const themingPages: Record<string, { Content: FunctionComponent; meta: any }> = {
+    '/theming/theme-provider': { Content: ThemeProviderContent, meta: themeProviderMeta },
+    '/theming/customization': { Content: CustomizationContent, meta: customizationMeta },
+    '/theming/dark-mode': { Content: DarkModeContent, meta: darkModeMeta },
+    '/theming/component-styles': { Content: ComponentStylesContent, meta: componentStylesMeta },
+    '/theming/default-props': { Content: DefaultPropsContent, meta: defaultPropsMeta },
+  };
+  if (themingPages[p]) {
+    const { Content, meta } = themingPages[p];
+    return (
+      <MDXPageLayout title={meta.title} description={meta.description} toc={meta.toc} currentPath={p}>
+        <Content />
+      </MDXPageLayout>
+    );
+  }
+
+  // Tokens
+  const tokenPages: Record<string, FunctionComponent> = {
+    '/tokens/colors': ColorsPage,
+    '/tokens/typography': TypographyPage,
+    '/tokens/spacing': SpacingPage,
+    '/tokens/border-radius': BorderRadiusPage,
+    '/tokens/box-shadow': BoxShadowPage,
+    '/tokens/breakpoints': BreakpointsPage,
+  };
+  if (tokenPages[p]) {
+    const TokenPage = tokenPages[p];
+    return <TokenPage />;
+  }
+
+  // Components
+  if (p.startsWith('/components/')) {
+    const name = p.replace('/components/', '');
+    const doc = componentDocs.find((d) => d.name === name);
+    if (doc) {
+      const kebab = name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+      const mdxKey = Object.keys(componentMdxModules).find((k) => k.includes(`/${kebab}.mdx`));
+      const Content = mdxKey ? componentMdxModules[mdxKey].default : null;
+      return (
+        <ComponentMDXLayout name={doc.name} description={doc.description} currentPath={p}>
+          {Content ? <Content /> : <p>Not found.</p>}
+        </ComponentMDXLayout>
+      );
+    }
+  }
+
+  return <p>Page not found.</p>;
+}
+
+// Title map
+const pageTitles: Record<string, string> = {
+  '/': 'seedui | React Component Library',
+  '/getting-started/installation': 'seedui | Installation',
+  '/getting-started/quick-start': 'seedui | Quick Start',
+  '/theming/theme-provider': 'seedui | ThemeProvider',
+  '/theming/customization': 'seedui | Customization',
+  '/theming/dark-mode': 'seedui | Dark Mode',
+  '/theming/component-styles': 'seedui | Component Styles',
+  '/theming/default-props': 'seedui | Default Props',
+  '/tokens/colors': 'seedui | Colors',
+  '/tokens/typography': 'seedui | Typography',
+  '/tokens/spacing': 'seedui | Spacing',
+  '/tokens/border-radius': 'seedui | Border Radius',
+  '/tokens/box-shadow': 'seedui | Box Shadow',
+  '/tokens/breakpoints': 'seedui | Breakpoints',
+};
+
+function getTitle(path: string): string {
+  const p = path === '/' ? '/' : path.replace(/\/$/, '');
+  if (pageTitles[p]) return pageTitles[p];
+  if (p.startsWith('/components/')) {
+    const name = p.replace('/components/', '');
+    return `seedui | ${name}`;
+  }
+  return 'seedui';
+}
+
+export const DocsApp: FunctionComponent<DocsAppProps> = ({ initialPath }) => {
+  const [currentPath, setCurrentPath] = useState(initialPath);
+
+  const navigate = useCallback((newPath: string) => {
+    const p = newPath === '/' ? '/' : newPath.replace(/\/$/, '');
+    setCurrentPath(p);
+    history.pushState(null, '', newPath);
+    document.title = getTitle(p);
+  }, []);
+
+  // Intercept internal link clicks
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement).closest('a[href]') as HTMLAnchorElement | null;
+      if (!link) return;
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:')) return;
+      if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+
+      e.preventDefault();
+      navigate(href);
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [navigate]);
+
+  // Handle back/forward
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+      document.title = getTitle(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  return (
+    <DocsShell currentPath={currentPath}>
+      <PageContent path={currentPath} />
+    </DocsShell>
+  );
+};

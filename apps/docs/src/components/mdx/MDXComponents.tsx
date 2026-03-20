@@ -1,5 +1,4 @@
 import { Children, FunctionComponent, isValidElement, MouseEvent, ReactNode, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { CodeBlock } from '../CodeBlock';
 import { CheckIcon, LinkIcon } from 'lucide-react';
@@ -97,7 +96,6 @@ const h3: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
 );
 
 const section: FunctionComponent<{ children?: ReactNode; id?: string }> = ({ children, id }) => {
-  // Pass the section id to the first heading child so the anchor link uses it
   const childArray = Children.toArray(children);
   const enhanced = childArray.map((child, i) => {
     if (i === 0 && isValidElement(child) && (child.type === h1 || child.type === h2 || child.type === h3)) {
@@ -131,17 +129,12 @@ const code: FunctionComponent<{ children?: string; className?: string }> = ({ ch
 };
 
 const pre: FunctionComponent<{ children?: ReactNode }> = ({ children }) => {
-  // MDX wraps code blocks in <pre><code>. We handle rendering in the code component,
-  // so pre just passes children through.
   return <>{children}</>;
 };
 
 const hr: FunctionComponent = () => <Divider spacing={28} />;
 
 const a: FunctionComponent<{ children?: ReactNode; href?: string }> = ({ children, href }) => {
-  if (href?.startsWith('/')) {
-    return <Link to={href}>{children}</Link>;
-  }
   return <a href={href}>{children}</a>;
 };
 

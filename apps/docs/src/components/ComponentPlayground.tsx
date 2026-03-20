@@ -293,6 +293,8 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   const [copied, setCopied] = useState(false);
   const editorCodeRef = useRef(code);
   const [editorCode, setEditorCode] = useState(code);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
   // Sync state when the code prop changes (e.g. navigating between components)
   useEffect(() => {
@@ -316,6 +318,20 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, []);
+
+  if (!mounted) {
+    // SSR: show code text with reserved preview space to prevent layout shift
+    return (
+      <Wrapper>
+        <PreviewPane />
+        <CodePane>
+          <pre className="code-editor" style={{ padding: '16px 48px 16px 16px', backgroundColor: 'transparent', color: '#D4D4D4', fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace", fontSize: 13, lineHeight: 1.6, margin: 0, whiteSpace: 'pre-wrap' }}>
+            <code>{code}</code>
+          </pre>
+        </CodePane>
+      </Wrapper>
+    );
+  }
 
   return (
     <LiveProvider code={liveCode} scope={liveScope} noInline={noInline} theme={themes.vsDark}>

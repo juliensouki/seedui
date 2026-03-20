@@ -4,4 +4,4 @@ export const MobileMenuContext = createContext<{
   isOpen: boolean;
   toggle: () => void;
   close: () => void;
-    }>({ isOpen: false, toggle: () => {}, close: () => {} });
+}>({ isOpen: false, toggle: () => {}, close: () => {} });

@@ -1,5 +1,4 @@
 import { FunctionComponent } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { styled, Text, Divider } from '@seedui-react/seedui';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { allPages } from '../data/navigation';
@@ -15,7 +14,7 @@ const Nav = styled('div')(() => ({
   padding: '16px 0',
 }));
 
-const NavLink = styled(Link)(({ theme }) => {
+const NavLink = styled('a')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -52,9 +51,14 @@ const Side = styled('div')(() => ({
   gap: 2,
 }));
 
-export const PageNavigation: FunctionComponent = () => {
-  const { pathname } = useLocation();
-  const index = allPages.findIndex((p) => p.path === pathname);
+interface PageNavigationProps {
+  currentPath?: string;
+}
+
+export const PageNavigation: FunctionComponent<PageNavigationProps> = ({ currentPath }) => {
+  const path = currentPath || (typeof window !== 'undefined' ? window.location.pathname : '/');
+  const normPath = path === '/' ? '/' : path.replace(/\/$/, '');
+  const index = allPages.findIndex((p) => p.path === normPath);
 
   if (index === -1) return null;
 
@@ -70,7 +74,7 @@ export const PageNavigation: FunctionComponent = () => {
         {prev ? (
           <Side>
             <Label><ChevronLeftIcon size={12} /> Previous</Label>
-            <NavLink to={prev.path}>
+            <NavLink href={prev.path}>
               {prev.name}
             </NavLink>
           </Side>
@@ -80,7 +84,7 @@ export const PageNavigation: FunctionComponent = () => {
         {next ? (
           <Side style={{ alignItems: 'flex-end' }}>
             <Label>Next <ChevronRightIcon size={12} /></Label>
-            <NavLink to={next.path}>
+            <NavLink href={next.path}>
               {next.name}
             </NavLink>
           </Side>

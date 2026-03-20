@@ -1,5 +1,4 @@
 import { ChangeEvent, FunctionComponent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { styled, IconButton, SearchBar } from '@seedui-react/seedui';
 import { GithubIcon, FigmaIcon } from 'lucide-react';
 import { ComponentCategory } from '../data/components';
@@ -150,7 +149,7 @@ const LinkList = styled('div')(() => ({
   gap: 2,
 }));
 
-const StyledLink = styled(NavLink)(({ theme }) => {
+const StyledLink = styled('a')<{ $active: boolean }>(({ theme, $active }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
@@ -158,16 +157,19 @@ const StyledLink = styled(NavLink)(({ theme }) => {
     borderRadius: 6,
     fontSize: 14,
     fontFamily: 'inherit',
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[900],
+    color: $active
+      ? (isLight ? theme.colors.primary[600] : theme.colors.neutral.white)
+      : (isLight ? theme.colors.neutral[900] : theme.colors.neutral[900]),
     textDecoration: 'none',
     transition: 'background 0.15s, color 0.15s',
+    backgroundColor: $active
+      ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+      : 'transparent',
+    fontWeight: $active ? 500 : 400,
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
-    },
-    '&.active': {
-      color: isLight ? theme.colors.primary[600] : theme.colors.neutral.white,
-      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary.default,
-      fontWeight: 500,
+      backgroundColor: $active
+        ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+        : (isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]),
     },
   };
 });
@@ -211,7 +213,7 @@ const CategoryLinks = styled('div')(({ theme }) => {
   };
 });
 
-const CategoryLink = styled(NavLink)(({ theme }) => {
+const CategoryLink = styled('a')<{ $active: boolean }>(({ theme, $active }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
@@ -219,46 +221,47 @@ const CategoryLink = styled(NavLink)(({ theme }) => {
     borderRadius: 4,
     fontSize: 14,
     fontFamily: 'inherit',
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral[900],
+    color: $active
+      ? (isLight ? theme.colors.primary[600] : theme.colors.neutral.white)
+      : (isLight ? theme.colors.neutral[900] : theme.colors.neutral[900]),
     textDecoration: 'none',
     transition: 'background 0.15s, color 0.15s',
+    backgroundColor: $active
+      ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+      : 'transparent',
+    fontWeight: $active ? 500 : 400,
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
-    },
-    '&.active': {
-      color: isLight ? theme.colors.primary[600] : theme.colors.neutral.white,
-      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary.default,
-      fontWeight: 500,
+      backgroundColor: $active
+        ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+        : (isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]),
     },
   };
 });
 
 interface SidebarProps {
+  currentPath: string;
   gettingStartedPages: NavPage[];
   themeGroups: { category: ThemeCategory; pages: NavPage[] }[];
   componentGroups: { category: ComponentCategory; names: string[] }[];
 }
 
 export const Sidebar: FunctionComponent<SidebarProps> = ({
+  currentPath,
   gettingStartedPages,
   themeGroups,
   componentGroups,
 }) => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
   const [mobileSearch, setMobileSearch] = useState('');
 
   // Compute which keys need to be open for a given path
   const getKeysForPath = useCallback((path: string): string[] => {
     const keys: string[] = [];
 
-    // Check getting-started
     if (gettingStartedPages.some((p) => p.path === path)) {
       keys.push('getting-started');
       return keys;
     }
 
-    // Check theme groups
     for (const group of themeGroups) {
       if (group.pages.some((p) => p.path === path)) {
         keys.push('theme', `theme-${group.category}`);
@@ -266,7 +269,6 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
       }
     }
 
-    // Check component groups
     const componentName = path.startsWith('/components/') ? path.replace('/components/', '') : '';
     for (const group of componentGroups) {
       if (group.names.includes(componentName)) {
@@ -278,18 +280,16 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
     return ['getting-started'];
   }, [gettingStartedPages, themeGroups, componentGroups]);
 
-  // State tracks open/closed for each key
   const [openState, setOpenState] = useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
-    for (const key of getKeysForPath(pathname)) {
+    for (const key of getKeysForPath(currentPath)) {
       initial[key] = true;
     }
     return initial;
   });
 
-  // When navigating, ensure the target section/subsection is open (but don't close anything)
   useEffect(() => {
-    const needed = getKeysForPath(pathname);
+    const needed = getKeysForPath(currentPath);
     setOpenState((prev) => {
       const allOpen = needed.every((k) => prev[k]);
       if (allOpen) return prev;
@@ -299,7 +299,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
       }
       return next;
     });
-  }, [pathname, getKeysForPath]);
+  }, [currentPath, getKeysForPath]);
 
   const { isOpen: mobileOpen, close: closeMobile } = useContext(MobileMenuContext);
 
@@ -310,12 +310,11 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
   }, [mobileSearch]);
 
   const handleMobileSearchSelect = (path: string) => {
-    navigate(path);
+    window.location.href = path;
     setMobileSearch('');
     closeMobile();
   };
 
-  // Clear search when menu closes
   useEffect(() => {
     if (!mobileOpen) setMobileSearch('');
   }, [mobileOpen]);
@@ -324,6 +323,9 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
 
   const toggle = (key: string) =>
     setOpenState((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  // Strip trailing slash for comparison (except root)
+  const normPath = currentPath === '/' ? '/' : currentPath.replace(/\/$/, '');
 
   return (
     <Nav $mobileOpen={mobileOpen}>
@@ -355,7 +357,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
               <div>
                 <LinkList>
                   {gettingStartedPages.map((page) => (
-                    <StyledLink key={page.path} to={page.path} end={page.path === '/'}>
+                    <StyledLink key={page.path} href={page.path} $active={normPath === page.path}>
                       {page.name}
                     </StyledLink>
                   ))}
@@ -383,7 +385,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
                       <div>
                         <CategoryLinks>
                           {group.pages.map((page) => (
-                            <CategoryLink key={page.path} to={page.path}>
+                            <CategoryLink key={page.path} href={page.path} $active={normPath === page.path}>
                               {page.name}
                             </CategoryLink>
                           ))}
@@ -415,7 +417,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
                       <div>
                         <CategoryLinks>
                           {group.names.map((name) => (
-                            <CategoryLink key={name} to={`/components/${name}`}>
+                            <CategoryLink key={name} href={`/components/${name}`} $active={normPath === `/components/${name}`}>
                               {name}
                             </CategoryLink>
                           ))}

@@ -9,6 +9,7 @@ import { mdxComponents, SectionHeading } from './MDXComponents';
 interface ComponentMDXLayoutProps {
   name: string;
   description: string;
+  currentPath?: string;
   children: ReactNode;
 }
 
@@ -33,7 +34,7 @@ const tocItems = [
   { id: 'section-props', label: 'Props' },
 ];
 
-export const ComponentMDXLayout: FunctionComponent<ComponentMDXLayoutProps> = ({ name, description, children }) => {
+export const ComponentMDXLayout: FunctionComponent<ComponentMDXLayoutProps> = ({ name, description, currentPath, children }) => {
   const theme = useTheme();
   const isLight = theme.mode === 'light';
   return (
@@ -57,7 +58,7 @@ export const ComponentMDXLayout: FunctionComponent<ComponentMDXLayoutProps> = ({
         <MDXProvider components={mdxComponents}>
           {children}
         </MDXProvider>
-        <PageNavigation />
+        <PageNavigation currentPath={currentPath} />
       </MainContent>
       <TableOfContents items={tocItems} />
     </PageLayout>
