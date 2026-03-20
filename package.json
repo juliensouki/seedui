@@ -4,7 +4,9 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "apps/*"
+    "apps/docs",
+    "apps/demo",
+    "apps/sandbox"
   ],
   "resolutions": {
     "@seedui-react/seedui": "workspace:packages/seedui"
