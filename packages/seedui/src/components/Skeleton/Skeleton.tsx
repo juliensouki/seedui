@@ -10,13 +10,19 @@ import { SeedContext } from '../ThemeProvider/context';
 
 export type SkeletonVariant = 'text' | 'circular' | 'rectangular' | 'rounded';
 
+/** A placeholder that mimics content layout while data is loading. */
 export interface SkeletonProps {
+  /** Access the root DOM element for custom attributes or event handlers. */
   elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
+  /** Shape: 'text' (inline line), 'circular' (avatar/icon), 'rectangular' (sharp corners), or 'rounded' (soft corners). */
   variant?: SkeletonVariant;
+  /** Width of the skeleton — number (px) or string (e.g. '100%'). */
   width?: string | number;
+  /** Height of the skeleton — number (px) or string. Defaults vary by variant. */
   height?: string | number;
+  /** Animation style: 'pulse' (fading), 'wave' (shimmer sweep), or 'none'. */
   animation?: 'pulse' | 'wave' | 'none';
 }
 
@@ -32,8 +38,8 @@ const SkeletonDiv = applyCustomStyles(
   styled.div<StyledComponentsPrefix<Required<SkeletonProps>>>(
     ({ theme, $variant, $width, $height, $animation }) => {
       const isLight = theme.mode === 'light';
-      const bgColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[300];
-      const shimmerColor = isLight ? theme.colors.neutral[300] : theme.colors.neutral[400];
+      const bgColor = isLight ? theme.colors.neutral[300] : theme.colors.neutral[300];
+      const shimmerColor = isLight ? theme.colors.neutral[400] : theme.colors.neutral[400];
 
       const borderRadius = (() => {
         switch ($variant) {
@@ -102,6 +108,7 @@ const SkeletonDiv = applyCustomStyles(
   ),
 );
 
+/** Displays an animated placeholder shape while content is loading. */
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

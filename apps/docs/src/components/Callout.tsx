@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode } from 'react';
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 
 const CalloutBox = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';

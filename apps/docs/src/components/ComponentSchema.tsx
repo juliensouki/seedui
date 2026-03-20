@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 
 /* ------------------------------------------------------------------ */
 /*  Generic building blocks                                            */
@@ -24,7 +24,7 @@ const Box = styled('div')<{ $dashed?: boolean }>(({ theme, $dashed }) => {
     border: `1.5px ${$dashed ? 'dashed' : 'solid'} ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
     borderRadius: 8,
     padding: 16,
-    backgroundColor: isLight ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.03)',
+    backgroundColor: isLight ? 'rgba(255,255,255,0.5)' : theme.colors.neutral[200],
   };
 });
 
@@ -38,7 +38,7 @@ const BoxLabel = styled('span')(({ theme }) => {
     fontWeight: 600,
     fontFamily: "'JetBrains Mono Variable', 'JetBrains Mono', monospace",
     color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     padding: '0 6px',
     letterSpacing: '0.02em',
   };
@@ -65,7 +65,7 @@ const Placeholder = styled('div')<{ $grow?: boolean }>(({ theme, $grow }) => {
     justifyContent: 'center',
     padding: '10px 14px',
     borderRadius: 6,
-    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
+    border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
     fontSize: 11,
     fontWeight: 600,
     fontFamily: "'JetBrains Mono Variable', 'JetBrains Mono', monospace",
@@ -283,7 +283,7 @@ const CirclePlaceholder = styled('div')<{ $size?: number }>(({ theme, $size = 48
     height: $size,
     borderRadius: '50%',
     border: `1.5px dashed ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

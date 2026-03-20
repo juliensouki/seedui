@@ -6,5 +6,5 @@ const currentPath = Astro.url.pathname;
 ---
 
 <DocsLayout>
-  <DocsApp client:load initialPath={currentPath} />
+  <DocsApp client:only="react" initialPath={currentPath} />
 </DocsLayout>

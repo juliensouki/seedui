@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 import { PropDef } from '../data/components';
 
 const Table = styled('table')(({ theme }) => {

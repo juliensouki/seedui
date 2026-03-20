@@ -13,11 +13,17 @@ export type ProgressBarColor = keyof Pick<
   'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'
 >;
 
+/** A horizontal bar that visualizes progress or completion percentage. */
 export interface ProgressBarProps {
+  /** Progress percentage from 0 to 100. */
   value?: number;
+  /** Bar height — number (px) or string. Defaults to 8px. */
   height?: string | number;
+  /** Fill color from the theme's semantic palette. */
   color?: ProgressBarColor;
+  /** Disables the smooth fill transition. */
   disableAnimation?: boolean;
+  /** Access underlying DOM elements (root track, fill bar). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     fill?: HTMLAttributes<HTMLDivElement>;
@@ -81,6 +87,7 @@ const ProgressBarFill = styled.div<
   };
 });
 
+/** A horizontal bar that visualizes progress or completion as a filled percentage. */
 export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

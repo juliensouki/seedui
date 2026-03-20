@@ -19,6 +19,17 @@ const { title = 'seedui' } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
+    <script is:inline>
+      (function() {
+        var mode = localStorage.getItem('seedui-docs-mode');
+        if (mode === 'dark') {
+          document.documentElement.style.colorScheme = 'dark';
+          document.documentElement.style.backgroundColor = '#121519';
+        } else {
+          document.documentElement.style.backgroundColor = '#F7F8FA';
+        }
+      })();
+    </script>
     <div id="page-progress"></div>
     <div id="root" style="width:100%;height:100vh;overflow:hidden;visibility:hidden;">
       <slot />

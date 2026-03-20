@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState, useCallback, useRef } from 'react';
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 
 interface TocItem {
   id: string;

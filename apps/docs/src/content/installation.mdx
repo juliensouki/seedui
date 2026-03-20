@@ -5,6 +5,7 @@ export const meta = {
   description: 'Get seedui set up in your React project.',
   toc: [
     { id: 'section-install-package', label: 'Install the package' },
+    { id: 'section-styled-components', label: 'Install styled-components' },
     { id: 'section-install-fonts', label: 'Install fonts' },
     { id: 'section-import-fonts', label: 'Import fonts' },
     { id: 'section-theme-provider', label: 'Wrap with ThemeProvider' },
@@ -15,20 +16,37 @@ export const meta = {
 ## Install the package
 
 <TabbedCode commands={{
-  yarn: 'yarn add @seedui-react/seedui styled-components',
-  npm: 'npm install @seedui-react/seedui styled-components',
+  yarn: 'yarn add @seedui-react/seedui',
+  npm: 'npm install @seedui-react/seedui',
 }} />
+
+seedui requires `react ^18.2.0`, `react-dom ^18.2.0`, and `styled-components ^6` as peer dependencies.
+</section>
+
+<section id="section-styled-components">
+## Install styled-components
+
+If you don't already have `styled-components` in your project, install it:
+
+<TabbedCode commands={{
+  yarn: 'yarn add styled-components@^6',
+  npm: 'npm install styled-components@^6',
+}} />
+
+seedui uses styled-components for all component styling and theming. It is a peer dependency rather than a bundled dependency to ensure your app and seedui share a single instance — this is required for theming to work correctly via React context.
 </section>
 
 <section id="section-install-fonts">
 ## Install fonts
 
-seedui uses Inter and Source Serif 4. Install them via Fontsource:
+The default theme uses **Inter** (body text, small headings) and **Source Serif 4** (h1–h4). Install them via Fontsource:
 
 <TabbedCode commands={{
   yarn: 'yarn add @fontsource-variable/inter @fontsource-variable/source-serif-4',
   npm: 'npm install @fontsource-variable/inter @fontsource-variable/source-serif-4',
 }} />
+
+Fonts are not bundled with seedui because they are a theming concern — if you override the typography tokens with custom fonts via the theme, you don't need to install these at all.
 </section>
 
 <section id="section-import-fonts">

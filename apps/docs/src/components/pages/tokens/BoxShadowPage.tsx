@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
-import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
+import { Text, Divider } from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { TableOfContents } from '../../TableOfContents';
 import { ComponentPlayground } from '../../ComponentPlayground';
 import { PageNavigation } from '../../PageNavigation';
@@ -35,7 +36,7 @@ const ShadowCard = styled('div')(({ theme }) => {
     gap: 12,
     padding: 24,
     borderRadius: 12,
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
     height: 120,
   };
 });

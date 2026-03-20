@@ -12,11 +12,17 @@ import { Avatar, AvatarProps } from '../Avatar';
 export type AvatarStackSize = Extract<Sizes, 'sm' | 'md' | 'lg'> | number;
 export type AvatarStackDirection = 'left' | 'right';
 
+/** Groups multiple Avatar components with an overlapping layout and optional overflow count. */
 export interface AvatarStackProps {
+  /** Maximum visible avatars before showing a "+N" overflow indicator. */
   max?: number;
+  /** Uniform size for all avatars in the stack: 'sm', 'md', 'lg', or a custom number. */
   size?: AvatarStackSize;
+  /** Overlap direction — 'left' (default) stacks right-to-left, 'right' stacks left-to-right. */
   direction?: AvatarStackDirection;
+  /** One or more Avatar components to display in the stack. */
   children: ReactElement<AvatarProps> | ReactElement<AvatarProps>[];
+  /** Access the underlying DOM elements for custom attributes or event handlers. */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     overflow?: HTMLAttributes<HTMLDivElement>;
@@ -88,6 +94,7 @@ const OverflowAvatar = styled.div<{ $size: number }>((props) => ({
   boxSizing: 'border-box',
 }));
 
+/** Groups multiple Avatar components with an overlapping layout and optional "+N" overflow indicator. */
 export const AvatarStack = forwardRef<HTMLDivElement, AvatarStackProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

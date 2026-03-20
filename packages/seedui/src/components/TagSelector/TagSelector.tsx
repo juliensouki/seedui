@@ -12,21 +12,35 @@ import { Text, TextPropsAndAttributes } from '../Text';
 import { Tag } from '../Tag';
 import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 
+/** An input that lets users add and remove tags from a list. */
 export interface TagSelectorProps {
+  /** Placeholder text for the tag input. */
   placeholder?: string;
+  /** Disables the input and add button. */
   disabled?: boolean;
+  /** Validation function for the input value. */
   inputValidation?: (value: string) => boolean;
+  /** Component width — number (px) or string. */
   width?: string | number;
+  /** Called with the tag string when a new tag is added. */
   onAddTag?: (tag: string) => void;
+  /** Called with the tag string when a tag is removed. */
   onRemoveTag?: (tag: string) => void;
+  /** Current list of tag strings. */
   tags: string[];
+  /** Maximum number of tags allowed. */
   maxTags?: number;
+  /** Label text displayed above the input. */
   label?: string;
+  /** Label for the add button. Defaults to "Add". */
   buttonLabel?: string;
+  /** Additional CSS class for the root element. */
   className?: string;
+  /** Pass props to internal sub-components like the label text. */
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
+  /** Access underlying DOM elements (root, inputContainer, input, button, tagsContainer). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     inputContainer?: HTMLAttributes<HTMLDivElement>;
@@ -118,6 +132,7 @@ const AddButton = styled(Button)(({ theme }: StyledProps<TagSelectorProps>) => (
   },
 }));
 
+/** An input that lets users build a list of tags by typing and adding them one by one. */
 export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

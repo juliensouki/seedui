@@ -26,7 +26,7 @@ const NoTextDivider = applyCustomStyles(
     height?: number | string;
     spacing: number;
   }>>(({ theme, $vertical, $width, $height, $spacing }) => ({
-    backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[200],
+    backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[400],
     width: $vertical ? 1 : $width || '100%',
     height: $vertical ? $height || '100%' : 1,
     margin: $vertical ? `0 ${$spacing}px` : `${$spacing}px 0`,
@@ -51,7 +51,7 @@ const DividerContainer = applyCustomStyles(
 );
 
 const Line = styled.div<{ vertical: boolean }>(({ theme, vertical }) => ({
-  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[200],
+  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[400],
   ...(vertical
     ? {
       width: 1,

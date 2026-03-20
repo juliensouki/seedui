@@ -8,10 +8,15 @@ import { SeedContextType } from '../../types';
 import { StyledComponentsPrefix, InternalProps, StyledProps } from '../../types/internal';
 import { Text } from '../Text';
 
+/** A horizontal step indicator showing progress through a multi-step flow. */
 export interface StepperProps {
+  /** Array of step labels displayed in order. */
   steps: string[];
+  /** The current active step (1-based index). */
   activeStep: number;
+  /** Additional CSS class for the root element. */
   className?: string;
+  /** Access underlying DOM elements (root, step, stepCircle, stepLabel). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     step?: HTMLAttributes<HTMLDivElement>;
@@ -147,6 +152,7 @@ const RightChevron: FunctionComponent<{ size?: number }> = ({ size = 12 }) => (
   </CheckIconStyled>
 );
 
+/** A horizontal step indicator that shows progress through a sequential workflow. */
 export const Stepper = forwardRef<HTMLDivElement, StepperProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

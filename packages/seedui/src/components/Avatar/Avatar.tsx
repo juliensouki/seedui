@@ -15,12 +15,19 @@ export type AvatarColor = keyof Pick<
   'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'
 >;
 
+/** Displays a user avatar as an image, initials, or fallback icon. */
 export interface AvatarProps {
+  /** Image URL to display inside the avatar. */
   src?: string;
+  /** Alt text for the image; falls back to name or "avatar". */
   alt?: string;
+  /** User's name — used to generate initials when no image is provided. */
   name?: string;
+  /** Avatar diameter: 'sm' (32px), 'md' (40px), 'lg' (48px), or a custom number. */
   size?: AvatarSize;
+  /** Background color from the theme's semantic palette. */
   color?: AvatarColor;
+  /** Access the underlying DOM elements for custom attributes or event handlers. */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     image?: ImgHTMLAttributes<HTMLImageElement>;
@@ -99,6 +106,7 @@ const AvatarInitials = styled(Text)({
   },
 });
 
+/** Displays a user avatar as an image, initials derived from a name, or a generic person icon. */
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

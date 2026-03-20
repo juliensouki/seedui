@@ -10,20 +10,30 @@ import { getDefaultProps } from '../../utils/props';
 import { SeedContextType } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
 
+/** A multi-line text input with optional label. */
 export interface TextareaProps {
+  /** Current textarea value (controlled). */
   value: string;
+  /** Label text displayed above the textarea. */
   label?: string;
+  /** Placeholder text shown when empty. */
   placeholder?: string;
+  /** Disables the textarea. */
   disabled?: boolean;
+  /** Component width — number (px) or string. */
   width?: string | number;
+  /** Change handler called when the user types. */
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  /** Pass props to internal sub-components like the label text. */
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
+  /** Access underlying DOM elements (root, input textarea). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     input?: HTMLAttributes<HTMLTextAreaElement>;
   };
+  /** Whether the user can resize the textarea. Defaults to true. */
   isResizable?: boolean;
 }
 
@@ -88,6 +98,7 @@ const TextareaElement = applyCustomStyles(
   }),
 );
 
+/** A multi-line text input with optional label and configurable resize behavior. */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLTextAreaElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

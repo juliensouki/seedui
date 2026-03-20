@@ -1,5 +1,6 @@
 import { ChangeEvent, FunctionComponent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { styled, IconButton, SearchBar } from '@seedui-react/seedui';
+import { IconButton, SearchBar } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 import { GithubIcon, FigmaIcon } from 'lucide-react';
 import { ComponentCategory } from '../data/components';
 import { allPages, NavPage, ThemeCategory } from '../data/navigation';
@@ -191,13 +192,10 @@ const CategoryHeader = styled('button')(({ theme }) => {
     cursor: 'pointer',
     fontSize: 11,
     fontWeight: 600,
-    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[700],
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[700],
     fontFamily: 'inherit',
     textTransform: 'uppercase' as const,
     letterSpacing: '0.05em',
-    '&:hover': {
-      color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
-    },
   };
 });
 

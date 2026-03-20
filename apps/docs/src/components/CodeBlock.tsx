@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback, useState } from 'react';
 import { Highlight, themes } from 'prism-react-renderer';
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 import { CopyIcon, CheckIcon } from 'lucide-react';
 
 const Wrapper = styled('div')(() => ({

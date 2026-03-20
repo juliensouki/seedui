@@ -1,5 +1,6 @@
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
-import { ThemeProvider, styled, colors, Mode } from '@seedui-react/seedui';
+import { ThemeProvider, colors, Mode } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 import { componentDocs, categoryOrder } from '../data/components';
 import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from '../data/navigation';
 import { Topbar } from './Topbar';
@@ -35,6 +36,9 @@ const Content = styled('main')(({ theme }) => {
     [theme.breakpoints.down('md')]: {
       padding: 20,
     },
+    '& code': {
+      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
+    },
   };
 });
 
@@ -59,10 +63,18 @@ interface DocsShellProps {
 }
 
 export const DocsShell: FunctionComponent<DocsShellProps> = ({ currentPath, children }) => {
-  const [mode, setMode] = useState<Mode>('light');
+  const [mode, setMode] = useState<Mode>(() => {
+    const stored = localStorage.getItem('seedui-docs-mode');
+    return stored === 'dark' ? 'dark' : 'light';
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const handleModeToggle = () => setMode(m => m === 'light' ? 'dark' : 'light');
+
+  const handleModeToggle = () => setMode(m => {
+    const next = m === 'light' ? 'dark' : 'light';
+    localStorage.setItem('seedui-docs-mode', next);
+    return next;
+  });
 
   const mobileMenuValue = {
     isOpen: mobileMenuOpen,

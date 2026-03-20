@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 import { CodeBlock } from './CodeBlock';
 
 type PkgManager = 'yarn' | 'npm';
@@ -35,6 +35,7 @@ const PmButton = styled('button')<{ $active: boolean }>(({ $active, theme }) => 
 });
 
 const TabbedCodeWrapper = styled('div')(() => ({
+  marginBottom: 16,
   '& pre': {
     borderRadius: '0 0 8px 8px',
   },

@@ -31,18 +31,31 @@ import { ExpandArrow } from '../_internal/ExpandArrow';
 
 export type SelectStates = 'default' | 'disabled' | 'active';
 
+/** A dropdown selector for choosing a single option from a list. */
 export interface SelectProps {
+  /** Array of selectable options with value, label, and optional icon. */
   options: SelectOption[];
+  /** Called with the selected value (or null if cleared). */
   onChange: (value: string | null) => void;
+  /** Currently selected value (controlled). */
   value?: string | null;
+  /** Placeholder text when no option is selected. */
   placeholder?: string;
+  /** Optional label displayed above the select. */
   label?: { text: string; className?: string; style?: CSSProperties };
+  /** Component width — number (px) or string. */
   width?: string | number;
+  /** Maximum dropdown menu height before scrolling. */
   menuHeight?: string | number;
+  /** Text shown when the options list is empty. */
   noOptionMessage?: string;
+  /** HTML attributes forwarded to the underlying hidden input. */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  /** Custom styles for the currently selected menu item. */
   activeItemStyle?: SelectActiveItemStyle;
+  /** Disables the select and applies a muted appearance. */
   disabled?: boolean;
+  /** Access underlying DOM elements (root, container, arrow, menu, menuItem). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     container?: HTMLAttributes<HTMLDivElement>;
@@ -209,6 +222,7 @@ const SelectMenu = styled.div<{ $menuHeight: string | number }>(({ theme, $menuH
   },
 }));
 
+/** A dropdown selector for picking a single option from a list, with keyboard navigation and search. */
 export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

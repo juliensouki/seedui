@@ -18,7 +18,9 @@ import { getDefaultProps } from '../../../utils/props';
 import { SeedContext } from '../../ThemeProvider/context';
 import { Loader } from '../../_internal/Loader/Loader';
 
+/** Props for the Button component — extends ButtonBaseProps with children content. */
 export interface ButtonProps extends ButtonBaseProps {
+  /** Button label or content. */
   children?: ReactNode;
 }
 
@@ -63,6 +65,7 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
 
 const componentsMap = stylesMapBuilder(ButtonBase);
 
+/** A clickable button for triggering actions. Available in filled and transparent variants across primary, neutral, and error colors. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

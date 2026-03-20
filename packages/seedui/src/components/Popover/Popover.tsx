@@ -24,17 +24,29 @@ import { SeedContext } from '../ThemeProvider/context';
 export type PopoverVerticalAlignment = 'top' | 'bottom' | 'center';
 export type PopoverHorizontalAlignment = 'left' | 'right' | 'center';
 
+/** A floating panel anchored to a trigger element, used for menus, tooltips, or contextual content. */
 export interface PopoverProps {
+  /** Controls whether the popover panel is visible. */
   isOpen: boolean;
+  /** Called when the popover opens. */
   onOpen?: () => void;
+  /** Called when the popover should close. */
   onClose: () => void;
+  /** Vertical position relative to the trigger: 'top', 'bottom', or 'center'. */
   verticalAlignment?: PopoverVerticalAlignment;
+  /** Horizontal position relative to the trigger: 'left', 'right', or 'center'. */
   horizontalAlignment?: PopoverHorizontalAlignment;
+  /** Gap in pixels between the trigger and the panel. */
   spacing?: number;
+  /** The trigger element that the popover anchors to. */
   children: ReactNode;
+  /** Content rendered inside the floating panel. */
   content: ReactNode;
+  /** Whether clicking outside the popover closes it. Defaults to true. */
   closeOnOutsideClick?: boolean;
+  /** Whether pressing Escape closes the popover. Defaults to true. */
   closeOnEscape?: boolean;
+  /** Access underlying DOM elements (root, trigger, panel). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     trigger?: HTMLAttributes<HTMLDivElement>;
@@ -91,6 +103,7 @@ const RootDiv = styled.div({
   display: 'inline-block',
 });
 
+/** A floating panel anchored to a trigger element for menus, dropdowns, or contextual content. */
 export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

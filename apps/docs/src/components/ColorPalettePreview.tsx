@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
-import { styled, useTheme, ThemeProvider } from '@seedui-react/seedui';
+import { ThemeProvider } from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
 import type { ThemeCustomization } from '@seedui-react/seedui';
 
 const PreviewBox = styled('div')(({ theme }) => {

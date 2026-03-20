@@ -15,5 +15,5 @@ const currentPath = Astro.url.pathname;
 ---
 
 <DocsLayout title={`seedui | ${doc.name}`}>
-  <DocsApp client:load initialPath={currentPath} />
+  <DocsApp client:only="react" initialPath={currentPath} />
 </DocsLayout>

@@ -10,12 +10,19 @@ import { SeedContext } from '../ThemeProvider/context';
 
 export type ToggleSize = Extract<Sizes, 'sm' | 'md' | 'lg'>;
 
+/** A switch control for toggling a boolean setting on or off. */
 export interface ToggleProps {
+  /** Whether the toggle is on (controlled). */
   checked: boolean;
+  /** Called when the toggle state changes. */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /** Disables the toggle. */
   disabled?: boolean;
+  /** Optional label text next to the toggle. */
   label?: string;
+  /** Toggle size: 'sm', 'md', or 'lg'. */
   size?: ToggleSize;
+  /** Access underlying DOM elements (root, label, input). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     label?: HTMLAttributes<HTMLLabelElement>;
@@ -140,6 +147,7 @@ const ToggleLabelText = styled.span(() => ({
   marginLeft: 8,
 }));
 
+/** A switch control for toggling a boolean setting, with optional label. */
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

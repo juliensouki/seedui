@@ -22,22 +22,34 @@ import { SeedContext } from '../ThemeProvider/context';
 export type InputIconPlacement = 'left' | 'right';
 export type InputType = 'email' | 'number' | 'password' | 'tel' | 'text' | 'url';
 
+/** A text input field with optional label, icon, and inline validation. */
 export interface InputProps {
+  /** Current input value (controlled). */
   value: string;
+  /** Label text displayed above the input. */
   label?: string;
+  /** Placeholder text shown when the input is empty. */
   placeholder?: string;
+  /** Disables the input and applies a muted appearance. */
   disabled?: boolean;
+  /** HTML input type — 'text', 'email', 'password', 'number', 'tel', or 'url'. */
   type?: InputType;
+  /** Validation function — receives the current value, returns true if valid (shows a checkmark). */
   inputValidation?: (value: string) => boolean;
+  /** Icon to display inside the input, with optional placement ('left' or 'right'). */
   inputIcon?: {
     icon: ReactNode;
     placement?: InputIconPlacement;
   };
+  /** Input width — number (px) or string (e.g. '100%'). */
   width?: string | number;
+  /** Change handler called when the user types. */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /** Pass props directly to internal sub-components like the label text. */
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
+  /** Access underlying DOM elements (root, container, input, icon, validation) for custom attributes. */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     container?: HTMLAttributes<HTMLDivElement>;
@@ -188,6 +200,7 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
   }),
 );
 
+/** A text input field with optional label, icon, and real-time validation indicator. */
 export const Input = forwardRef<HTMLInputElement, InputProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

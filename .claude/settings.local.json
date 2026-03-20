@@ -36,7 +36,11 @@
       "Bash(node -e \":*)",
       "Bash(mv apps/docs apps/old-docs)",
       "Bash(mv apps/docs-astro apps/docs)",
-      "Bash(tasklist)"
+      "Bash(tasklist)",
+      "WebFetch(domain:www.dev.seedui.dev)",
+      "Bash(find C:/Users/julie/Documents/Projects/seedui -maxdepth 3 -type f \\\\\\(-name jest.config.* -o -name vitest.config.* -o -name *.test.* -o -name *.spec.* \\\\\\) ! -path */node_modules/*)",
+      "Bash(npx eslint:*)",
+      "Bash(yarn run:*)"
     ]
   }
 }

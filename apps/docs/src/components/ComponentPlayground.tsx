@@ -1,5 +1,6 @@
 import {
   FunctionComponent,
+  ReactNode,
   useEffect,
   useMemo,
   useState,
@@ -16,8 +17,6 @@ import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 import tsx from 'shiki/langs/tsx.mjs';
 import darkPlus from 'shiki/themes/dark-plus.mjs';
 import {
-  styled,
-  useTheme,
   Avatar,
   AvatarStack,
   Button,
@@ -39,6 +38,7 @@ import {
   IconButton,
   ProgressBar,
 } from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
 import {
   CopyIcon,
   CheckIcon,
@@ -197,6 +197,7 @@ const Wrapper = styled('div')(({ theme }) => {
     borderRadius: 8,
     border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
     overflow: 'hidden' as const,
+    marginBottom: 24,
   };
 });
 
@@ -212,7 +213,7 @@ const PreviewPane = styled('div')(({ theme }) => {
 const CodePane = styled('div')(({ theme }) => ({
   position: 'relative',
   borderTop: `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
-  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[200],
+  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[100],
 
   '& .code-editor': {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
@@ -282,9 +283,15 @@ function LiveErrorBar() {
 
 interface ComponentPlaygroundProps {
   code: string;
+  preview?: ReactNode;
+  previewBg?: 'contrast' | string;
 }
 
-export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = ({ code }) => {
+export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = ({ code, preview, previewBg: previewBgProp }) => {
+  const theme = useTheme();
+  const previewBg = previewBgProp === 'contrast'
+    ? (theme.mode === 'light' ? theme.colors.neutral.white : theme.colors.neutral[100])
+    : previewBgProp;
   const initialPrepared = useMemo(() => prepareCode(code), [code]);
 
   // The code fed to LiveProvider — only updated when new code compiles
@@ -323,7 +330,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
     // SSR: show code text with reserved preview space to prevent layout shift
     return (
       <Wrapper>
-        <PreviewPane />
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
         <CodePane>
           <pre className="code-editor" style={{ padding: '16px 48px 16px 16px', backgroundColor: 'transparent', color: '#D4D4D4', fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace", fontSize: 13, lineHeight: 1.6, margin: 0, whiteSpace: 'pre-wrap' }}>
             <code>{code}</code>
@@ -333,10 +340,30 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
     );
   }
 
+  if (preview) {
+    return (
+      <Wrapper>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <CodePane>
+          <CopyButton onClick={handleCopy} title="Copy code">
+            {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+          </CopyButton>
+          <SimpleEditor
+            className="code-editor"
+            value={editorCode}
+            onValueChange={handleCodeChange}
+            highlight={highlightCode}
+            style={{ backgroundColor: 'transparent', color: '#D4D4D4' }}
+          />
+        </CodePane>
+      </Wrapper>
+    );
+  }
+
   return (
     <LiveProvider code={liveCode} scope={liveScope} noInline={noInline} theme={themes.vsDark}>
       <Wrapper>
-        <PreviewPane>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
           <StablePreview />
         </PreviewPane>
         <CodePane>

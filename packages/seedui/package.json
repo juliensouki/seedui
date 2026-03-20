@@ -7,6 +7,23 @@
   "type": "module",
   "main": "dist/seedui.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/seedui.js"
+    },
+    "./sc": {
+      "types": "./dist/sc.d.ts",
+      "import": "./dist/sc.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sc": [
+        "dist/sc.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "vite build --watch",
@@ -18,7 +35,7 @@
     "styled-components": "^6.1.15"
   },
   "resolutions": {
-    "styled-components": "^5"
+    "styled-components": "^6"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",

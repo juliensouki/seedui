@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { styled, Text } from '@seedui-react/seedui';
+import { Text } from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { CodeBlock } from '../CodeBlock';
 import { PropsTable } from '../PropsTable';
 import { ComponentSchema } from '../ComponentSchema';
@@ -55,12 +56,16 @@ const MonoCode = styled('code')(({ theme }) => {
   };
 });
 
-export const OverviewDemo: FunctionComponent<{ example: FunctionComponent }> = ({ example: Example }) => {
+export const OverviewDemo: FunctionComponent<{ example: FunctionComponent; previewBg?: 'contrast' | string }> = ({ example: Example, previewBg: previewBgProp }) => {
   const [mounted, setMounted] = useState(false);
+  const theme = useTheme();
+  const previewBg = previewBgProp === 'contrast'
+    ? (theme.mode === 'light' ? theme.colors.neutral.white : theme.colors.neutral[100])
+    : previewBgProp;
   useEffect(() => { setMounted(true); }, []);
   return (
     <div style={{ marginBottom: 20 }}>
-      <ComponentDemo>{mounted ? <Example /> : null}</ComponentDemo>
+      <ComponentDemo style={previewBg ? { backgroundColor: previewBg } : undefined}>{mounted ? <Example /> : null}</ComponentDemo>
     </div>
   );
 };

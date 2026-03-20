@@ -8,9 +8,13 @@ import { SeedContextType } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
+/** A typography component that renders themed text in heading or body styles. */
 export interface TextProps {
+  /** Typography style: 'h1'–'h6' for headings, 'p' for body, 'caption' or 'small' for fine print. */
   variant?: TextVariants;
+  /** Override the rendered HTML element (e.g. render an h1 style as an h2 tag). */
   as?: ElementType;
+  /** Adds bottom margin for vertical rhythm between text blocks. */
   bottomSpacing?: boolean;
 }
 export type TextPropsAndAttributes = PropsWithChildren<
@@ -76,6 +80,7 @@ const mapVariantToElement: Record<TextVariants, ReturnType<typeof TextFactory>> 
   small: applyCustomStyles(TextFactory('small')),
 };
 
+/** Renders themed text — headings, body, captions — with consistent typography from the design system. */
 export const Text = forwardRef<
   HTMLParagraphElement,
   PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement> & { as?: ElementType }>

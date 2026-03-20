@@ -1,4 +1,4 @@
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 
 export const Table = styled('table')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -7,6 +7,7 @@ export const Table = styled('table')(({ theme }) => {
     borderCollapse: 'collapse' as const,
     fontSize: 14,
     fontFamily: 'inherit',
+    marginBottom: 24,
     color: isLight ? theme.colors.neutral[800] : theme.colors.neutral[800],
   };
 });
@@ -32,5 +33,12 @@ export const Td = styled('td')(({ theme }) => {
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
+    '& code': {
+      backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
+      padding: '2px 6px',
+      borderRadius: 4,
+      fontSize: '0.9em',
+      fontFamily: "'SF Mono', 'Fira Code', monospace",
+    },
   };
 });

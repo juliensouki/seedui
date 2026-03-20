@@ -10,11 +10,15 @@ import { SeedContext } from '../ThemeProvider/context';
 
 export type CardVariants = 'default' | 'outlined';
 
+/** A container that visually separates content with an elevated or outlined appearance. */
 export interface CardProps {
+  /** Access the root DOM element for custom attributes or event handlers. */
   elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
+  /** Content to render inside the card. */
   children?: ReactNode;
+  /** Visual style: 'default' (elevated with shadow) or 'outlined' (bordered, flat). */
   variant?: CardVariants;
 }
 
@@ -43,6 +47,7 @@ const CardDiv = applyCustomStyles(
   }),
 );
 
+/** A container that visually groups content with either a subtle elevation or a border. */
 export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

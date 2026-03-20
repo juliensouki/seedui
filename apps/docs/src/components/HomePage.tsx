@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
-import { styled, Text, Divider, Button, Input, Tag, Toggle, SearchBar, Textarea, useTheme } from '@seedui-react/seedui';
+import { Text, Divider, Button, Input, Tag, Toggle, SearchBar, Textarea, Avatar, AvatarStack, Card, ProgressBar, Stepper } from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { GithubIcon } from 'lucide-react';
 
 const Section = styled('section')(() => ({
@@ -99,18 +100,10 @@ const ComponentWall = styled('div')(() => ({
 
 /* ── Mini-UI card ── */
 
-const MiniCard = styled('div')(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    padding: '20px',
-    borderRadius: 12,
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
-    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
-    boxShadow: isLight
-      ? '0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04)'
-      : '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15)',
-  };
-});
+const WallCard = styled(Card)(() => ({
+  width: '100%',
+  padding: 20,
+}));
 
 const MiniLabel = styled('span')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -143,48 +136,6 @@ const SettingRow = styled('div')(({ theme }) => {
     '&:first-child': { paddingTop: 0 },
   };
 });
-
-/* ── Avatar components ── */
-
-const AvatarBase = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#fff',
-  fontWeight: 600,
-  flexShrink: 0,
-}));
-
-const AvatarSm = styled(AvatarBase)(() => ({
-  width: 32,
-  height: 32,
-  borderRadius: '50%',
-  fontSize: 12,
-}));
-
-const AvatarLg = styled(AvatarBase)(({ theme }) => ({
-  width: 52,
-  height: 52,
-  borderRadius: '50%',
-  fontSize: 18,
-  boxShadow: `0 0 0 2px ${theme.colors.neutral.white}, 0 0 0 4px ${theme.colors.primary[200]}`,
-}));
-
-const AvatarStack = styled('div')(() => ({
-  display: 'flex',
-  '& > *:not(:first-child)': {
-    marginLeft: -8,
-  },
-}));
-
-const AvatarStackItem = styled(AvatarBase)<{ $color: string }>(({ $color }) => ({
-  width: 30,
-  height: 30,
-  borderRadius: '50%',
-  fontSize: 11,
-  backgroundColor: $color,
-  border: '2px solid #fff',
-}));
 
 /* ── Stat / badge helpers ── */
 
@@ -226,78 +177,6 @@ const NotifItem = styled('div')(({ theme }) => {
   };
 });
 
-const ProgressBar = styled('div')(({ theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
-    overflow: 'hidden',
-  };
-});
-
-const ProgressFill = styled('div')<{ $width: number; $color: string }>(({ $width, $color }) => ({
-  height: '100%',
-  width: `${$width}%`,
-  borderRadius: 3,
-  backgroundColor: $color,
-}));
-
-const StepperMini = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-  gap: 0,
-}));
-
-const StepItem = styled('div')(() => ({
-  display: 'flex',
-  flexDirection: 'column' as const,
-  alignItems: 'center',
-  gap: 6,
-  width: 56,
-  flexShrink: 0,
-}));
-
-const StepDot = styled('div')<{ $active: boolean; $done: boolean; $color: string }>(
-  ({ $active, $done, $color, theme }) => {
-    const isLight = theme.mode === 'light';
-    const filled = $done || $active;
-    return {
-      width: 12,
-      height: 12,
-      borderRadius: '50%',
-      flexShrink: 0,
-      backgroundColor: filled ? $color : isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
-      boxShadow: $active ? `0 0 0 3px ${$color}33` : 'none',
-      transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
-    };
-  },
-);
-
-const StepLine = styled('div')<{ $done: boolean; $color: string }>(({ $done, $color, theme }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    flex: 1,
-    height: 2,
-    marginTop: 5,
-    backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
-    borderRadius: 1,
-    overflow: 'hidden' as const,
-    position: 'relative' as const,
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      height: '100%',
-      width: $done ? '100%' : '0%',
-      backgroundColor: $color,
-      borderRadius: 1,
-      transition: 'width 0.4s ease',
-    },
-  };
-});
-
 /* ── Wall content (purely decorative) ── */
 
 const WallContent: FunctionComponent = () => {
@@ -311,7 +190,7 @@ const WallContent: FunctionComponent = () => {
   const [role, setRole] = useState('Editor');
   const [feedback, setFeedback] = useState('');
   const [feedbackTag, setFeedbackTag] = useState('Feature');
-  const [checkoutStep, setCheckoutStep] = useState(2);
+  const [checkoutStep, setCheckoutStep] = useState(3);
   const [inviteSent, setInviteSent] = useState(false);
 
   const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -330,9 +209,9 @@ const WallContent: FunctionComponent = () => {
   return (
     <ComponentWall>
       {/* ── User profile card ── */}
-      <MiniCard>
+      <WallCard>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 16 }}>
-          <AvatarLg style={{ backgroundColor: theme.colors.primary[500] }}>JD</AvatarLg>
+          <Avatar name="Jane Doe" size="lg" color="primary" />
           <div style={{ flex: 1 }}>
             <Text variant="h6" style={{ lineHeight: 1.2 }}>
               Jane Doe
@@ -364,10 +243,10 @@ const WallContent: FunctionComponent = () => {
             Follow
           </Button>
         </div>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Settings panel ── */}
-      <MiniCard>
+      <WallCard>
         <MiniLabel>Preferences</MiniLabel>
         <SettingRow>
           <div>
@@ -402,10 +281,10 @@ const WallContent: FunctionComponent = () => {
           </div>
           <Toggle checked={autoSave} onChange={() => setAutoSave(!autoSave)} />
         </SettingRow>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Project card ── */}
-      <MiniCard>
+      <WallCard>
         <MiniLabel>Projects</MiniLabel>
         <SearchBar
           placeholder="Search projects..."
@@ -442,10 +321,10 @@ const WallContent: FunctionComponent = () => {
             ))
           )}
         </div>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Invite team member ── */}
-      <MiniCard>
+      <WallCard>
         <MiniLabel>Invite team member</MiniLabel>
         <Input
           placeholder="colleague@company.com"
@@ -498,25 +377,19 @@ const WallContent: FunctionComponent = () => {
             Send Invite
           </Button>
         </div>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Activity feed ── */}
-      <MiniCard>
+      <WallCard>
         <MiniLabel>Recent activity</MiniLabel>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {[
-            {
-              initials: 'AL',
-              name: 'Alice',
-              action: 'updated the design tokens',
-              time: '2m ago',
-              bg: theme.colors.primary[500],
-            },
-            { initials: 'BK', name: 'Bob', action: 'pushed to main', time: '15m ago', bg: theme.colors.success[500] },
-            { initials: 'CM', name: 'Carol', action: 'left a comment', time: '1h ago', bg: theme.colors.warning[500] },
+            { name: 'Alice', action: 'updated the design tokens', time: '2m ago', color: 'primary' as const },
+            { name: 'Bob', action: 'pushed to main', time: '15m ago', color: 'success' as const },
+            { name: 'Carol', action: 'left a comment', time: '1h ago', color: 'warning' as const },
           ].map((item) => (
             <div
-              key={item.initials}
+              key={item.name}
               style={{
                 display: 'flex',
                 gap: 10,
@@ -525,7 +398,7 @@ const WallContent: FunctionComponent = () => {
                 borderRadius: 8,
               }}
             >
-              <AvatarSm style={{ backgroundColor: item.bg }}>{item.initials}</AvatarSm>
+              <Avatar name={item.name} size="sm" color={item.color} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <Text variant="small" style={{ fontWeight: 500 }}>
                   {item.name} <span style={{ fontWeight: 400, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{item.action}</span>
@@ -539,19 +412,19 @@ const WallContent: FunctionComponent = () => {
         </div>
         <Divider spacing={8} />
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <AvatarStack>
-            <AvatarStackItem $color={theme.colors.primary[500]}>AL</AvatarStackItem>
-            <AvatarStackItem $color={theme.colors.success[500]}>BK</AvatarStackItem>
-            <AvatarStackItem $color={theme.colors.warning[500]}>CM</AvatarStackItem>
+          <AvatarStack size="sm">
+            <Avatar name="Alice" color="primary" />
+            <Avatar name="Bob" color="success" />
+            <Avatar name="Carol" color="warning" />
           </AvatarStack>
           <Text variant="caption" style={{ color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800] }}>
             3 team members
           </Text>
         </div>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Feedback form ── */}
-      <MiniCard>
+      <WallCard>
         <MiniLabel>Feedback</MiniLabel>
         <Row style={{ gap: 6, marginBottom: 12 }}>
           {['Bug', 'Feature', 'Improvement', 'Other'].map((label) => (
@@ -559,7 +432,7 @@ const WallContent: FunctionComponent = () => {
               key={label}
               color={feedbackTag === label ? 'primary' : 'neutral'}
               size="md"
-              elementProps={{ rootDiv: { style: { cursor: 'pointer' }, onClick: () => setFeedbackTag(label) } }}
+              elementProps={{ root: { style: { cursor: 'pointer' }, onClick: () => setFeedbackTag(label) } }}
             >
               {label}
             </Tag>
@@ -587,44 +460,24 @@ const WallContent: FunctionComponent = () => {
             Submit
           </Button>
         </div>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Checkout ── */}
-      <MiniCard style={{ gridColumn: 'span 2' }}>
+      <WallCard elementProps={{ rootDiv: { style: { gridColumn: 'span 2' } } }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <MiniLabel style={{ marginBottom: 0 }}>Checkout</MiniLabel>
           <Tag color="info" size="md">
-            {`Step ${checkoutStep + 1} of ${stepLabels.length}`}
+            {`Step ${checkoutStep} of ${stepLabels.length}`}
           </Tag>
         </div>
-        <StepperMini>
-          {stepLabels.map((label, i) => (
-            <React.Fragment key={label}>
-              <StepItem>
-                <StepDot $active={i === checkoutStep} $done={i < checkoutStep} $color={theme.colors.primary[500]} />
-                <Text
-                  variant="caption"
-                  style={{
-                    fontSize: 10,
-                    color: i <= checkoutStep ? theme.colors.primary[500] : (isLight ? theme.colors.neutral[400] : theme.colors.neutral[800]),
-                    fontWeight: i === checkoutStep ? 600 : 400,
-                    transition: 'color 0.3s ease, font-weight 0.3s ease',
-                  }}
-                >
-                  {label}
-                </Text>
-              </StepItem>
-              {i < stepLabels.length - 1 && <StepLine $done={i < checkoutStep} $color={theme.colors.primary[500]} />}
-            </React.Fragment>
-          ))}
-        </StepperMini>
+        <Stepper steps={stepLabels} activeStep={checkoutStep} />
         <Divider spacing={10} />
         <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
           <Button
             variant="transparent"
             color="neutral"
             size="md"
-            onClick={() => setCheckoutStep((s) => Math.max(0, s - 1))}
+            onClick={() => setCheckoutStep((s) => Math.max(1, s - 1))}
           >
             Back
           </Button>
@@ -632,15 +485,15 @@ const WallContent: FunctionComponent = () => {
             variant="filled"
             color="primary"
             size="md"
-            onClick={() => setCheckoutStep((s) => Math.min(stepLabels.length - 1, s + 1))}
+            onClick={() => setCheckoutStep((s) => Math.min(stepLabels.length, s + 1))}
           >
-            {checkoutStep === stepLabels.length - 1 ? 'Place Order' : `Continue to ${stepLabels[checkoutStep + 1]}`}
+            {checkoutStep === stepLabels.length ? 'Place Order' : `Continue to ${stepLabels[checkoutStep]}`}
           </Button>
         </div>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Notifications ── */}
-      <MiniCard>
+      <WallCard>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <MiniLabel style={{ marginBottom: 0 }}>Notifications</MiniLabel>
           <Tag color="error" size="sm">
@@ -648,9 +501,7 @@ const WallContent: FunctionComponent = () => {
           </Tag>
         </div>
         <NotifItem>
-          <AvatarSm style={{ backgroundColor: theme.colors.info[500], width: 28, height: 28, fontSize: 11 }}>
-            DR
-          </AvatarSm>
+          <Avatar name="David R" size="sm" color="info" />
           <div style={{ flex: 1 }}>
             <Text variant="small" style={{ fontWeight: 500 }}>
               Design review requested
@@ -661,9 +512,7 @@ const WallContent: FunctionComponent = () => {
           </div>
         </NotifItem>
         <NotifItem>
-          <AvatarSm style={{ backgroundColor: theme.colors.success[500], width: 28, height: 28, fontSize: 11 }}>
-            CI
-          </AvatarSm>
+          <Avatar name="CI" size="sm" color="success" />
           <div style={{ flex: 1 }}>
             <Text variant="small" style={{ fontWeight: 500 }}>
               Build passed
@@ -674,9 +523,7 @@ const WallContent: FunctionComponent = () => {
           </div>
         </NotifItem>
         <NotifItem>
-          <AvatarSm style={{ backgroundColor: theme.colors.warning[500], width: 28, height: 28, fontSize: 11 }}>
-            PM
-          </AvatarSm>
+          <Avatar name="PM" size="sm" color="warning" />
           <div style={{ flex: 1 }}>
             <Text variant="small" style={{ fontWeight: 500 }}>
               Sprint ends tomorrow
@@ -686,10 +533,10 @@ const WallContent: FunctionComponent = () => {
             </Text>
           </div>
         </NotifItem>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Storage usage ── */}
-      <MiniCard>
+      <WallCard>
         <MiniLabel>Storage</MiniLabel>
         <div style={{ display: 'flex', gap: 20, marginBottom: 16 }}>
           <div>
@@ -702,9 +549,9 @@ const WallContent: FunctionComponent = () => {
           </div>
         </div>
         {[
-          { label: 'Documents', pct: 45, color: theme.colors.primary[500] },
-          { label: 'Images', pct: 28, color: theme.colors.info[500] },
-          { label: 'Other', pct: 12, color: theme.colors.neutral[400] },
+          { label: 'Documents', pct: 45, color: 'primary' as const },
+          { label: 'Images', pct: 28, color: 'info' as const },
+          { label: 'Other', pct: 12, color: 'neutral' as const },
         ].map((item) => (
           <div key={item.label} style={{ marginBottom: 10 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
@@ -715,9 +562,7 @@ const WallContent: FunctionComponent = () => {
                 {item.pct}%
               </Text>
             </div>
-            <ProgressBar>
-              <ProgressFill $width={item.pct} $color={item.color} />
-            </ProgressBar>
+            <ProgressBar value={item.pct} color={item.color} height={6} />
           </div>
         ))}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 4 }}>
@@ -725,10 +570,10 @@ const WallContent: FunctionComponent = () => {
             Upgrade Plan
           </Button>
         </div>
-      </MiniCard>
+      </WallCard>
 
       {/* ── Team members ── */}
-      <MiniCard style={{ gridColumn: 'span 2' }}>
+      <WallCard elementProps={{ rootDiv: { style: { gridColumn: 'span 2' } } }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <MiniLabel style={{ marginBottom: 0 }}>Team</MiniLabel>
           <Button variant="filled" color="primary" size="md">
@@ -737,13 +582,13 @@ const WallContent: FunctionComponent = () => {
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           {[
-            { initials: 'JD', name: 'Jane', role: 'Design', bg: theme.colors.info[500] },
-            { initials: 'AL', name: 'Alice', role: 'Frontend', bg: theme.colors.primary[500] },
-            { initials: 'BK', name: 'Bob', role: 'Backend', bg: theme.colors.success[500] },
-            { initials: 'CM', name: 'Carol', role: 'PM', bg: theme.colors.warning[500] },
+            { name: 'Jane', role: 'Design', color: 'info' as const },
+            { name: 'Alice', role: 'Frontend', color: 'primary' as const },
+            { name: 'Bob', role: 'Backend', color: 'success' as const },
+            { name: 'Carol', role: 'PM', color: 'warning' as const },
           ].map((m) => (
             <div
-              key={m.initials}
+              key={m.name}
               style={{
                 flex: 1,
                 display: 'flex',
@@ -755,7 +600,7 @@ const WallContent: FunctionComponent = () => {
                 backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
               }}
             >
-              <AvatarSm style={{ backgroundColor: m.bg, width: 38, height: 38, fontSize: 13 }}>{m.initials}</AvatarSm>
+              <Avatar name={m.name} size="md" color={m.color} />
               <Text variant="small" style={{ fontWeight: 500 }}>
                 {m.name}
               </Text>
@@ -767,7 +612,7 @@ const WallContent: FunctionComponent = () => {
             </div>
           ))}
         </div>
-      </MiniCard>
+      </WallCard>
     </ComponentWall>
   );
 };
@@ -785,8 +630,7 @@ export const HomePage: FunctionComponent = () => {
               A simple and elegant React component library that&apos;s endlessly customizable.
             </Text>
             <Text variant="p" style={{ marginTop: 16, lineHeight: 1.7, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>
-              Everything you need to craft polished applications, internal tools, and delightful user experiences —
-              designed to get out of your way.
+              Everything you need to craft polished applications, internal tools, and delightful user experiences.
             </Text>
             <div style={{ display: 'flex', gap: 10, marginTop: 24 }}>
               <Button
@@ -824,20 +668,11 @@ export const HomePage: FunctionComponent = () => {
         <FeatureGrid>
           <FeatureCard>
             <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Design Token System
+              Clean Foundation
             </Text>
             <FeatureDescription>
-              A comprehensive set of tokens for colors, typography, spacing, border radius, box shadows, and
-              breakpoints. Every value is consistent and overridable.
-            </FeatureDescription>
-          </FeatureCard>
-          <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Fully Themeable
-            </Text>
-            <FeatureDescription>
-              Customize the entire look and feel through the ThemeProvider. Override design tokens, set global default
-              props, and apply conditional styles to any component.
+              A React component library that aims to look and feel right from the start.
+              Use it as-is or build on top of it to create your own design system.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
@@ -850,29 +685,39 @@ export const HomePage: FunctionComponent = () => {
           </FeatureCard>
           <FeatureCard>
             <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Styled Components
+              Fully Customizable
             </Text>
             <FeatureDescription>
-              Built on styled-components with full TypeScript support. Use the re-exported <code>styled</code> and{' '}
-              <code>useTheme</code> utilities to build custom components that access your theme.
+              Built on styled-components, every token and component can be tailored to your needs.
+              Override anything from a single theme object, or create your own themed components
+              using the same tools that power seedui.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
             <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              TypeScript First
+              Designed in Figma
             </Text>
             <FeatureDescription>
-              Every component, token, and theme configuration is fully typed. Get autocompletion and type safety for
-              props, style overrides, and conditional style conditions.
+              Every component comes with matching Figma designs, ready to use in your workflows. Designers and developers
+              stay in sync from day one.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
             <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Component Customization
+              AI-Friendly Docs
             </Text>
             <FeatureDescription>
-              Go beyond props — apply global CSS overrides and conditional styles that react to component props and
-              theme values, all from a single configuration object.
+              Documentation is server-side rendered so AI agents and coding assistants can read it directly.
+              Point your tools at the docs and let them help you build.
+            </FeatureDescription>
+          </FeatureCard>
+          <FeatureCard>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Developer Experience
+            </Text>
+            <FeatureDescription>
+              Fully typed with TypeScript, so you get autocompletion and type safety for every prop, token, and
+              style override. Spend less time looking things up and more time building.
             </FeatureDescription>
           </FeatureCard>
         </FeatureGrid>

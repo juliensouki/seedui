@@ -1,5 +1,5 @@
-import { FunctionComponent, ReactNode } from 'react';
-import { styled } from '@seedui-react/seedui';
+import { CSSProperties, FunctionComponent, ReactNode } from 'react';
+import styled from '@seedui-react/seedui/sc';
 
 const Wrapper = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -14,8 +14,9 @@ const Wrapper = styled('div')(({ theme }) => {
 
 interface ComponentDemoProps {
   children: ReactNode;
+  style?: CSSProperties;
 }
 
-export const ComponentDemo: FunctionComponent<ComponentDemoProps> = ({ children }) => (
-  <Wrapper>{children}</Wrapper>
+export const ComponentDemo: FunctionComponent<ComponentDemoProps> = ({ children, style }) => (
+  <Wrapper style={style}>{children}</Wrapper>
 );

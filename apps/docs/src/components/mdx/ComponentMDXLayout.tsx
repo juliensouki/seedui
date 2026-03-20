@@ -1,5 +1,6 @@
 import { FunctionComponent, ReactNode } from 'react';
-import { styled, Text, Divider, IconButton, useTheme } from '@seedui-react/seedui';
+import { Text, Divider, IconButton } from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { FigmaIcon, GithubIcon } from 'lucide-react';
 import { MDXProvider } from '@mdx-js/react';
 import { TableOfContents } from '../TableOfContents';

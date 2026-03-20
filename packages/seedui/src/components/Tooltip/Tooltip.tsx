@@ -21,17 +21,23 @@ import { SeedContext } from '../ThemeProvider/context';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
+/** A small text popup that appears on hover to provide additional context. */
 export interface TooltipProps {
+  /** Tooltip message text. */
   text: string;
+  /** Position relative to the trigger: 'top', 'right', 'bottom', or 'left'. */
   direction?: TooltipDirection;
+  /** Access underlying DOM elements (root, trigger, tooltip). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     trigger?: HTMLAttributes<HTMLDivElement>;
     tooltip?: HTMLAttributes<HTMLSpanElement>;
   };
+  /** Pass props to the internal Text component. */
   forwardProps?: {
     text?: TextPropsAndAttributes;
   };
+  /** The element that triggers the tooltip on hover. */
   children: ReactNode;
 }
 
@@ -133,6 +139,7 @@ const mapDirectionToTooltip: Record<TooltipDirection, typeof TooltipSpan> = {
   left: applyCustomStyles(LeftTooltip),
 };
 
+/** A small text popup that appears on hover, positioned relative to its trigger element. */
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

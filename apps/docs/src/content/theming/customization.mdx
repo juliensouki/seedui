@@ -1,5 +1,6 @@
 import { Table, Th, Td } from '../../components/StyledTable';
 import { ColorPalettePreview } from '../../components/ColorPalettePreview';
+import { ComponentPlayground } from '../../components/ComponentPlayground';
 
 export const meta = {
   title: 'Customization',
@@ -101,26 +102,26 @@ control.
 
 Available palettes: `primary`, `neutral`, `success`, `info`, `warning`, and `error`.
 
-<ColorPalettePreview />
-
-```tsx
-colors: {
-  light: {
-    primary: '#e11d48',
-    success: {
-      500: '#0ea5e9',
-      600: '#0284c7',
+<ComponentPlayground
+  preview={<ColorPalettePreview />}
+  code={`const myTheme: ThemeCustomization = {
+  colors: {
+    light: {
+      primary: '#e11d48',
+      success: {
+        500: '#0ea5e9',
+        600: '#0284c7',
+      },
+    },
+    dark: {
+      primary: '#fb7185',
+      success: {
+        400: '#fb923c',
+        500: '#f97316',
+      },
     },
   },
-  dark: {
-    primary: '#fb7185',
-    success: {
-      400: '#fb923c',
-      500: '#f97316',
-    },
-  },
-}
-```
+};`} />
 
 For the `neutral` palette you can also override the `white` and `black` values alongside shade numbers.
 </section>
@@ -131,7 +132,9 @@ For the `neutral` palette you can also override the `white` and `black` values a
 The `spacing` property sets the base size in pixels used by the `theme.spacing()` function. The default base is `8`, so `spacing(2)` returns `16`.
 
 ```tsx
-spacing: 10
+const myTheme: ThemeCustomization = {
+  spacing: 10,
+};
 ```
 </section>
 
@@ -174,20 +177,22 @@ Variants: `h1` – `h6`, `p`, `caption`, `small`.
 </Table>
 
 ```tsx
-typography: {
-  h1: {
-    fontFamily: '"Poppins", sans-serif',
-    fontWeight: 800,
-    responsive: {
-      desktop: { fontSize: '3rem', lineHeight: 1.1 },
-      tablet:  { fontSize: '2.25rem' },
-      mobile:  { fontSize: '1.75rem' },
+const myTheme: ThemeCustomization = {
+  typography: {
+    h1: {
+      fontFamily: '"Poppins", sans-serif',
+      fontWeight: 800,
+      responsive: {
+        desktop: { fontSize: '3rem', lineHeight: 1.1 },
+        tablet:  { fontSize: '2.25rem' },
+        mobile:  { fontSize: '1.75rem' },
+      },
+    },
+    p: {
+      fontFamily: '"Lora", serif',
     },
   },
-  p: {
-    fontFamily: '"Lora", serif',
-  },
-}
+};
 ```
 </section>
 
@@ -197,7 +202,9 @@ typography: {
 The `borderRadius` property sets the base size in pixels used by the `theme.borderRadius()` function. The default base is `2`, so `borderRadius(4)` returns `8`. Passing `'full'` always returns `9999`.
 
 ```tsx
-borderRadius: 4
+const myTheme: ThemeCustomization = {
+  borderRadius: 4,
+};
 ```
 </section>
 
@@ -208,16 +215,18 @@ Override elevation shadow values independently for light and dark modes. Each mo
 partial overrides of the shadow elevation keys.
 
 ```tsx
-boxShadow: {
-  light: {
-    1: '0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06)',
-    2: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)',
+const myTheme: ThemeCustomization = {
+  boxShadow: {
+    light: {
+      1: '0 2px 8px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06)',
+      2: '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)',
+    },
+    dark: {
+      1: '0 2px 8px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3)',
+      2: '0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2)',
+    },
   },
-  dark: {
-    1: '0 2px 8px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3)',
-    2: '0 4px 12px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.2)',
-  },
-}
+};
 ```
 </section>
 
@@ -247,14 +256,16 @@ The semantic aliases `mobile` (`sm`), `tablet` (`md`),
 and `desktop` (`lg`) can also be remapped.
 
 ```tsx
-breakpoints: {
-  sm: 640,
-  md: 1024,
-  lg: 1280,
-  mobile: 'sm',
-  tablet: 'md',
-  desktop: 'lg',
-}
+const myTheme: ThemeCustomization = {
+  breakpoints: {
+    sm: 640,
+    md: 1024,
+    lg: 1280,
+    mobile: 'sm',
+    tablet: 'md',
+    desktop: 'lg',
+  },
+};
 ```
 </section>
 

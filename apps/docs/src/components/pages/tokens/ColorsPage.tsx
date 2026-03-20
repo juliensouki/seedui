@@ -1,5 +1,6 @@
 import { FunctionComponent, useCallback, useState } from 'react';
-import { styled, Text, Divider, useTheme } from '@seedui-react/seedui';
+import { Text, Divider } from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { TableOfContents } from '../../TableOfContents';
 import { PageNavigation } from '../../PageNavigation';
 import { ComponentPlayground } from '../../ComponentPlayground';

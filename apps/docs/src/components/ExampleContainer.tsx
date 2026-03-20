@@ -1,4 +1,4 @@
-import { styled } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 
 export const ExampleContainer = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';

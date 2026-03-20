@@ -15,7 +15,9 @@ import { getDefaultProps } from '../../../utils/props';
 import { SeedContextType } from '../../../types';
 import { SeedContext } from '../../ThemeProvider/context';
 
+/** Props for the IconButton component — a circular button designed to hold a single icon. */
 export interface IconButtonProps extends ButtonBaseProps {
+  /** Icon element to display inside the button. */
   children?: ReactNode;
 }
 
@@ -47,6 +49,7 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
 
 const componentsMap = stylesMapBuilder(IconButtonBase);
 
+/** A circular button designed for icon-only actions like edit, delete, or settings. */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

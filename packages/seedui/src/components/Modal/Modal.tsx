@@ -19,15 +19,25 @@ import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
 import { Text } from '../Text';
 
+/** A dialog overlay that focuses attention on a specific task or message. */
 export interface ModalProps {
+  /** Controls whether the modal is visible. */
   isOpen: boolean;
+  /** Called when the modal should close (close button, overlay click, or Escape key). */
   onClose: () => void;
+  /** Optional title displayed in the modal header. */
   title?: string;
+  /** Content rendered inside the modal body. */
   children?: ReactNode;
+  /** Whether to show the X close button in the header. Defaults to true. */
   showCloseButton?: boolean;
+  /** Whether clicking the backdrop closes the modal. Defaults to true. */
   closeOnOverlayClick?: boolean;
+  /** Whether pressing Escape closes the modal. Defaults to true. */
   closeOnEscape?: boolean;
+  /** Modal width — number (px) or string. Defaults to 500px. */
   width?: string | number;
+  /** Access underlying DOM elements (overlay, container, header, content, closeButton). */
   elementProps?: {
     overlay?: HTMLAttributes<HTMLDivElement>;
     container?: HTMLAttributes<HTMLDivElement>;
@@ -157,6 +167,7 @@ const CloseButton = styled.button<StyledComponentsPrefix<Record<string, never>>>
   };
 });
 
+/** A dialog overlay that focuses user attention on a task, confirmation, or message. */
 export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

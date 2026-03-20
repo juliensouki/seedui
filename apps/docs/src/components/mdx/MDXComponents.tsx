@@ -1,10 +1,11 @@
 import { Children, FunctionComponent, isValidElement, MouseEvent, ReactNode, useState } from 'react';
-import { styled, Text, Divider } from '@seedui-react/seedui';
+import { Text, Divider } from '@seedui-react/seedui';
+import styled from '@seedui-react/seedui/sc';
 import { CodeBlock } from '../CodeBlock';
 import { CheckIcon, LinkIcon } from 'lucide-react';
 
 const StyledSection = styled('section')(() => ({
-  marginBottom: 40,
+  marginBottom: 72,
 }));
 
 const InlineCode = styled('code')(({ theme }) => {
@@ -88,11 +89,11 @@ const h1: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
 );
 
 const h2: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
-  <SectionHeading variant="h4" as="h2" style={{ marginBottom: 12 }}>{children}</SectionHeading>
+  <SectionHeading variant="h4" as="h2" style={{ marginBottom: 20 }}>{children}</SectionHeading>
 );
 
 const h3: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
-  <SectionHeading variant="h5" as="h3" style={{ marginTop: 32, marginBottom: 6 }}>{children}</SectionHeading>
+  <SectionHeading variant="h5" as="h3" style={{ marginTop: 48, marginBottom: 14 }}>{children}</SectionHeading>
 );
 
 const section: FunctionComponent<{ children?: ReactNode; id?: string }> = ({ children, id }) => {
@@ -108,12 +109,12 @@ const section: FunctionComponent<{ children?: ReactNode; id?: string }> = ({ chi
 };
 
 const p: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
-  <Text variant="p" style={{ marginBottom: 12 }}>{children}</Text>
+  <Text variant="p" style={{ marginBottom: 22 }}>{children}</Text>
 );
 
 const CodeBlockWrapper = styled('div')(() => ({
-  marginTop: 4,
-  marginBottom: 16,
+  marginTop: 12,
+  marginBottom: 28,
 }));
 
 const code: FunctionComponent<{ children?: string; className?: string }> = ({ children, className }) => {

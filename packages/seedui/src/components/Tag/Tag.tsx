@@ -16,18 +16,26 @@ export type TagColor = keyof Pick<
 >;
 export type TagSize = Extract<Sizes, 'sm' | 'md'>;
 
+/** A small colored label for categories, statuses, or metadata. */
 export interface TagProps {
+  /** Tag color from the theme's semantic palette. */
   color?: TagColor;
+  /** Tag size: 'sm' or 'md'. */
   size?: TagSize;
+  /** Shows an X button to allow removal. */
   removable?: boolean;
+  /** Called when the remove button is clicked. */
   onRemove?: () => void;
+  /** Access underlying DOM elements (root, removeButton). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     removeButton?: HTMLAttributes<HTMLButtonElement>;
   };
+  /** Pass props to the internal Text component. */
   forwardProps?: {
     text?: TextPropsAndAttributes;
   };
+  /** Tag label text. */
   children: string;
 }
 
@@ -92,6 +100,7 @@ const RemoveButton = styled(IconButton)(() => ({
   height: 24,
 }));
 
+/** A small colored label used for categories, statuses, or metadata badges. */
 export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

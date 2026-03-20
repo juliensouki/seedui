@@ -9,17 +9,29 @@ import { Input } from '../Input';
 import { StyledComponentsPrefix, InternalProps, StyledProps } from '../../types/internal';
 import { Button } from '../Button';
 
+/** A search input with a built-in icon and optional submit button. */
 export interface SearchBarProps {
+  /** Current search value (controlled). */
   value: string;
+  /** Placeholder text. Defaults to "Search...". */
   placeholder?: string;
+  /** Disables the input and button. */
   disabled?: boolean;
+  /** Validation function — returns true if the input is valid. */
   inputValidation?: (value: string) => boolean;
+  /** Component width — number (px) or string. */
   width?: string | number;
+  /** Called when the user types in the search field. */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /** Called when the user clicks the search button or presses Enter. */
   onSearch?: () => void;
+  /** Label for the submit button. Defaults to "Search". */
   buttonLabel?: string;
+  /** Hides the submit button, showing only the input with icon. */
   hideButton?: boolean;
+  /** Additional CSS class for the root element. */
   className?: string;
+  /** Access underlying DOM elements (root, icon, input, button). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     icon?: HTMLAttributes<HTMLDivElement>;
@@ -115,6 +127,7 @@ const IconWrapper = styled.div(({ theme }) => {
   };
 });
 
+/** A search input with an integrated icon and optional submit button. */
 export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);

@@ -1,4 +1,3 @@
-import styled, { useTheme, createGlobalStyle, ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import * as lightSemanticColors from './tokens/colors/light/semantics';
 import * as lightPrimitiveColors from './tokens/colors/light/primitives';
 import * as darkSemanticColors from './tokens/colors/dark/semantics';
@@ -8,8 +7,6 @@ export * from './style';
 
 export * from './components';
 export * from './types';
-
-export { styled, useTheme, createGlobalStyle, ServerStyleSheet, StyleSheetManager };
 
 export const colors = {
   light: { primitive: lightPrimitiveColors, semantic: lightSemanticColors },
