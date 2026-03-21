@@ -1,0 +1,38 @@
+---
+import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/inter';
+
+interface Props {
+  title?: string;
+}
+
+const { title = 'seedui' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" style="margin:0;padding:0;width:100%;height:100%;overflow:hidden;">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <style>*, *::before, *::after { box-sizing: border-box; }</style>
+  </head>
+  <body style="margin:0;padding:0;width:100%;height:100%;overflow:hidden;">
+    <script is:inline>
+      (function() {
+        var mode = localStorage.getItem('seedui-docs-mode');
+        if (mode === 'dark') {
+          document.documentElement.style.colorScheme = 'dark';
+          document.documentElement.style.backgroundColor = '#121519';
+        } else {
+          document.documentElement.style.backgroundColor = '#F7F8FA';
+        }
+      })();
+    </script>
+    <div id="page-progress" style="position:fixed;top:0;left:0;height:2px;background:#4F6EF7;z-index:9999;width:0;pointer-events:none;"></div>
+    <div id="root" style="width:100%;height:100vh;overflow:hidden;visibility:hidden;">
+      <slot />
+    </div>
+  </body>
+</html>

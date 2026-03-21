@@ -1,20 +1,12 @@
 import { TypographyConfig } from '../../types';
 
 export const h6Styles: TypographyConfig = {
-  fontFamily: 'poppins',
-  fontWeight: 'bold',
+  fontFamily: 'Inter Variable',
+  fontWeight: 600,
+  letterSpacing: 'normal',
+  fontSize: '1rem',
+  lineHeight: '1.375rem',
   responsive: {
-    desktop: {
-      fontSize: 20,
-      lineHeight: 24,
-    },
-    tablet: {
-      fontSize: 18,
-      lineHeight: 20,
-    },
-    mobile: {
-      fontSize: 18,
-      lineHeight: 24,
-    },
+    tablet: { fontSize: '0.875rem', lineHeight: '1.25rem' },
   },
 };

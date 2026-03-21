@@ -1,0 +1,51 @@
+import { dividerDoc as doc } from './data';
+import { OverviewDemo, ImportSection, PropsSection, AnatomySection } from '../../../../components/mdx/ComponentDocSections';
+import { ComponentPlayground } from '../../../../components/content/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+A thin line to visually divide content. Supports horizontal and vertical orientations with adjustable spacing.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Horizontal divider
+
+A horizontal divider separates stacked content. Use the spacing prop to control the vertical margin around it.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Vertical divider
+
+A vertical divider separates side-by-side content inside a flex layout. Set a height to match the surrounding elements.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### With text
+
+Pass children to display a label between the two lines.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+
+### Custom spacing
+
+Adjust the spacing prop to increase or decrease the breathing room around the divider.
+
+<ComponentPlayground code={doc.usageExamples[3].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

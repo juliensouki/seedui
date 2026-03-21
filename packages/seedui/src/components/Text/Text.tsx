@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes, useContext } from 'react';
+import { ElementType, ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren, RefAttributes, useContext } from 'react';
 import styled from 'styled-components';
 
 import { StyledComponentsPrefix } from '../../types/internal';
@@ -8,8 +8,13 @@ import { SeedContextType } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
 
 export type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';
+/** A typography component that renders themed text in heading or body styles. */
 export interface TextProps {
+  /** Typography style: 'h1'–'h6' for headings, 'p' for body, 'caption' or 'small' for fine print. */
   variant?: TextVariants;
+  /** Override the rendered HTML element (e.g. render an h1 style as an h2 tag). */
+  as?: ElementType;
+  /** Adds bottom margin for vertical rhythm between text blocks. */
   bottomSpacing?: boolean;
 }
 export type TextPropsAndAttributes = PropsWithChildren<
@@ -36,26 +41,29 @@ const TextFactory = (variant: TextVariants) => {
     ({ theme, $variant, $bottomSpacing }) => ({
       fontFamily: theme.typography[$variant].fontFamily,
       fontWeight: theme.typography[$variant].fontWeight,
+      letterSpacing: theme.typography[$variant].letterSpacing,
       color:
         tag === 'p' && theme.mode === 'dark'
-          ? theme.colors.neutral[100]
+          ? theme.colors.neutral[900]
           : theme.mode === 'light'
           ? theme.colors.neutral.black
           : theme.colors.neutral.white,
 
       margin: 0,
-      fontSize: theme.typography[$variant].responsive.desktop.fontSize,
-      lineHeight: `${theme.typography[$variant].responsive.desktop.lineHeight}px`,
+      fontSize: theme.typography[$variant].fontSize,
+      lineHeight: theme.typography[$variant].lineHeight,
       marginBottom: $bottomSpacing ? '0.4em' : 0,
 
-      [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
-        fontSize: theme.typography[$variant].responsive.tablet.fontSize,
-        lineHeight: `${theme.typography[$variant].responsive.tablet.lineHeight}px`,
-      },
-      [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
-        fontSize: theme.typography[$variant].responsive.mobile.fontSize,
-        lineHeight: `${theme.typography[$variant].responsive.mobile.lineHeight}px`,
-      },
+      ...(theme.typography[$variant].responsive?.tablet && {
+        [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {
+          ...theme.typography[$variant].responsive.tablet,
+        },
+      }),
+      ...(theme.typography[$variant].responsive?.mobile && {
+        [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.mobile]}px)`]: {
+          ...theme.typography[$variant].responsive.mobile,
+        },
+      }),
     }),
   );
 };
@@ -72,12 +80,13 @@ const mapVariantToElement: Record<TextVariants, ReturnType<typeof TextFactory>> 
   small: applyCustomStyles(TextFactory('small')),
 };
 
+/** Renders themed text — headings, body, captions — with consistent typography from the design system. */
 export const Text = forwardRef<
   HTMLParagraphElement,
-  PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement>>
+  PropsWithChildren<TextProps & HTMLAttributes<HTMLParagraphElement> & { as?: ElementType }>
 >((props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
   const { customizations } = useContext<SeedContextType>(SeedContext);
-  const { variant, children, bottomSpacing, ...allHTMLAttributes } = getDefaultProps<PropsWithChildren<TextProps>>({
+  const { variant, as: asProp, children, bottomSpacing, ...allHTMLAttributes } = getDefaultProps<PropsWithChildren<TextProps>>({
     providedProps: props,
     globalDefaultProps: customizations?.components?.text?.defaultProps,
     defaultProps,
@@ -88,6 +97,7 @@ export const Text = forwardRef<
   return (
     <TextElement
       ref={forwardedRef}
+      as={asProp}
       $bottomSpacing={bottomSpacing}
       $variant={variant}
       $customizations={customizations.components?.text}

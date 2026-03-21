@@ -35,3 +35,5 @@ apps/*/dist
 /**/tsconfig.tsbuildinfo
 vite.config.ts.timestamp*
 .vite/
+.astro/
+.claude/settings.local.json

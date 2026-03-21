@@ -10,17 +10,21 @@ import { SeedContext } from '../ThemeProvider/context';
 
 export type CardVariants = 'default' | 'outlined';
 
+/** A container that visually separates content with an elevated or outlined appearance. */
 export interface CardProps {
-  htmlAttributes?: {
+  /** Access the root DOM element for custom attributes or event handlers. */
+  elementProps?: {
     rootDiv?: HTMLAttributes<HTMLDivElement>;
   };
+  /** Content to render inside the card. */
   children?: ReactNode;
+  /** Visual style: 'default' (elevated with shadow) or 'outlined' (bordered, flat). */
   variant?: CardVariants;
 }
 
 const defaultProps: CardProps = {
   variant: 'default',
-  htmlAttributes: {
+  elementProps: {
     rootDiv: {},
   },
 };
@@ -32,24 +36,25 @@ const CardDiv = applyCustomStyles(
     return {
       display: 'block',
       width: 'fit-content',
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[800],
-      borderRadius: theme.borderRadius['075'],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
+      borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[1],
       border:
         $variant === 'outlined'
-          ? `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[600]}`
+          ? `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[400]}`
           : 'none',
     };
   }),
 );
 
+/** A container that visually groups content with either a subtle elevation or a border. */
 export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       variant,
       className,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      elementProps: { rootDiv: rootDivHTMLAttributes } = {},
       children,
     } = getDefaultProps<CardProps & InternalProps>({
       providedProps: props,

@@ -21,17 +21,23 @@ import { SeedContext } from '../ThemeProvider/context';
 
 export type TooltipDirection = 'top' | 'right' | 'bottom' | 'left';
 
+/** A small text popup that appears on hover to provide additional context. */
 export interface TooltipProps {
+  /** Tooltip message text. */
   text: string;
+  /** Position relative to the trigger: 'top', 'right', 'bottom', or 'left'. */
   direction?: TooltipDirection;
-  htmlAttributes?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    childrenWrapperDiv?: HTMLAttributes<HTMLDivElement>;
-    tooltipSpan?: HTMLAttributes<HTMLSpanElement>;
+  /** Access underlying DOM elements (root, trigger, tooltip). */
+  elementProps?: {
+    root?: HTMLAttributes<HTMLDivElement>;
+    trigger?: HTMLAttributes<HTMLDivElement>;
+    tooltip?: HTMLAttributes<HTMLSpanElement>;
   };
+  /** Pass props to the internal Text component. */
   forwardProps?: {
     text?: TextPropsAndAttributes;
   };
+  /** The element that triggers the tooltip on hover. */
   children: ReactNode;
 }
 
@@ -40,10 +46,10 @@ type TooltipSpanProps = StyledComponentsPrefix<Required<TooltipProps> & { toolti
 const defaultProps: TooltipProps = {
   text: '',
   direction: 'top',
-  htmlAttributes: {
-    rootDiv: {},
-    childrenWrapperDiv: {},
-    tooltipSpan: {},
+  elementProps: {
+    root: {},
+    trigger: {},
+    tooltip: {},
   },
   forwardProps: {
     text: {},
@@ -51,23 +57,23 @@ const defaultProps: TooltipProps = {
   children: <></>,
 };
 
-const computeTooltipMarginX = (theme: Theme): number => theme.spacing['200'];
-const computeTooltipMarginY = (theme: Theme): number => theme.spacing['100'];
+const computeTooltipMarginX = (theme: Theme): number => theme.spacing(2);
+const computeTooltipMarginY = (theme: Theme): number => theme.spacing(1);
 
 const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
   const theme = props.theme;
   const isLight = theme.mode === 'light';
 
   return {
-    backgroundColor: isLight ? theme.colors.neutral[900] : theme.colors.neutral[400],
+    backgroundColor: isLight ? theme.colors.neutral[900] : theme.colors.neutral[600],
     color: theme.colors.neutral.white,
     position: 'absolute',
     visibility: 'hidden',
     width: 'max-content',
     maxWidth: 200,
     textAlign: 'center',
-    borderRadius: props.theme.borderRadius[100],
-    padding: `${props.theme.spacing[100]}px ${props.theme.spacing[150]}px`,
+    borderRadius: props.theme.borderRadius(4),
+    padding: `${props.theme.spacing(1)}px ${props.theme.spacing(1.5)}px`,
     zIndex: 9999,
     opacity: 0,
     transition: 'all 0.2s',
@@ -133,16 +139,17 @@ const mapDirectionToTooltip: Record<TooltipDirection, typeof TooltipSpan> = {
   left: applyCustomStyles(LeftTooltip),
 };
 
+/** A small text popup that appears on hover, positioned relative to its trigger element. */
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       text,
       direction,
-      htmlAttributes: {
-        rootDiv: rootDivHTMLAttributes,
-        childrenWrapperDiv: childrenWrapperDivHTMLAttributes,
-        tooltipSpan: tooltipSpanHTMLAttributes,
+      elementProps: {
+        root: rootHTMLAttributes,
+        trigger: triggerHTMLAttributes,
+        tooltip: tooltipHTMLAttributes,
       },
       className,
       forwardProps: { text: textProps },
@@ -187,8 +194,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
     const TooltipComponent = mapDirectionToTooltip[direction];
 
     return (
-      <MainDiv ref={forwardedRef} {...rootDivHTMLAttributes}>
-        <ChildrenWrapper ref={childrenContainerRef} {...childrenWrapperDivHTMLAttributes}>
+      <MainDiv ref={forwardedRef} className={joinClasses('tooltip-root', rootHTMLAttributes?.className)} {...rootHTMLAttributes}>
+        <ChildrenWrapper ref={childrenContainerRef} className={joinClasses('tooltip-trigger', triggerHTMLAttributes?.className)} {...triggerHTMLAttributes}>
           {children}
         </ChildrenWrapper>
         <TooltipComponent
@@ -197,8 +204,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           $tooltipTop={tooltipTop}
           $direction={direction}
           $customizations={customizations.components?.tooltip}
-          className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
-          {...tooltipSpanHTMLAttributes}
+          className={joinClasses('tooltip-content', className, tooltipHTMLAttributes?.className)}
+          {...tooltipHTMLAttributes}
         >
           <TooltipText variant="caption" {...textProps}>
             {text}

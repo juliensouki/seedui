@@ -1,0 +1,19 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { DocsApp } from '../../components/DocsApp';
+import { componentDocs } from '../../docs/components';
+
+export function getStaticPaths() {
+  return componentDocs.map((doc) => ({
+    params: { name: doc.name },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<DocsLayout title={`seedui | ${doc.name}`}>
+  <DocsApp client:only="react" initialPath={currentPath} />
+</DocsLayout>

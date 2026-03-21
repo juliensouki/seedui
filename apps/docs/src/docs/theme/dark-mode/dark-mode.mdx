@@ -1,0 +1,183 @@
+import { ModeToggleDemo } from '../../../components/content/ModeToggleDemo';
+
+export const meta = {
+  title: 'Dark Mode',
+  description: 'Built-in light and dark mode with automatic adaptation across all components and tokens.',
+  toc: [
+    { id: 'section-overview', label: 'Overview' },
+    { id: 'section-toggling-modes', label: 'Toggling modes' },
+    { id: 'section-mode-aware-custom-styles', label: 'Styling by mode' },
+    { id: 'section-mode-aware-colors', label: 'Mode-aware color overrides' },
+    { id: 'section-conditional-styles', label: 'Conditional component styles' },
+  ],
+};
+
+<section id="section-overview">
+## Overview
+
+seedui supports light and dark mode out of the box. Set the `mode` prop on
+`ThemeProvider` and every component, color token, and box shadow automatically adapts &mdash; no
+extra configuration needed.
+
+```tsx
+import { ThemeProvider } from '@seedui-react/seedui';
+
+function App() {
+  return (
+    <ThemeProvider mode="dark">
+      <YourApp />
+    </ThemeProvider>
+  );
+}
+```
+</section>
+
+<section id="section-toggling-modes">
+## Toggling modes
+
+Store the current mode in state and toggle it with a button, system preference, or any other mechanism.
+seedui re-renders all themed components when the mode changes.
+
+<ModeToggleDemo />
+
+```tsx
+import { useState } from 'react';
+import { ThemeProvider, Mode } from '@seedui-react/seedui';
+
+function App() {
+  const [mode, setMode] = useState<Mode>('light');
+
+  return (
+    <ThemeProvider mode={mode}>
+      <button onClick={() => setMode(m => m === 'light' ? 'dark' : 'light')}>
+        Toggle mode
+      </button>
+    </ThemeProvider>
+  );
+}
+```
+</section>
+
+<section id="section-mode-aware-custom-styles">
+## Styling by mode
+
+When building your own styled components, access `theme.mode` to apply different styles per mode.
+
+```tsx
+import { styled } from '@seedui-react/seedui';
+
+const Card = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    padding: theme.spacing(3),
+    borderRadius: theme.borderRadius(4),
+    backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+  };
+});
+```
+
+You can also use the `useTheme` hook for the same purpose in regular components:
+
+```tsx
+import { useTheme } from '@seedui-react/seedui';
+
+function Banner() {
+  const theme = useTheme();
+  const isLight = theme.mode === 'light';
+
+  return (
+    <div style={{
+      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary[900],
+      color: isLight ? theme.colors.primary[800] : theme.colors.primary[200],
+    }}>
+      Mode-aware banner
+    </div>
+  );
+}
+```
+</section>
+
+<section id="section-mode-aware-colors">
+## Mode-aware color overrides
+
+When customizing the theme, you can provide different color overrides for light and dark mode independently.
+Each mode receives its own set of color tokens.
+
+```tsx
+import { ThemeProvider, ThemeCustomization } from '@seedui-react/seedui';
+
+const theme: ThemeCustomization = {
+  colors: {
+    light: {
+      primary: '#6366f1',
+      neutral: { 100: '#f8f9fa' },
+    },
+    dark: {
+      primary: '#818cf8',
+      neutral: { 900: '#0f0f12' },
+    },
+  },
+};
+
+function App() {
+  return (
+    <ThemeProvider mode="dark" theme={theme}>
+      <YourApp />
+    </ThemeProvider>
+  );
+}
+```
+
+Similarly, box shadows can be customized per mode:
+
+```tsx
+const theme: ThemeCustomization = {
+  boxShadow: {
+    light: {
+      1: '0 1px 3px rgba(0, 0, 0, 0.08)',
+      2: '0 4px 12px rgba(0, 0, 0, 0.1)',
+    },
+    dark: {
+      1: '0 1px 3px rgba(0, 0, 0, 0.3)',
+      2: '0 4px 12px rgba(0, 0, 0, 0.5)',
+    },
+  },
+};
+```
+</section>
+
+<section id="section-conditional-styles">
+## Conditional component styles
+
+Use the global `conditionalStyles` configuration to apply styles to specific components based on
+the current mode.
+
+```tsx
+const theme: ThemeCustomization = {
+  components: {
+    card: {
+      conditionalStyles: [
+        {
+          condition: (_props, theme) => theme.mode === 'dark',
+          styles: {
+            boxShadow: '0 0 20px rgba(99, 102, 241, 0.15)',
+            border: '1px solid rgba(99, 102, 241, 0.2)',
+          },
+        },
+      ],
+    },
+    button: {
+      conditionalStyles: [
+        {
+          condition: (_props, theme) => theme.mode === 'dark',
+          styles: {
+            fontWeight: 500,
+          },
+        },
+      ],
+    },
+  },
+};
+```
+</section>

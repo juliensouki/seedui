@@ -1,0 +1,45 @@
+import { toggleDoc as doc } from './data';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../../components/mdx/ComponentDocSections';
+import { ComponentPlayground } from '../../../../components/content/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+A switch for binary settings that take effect immediately, like enabling notifications or dark mode. Supports an optional label and multiple sizes.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Basic toggle
+
+A controlled switch with a label. The change takes effect immediately, making it ideal for settings that don't require a form submission.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Sizes
+
+Three sizes are available. Small works in dense settings panels, while large provides a bigger hit target for touch interfaces.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Disabled
+
+A disabled toggle is visually muted and cannot be interacted with. Use it when a setting is locked or unavailable.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

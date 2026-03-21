@@ -1,17 +1,30 @@
 import { CSSObject } from 'styled-components';
 
 import {
+  AvatarProps,
+  AvatarStackProps,
   ButtonProps,
   CardProps,
+  DividerProps,
   IconButtonProps,
   InputProps,
+  ModalProps,
+  PopoverProps,
+  ProgressBarProps,
+  SearchBarProps,
+  SelectProps,
+  SkeletonProps,
+  StepperProps,
   TagProps,
+  TagSelectorProps,
   TextareaProps,
   TextProps,
+  ToggleProps,
   TooltipProps,
 } from '../components';
-import { BorderRadius, BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
+import { BoxShadow, Breakpoints, SemanticColorShades, Theme, TypographyVariants } from './theme';
 import { MultiMode } from './internal';
+import { MenuItemProps } from '../components/Select/MenuItem';
 
 export type CustomComponentConfiguration<T> = {
   defaultProps?: Partial<T>;
@@ -23,21 +36,38 @@ export type CustomComponentConfiguration<T> = {
 };
 
 export interface CustomComponents {
+  avatar?: CustomComponentConfiguration<AvatarProps>;
+  avatarStack?: CustomComponentConfiguration<AvatarStackProps>;
   button?: CustomComponentConfiguration<ButtonProps>;
   card?: CustomComponentConfiguration<CardProps>;
+  divider?: CustomComponentConfiguration<DividerProps>;
   iconButton?: CustomComponentConfiguration<IconButtonProps>;
   input?: CustomComponentConfiguration<InputProps>;
+  modal?: CustomComponentConfiguration<ModalProps>;
+  popover?: CustomComponentConfiguration<PopoverProps>;
+  progressBar?: CustomComponentConfiguration<ProgressBarProps>;
+  searchBar?: CustomComponentConfiguration<SearchBarProps>;
+  skeleton?: CustomComponentConfiguration<SkeletonProps>;
+  stepper?: CustomComponentConfiguration<StepperProps>;
   tag?: CustomComponentConfiguration<TagProps>;
+  tagSelector?: CustomComponentConfiguration<TagSelectorProps>;
   text?: CustomComponentConfiguration<TextProps>;
   textarea?: CustomComponentConfiguration<TextareaProps>;
+  toggle?: CustomComponentConfiguration<ToggleProps>;
   tooltip?: CustomComponentConfiguration<TooltipProps>;
+  select?: CustomComponentConfiguration<SelectProps> & {
+    menuItem?: CustomComponentConfiguration<MenuItemProps>;
+  };
 }
 
 export type CustomTypographyResponsiveConfig = Partial<{
   fontFamily: string;
   fontWeight: string | number;
+  letterSpacing: string;
+  fontSize: number | string;
+  lineHeight: number | string;
   responsive: Partial<
-    Record<'desktop' | 'tablet' | 'mobile', Partial<{ fontSize: number | string; lineHeight: number | string }>>
+    Record<'tablet' | 'mobile', Partial<{ fontSize: number | string; lineHeight: number | string }>>
   >;
 }>;
 
@@ -47,7 +77,6 @@ export type CustomTypographyConfig = Partial<Record<TypographyVariants, CustomTy
 
 export interface CustomizedColors {
   primary?: Partial<SemanticColorShades> | string;
-  secondary?: Partial<SemanticColorShades> | string;
   neutral?: (Partial<SemanticColorShades> & { white: string; black: string }) | string;
   success?: Partial<SemanticColorShades> | string;
   info?: Partial<SemanticColorShades> | string;
@@ -58,7 +87,7 @@ export interface CustomizedColors {
 export interface ThemeCustomization {
   components?: CustomComponents;
   breakpoints?: Partial<Breakpoints>;
-  borderRadius?: Partial<BorderRadius>;
+  borderRadius?: number;
   spacing?: number;
   typography?: CustomTypographyConfig;
   boxShadow?: CustomBoxShadow;

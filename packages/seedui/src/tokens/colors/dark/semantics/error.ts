@@ -2,7 +2,7 @@ import { SemanticColorShades } from '../../../../types';
 import { red } from '../primitives/red';
 
 export const error: SemanticColorShades = {
-  default: red[500],
+  default: red[600],
   100: red[100],
   200: red[200],
   300: red[300],

@@ -2,7 +2,7 @@ import { SemanticColorShades } from '../../../../types';
 import { purple } from '../primitives/purple';
 
 export const primary: SemanticColorShades = {
-  default: purple[500],
+  default: purple[600],
   100: purple[100],
   200: purple[200],
   300: purple[300],

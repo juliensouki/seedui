@@ -3,11 +3,11 @@ import { PrimitiveColorShades } from '../../../../types';
 export const green: PrimitiveColorShades = {
   100: '#EBF4EC',
   200: '#CCE2CF',
-  300: '#AFD1B3',
-  400: '#86B98C',
-  500: '#5EA266',
-  600: '#368B40',
-  700: '#2B6F33',
-  800: '#205326',
-  900: '#16381A',
+  300: '#A6CFAC',
+  400: '#74B57C',
+  500: '#479A50',
+  600: '#2E7A37',
+  700: '#24622C',
+  800: '#1A4A21',
+  900: '#113216',
 };

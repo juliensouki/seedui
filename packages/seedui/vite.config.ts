@@ -12,7 +12,10 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: {
+        seedui: resolve(__dirname, 'src/index.ts'),
+        sc: resolve(__dirname, 'src/sc.ts'),
+      },
       formats: ['es'],
     },
     rollupOptions: {

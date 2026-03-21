@@ -1,13 +1,13 @@
 import { PrimitiveColorShades } from '../../../../types';
 
 export const purple: PrimitiveColorShades = {
-  100: '#F2ECFA',
-  200: '#DDCEF1',
-  300: '#CAB1E9',
-  400: '#AF8ADE',
-  500: '#9563D3',
-  600: '#7A3CC8',
-  700: '#6230A0',
-  800: '#492478',
-  900: '#311850',
+  100: '#F0EDFF',
+  200: '#D8D1FF',
+  300: '#BFB6FF',
+  400: '#9B8AFF',
+  500: '#7B61FF',
+  600: '#6344E5',
+  700: '#5138BF',
+  800: '#3F2C99',
+  900: '#2D2073',
 };

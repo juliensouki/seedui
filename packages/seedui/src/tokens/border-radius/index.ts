@@ -1,13 +1,9 @@
 import { BorderRadius } from '../../types';
 
-export const borderRadius: BorderRadius = {
-  '0': 0,
-  '025': 2,
-  '050': 4,
-  '075': 6,
-  '100': 8,
-  '125': 10,
-  '150': 12,
-  '175': 14,
-  '200': 16,
+const BASE_SIZE = 2;
+const FULL_VALUE = 9999;
+
+export const borderRadius: BorderRadius = (factor: number | 'full') => {
+  if (factor === 'full') return FULL_VALUE;
+  return BASE_SIZE * factor;
 };

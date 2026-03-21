@@ -1,0 +1,388 @@
+import {
+  FunctionComponent,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useContext,
+} from 'react';
+import { LiveProvider, LivePreview, LiveContext } from 'react-live';
+import { themes, Highlight } from 'prism-react-renderer';
+import SimpleEditor from 'react-simple-code-editor';
+import { createHighlighterCoreSync } from 'shiki/core';
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
+import tsx from 'shiki/langs/tsx.mjs';
+import darkPlus from 'shiki/themes/dark-plus.mjs';
+import * as seedui from '@seedui-react/seedui';
+import styled, { useTheme } from '@seedui-react/seedui/sc';
+import { CopyIcon, CheckIcon } from 'lucide-react';
+
+const baseScope = {
+  useState,
+  useCallback,
+  useMemo,
+  styled,
+  useTheme,
+  ...seedui,
+};
+
+const highlighter = createHighlighterCoreSync({
+  themes: [darkPlus],
+  langs: [tsx],
+  engine: createJavaScriptRegexEngine(),
+});
+
+function highlightCode(code: string): string {
+  const html = highlighter.codeToHtml(code, { lang: 'tsx', theme: 'dark-plus' });
+  return html.replace(/^<pre[^>]*><code[^>]*>/, '').replace(/<\/code><\/pre>$/, '');
+}
+
+function prepareCode(code: string): { code: string; noInline: boolean } {
+  const hasHooks = /\buse[A-Z]\w*\s*\(/.test(code);
+
+  if (!hasHooks) {
+    return { code: code.trim(), noInline: false };
+  }
+
+  const lines = code.split('\n');
+  const firstJsxIdx = lines.findIndex((l) => l.trim().startsWith('<'));
+
+  if (firstJsxIdx === -1) {
+    return { code: code.trim(), noInline: false };
+  }
+
+  const statements = lines.slice(0, firstJsxIdx).filter((l) => l.trim());
+  const jsx = lines.slice(firstJsxIdx);
+  const jsxStr = jsx.join('\n    ');
+
+  const wrapped = `function Demo() {
+  ${statements.join('\n  ')}
+  return (
+    <>${jsxStr}</>
+  );
+}
+
+render(<Demo />)`;
+
+  return { code: wrapped, noInline: true };
+}
+
+function StablePreview() {
+  const { error, element } = useContext(LiveContext);
+  const liveRef = useRef<HTMLDivElement>(null);
+  const snapshotRef = useRef('');
+  const hasError = !!error || !element;
+
+  useLayoutEffect(() => {
+    if (liveRef.current) {
+      const wrapper = liveRef.current.firstElementChild;
+      if (wrapper && wrapper.childElementCount > 0) {
+        snapshotRef.current = liveRef.current.innerHTML;
+      }
+    }
+  });
+
+  return (
+    <>
+      <div ref={liveRef} style={hasError && snapshotRef.current ? { display: 'none' } : undefined}>
+        <LivePreview />
+      </div>
+      {hasError && snapshotRef.current && <div dangerouslySetInnerHTML={{ __html: snapshotRef.current }} />}
+    </>
+  );
+}
+
+const Wrapper = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    borderRadius: theme.borderRadius(4),
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    overflow: 'hidden' as const,
+    marginBottom: theme.spacing(3),
+  };
+});
+
+const PreviewPane = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    padding: theme.spacing(3),
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+  };
+});
+
+const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) => ({
+  position: 'relative',
+  borderTop: $hasPreview ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}` : undefined,
+  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[100],
+
+  '& .code-editor': {
+    fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
+    fontSize: '13px !important',
+    lineHeight: '1.6 !important',
+  },
+
+  '& .code-editor > textarea, & .code-editor > pre': {
+    padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px !important`,
+    fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
+    fontSize: '13px !important',
+    lineHeight: '1.6 !important',
+    background: 'transparent !important',
+    outline: 'none',
+  },
+}));
+
+const ReadOnlyCode = styled('pre')(({ theme }) => ({
+  padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`,
+  fontSize: theme.typography.caption.fontSize,
+  lineHeight: 1.6,
+  fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
+  overflowX: 'auto',
+  margin: 0,
+  background: 'transparent',
+}));
+
+const CopyButton = styled('button')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    position: 'absolute',
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+    zIndex: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    borderRadius: theme.borderRadius(3),
+    border: 'none',
+    cursor: 'pointer',
+    backgroundColor: 'transparent',
+    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
+    transition: 'color 0.15s, background-color 0.15s',
+    '&:hover': {
+      backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+      color: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
+    },
+  };
+});
+
+const ErrorBar = styled('div')(({ theme }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    padding: `${theme.spacing(1.5)}px ${theme.spacing(2)}px`,
+    backgroundColor: isLight ? theme.colors.error[100] : theme.colors.error[200],
+    color: isLight ? theme.colors.error[700] : theme.colors.error[700],
+    fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
+    fontSize: theme.typography.caption.fontSize,
+    lineHeight: 1.5,
+    whiteSpace: 'pre-wrap' as const,
+  };
+});
+
+function LiveErrorBar() {
+  const { error } = useContext(LiveContext);
+  const snapshotExists = useRef(false);
+
+  if (!error) snapshotExists.current = true;
+  if (snapshotExists.current) return null;
+
+  return <ErrorBar>{error}</ErrorBar>;
+}
+
+interface ComponentPlaygroundProps {
+  /** Code string to display. Omit for preview-only mode. */
+  code?: string;
+  /** Static preview content (bypasses react-live). */
+  preview?: ReactNode;
+  /** Background for the preview pane. */
+  previewBg?: 'contrast' | string;
+  /** Additional scope variables for react-live. */
+  scope?: Record<string, unknown>;
+  /** When true, shows code as read-only with syntax highlighting (no live editing). */
+  readOnly?: boolean;
+  /** Language for read-only syntax highlighting. */
+  language?: string;
+}
+
+export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = ({
+  code,
+  preview,
+  previewBg: previewBgProp,
+  scope,
+  readOnly,
+  language = 'tsx',
+}) => {
+  const theme = useTheme();
+  const previewBg =
+    previewBgProp === 'contrast'
+      ? theme.mode === 'light'
+        ? theme.colors.neutral.white
+        : theme.colors.neutral[100]
+      : previewBgProp;
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(() => {
+    if (code) {
+      void navigator.clipboard.writeText(code.trim());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }, [code]);
+
+  // Preview-only mode (no code)
+  if (!code) {
+    return (
+      <Wrapper>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
+          {preview}
+        </PreviewPane>
+      </Wrapper>
+    );
+  }
+
+  // Read-only code block mode
+  if (readOnly) {
+    return (
+      <Wrapper>
+        <CodePane>
+          <CopyButton style={{ top: '50%', transform: 'translateY(-50%)' }} onClick={handleCopy} title="Copy code">
+            {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+          </CopyButton>
+          <Highlight theme={themes.vsDark} code={code.trim()} language={language}>
+            {({ tokens, getLineProps, getTokenProps }) => (
+              <ReadOnlyCode>
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line })}>
+                    {line.map((token, j) => (
+                      <span key={j} {...getTokenProps({ token })} />
+                    ))}
+                  </div>
+                ))}
+              </ReadOnlyCode>
+            )}
+          </Highlight>
+        </CodePane>
+      </Wrapper>
+    );
+  }
+
+  // Live playground mode
+  return <LivePlayground code={code} preview={preview} previewBg={previewBg} scope={scope} />;
+};
+
+// Separated to avoid hooks running in read-only/preview-only paths
+const LivePlayground: FunctionComponent<{
+  code: string;
+  preview?: ReactNode;
+  previewBg?: string;
+  scope?: Record<string, unknown>;
+}> = ({ code, preview, previewBg, scope }) => {
+  const theme = useTheme();
+  const initialPrepared = useMemo(() => prepareCode(code), [code]);
+
+  const [liveCode, setLiveCode] = useState(initialPrepared.code);
+  const [noInline, setNoInline] = useState(initialPrepared.noInline);
+  const [copied, setCopied] = useState(false);
+  const editorCodeRef = useRef(code);
+  const [editorCode, setEditorCode] = useState(code);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const prepared = prepareCode(code);
+    setLiveCode(prepared.code);
+    setNoInline(prepared.noInline);
+    editorCodeRef.current = code;
+    setEditorCode(code);
+  }, [code]);
+
+  const handleCodeChange = useCallback((newCode: string) => {
+    editorCodeRef.current = newCode;
+    setEditorCode(newCode);
+    const prepared = prepareCode(newCode);
+    setLiveCode(prepared.code);
+    setNoInline(prepared.noInline);
+  }, []);
+
+  const handleCopy = useCallback(() => {
+    void navigator.clipboard.writeText(editorCodeRef.current);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, []);
+
+  const hasPreview = !!preview || !preview; // always show preview pane for live mode
+
+  if (!mounted) {
+    return (
+      <Wrapper>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <CodePane $hasPreview>
+          <pre
+            className="code-editor"
+            style={{
+              padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`,
+              backgroundColor: 'transparent',
+              color: '#D4D4D4',
+              fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",
+              fontSize: 13,
+              lineHeight: 1.6,
+              margin: 0,
+              whiteSpace: 'pre-wrap',
+            }}
+          >
+            <code>{code}</code>
+          </pre>
+        </CodePane>
+      </Wrapper>
+    );
+  }
+
+  if (preview) {
+    return (
+      <Wrapper>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <CodePane $hasPreview>
+          <CopyButton onClick={handleCopy} title="Copy code">
+            {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+          </CopyButton>
+          <SimpleEditor
+            className="code-editor"
+            value={editorCode}
+            onValueChange={handleCodeChange}
+            highlight={highlightCode}
+            style={{ backgroundColor: 'transparent', color: '#D4D4D4' }}
+          />
+        </CodePane>
+      </Wrapper>
+    );
+  }
+
+  return (
+    <LiveProvider code={liveCode} scope={scope ? { ...baseScope, ...scope } : baseScope} noInline={noInline} theme={themes.vsDark}>
+      <Wrapper>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
+          <StablePreview />
+        </PreviewPane>
+        <CodePane $hasPreview>
+          <CopyButton onClick={handleCopy} title="Copy code">
+            {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+          </CopyButton>
+          <SimpleEditor
+            className="code-editor"
+            value={editorCode}
+            onValueChange={handleCodeChange}
+            highlight={highlightCode}
+            style={{ backgroundColor: 'transparent', color: '#D4D4D4' }}
+          />
+        </CodePane>
+        <LiveErrorBar />
+      </Wrapper>
+    </LiveProvider>
+  );
+};

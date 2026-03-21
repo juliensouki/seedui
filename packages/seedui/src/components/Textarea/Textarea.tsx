@@ -10,20 +10,30 @@ import { getDefaultProps } from '../../utils/props';
 import { SeedContextType } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
 
+/** A multi-line text input with optional label. */
 export interface TextareaProps {
+  /** Current textarea value (controlled). */
   value: string;
+  /** Label text displayed above the textarea. */
   label?: string;
+  /** Placeholder text shown when empty. */
   placeholder?: string;
+  /** Disables the textarea. */
   disabled?: boolean;
+  /** Component width — number (px) or string. */
   width?: string | number;
+  /** Change handler called when the user types. */
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  /** Pass props to internal sub-components like the label text. */
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
   };
-  htmlAttributes?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
-    textarea?: HTMLAttributes<HTMLTextAreaElement>;
+  /** Access underlying DOM elements (root, input textarea). */
+  elementProps?: {
+    root?: HTMLAttributes<HTMLDivElement>;
+    input?: HTMLAttributes<HTMLTextAreaElement>;
   };
+  /** Whether the user can resize the textarea. Defaults to true. */
   isResizable?: boolean;
 }
 
@@ -35,9 +45,9 @@ const defaultProps: TextareaProps = {
   forwardProps: {
     labelTextProps: {},
   },
-  htmlAttributes: {
-    rootDiv: {},
-    textarea: {},
+  elementProps: {
+    root: {},
+    input: {},
   },
 };
 
@@ -47,36 +57,38 @@ const TextareaElement = applyCustomStyles(
 
     return {
       width: '100%',
-      borderRadius: theme.borderRadius[100],
-      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[400]}`,
+      borderRadius: theme.borderRadius(4),
+      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
       boxSizing: 'border-box',
 
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[700],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
       color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
-      padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
+      padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
 
       fontFamily: theme.typography.p.fontFamily,
-      fontSize: theme.typography.p.responsive.desktop.fontSize,
+      fontSize: theme.typography.p.fontSize,
 
       resize: !$isResizable ? 'none' : undefined,
 
       '&::placeholder': {
-        color: theme.colors.neutral[400],
+        color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[600],
       },
 
       '&:hover': {
-        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[200],
+        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
       },
 
       '&:focus': {
-        outline: 'none',
+        outline: `2px solid ${theme.colors.primary[300]}`,
+        outlineOffset: 1,
         borderColor: theme.colors.primary.default,
       },
 
       '&:disabled': {
-        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[800],
-        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[600],
+        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+        borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
+        color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
 
         '&::placeholder': {
           color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
@@ -86,6 +98,7 @@ const TextareaElement = applyCustomStyles(
   }),
 );
 
+/** A multi-line text input with optional label and configurable resize behavior. */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLTextAreaElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
@@ -99,7 +112,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
       isResizable = true,
       forwardProps,
       className,
-      htmlAttributes,
+      elementProps,
     } = getDefaultProps<TextareaProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.textarea?.defaultProps,
@@ -107,15 +120,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps & Internal
     });
 
     return (
-      <ContainerWithLabel label={label} forwardProps={forwardProps} htmlAttributes={htmlAttributes} width={width}>
+      <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width} className="textarea-root">
         <TextareaElement
-          {...htmlAttributes.textarea}
+          {...elementProps.input}
           ref={forwardedRef}
           disabled={disabled}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className={joinClasses(className, className, htmlAttributes?.textarea?.className)}
+          className={joinClasses('textarea-input', className, elementProps?.input?.className)}
           $customizations={customizations.components?.textarea}
           $isResizable={isResizable}
         />

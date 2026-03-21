@@ -1,0 +1,43 @@
+import { textDoc as doc } from './data';
+import { OverviewDemo, ImportSection, PropsSection } from '../../../../components/mdx/ComponentDocSections';
+import { ComponentPlayground } from '../../../../components/content/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+The base component for all text content. Each variant maps to a semantic HTML element (h1–h6, p, span) with predefined styles.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Headings
+
+Six heading levels are available, from h1 (largest) to h6 (smallest). Each maps to its corresponding HTML heading element.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Body text
+
+Use the p variant for paragraph text, caption for secondary descriptions, and small for fine print.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Bottom spacing
+
+Enable bottomSpacing to add margin below the text, useful for stacking headings and paragraphs without manual margins.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+</section>
+
+<PropsSection props={doc.props} />

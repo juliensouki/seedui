@@ -1,0 +1,96 @@
+import { Table, Th, Td } from '../../../components/content/StyledTable';
+import { Text } from '@seedui-react/seedui';
+
+export const meta = {
+  title: 'ThemeProvider',
+  description: 'The root component that provides theming and customization to all seedui components.',
+  toc: [
+    { id: 'section-overview', label: 'Overview' },
+    { id: 'section-props', label: 'Props' },
+    { id: 'section-accessing-the-theme', label: 'Accessing the theme' },
+  ],
+};
+
+<section id="section-overview">
+## Overview
+
+Every seedui application must be wrapped in a `ThemeProvider`. It supplies the
+design tokens (colors, spacing, typography, etc.) and component customizations to the
+entire component tree via React context.
+
+```tsx
+import { ThemeProvider } from '@seedui-react/seedui';
+
+function App() {
+  return (
+    <ThemeProvider mode="light">
+      <YourApp />
+    </ThemeProvider>
+  );
+}
+```
+</section>
+
+<section id="section-props">
+## Props
+
+<Table>
+  <thead>
+    <tr>
+      <Th>Prop</Th>
+      <Th>Type</Th>
+      <Th>Default</Th>
+      <Th>Description</Th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <Td><code>mode</code></Td>
+      <Td><code>'light' | 'dark'</code></Td>
+      <Td><code>'light'</code></Td>
+      <Td>Sets the color mode for the entire application.</Td>
+    </tr>
+    <tr>
+      <Td><code>theme</code></Td>
+      <Td><code>ThemeCustomization</code></Td>
+      <Td><code>undefined</code></Td>
+      <Td>Optional theme customization object. Allows overriding colors, spacing, typography, component styles, and more.</Td>
+    </tr>
+    <tr>
+      <Td><code>children</code></Td>
+      <Td><code>ReactNode</code></Td>
+      <Td>&mdash;</Td>
+      <Td>Your application content.</Td>
+    </tr>
+  </tbody>
+</Table>
+</section>
+
+<section id="section-accessing-the-theme">
+## Accessing the theme
+
+seedui provides two ways to access theme values in your own components:
+
+<Text variant="p" style={{ marginTop: 24, marginBottom: 4 }}>1. The `useTheme` hook</Text>
+
+```tsx
+import { useTheme } from '@seedui-react/seedui';
+
+function MyComponent() {
+  const theme = useTheme();
+  return <div style={{ color: theme.colors.primary[600] }}>Themed</div>;
+}
+```
+
+<Text variant="p" style={{ marginTop: 24, marginBottom: 4 }}>2. The `styled` utility</Text>
+
+```tsx
+import { styled } from '@seedui-react/seedui';
+
+const Box = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+  backgroundColor: theme.colors.primary[100],
+  borderRadius: theme.borderRadius(2),
+}));
+```
+</section>

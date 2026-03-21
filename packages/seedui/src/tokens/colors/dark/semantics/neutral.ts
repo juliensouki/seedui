@@ -4,7 +4,7 @@ import white from '../primitives/white';
 import black from '../primitives/black';
 
 export const neutral: SemanticColorShades & { white: string; black: string } = {
-  default: grey[500],
+  default: grey[600],
   100: grey[100],
   200: grey[200],
   300: grey[300],

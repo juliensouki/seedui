@@ -1,10 +1,9 @@
 import { borderRadius } from '../../tokens/border-radius';
-import { breakpoints } from '../../tokens/breakpoints';
+import { breakpoints, createBreakpointHelpers } from '../../tokens/breakpoints';
 import { spacing } from '../../tokens/spacing';
 import { Mode, Theme, ThemeCustomization } from '../../types';
 import {
   primary as lightPrimary,
-  secondary as lightSecondary,
   neutral as lightNeutral,
   info as lightInfo,
   success as lightSuccess,
@@ -13,7 +12,6 @@ import {
 } from '../../tokens/colors/light/semantics';
 import {
   primary as darkPrimary,
-  secondary as darkSecondary,
   neutral as darkNeutral,
   info as darkInfo,
   success as darkSuccess,
@@ -56,7 +54,6 @@ export const themeServiceFactory = ({
   const semanticColors = {
     light: {
       primary: lightPrimary,
-      secondary: lightSecondary,
       neutral: lightNeutral,
       info: lightInfo,
       success: lightSuccess,
@@ -65,7 +62,6 @@ export const themeServiceFactory = ({
     },
     dark: {
       primary: darkPrimary,
-      secondary: darkSecondary,
       neutral: darkNeutral,
       info: darkInfo,
       success: darkSuccess,
@@ -101,18 +97,23 @@ export const themeServiceFactory = ({
 
       return {
         ...defaultTheme,
-        breakpoints: {
-          ...defaultTheme.breakpoints,
-          ...customTheme.breakpoints,
-        },
-        borderRadius: {
-          ...defaultTheme.borderRadius,
-          ...customTheme.borderRadius,
-        },
-        spacing: spacingService.generateCustomSpacing(customTheme.spacing || 1),
+        breakpoints: (() => {
+          const merged = {
+            ...defaultTheme.breakpoints,
+            ...customTheme.breakpoints,
+          };
+          return {
+            ...merged,
+            ...createBreakpointHelpers(merged),
+          };
+        })(),
+        borderRadius: customTheme.borderRadius
+          ? (factor: number | 'full') => (factor === 'full' ? 9999 : customTheme.borderRadius! * (factor))
+          : defaultTheme.borderRadius,
+        spacing: spacingService.generateCustomSpacing(customTheme.spacing || 8),
         typography: typographyService.generateCustomTypography(customTheme.typography),
         boxShadow: boxShadowService.generateCustomBoxShadow(customTheme.boxShadow || { light: {}, dark: {} }, mode),
-        colors: colorService.generateCustomColors(customTheme.colors || {}),
+        colors: colorService.generateCustomColors(customTheme.colors || {}, mode),
       };
     },
   };

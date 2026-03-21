@@ -2,6 +2,7 @@ import { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../../Text';
+import { joinClasses } from '../../../utils/classes';
 
 const RootDiv = styled.div<{ $width?: string | number }>(({ $width }) => ({
   display: 'flex',
@@ -14,8 +15,9 @@ interface ContainerWithLabelProps {
   label?: string;
   width?: string | number;
   children: ReactNode;
-  htmlAttributes?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
+  className?: string;
+  elementProps?: {
+    root?: HTMLAttributes<HTMLDivElement>;
   };
   forwardProps?: {
     labelTextProps?: TextPropsAndAttributes;
@@ -26,12 +28,15 @@ export const ContainerWithLabel: FunctionComponent<ContainerWithLabelProps> = ({
   label,
   children,
   width,
-  htmlAttributes: { rootDiv } = {},
+  className,
+  elementProps: { root } = {},
   forwardProps: { labelTextProps } = {},
 }) => {
+  const mergedClassName = joinClasses(className, root?.className);
+
   if (label) {
     return (
-      <RootDiv {...rootDiv} $width={width}>
+      <RootDiv {...root} className={mergedClassName} $width={width}>
         {label && (
           <Text {...labelTextProps} variant="caption">
             {label}
@@ -42,7 +47,7 @@ export const ContainerWithLabel: FunctionComponent<ContainerWithLabelProps> = ({
     );
   }
   return (
-    <RootDiv {...rootDiv} $width={width}>
+    <RootDiv {...root} className={mergedClassName} $width={width}>
       {children}
     </RootDiv>
   );

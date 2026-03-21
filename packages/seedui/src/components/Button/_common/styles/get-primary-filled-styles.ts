@@ -8,8 +8,13 @@ export const getPrimaryFilledButtonStyles = (theme: Theme) => ({
     backgroundColor: theme.mode === 'light' ? theme.colors.primary[500] : theme.colors.primary[400],
   },
 
+  '&:focus': {
+    outline: `2px solid ${theme.colors.primary[300]}`,
+    outlineOffset: 1,
+  },
+
   '&:active': {
-    backgroundColor: theme.colors.primary[800],
+    backgroundColor: theme.mode === 'light' ? theme.colors.primary[800] : theme.colors.primary.default,
   },
 
   '& svg': {

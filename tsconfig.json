@@ -1,5 +1,5 @@
 {
-  "references": [{ "path": "./apps/sandbox" }, { "path": "./apps/demo" }, { "path": "./packages/seedui" }],
+  "references": [{ "path": "./apps/docs" }, { "path": "./packages/seedui" }],
   "compilerOptions": {
     "useDefineForClassFields": true,
     "jsx": "react-jsx",

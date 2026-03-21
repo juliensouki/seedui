@@ -1,0 +1,8 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { DocsApp } from '../../components/DocsApp';
+---
+
+<DocsLayout title="seedui | Quick Start">
+  <DocsApp client:only="react" initialPath="/getting-started/quick-start" />
+</DocsLayout>

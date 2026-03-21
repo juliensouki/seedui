@@ -8,31 +8,46 @@ import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
+import { IconButton } from '../Button';
 
 export type TagColor = keyof Pick<
   SemanticColors,
-  'primary' | 'secondary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'
+  'primary' | 'neutral' | 'success' | 'info' | 'warning' | 'error'
 >;
 export type TagSize = Extract<Sizes, 'sm' | 'md'>;
 
+/** A small colored label for categories, statuses, or metadata. */
 export interface TagProps {
+  /** Tag color from the theme's semantic palette. */
   color?: TagColor;
+  /** Tag size: 'sm' or 'md'. */
   size?: TagSize;
-  htmlAttributes?: {
-    rootDiv?: HTMLAttributes<HTMLDivElement>;
+  /** Shows an X button to allow removal. */
+  removable?: boolean;
+  /** Called when the remove button is clicked. */
+  onRemove?: () => void;
+  /** Access underlying DOM elements (root, removeButton). */
+  elementProps?: {
+    root?: HTMLAttributes<HTMLDivElement>;
+    removeButton?: HTMLAttributes<HTMLButtonElement>;
   };
+  /** Pass props to the internal Text component. */
   forwardProps?: {
     text?: TextPropsAndAttributes;
   };
+  /** Tag label text. */
   children: string;
 }
 
 const defaultProps: TagProps = {
   color: 'neutral',
   size: 'md',
+  removable: false,
+  onRemove: undefined,
   children: '',
-  htmlAttributes: {
-    rootDiv: {},
+  elementProps: {
+    root: {},
+    removeButton: {},
   },
   forwardProps: {
     text: {},
@@ -40,34 +55,29 @@ const defaultProps: TagProps = {
 };
 
 const TagDiv = applyCustomStyles(
-  styled.div<Required<TagProps>>((props) => {
+  styled.div<{ color: TagColor; size: TagSize; $removable: boolean }>((props) => {
     const theme = props.theme;
     const color = props.color;
-    const size = props.size;
 
     const darkNeutralColors = {
-      backgroundColor: theme.colors.neutral[600],
-      color: theme.colors.neutral[200],
-      borderColor: theme.colors.neutral[500],
+      backgroundColor: theme.colors.neutral[400],
+      color: theme.colors.neutral[800],
     };
     const commonColors = {
-      borderColor: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-      color: color === 'neutral' ? theme.colors.neutral[400] : theme.colors[color][600],
-      backgroundColor: theme.colors[color][100],
+      color: color === 'neutral' ? theme.colors.neutral[600] : theme.colors[color][600],
+      backgroundColor: theme.colors[color][200],
     };
 
     return {
-      display: 'block',
+      display: 'flex',
+      gap: theme.spacing(1),
+      alignItems: 'center',
       height: '100%',
       width: 'max-content',
       boxSizing: 'border-box',
-      border: `1px solid`,
       ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
-      padding:
-        size === 'sm'
-          ? `${theme.spacing['100']}px ${theme.spacing['100']}px`
-          : `${theme.spacing['100']}px ${theme.spacing['150']}px`,
-      borderRadius: 100,
+      padding: `${theme.spacing(0.75)}px ${theme.spacing(1)}px`,
+      borderRadius: theme.borderRadius(6),
       flexShrink: 0,
     };
   }),
@@ -82,13 +92,24 @@ const TagText = styled(Text)(() => ({
   },
 }));
 
+const RemoveButton = styled(IconButton)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 24,
+  height: 24,
+}));
+
+/** A small colored label used for categories, statuses, or metadata badges. */
 export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       color,
       size,
-      htmlAttributes: { rootDiv: rootDivHTMLAttributes } = {},
+      removable,
+      onRemove,
+      elementProps: { root: rootHTMLAttributes, removeButton: removeButtonHTMLAttributes } = {},
       forwardProps: { text: textProps } = {},
       className,
       children,
@@ -102,14 +123,20 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
       <TagDiv
         color={color}
         size={size}
+        $removable={removable}
         ref={forwardedRef}
-        className={joinClasses(className, className, rootDivHTMLAttributes?.className)}
+        className={joinClasses('tag-root', className, rootHTMLAttributes?.className)}
         $customizations={customizations.components?.tag}
-        {...rootDivHTMLAttributes}
+        {...rootHTMLAttributes}
       >
         <TagText variant={size === 'sm' ? 'caption' : 'p'} size={size} {...textProps}>
           {children}
         </TagText>
+        {removable && onRemove && (
+          <RemoveButton size="sm" color="neutral" onClick={onRemove} type="button" className={joinClasses('tag-remove-button', removeButtonHTMLAttributes?.className)} {...removeButtonHTMLAttributes}>
+            <Text style={{ padding: 0, fontSize: 18 }}>×</Text>
+          </RemoveButton>
+        )}
       </TagDiv>
     );
   },

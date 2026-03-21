@@ -18,7 +18,6 @@ export type Colors = keyof SemanticColors;
 
 export interface SemanticColors {
   primary: SemanticColorShades;
-  secondary: SemanticColorShades;
   neutral: SemanticColorShades & { white: string; black: string };
   success: SemanticColorShades;
   info: SemanticColorShades;
@@ -26,7 +25,7 @@ export interface SemanticColors {
   error: SemanticColorShades;
 }
 
-interface BreakpointKeys {
+export interface BreakpointKeys {
   xs: number;
   sm: number;
   md: number;
@@ -37,45 +36,15 @@ interface BreakpointKeys {
 export interface Breakpoints extends BreakpointKeys {
   mobile: keyof BreakpointKeys;
   tablet: keyof BreakpointKeys;
+  desktop: keyof BreakpointKeys;
+  up: (key: keyof BreakpointKeys) => string;
+  down: (key: keyof BreakpointKeys) => string;
+  between: (start: keyof BreakpointKeys, end: keyof BreakpointKeys) => string;
 }
 
-export interface Spacing {
-  '0': number;
-  '025': number;
-  '050': number;
-  '075': number;
-  '100': number;
-  '150': number;
-  '200': number;
-  '250': number;
-  '300': number;
-  '350': number;
-  '400': number;
-  '450': number;
-  '500': number;
-  '550': number;
-  '600': number;
-  '650': number;
-  '700': number;
-  '750': number;
-  '800': number;
-  '850': number;
-  '900': number;
-  '950': number;
-  '1000': number;
-}
+export type Spacing = (factor: number) => number;
 
-export interface BorderRadius {
-  '0': number;
-  '025': number;
-  '050': number;
-  '075': number;
-  '100': number;
-  '125': number;
-  '150': number;
-  '175': number;
-  '200': number;
-}
+export type BorderRadius = (factor: number | 'full') => number;
 
 export interface BoxShadow {
   1: string;
@@ -85,10 +54,18 @@ export interface BoxShadow {
   5: string;
 }
 
+export interface TypographyResponsiveOverride {
+  fontSize?: number | string;
+  lineHeight?: number | string;
+}
+
 export interface TypographyConfig {
   fontFamily: string;
   fontWeight: string | number;
-  responsive: Record<'desktop' | 'tablet' | 'mobile', { fontSize: number | string; lineHeight: number | string }>;
+  letterSpacing: string;
+  fontSize: number | string;
+  lineHeight: number | string;
+  responsive?: Partial<Record<'tablet' | 'mobile', TypographyResponsiveOverride>>;
 }
 
 export type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'caption' | 'small';

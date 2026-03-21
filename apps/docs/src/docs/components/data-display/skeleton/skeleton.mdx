@@ -1,0 +1,55 @@
+import { skeletonDoc as doc } from './data';
+import { OverviewDemo, ImportSection, PropsSection } from '../../../../components/mdx/ComponentDocSections';
+import { ComponentPlayground } from '../../../../components/content/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+Shows a shimmering placeholder in place of content that hasn't loaded yet. Comes in text, circular, rectangular, and rounded variants with pulse or wave animations.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### Text placeholder
+
+Use the text variant to represent lines of text content. Vary the width to mimic natural paragraph shapes.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### Circular avatar placeholder
+
+Use the circular variant for avatar or icon placeholders. Set width and height to match the target element size.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Rectangular content block
+
+Use the rectangular variant for image or media placeholders where sharp corners are appropriate.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+
+### Rounded card placeholder
+
+Use the rounded variant for card-like placeholders with soft corners.
+
+<ComponentPlayground code={doc.usageExamples[3].code} />
+
+### Wave animation
+
+Switch to the wave animation for a shimmer effect that sweeps across the skeleton.
+
+<ComponentPlayground code={doc.usageExamples[4].code} />
+</section>
+
+<PropsSection props={doc.props} />

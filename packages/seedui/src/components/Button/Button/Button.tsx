@@ -1,25 +1,26 @@
 import {
   ForwardedRef,
   forwardRef,
-  KeyboardEvent,
   MouseEvent,
   ReactNode,
   useContext,
   useImperativeHandle,
   useRef,
   useState,
+  useLayoutEffect,
 } from 'react';
 import styled from 'styled-components';
 
-import { FocusRing } from '../../_internal/FocusRing';
 import { SeedContextType, Theme } from '../../../types';
 import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
-import { joinClasses } from '../../../utils/classes';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContext } from '../../ThemeProvider/context';
+import { Loader } from '../../_internal/Loader/Loader';
 
+/** Props for the Button component — extends ButtonBaseProps with children content. */
 export interface ButtonProps extends ButtonBaseProps {
+  /** Button label or content. */
   children?: ReactNode;
 }
 
@@ -27,27 +28,21 @@ const getButtonStyles = (
   theme: Theme,
 ): Record<ButtonSizes, { fontSize: string | number; borderRadius: number; padding: string }> => ({
   sm: {
-    fontSize: theme.typography.small.responsive.desktop.fontSize,
-    borderRadius: theme.borderRadius['075'],
-    padding: `${theme.spacing['050']}px ${theme.spacing[100]}px`,
+    fontSize: theme.typography.small.fontSize,
+    borderRadius: theme.borderRadius(3),
+    padding: `${theme.spacing(0.375)}px ${theme.spacing(0.875)}px`,
   },
   md: {
-    fontSize: theme.typography.p.responsive.desktop.fontSize,
-    borderRadius: theme.borderRadius[100],
-    padding: `${theme.spacing[100]}px ${theme.spacing[150]}px`,
+    fontSize: theme.typography.p.fontSize,
+    borderRadius: theme.borderRadius(4),
+    padding: `${theme.spacing(0.75)}px ${theme.spacing(1.25)}px`,
   },
   lg: {
-    fontSize: theme.typography.p.responsive.desktop.fontSize,
-    borderRadius: theme.borderRadius[125],
-    padding: `${theme.spacing[150]}px ${theme.spacing[200]}px`,
+    fontSize: theme.typography.p.fontSize,
+    borderRadius: theme.borderRadius(5),
+    padding: `${theme.spacing(1.25)}px ${theme.spacing(1.75)}px`,
   },
 });
-
-const mapSizeToRingBorderRadius: Record<ButtonSizes, number> = {
-  sm: 11,
-  md: 13,
-  lg: 15,
-};
 
 export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<ButtonProps>>) => {
   const size = props.size;
@@ -70,6 +65,7 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
 
 const componentsMap = stylesMapBuilder(ButtonBase);
 
+/** A clickable button for triggering actions. Available in filled and transparent variants across primary, neutral, and error colors. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
@@ -79,25 +75,34 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       color,
       disabled,
       size,
+      type,
+      isLoading,
       className,
-      htmlAttributes: { rootButton: rootButtonHTMLAttributes },
       children,
+      ...restProps
     } = getDefaultProps<ButtonProps & InternalProps>({
       providedProps: props,
       globalDefaultProps: customizations?.components?.button?.defaultProps,
       defaultProps: defaultProps as ButtonProps,
     });
 
-    const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [isActive, setIsActive] = useState<boolean>(false);
-    const [isClicking, setIsClicking] = useState<boolean>(false);
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const ButtonComponent = componentsMap[variant][color];
+    const innerRef = useRef<HTMLButtonElement>(null);
+    const [buttonSize, setButtonSize] = useState<{
+      width?: number;
+      height?: number;
+    }>({});
 
-    useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
+    useImperativeHandle(forwardedRef, () => innerRef.current as HTMLButtonElement);
+
+    useLayoutEffect(() => {
+      if (innerRef.current && !isLoading) {
+        const { width, height } = innerRef.current.getBoundingClientRect();
+        setButtonSize({ width, height });
+      }
+    }, [isLoading, children]);
 
     const preventFocusOnClick = (event: MouseEvent<HTMLButtonElement>): void => {
-      if (onClick) {
+      if (onClick && !isLoading) {
         onClick(event);
       }
       if (event.detail === 0) {
@@ -107,48 +112,35 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       event.currentTarget.blur();
     };
 
-    const handleKeyEvent = (event: KeyboardEvent<HTMLButtonElement>): void => {
-      if (event.key === ' ') {
-        if (event.type === 'keydown') {
-          setIsActive(true);
-        } else if (event.type === 'keyup') {
-          setIsActive(false);
-        }
-      }
-    };
-
-    const handleMouseEvent = (event: MouseEvent<HTMLButtonElement>): void => {
-      if (event.type === 'mousedown') {
-        setIsClicking(true);
-      } else if (event.type === 'mouseup') {
-        setIsClicking(false);
-      }
-    };
+    const ButtonComponent = componentsMap[variant][color];
 
     return (
       <ButtonComponent
-        {...rootButtonHTMLAttributes}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onKeyDown={handleKeyEvent}
-        onKeyUp={handleKeyEvent}
+        {...restProps}
         onClick={preventFocusOnClick}
-        onMouseDown={handleMouseEvent}
-        onMouseUp={handleMouseEvent}
         color={color}
         disabled={disabled}
         size={size}
-        className={joinClasses(className, rootButtonHTMLAttributes?.className)}
+        type={type}
+        className={className}
         $customizations={customizations.components?.button}
-        ref={buttonRef}
+        ref={innerRef}
+        // lock dimensions when loading, merge with user-provided style
+        style={{
+          ...restProps?.style,
+          ...(isLoading && buttonSize.width && buttonSize.height
+            ? {
+              width: `${buttonSize.width}px`,
+              height: `${buttonSize.height}px`,
+            }
+            : undefined),
+        }}
       >
-        <FocusRing
-          color={color}
-          radius={mapSizeToRingBorderRadius[size]}
-          show={isFocused && !isClicking}
-          pressed={isActive}
-        />
-        {children}
+        {isLoading ? (
+          <Loader size={size} color={color === 'primary' && variant === 'filled' ? 'white' : undefined} />
+        ) : (
+          children
+        )}
       </ButtonComponent>
     );
   },

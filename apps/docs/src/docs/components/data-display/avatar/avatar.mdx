@@ -1,0 +1,57 @@
+import { avatarDoc as doc } from './data';
+import { OverviewDemo, ImportSection, AnatomySection, PropsSection } from '../../../../components/mdx/ComponentDocSections';
+import { ComponentPlayground } from '../../../../components/content/ComponentPlayground';
+
+export const meta = {
+  name: doc.name,
+  category: doc.category,
+  description: doc.description,
+};
+
+<section id="section-overview">
+## Overview
+
+<OverviewDemo example={doc.example} />
+
+Displays a user as a circle with an image, initials from the name prop, or a default icon. Supports multiple sizes and colors.
+</section>
+
+<ImportSection name={doc.name} />
+
+<section id="section-usage">
+## Usage
+
+### With image
+
+Pass a src prop to display an image. The name prop provides alt text and serves as a fallback if the image fails to load.
+
+<ComponentPlayground code={doc.usageExamples[0].code} />
+
+### With initials
+
+When no image is provided, initials are generated from the name prop. Single names show one letter, multi-word names show first and last initials.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
+### Sizes
+
+Use sm for dense layouts, md for general use, and lg for profile pages or headers.
+
+<ComponentPlayground code={doc.usageExamples[2].code} />
+
+### Colors
+
+Use color to differentiate avatars by role, team, or status when no image is available.
+
+<ComponentPlayground code={doc.usageExamples[3].code} />
+
+### Fallback icon
+
+When neither src nor name is provided, a generic person icon is displayed.
+
+<ComponentPlayground code={doc.usageExamples[4].code} />
+</section>
+
+<AnatomySection name={doc.name} anatomy={doc.anatomy} />
+
+<PropsSection props={doc.props} />

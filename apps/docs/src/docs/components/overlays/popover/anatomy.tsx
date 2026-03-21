@@ -1,0 +1,22 @@
+import { FunctionComponent } from 'react';
+import { SchemaWrapper, Box, BoxLabel, Col, Placeholder } from '../../../../components/anatomy/shared';
+
+const PopoverSchema: FunctionComponent = () => (
+  <SchemaWrapper>
+    <Box>
+      <BoxLabel>Root</BoxLabel>
+      <Col>
+        <Box $dashed>
+          <BoxLabel>Trigger</BoxLabel>
+          <Placeholder $grow>children</Placeholder>
+        </Box>
+        <Box $dashed>
+          <BoxLabel>Panel</BoxLabel>
+          <Placeholder $grow>content</Placeholder>
+        </Box>
+      </Col>
+    </Box>
+  </SchemaWrapper>
+);
+
+export default PopoverSchema;

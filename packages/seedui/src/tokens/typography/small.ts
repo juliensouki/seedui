@@ -3,18 +3,7 @@ import { TypographyConfig } from '../../types';
 export const smallStyles: TypographyConfig = {
   fontFamily: 'Inter Variable',
   fontWeight: 'normal',
-  responsive: {
-    desktop: {
-      fontSize: 10,
-      lineHeight: 16,
-    },
-    tablet: {
-      fontSize: 10,
-      lineHeight: 16,
-    },
-    mobile: {
-      fontSize: 10,
-      lineHeight: 16,
-    },
-  },
+  letterSpacing: '0.02em',
+  fontSize: '0.6875rem',
+  lineHeight: '1rem',
 };
