@@ -61,7 +61,6 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       size,
       className,
       children,
-      elementProps: _elementProps,
       ...restProps
     } = getDefaultProps<IconButtonProps & InternalProps>({
       providedProps: props,

@@ -74,19 +74,13 @@ const radiusFactors: (number | 'full')[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 'full'];
 const usageCode = `const theme = useTheme();
 
 <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-  <Button
-    elementProps={{ rootButton: { style: { borderRadius: theme.borderRadius(2) } } }}
-  >
+  <Button style={{ borderRadius: theme.borderRadius(2) }}>
     borderRadius(2)
   </Button>
-  <Button
-    elementProps={{ rootButton: { style: { borderRadius: theme.borderRadius(6) } } }}
-  >
+  <Button style={{ borderRadius: theme.borderRadius(6) }}>
     borderRadius(6)
   </Button>
-  <Button
-    elementProps={{ rootButton: { style: { borderRadius: theme.borderRadius('full') } } }}
-  >
+  <Button style={{ borderRadius: theme.borderRadius('full') }}>
     borderRadius('full')
   </Button>
 </div>`;

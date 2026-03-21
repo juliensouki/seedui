@@ -34,10 +34,10 @@ export const UserProfileCard: FunctionComponent = () => {
         </div>
       </div>
       <div style={{ display: 'flex', gap: 6 }}>
-        <Button variant="filled" color="primary" size="md" elementProps={{ rootButton: { style: { flex: 1 } } }}>
+        <Button variant="filled" color="primary" size="md" style={{ flex: 1 }}>
           Message
         </Button>
-        <Button variant="transparent" color="neutral" size="md" elementProps={{ rootButton: { style: { flex: 1 } } }}>
+        <Button variant="transparent" color="neutral" size="md" style={{ flex: 1 }}>
           Follow
         </Button>
       </div>

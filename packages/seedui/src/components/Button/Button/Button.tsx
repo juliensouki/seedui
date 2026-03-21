@@ -79,7 +79,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading,
       className,
       children,
-      elementProps: _elementProps,
       ...restProps
     } = getDefaultProps<ButtonProps & InternalProps>({
       providedProps: props,
