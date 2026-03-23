@@ -23,6 +23,9 @@ const HeadingRow = styled('div')(() => ({
   '&:hover .anchor-link': {
     opacity: 1,
   },
+  '& + &': {
+    marginTop: '0 !important',
+  },
 }));
 
 const AnchorButton = styled('button')(({ theme }) => ({

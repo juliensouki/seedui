@@ -6,15 +6,9 @@ import { TableOfContents } from '../layout/TableOfContents';
 import { PageNavigation } from '../layout/PageNavigation';
 import { mdxComponents, SectionHeading } from './MDXComponents';
 
-interface TocItem {
-  id: string;
-  label: string;
-}
-
 interface PageLayoutProps {
   title: string;
   description: string;
-  toc: TocItem[];
   currentPath?: string;
   headerActions?: ReactNode;
   children: ReactNode;
@@ -33,7 +27,7 @@ const MainContent = styled('div')(({ theme }) => ({
   },
 }));
 
-export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, description, toc, currentPath, headerActions, children }) => {
+export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, description, currentPath, headerActions, children }) => {
   const theme = useTheme();
   const isLight = theme.mode === 'light';
   return (
@@ -56,7 +50,7 @@ export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, descript
         </MDXProvider>
         <PageNavigation currentPath={currentPath} />
       </MainContent>
-      <TableOfContents items={toc} />
+      <TableOfContents />
     </Layout>
   );
 };

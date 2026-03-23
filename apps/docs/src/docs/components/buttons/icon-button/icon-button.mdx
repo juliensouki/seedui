@@ -9,12 +9,6 @@ export const meta = {
   name: doc.name,
   category: doc.category,
   description: doc.description,
-  toc: [
-    { id: 'section-overview', label: 'Overview' },
-    { id: 'section-import', label: 'Import' },
-    { id: 'section-usage', label: 'Usage' },
-    { id: 'section-props', label: 'Props' },
-  ],
 };
 
 <section id="section-overview">
@@ -23,6 +17,7 @@ export const meta = {
 <OverviewDemo example={doc.example} />
 
 An icon-only alternative to Button, useful when space is tight or a label isn't needed. Shares the same variants and colors as Button. Pair with a Tooltip when the icon meaning isn't obvious.
+
 </section>
 
 <ImportSection name={doc.name} />

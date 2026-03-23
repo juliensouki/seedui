@@ -58,7 +58,6 @@ function PageContent({ path }: { path: string }) {
       <PageLayout
         title={installationMeta.title}
         description={installationMeta.description}
-        toc={installationMeta.toc}
         currentPath={p}
       >
         <InstallationContent />
@@ -70,7 +69,6 @@ function PageContent({ path }: { path: string }) {
       <PageLayout
         title={quickStartMeta.title}
         description={quickStartMeta.description}
-        toc={quickStartMeta.toc}
         currentPath={p}
       >
         <QuickStartContent />
@@ -89,7 +87,7 @@ function PageContent({ path }: { path: string }) {
   if (themingPages[p]) {
     const { Content, meta } = themingPages[p];
     return (
-      <PageLayout title={meta.title} description={meta.description} toc={meta.toc} currentPath={p}>
+      <PageLayout title={meta.title} description={meta.description} currentPath={p}>
         <Content />
       </PageLayout>
     );
@@ -116,15 +114,12 @@ function PageContent({ path }: { path: string }) {
     if (doc) {
       const kebab = name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       const mdxKey = Object.keys(componentMdxModules).find((k) => k.includes(`/${kebab}.mdx`));
-      const mdxModule = mdxKey ? componentMdxModules[mdxKey] : null;
-      const Content = mdxModule?.default ?? null;
-      const toc = mdxModule?.meta?.toc;
+      const Content = mdxKey ? componentMdxModules[mdxKey].default : null;
       return (
         <PageLayout
           title={doc.name}
           description={doc.description}
           currentPath={p}
-          toc={toc}
           headerActions={componentHeaderActions}
         >
           {Content ? <Content /> : <p>Not found.</p>}
