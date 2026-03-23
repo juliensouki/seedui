@@ -5,14 +5,23 @@ import {
   ReactNode,
   useContext,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
   useLayoutEffect,
 } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { SeedContextType, Theme } from '../../../types';
-import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
+import {
+  ButtonBaseProps,
+  ButtonCommon,
+  ButtonSizes,
+  defaultProps,
+  stylesMapBuilder,
+  customStylesBuilder,
+  isPresetColor,
+} from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContext } from '../../ThemeProvider/context';
@@ -64,27 +73,19 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
 });
 
 const componentsMap = stylesMapBuilder(ButtonBase);
+const customComponents = customStylesBuilder(ButtonBase);
 
-/** A clickable button for triggering actions. Available in filled and transparent variants across primary, neutral, and error colors. */
+/** A clickable button for triggering actions. Available in filled and transparent variants across primary, neutral, and error colors, or any custom hex color. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
-    const { customizations } = useContext<SeedContextType>(SeedContext);
-    const {
-      onClick,
-      variant,
-      color,
-      disabled,
-      size,
-      type,
-      isLoading,
-      className,
-      children,
-      ...restProps
-    } = getDefaultProps<ButtonProps & InternalProps>({
-      providedProps: props,
-      globalDefaultProps: customizations?.components?.button?.defaultProps,
-      defaultProps: defaultProps as ButtonProps,
-    });
+    const { customizations, colorService } = useContext<SeedContextType>(SeedContext);
+    const { mode } = useTheme();
+    const { onClick, variant, color, disabled, size, type, isLoading, className, children, ...restProps } =
+      getDefaultProps<ButtonProps & InternalProps>({
+        providedProps: props,
+        globalDefaultProps: customizations?.components?.button?.defaultProps,
+        defaultProps: defaultProps as ButtonProps,
+      });
 
     const innerRef = useRef<HTMLButtonElement>(null);
     const [buttonSize, setButtonSize] = useState<{
@@ -112,7 +113,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       event.currentTarget.blur();
     };
 
-    const ButtonComponent = componentsMap[variant][color];
+    const isCustom = !isPresetColor(color);
+    const colorScale = useMemo(
+      () => (isCustom ? colorService.generateShades(color, mode === 'dark') : undefined),
+      [isCustom, color, mode, colorService],
+    );
+    const ButtonComponent = isCustom ? customComponents[variant] : componentsMap[variant][color];
 
     return (
       <ButtonComponent
@@ -124,6 +130,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
         className={className}
         $customizations={customizations.components?.button}
+        {...(isCustom && { $colorScale: colorScale })}
         ref={innerRef}
         // lock dimensions when loading, merge with user-provided style
         style={{

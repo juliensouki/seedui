@@ -18,27 +18,25 @@ import QuickStartContent, { meta as quickStartMeta } from '../docs/getting-start
 import ThemeProviderContent, { meta as themeProviderMeta } from '../docs/theme/theme-provider/theme-provider.mdx';
 import CustomizationContent, { meta as customizationMeta } from '../docs/theme/customization/customization.mdx';
 import DarkModeContent, { meta as darkModeMeta } from '../docs/theme/dark-mode/dark-mode.mdx';
-import ComponentStylesContent, { meta as componentStylesMeta } from '../docs/theme/component-styles/component-styles.mdx';
+import ComponentStylesContent, {
+  meta as componentStylesMeta,
+} from '../docs/theme/component-styles/component-styles.mdx';
 import DefaultPropsContent, { meta as defaultPropsMeta } from '../docs/theme/default-props/default-props.mdx';
 
 // Component MDX modules (eager load)
-const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { eager: true }) as Record<string, { default: FunctionComponent; meta?: any }>;
+const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { eager: true }) as Record<
+  string,
+  { default: FunctionComponent; meta?: any }
+>;
 
-const componentToc = [
-  { id: 'section-overview', label: 'Overview' },
-  { id: 'section-import', label: 'Import' },
-  { id: 'section-usage', label: 'Usage' },
-  { id: 'section-anatomy', label: 'Anatomy' },
-  { id: 'section-props', label: 'Props' },
-];
 
 const componentHeaderActions = (
   <>
     <IconButton variant="transparent" color="neutral" size="md">
-      <FigmaIcon size={16} strokeWidth={1.8} />
+      <GithubIcon size={16} strokeWidth={1.8} />
     </IconButton>
     <IconButton variant="transparent" color="neutral" size="md">
-      <GithubIcon size={16} strokeWidth={1.8} />
+      <FigmaIcon size={16} strokeWidth={1.8} />
     </IconButton>
   </>
 );
@@ -57,14 +55,22 @@ function PageContent({ path }: { path: string }) {
   // Getting started
   if (p === '/getting-started/installation') {
     return (
-      <PageLayout title={installationMeta.title} description={installationMeta.description} toc={installationMeta.toc} currentPath={p}>
+      <PageLayout
+        title={installationMeta.title}
+        description={installationMeta.description}
+        currentPath={p}
+      >
         <InstallationContent />
       </PageLayout>
     );
   }
   if (p === '/getting-started/quick-start') {
     return (
-      <PageLayout title={quickStartMeta.title} description={quickStartMeta.description} toc={quickStartMeta.toc} currentPath={p}>
+      <PageLayout
+        title={quickStartMeta.title}
+        description={quickStartMeta.description}
+        currentPath={p}
+      >
         <QuickStartContent />
       </PageLayout>
     );
@@ -81,7 +87,7 @@ function PageContent({ path }: { path: string }) {
   if (themingPages[p]) {
     const { Content, meta } = themingPages[p];
     return (
-      <PageLayout title={meta.title} description={meta.description} toc={meta.toc} currentPath={p}>
+      <PageLayout title={meta.title} description={meta.description} currentPath={p}>
         <Content />
       </PageLayout>
     );
@@ -114,7 +120,6 @@ function PageContent({ path }: { path: string }) {
           title={doc.name}
           description={doc.description}
           currentPath={p}
-          toc={componentToc}
           headerActions={componentHeaderActions}
         >
           {Content ? <Content /> : <p>Not found.</p>}

@@ -5,14 +5,24 @@ import {
   ReactNode,
   useContext,
   useImperativeHandle,
+  useMemo,
   useRef,
 } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
-import { ButtonBaseProps, ButtonCommon, ButtonSizes, defaultProps, stylesMapBuilder } from '../_common';
+import {
+  ButtonBaseProps,
+  ButtonCommon,
+  ButtonSizes,
+  defaultProps,
+  stylesMapBuilder,
+  customStylesBuilder,
+  isPresetColor,
+} from '../_common';
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContextType } from '../../../types';
+
 import { SeedContext } from '../../ThemeProvider/context';
 
 /** Props for the IconButton component — a circular button designed to hold a single icon. */
@@ -48,28 +58,29 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
 });
 
 const componentsMap = stylesMapBuilder(IconButtonBase);
+const customComponents = customStylesBuilder(IconButtonBase);
 
 /** A circular button designed for icon-only actions like edit, delete, or settings. */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
-    const { customizations } = useContext<SeedContextType>(SeedContext);
-    const {
-      onClick,
-      variant,
-      color,
-      disabled,
-      size,
-      className,
-      children,
-      ...restProps
-    } = getDefaultProps<IconButtonProps & InternalProps>({
+    const { customizations, colorService } = useContext<SeedContextType>(SeedContext);
+    const { mode } = useTheme();
+    const { onClick, variant, color, disabled, size, className, children, ...restProps } = getDefaultProps<
+      IconButtonProps & InternalProps
+    >({
       providedProps: props,
       globalDefaultProps: customizations?.components?.iconButton?.defaultProps,
       defaultProps: defaultProps as IconButtonProps,
     });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const IconButtonComponent = componentsMap[variant][color];
+
+    const isCustom = !isPresetColor(color);
+    const colorScale = useMemo(
+      () => (isCustom ? colorService.generateShades(color, mode === 'dark') : undefined),
+      [isCustom, color, mode, colorService],
+    );
+    const IconButtonComponent = isCustom ? customComponents[variant] : componentsMap[variant][color];
 
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 
@@ -94,6 +105,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         size={size}
         className={className}
         $customizations={customizations.components?.iconButton}
+        {...(isCustom && { $colorScale: colorScale })}
         ref={buttonRef}
       >
         {children}

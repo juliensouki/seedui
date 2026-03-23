@@ -17,6 +17,7 @@ export const meta = {
 <OverviewDemo example={doc.example} />
 
 An icon-only alternative to Button, useful when space is tight or a label isn't needed. Shares the same variants and colors as Button. Pair with a Tooltip when the icon meaning isn't obvious.
+
 </section>
 
 <ImportSection name={doc.name} />
@@ -30,23 +31,28 @@ Like Button, IconButton supports filled and transparent variants. Use transparen
 
 <ComponentPlayground code={doc.usageExamples[0].code} scope={iconScope} />
 
-### Color schemes
+### Colors
 
 Apply a color to match the action context. Primary for main actions, neutral for general-purpose, and error for destructive ones.
 
 <ComponentPlayground code={doc.usageExamples[1].code} scope={iconScope} />
 
+You can also pass any hex color and SeedUI will automatically generate the full shade scale for hover, focus, and active states.
+
+<ComponentPlayground code={doc.usageExamples[2].code} scope={iconScope} />
+
 ### Sizes
 
 Small works well in dense toolbars, medium is the default, and large is suited for prominent standalone actions.
 
-<ComponentPlayground code={doc.usageExamples[2].code} scope={iconScope} />
+<ComponentPlayground code={doc.usageExamples[3].code} scope={iconScope} />
 
 ### Disabled
 
 A disabled IconButton is visually muted and non-interactive. Use it when the action is temporarily unavailable.
 
-<ComponentPlayground code={doc.usageExamples[3].code} scope={iconScope} />
+<ComponentPlayground code={doc.usageExamples[4].code} scope={iconScope} />
+
 </section>
 
 <PropsSection props={doc.props} />

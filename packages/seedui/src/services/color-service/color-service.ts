@@ -7,16 +7,18 @@ import { getEntries } from '../../utils/type-helpers';
 
 export interface ColorService {
   generateCustomColors: (custom: Partial<MultiMode<CustomizedColors>>, mode?: Mode) => SemanticColors;
+  generateShades: (mainColor: string, isDark: boolean) => SemanticColorShades | null;
 }
 
 export const colorServiceFactory = (): ColorService => {
   const generateShades = (mainColor: string, isDark: boolean): SemanticColorShades | null => {
-    let shades: Partial<SemanticColorShades> = {};
     const hexColor = new TinyColor(mainColor);
 
     if (!hexColor.isValid) {
       return null;
     }
+
+    let shades: Partial<SemanticColorShades> = {};
 
     for (let i = 1; i < 10; i++) {
       let newColor;
@@ -40,6 +42,8 @@ export const colorServiceFactory = (): ColorService => {
       }
       shades = { ...shades, [`${i}00`]: `#${newColor.toHex()}` };
     }
+
+    shades.default = shades[600]!;
     return shades as SemanticColorShades;
   };
 
@@ -51,6 +55,7 @@ export const colorServiceFactory = (): ColorService => {
   };
 
   return {
+    generateShades,
     generateCustomColors: (customColorsByMode, mode = 'light') => {
       if (!customColorsByMode || !customColorsByMode[mode]) return semantic[mode];
 

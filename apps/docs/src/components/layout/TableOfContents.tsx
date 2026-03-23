@@ -7,10 +7,6 @@ interface TocItem {
   label: string;
 }
 
-interface TableOfContentsProps {
-  items: TocItem[];
-}
-
 const Nav = styled('nav')(({ theme }) => ({
   position: 'sticky' as const,
   top: theme.spacing(5),
@@ -64,12 +60,29 @@ const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => {
   };
 });
 
-export const TableOfContents: FunctionComponent<TableOfContentsProps> = ({ items }) => {
-  const [activeId, setActiveId] = useState(items[0]?.id ?? '');
+export const TableOfContents: FunctionComponent = () => {
+  const [items, setItems] = useState<TocItem[]>([]);
+  const [activeId, setActiveId] = useState('');
   const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0 });
-  const [isScrollable, setIsScrollable] = useState(true); // default true to avoid SSR layout shift
+  const [isScrollable, setIsScrollable] = useState(true);
   const itemListRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+
+  // Discover sections from the DOM
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>('section[id^="section-"]');
+    const discovered: TocItem[] = [];
+    sections.forEach((section) => {
+      const heading = section.querySelector('h1, h2, h3, h4, h5, h6');
+      if (heading) {
+        discovered.push({ id: section.id, label: heading.textContent ?? '' });
+      }
+    });
+    setItems(discovered);
+    if (discovered.length > 0) {
+      setActiveId(discovered[0].id);
+    }
+  }, []);
 
   useEffect(() => {
     const el = itemRefs.current.get(activeId);

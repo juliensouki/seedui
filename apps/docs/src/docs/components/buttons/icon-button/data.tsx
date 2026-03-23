@@ -28,9 +28,9 @@ export const iconButtonDoc: ComponentDoc = {
     { name: 'children', type: 'ReactNode', default: '—', description: 'Icon element to render.' },
     {
       name: 'color',
-      type: "'primary' | 'neutral' | 'error'",
+      type: "'primary' | 'neutral' | 'error' | string",
       default: "'primary'",
-      description: 'Color scheme.',
+      description: 'Color scheme. Accepts a preset or any hex color string.',
     },
     { name: 'variant', type: "'filled' | 'transparent'", default: "'filled'", description: 'Visual style variant.' },
     { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size.' },
@@ -60,6 +60,17 @@ export const iconButtonDoc: ComponentDoc = {
   <IconButton color="primary"><ShareIcon strokeWidth={1.8} /></IconButton>
   <IconButton color="neutral"><SettingsIcon strokeWidth={1.8} /></IconButton>
   <IconButton color="error"><TrashIcon strokeWidth={1.8} /></IconButton>
+</div>`,
+    },
+    {
+      title: 'Custom colors',
+      description:
+        'Pass any hex color to the color prop and SeedUI will automatically generate the full shade scale for hover, focus, and active states.',
+      code: `<div style={{ display: 'flex', gap: 8 }}>
+  <IconButton color="#2563EB"><ShareIcon strokeWidth={1.8} /></IconButton>
+  <IconButton color="#10B981"><SearchIcon strokeWidth={1.8} /></IconButton>
+  <IconButton color="#2563EB" variant="transparent"><ShareIcon strokeWidth={1.8} /></IconButton>
+  <IconButton color="#10B981" variant="transparent"><SearchIcon strokeWidth={1.8} /></IconButton>
 </div>`,
     },
     {

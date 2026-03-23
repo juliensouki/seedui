@@ -22,9 +22,9 @@ export const buttonDoc: ComponentDoc = {
     { name: 'children', type: 'ReactNode', default: '—', description: 'Button content.' },
     {
       name: 'color',
-      type: "'primary' | 'neutral' | 'error'",
+      type: "'primary' | 'neutral' | 'error' | string",
       default: "'primary'",
-      description: 'Color scheme of the button.',
+      description: 'Color scheme of the button. Accepts a preset or any hex color string.',
     },
     { name: 'variant', type: "'filled' | 'transparent'", default: "'filled'", description: 'Visual style variant.' },
     { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size.' },
@@ -47,6 +47,18 @@ export const buttonDoc: ComponentDoc = {
   <Button color="primary">Primary</Button>
   <Button color="neutral">Neutral</Button>
   <Button color="error">Error</Button>
+</div>`,
+    },
+    {
+      title: 'Custom colors',
+      description:
+        'Pass any hex color to the color prop and SeedUI will automatically generate the full shade scale for hover, focus, and active states.',
+      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+  <Button color="#2563EB">Custom Blue</Button>
+  <Button color="#10B981">Custom Green</Button>
+  <Button color="#F59E0B">Amber</Button>
+  <Button color="#2563EB" variant="transparent">Custom Blue</Button>
+  <Button color="#10B981" variant="transparent">Custom Green</Button>
 </div>`,
     },
     {

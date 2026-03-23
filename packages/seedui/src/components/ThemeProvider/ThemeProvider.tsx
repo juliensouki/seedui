@@ -41,7 +41,7 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
 
   return (
     <SCThemeProvider theme={{ ...theme, mode: currentMode }}>
-      <SeedContext.Provider value={{ customizations: { components: customTheme?.components } }}>
+      <SeedContext.Provider value={{ customizations: { components: customTheme?.components }, colorService }}>
         {children}
       </SeedContext.Provider>{' '}
     </SCThemeProvider>
