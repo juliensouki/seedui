@@ -1,18 +1,5 @@
 import { Theme } from '../../../../types';
+import { getTransparentButtonStyles } from './get-transparent-styles';
 
-export const getPrimaryTransparentButtonStyles = (theme: Theme) => ({
-  backgroundColor: 'transparent',
-  color: theme.colors.primary.default,
-
-  '&:hover': {
-    backgroundColor: theme.mode === 'light' ? theme.colors.primary[200] : theme.colors.primary[200],
-  },
-
-  '&:active': {
-    backgroundColor: theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[300],
-  },
-
-  '& svg': {
-    color: theme.colors.primary.default,
-  },
-});
+export const getPrimaryTransparentButtonStyles = (theme: Theme) =>
+  getTransparentButtonStyles(theme, theme.colors.primary);

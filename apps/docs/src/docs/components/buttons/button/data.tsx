@@ -22,9 +22,9 @@ export const buttonDoc: ComponentDoc = {
     { name: 'children', type: 'ReactNode', default: '—', description: 'Button content.' },
     {
       name: 'color',
-      type: "'primary' | 'neutral' | 'error'",
+      type: "'primary' | 'neutral' | 'error' | string",
       default: "'primary'",
-      description: 'Color scheme of the button.',
+      description: 'Color scheme of the button. Accepts a preset or any hex color string.',
     },
     { name: 'variant', type: "'filled' | 'transparent'", default: "'filled'", description: 'Visual style variant.' },
     { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size.' },
@@ -81,6 +81,18 @@ export const buttonDoc: ComponentDoc = {
       code: `<div style={{ display: 'flex', gap: 8 }}>
   <Button disabled>Disabled</Button>
   <Button variant="transparent" disabled>Disabled</Button>
+</div>`,
+    },
+    {
+      title: 'Custom color',
+      description:
+        'Pass any hex color to the color prop and SeedUI will automatically generate a full shade scale. Works with both filled and transparent variants.',
+      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+  <Button color="#2563EB">Brand Blue</Button>
+  <Button color="#10B981">Success Green</Button>
+  <Button color="#F59E0B">Amber</Button>
+  <Button color="#2563EB" variant="transparent">Brand Blue</Button>
+  <Button color="#10B981" variant="transparent">Success Green</Button>
 </div>`,
     },
   ],

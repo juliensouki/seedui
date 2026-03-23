@@ -3,7 +3,12 @@ import styled from 'styled-components';
 
 import { Colors, Sizes } from '../../../types';
 
-export type ButtonColors = Exclude<Colors, 'success' | 'warning' | 'info'>;
+export type ButtonPresetColors = Exclude<Colors, 'success' | 'warning' | 'info'>;
+export type ButtonColors = ButtonPresetColors | (string & {});
+
+const PRESET_COLORS: ButtonPresetColors[] = ['primary', 'neutral', 'error'];
+export const isPresetColor = (color: string): color is ButtonPresetColors =>
+  PRESET_COLORS.includes(color as ButtonPresetColors);
 export type ButtonVariants = 'filled' | 'transparent';
 export type ButtonSizes = Exclude<Sizes, 'xs' | 'xl'>;
 export type ButtonType = 'button' | 'reset' | 'submit';

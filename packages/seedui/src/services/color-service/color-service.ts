@@ -1,8 +1,7 @@
-import { TinyColor } from '@ctrl/tinycolor';
-
 import { semantic } from '../../tokens/colors';
 import { CustomizedColors, Mode, SemanticColors, SemanticColorShades } from '../../types';
 import { MultiMode } from '../../types/internal';
+import { generateShades } from '../../utils/generate-shades';
 import { getEntries } from '../../utils/type-helpers';
 
 export interface ColorService {
@@ -10,38 +9,6 @@ export interface ColorService {
 }
 
 export const colorServiceFactory = (): ColorService => {
-  const generateShades = (mainColor: string, isDark: boolean): SemanticColorShades | null => {
-    let shades: Partial<SemanticColorShades> = {};
-    const hexColor = new TinyColor(mainColor);
-
-    if (!hexColor.isValid) {
-      return null;
-    }
-
-    for (let i = 1; i < 10; i++) {
-      let newColor;
-
-      if (isDark) {
-        if (i < 6) {
-          newColor = hexColor.clone().shade((6 - i) * 15);
-        } else if (i === 6) {
-          newColor = hexColor;
-        } else {
-          newColor = hexColor.clone().tint((i - 6) * 15);
-        }
-      } else {
-        if (i < 6) {
-          newColor = hexColor.clone().tint((6 - i) * 15);
-        } else if (i === 6) {
-          newColor = hexColor;
-        } else {
-          newColor = hexColor.clone().shade((i - 6) * 15);
-        }
-      }
-      shades = { ...shades, [`${i}00`]: `#${newColor.toHex()}` };
-    }
-    return shades as SemanticColorShades;
-  };
 
   const setDefaultColors = (colors: SemanticColors): SemanticColors => {
     for (const [color, values] of getEntries<SemanticColors>(colors)) {
