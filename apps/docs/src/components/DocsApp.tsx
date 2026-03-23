@@ -29,13 +29,6 @@ const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { ea
   { default: FunctionComponent; meta?: any }
 >;
 
-const componentToc = [
-  { id: 'section-overview', label: 'Overview' },
-  { id: 'section-import', label: 'Import' },
-  { id: 'section-usage', label: 'Usage' },
-  { id: 'section-anatomy', label: 'Anatomy' },
-  { id: 'section-props', label: 'Props' },
-];
 
 const componentHeaderActions = (
   <>
@@ -123,13 +116,15 @@ function PageContent({ path }: { path: string }) {
     if (doc) {
       const kebab = name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       const mdxKey = Object.keys(componentMdxModules).find((k) => k.includes(`/${kebab}.mdx`));
-      const Content = mdxKey ? componentMdxModules[mdxKey].default : null;
+      const mdxModule = mdxKey ? componentMdxModules[mdxKey] : null;
+      const Content = mdxModule?.default ?? null;
+      const toc = mdxModule?.meta?.toc;
       return (
         <PageLayout
           title={doc.name}
           description={doc.description}
           currentPath={p}
-          toc={componentToc}
+          toc={toc}
           headerActions={componentHeaderActions}
         >
           {Content ? <Content /> : <p>Not found.</p>}

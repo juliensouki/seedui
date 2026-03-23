@@ -50,6 +50,18 @@ export const buttonDoc: ComponentDoc = {
 </div>`,
     },
     {
+      title: 'Custom colors',
+      description:
+        'Pass any hex color to the color prop and SeedUI will automatically generate the full shade scale for hover, focus, and active states.',
+      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+  <Button color="#2563EB">Custom Blue</Button>
+  <Button color="#10B981">Custom Green</Button>
+  <Button color="#F59E0B">Amber</Button>
+  <Button color="#2563EB" variant="transparent">Custom Blue</Button>
+  <Button color="#10B981" variant="transparent">Custom Green</Button>
+</div>`,
+    },
+    {
       title: 'Variants',
       description:
         'Filled buttons draw the most attention and are best for primary actions. Transparent buttons work well for secondary or less prominent actions.',
@@ -81,18 +93,6 @@ export const buttonDoc: ComponentDoc = {
       code: `<div style={{ display: 'flex', gap: 8 }}>
   <Button disabled>Disabled</Button>
   <Button variant="transparent" disabled>Disabled</Button>
-</div>`,
-    },
-    {
-      title: 'Custom color',
-      description:
-        'Pass any hex color to the color prop and SeedUI will automatically generate a full shade scale. Works with both filled and transparent variants.',
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Button color="#2563EB">Brand Blue</Button>
-  <Button color="#10B981">Success Green</Button>
-  <Button color="#F59E0B">Amber</Button>
-  <Button color="#2563EB" variant="transparent">Brand Blue</Button>
-  <Button color="#10B981" variant="transparent">Success Green</Button>
 </div>`,
     },
   ],

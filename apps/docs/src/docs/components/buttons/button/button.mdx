@@ -6,6 +6,12 @@ export const meta = {
   name: doc.name,
   category: doc.category,
   description: doc.description,
+  toc: [
+    { id: 'section-overview', label: 'Overview' },
+    { id: 'section-import', label: 'Import' },
+    { id: 'section-usage', label: 'Usage' },
+    { id: 'section-props', label: 'Props' },
+  ],
 };
 
 <section id="section-overview">
@@ -21,41 +27,40 @@ Buttons let people take actions like submitting a form, confirming a choice, or 
 <section id="section-usage">
 ## Usage
 
-### Color schemes
+### Colors
 
 Use the color prop to match the button to its intent. Primary for main actions, neutral for general-purpose, and error for destructive operations.
 
 <ComponentPlayground code={doc.usageExamples[0].code} />
 
+You can also pass any hex color and SeedUI will automatically generate the full shade scale for hover, focus, and active states.
+
+<ComponentPlayground code={doc.usageExamples[1].code} />
+
 ### Variants
 
 Filled buttons draw the most attention and are best for primary actions. Transparent buttons work well for secondary or less prominent actions.
 
-<ComponentPlayground code={doc.usageExamples[1].code} />
+<ComponentPlayground code={doc.usageExamples[2].code} />
 
 ### Sizes
 
 Three sizes are available. Use small for dense UIs or inline actions, medium as the default, and large for prominent call-to-action buttons.
 
-<ComponentPlayground code={doc.usageExamples[2].code} />
+<ComponentPlayground code={doc.usageExamples[3].code} />
 
 ### Loading state
 
 Set <code>isLoading</code> to show a spinner and disable interaction. Useful while waiting for an async operation like a form submission.
 
-<ComponentPlayground code={doc.usageExamples[3].code} />
+<ComponentPlayground code={doc.usageExamples[4].code} />
 
 ### Disabled
 
 Disabled buttons are visually muted and ignore clicks. Use them to indicate that an action is unavailable until a condition is met.
 
-<ComponentPlayground code={doc.usageExamples[4].code} />
-
-### Custom color
-
-Pass any hex color to the color prop and SeedUI will automatically generate a full shade scale for hover, focus, and active states. Works with both filled and transparent variants.
-
 <ComponentPlayground code={doc.usageExamples[5].code} />
+
 </section>
 
 <PropsSection props={doc.props} />
