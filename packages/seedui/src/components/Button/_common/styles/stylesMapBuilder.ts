@@ -6,10 +6,6 @@ import { generateShades } from '../../../../utils/generate-shades';
 import { ButtonProps } from '../../Button';
 import { getNeutralFilledButtonStyles } from './get-neutral-filled-styles';
 import { getNeutralTransparentButtonStyles } from './get-neutral-transparent-styles';
-import { getPrimaryFilledButtonStyles } from './get-primary-filled-styles';
-import { getPrimaryTransparentButtonStyles } from './get-primary-transparent-styles';
-import { getErrorFilledButtonStyles } from './get-error-filled-styles';
-import { getErrorTransparentButtonStyles } from './get-error-transparent-styles';
 import { getFilledButtonStyles } from './get-filled-styles';
 import { getTransparentButtonStyles } from './get-transparent-styles';
 import { ButtonPresetColors, ButtonVariants } from '../ButtonCommon';
@@ -21,24 +17,24 @@ export const stylesMapBuilder = (
 ): Record<ButtonVariants, Record<ButtonPresetColors, typeof base>> => ({
   filled: {
     primary: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getPrimaryFilledButtonStyles(props.theme)),
+      styled(base)((props: StyledProps<ButtonProps>) => getFilledButtonStyles(props.theme, props.theme.colors.primary)),
     ),
     neutral: applyCustomStyles(
       styled(base)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
     ),
     error: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getErrorFilledButtonStyles(props.theme)),
+      styled(base)((props: StyledProps<ButtonProps>) => getFilledButtonStyles(props.theme, props.theme.colors.error)),
     ),
   },
   transparent: {
     primary: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getPrimaryTransparentButtonStyles(props.theme)),
+      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme, props.theme.colors.primary)),
     ),
     neutral: applyCustomStyles(
       styled(base)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
     ),
     error: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getErrorTransparentButtonStyles(props.theme)),
+      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme, props.theme.colors.error)),
     ),
   },
 });
