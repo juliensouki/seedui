@@ -1,6 +1,6 @@
-import { SemanticColorShades, Theme } from '../../../../types';
+import { SemanticColorShades } from '../../../../types';
 
-export const getTransparentButtonStyles = (_theme: Theme, scale: SemanticColorShades) => ({
+export const getTransparentButtonStyles = (scale: SemanticColorShades) => ({
   backgroundColor: 'transparent',
   color: scale.default,
 

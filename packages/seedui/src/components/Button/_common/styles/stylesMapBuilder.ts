@@ -28,13 +28,13 @@ export const stylesMapBuilder = (
   },
   transparent: {
     primary: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme, props.theme.colors.primary)),
+      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme.colors.primary)),
     ),
     neutral: applyCustomStyles(
       styled(base)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
     ),
     error: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme, props.theme.colors.error)),
+      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme.colors.error)),
     ),
   },
 });
@@ -53,7 +53,7 @@ export const customStylesBuilder = (
     styled(base)((props: CustomColorProps) => {
       if (!props.$customColor) return {};
       const scale = generateShades(props.$customColor, props.theme.mode === 'dark');
-      return scale ? getTransparentButtonStyles(props.theme, scale) : {};
+      return scale ? getTransparentButtonStyles(scale) : {};
     }),
   ),
 });
