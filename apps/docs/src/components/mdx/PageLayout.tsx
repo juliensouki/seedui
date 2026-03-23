@@ -50,7 +50,7 @@ export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, descript
         </MDXProvider>
         <PageNavigation currentPath={currentPath} />
       </MainContent>
-      <TableOfContents />
+      <TableOfContents path={currentPath} />
     </Layout>
   );
 };

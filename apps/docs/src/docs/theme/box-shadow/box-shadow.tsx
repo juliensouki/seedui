@@ -62,11 +62,6 @@ const ShadowValue = styled('span')(({ theme }) => {
   };
 });
 
-const tocItems = [
-  { id: 'levels', label: 'Levels' },
-  { id: 'usage', label: 'Usage' },
-];
-
 const usageCode = `const theme = useTheme();
 
 <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -95,7 +90,7 @@ export const BoxShadow: FunctionComponent = () => {
 
         <Divider spacing={28} />
 
-        <Section id="levels">
+        <Section id="section-levels">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Levels</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Access via <code>theme.boxShadow[1]</code> through <code>theme.boxShadow[5]</code>.
@@ -109,7 +104,7 @@ export const BoxShadow: FunctionComponent = () => {
             ))}
           </Grid>
         </Section>
-        <Section id="usage">
+        <Section id="section-usage">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Access box shadow via <code>useTheme()</code> or styled-components theme injection.
@@ -119,7 +114,7 @@ export const BoxShadow: FunctionComponent = () => {
         <PageNavigation />
       </MainContent>
 
-      <TableOfContents items={tocItems} />
+      <TableOfContents />
     </PageLayout>
   );
 };

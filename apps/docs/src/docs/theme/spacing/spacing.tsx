@@ -64,11 +64,6 @@ const Bar = styled('div')(({ theme }) => ({
   transition: 'width 0.2s',
 }));
 
-const tocItems = [
-  { id: 'scale', label: 'Scale' },
-  { id: 'usage', label: 'Usage' },
-];
-
 const spacingFactors = [0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
 
 const usageCode = `const theme = useTheme();
@@ -98,7 +93,7 @@ export const Spacing: FunctionComponent = () => {
 
         <Divider spacing={28} />
 
-        <Section id="scale">
+        <Section id="section-scale">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Access via <code>theme.spacing(factor)</code> — returns the pixel value as a number (base &times; factor).
@@ -131,7 +126,7 @@ export const Spacing: FunctionComponent = () => {
           })()}
         </Section>
 
-        <Section id="usage">
+        <Section id="section-usage">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Access spacing via <code>useTheme()</code> or styled-components theme injection.
@@ -142,7 +137,7 @@ export const Spacing: FunctionComponent = () => {
         <PageNavigation />
       </MainContent>
 
-      <TableOfContents items={tocItems} />
+      <TableOfContents />
     </PageLayout>
   );
 };

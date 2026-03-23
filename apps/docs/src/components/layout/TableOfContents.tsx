@@ -60,7 +60,7 @@ const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => {
   };
 });
 
-export const TableOfContents: FunctionComponent = () => {
+export const TableOfContents: FunctionComponent<{ path?: string }> = ({ path }) => {
   const [items, setItems] = useState<TocItem[]>([]);
   const [activeId, setActiveId] = useState('');
   const [indicatorStyle, setIndicatorStyle] = useState({ top: 0, height: 0 });
@@ -82,7 +82,7 @@ export const TableOfContents: FunctionComponent = () => {
     if (discovered.length > 0) {
       setActiveId(discovered[0].id);
     }
-  }, []);
+  }, [path]);
 
   useEffect(() => {
     const el = itemRefs.current.get(activeId);

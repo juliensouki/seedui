@@ -54,13 +54,6 @@ const Td = styled('td')(({ theme }) => {
   };
 });
 
-const tocItems = [
-  { id: 'pixel-breakpoints', label: 'Pixel breakpoints' },
-  { id: 'semantic-aliases', label: 'Semantic aliases' },
-  { id: 'media-query-helpers', label: 'Media query helpers' },
-  { id: 'usage', label: 'Usage' },
-];
-
 const usageCode = `const Container = styled('div')(({ theme }) => ({
   padding: theme.spacing(2),
 
@@ -105,7 +98,7 @@ export const Breakpoints: FunctionComponent = () => {
 
         <Divider spacing={28} />
 
-        <Section id="pixel-breakpoints">
+        <Section id="section-pixel-breakpoints">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Pixel breakpoints</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Access via <code>theme.breakpoints.sm</code> etc. Values are in pixels.
@@ -130,7 +123,7 @@ export const Breakpoints: FunctionComponent = () => {
           </Table>
         </Section>
 
-        <Section id="semantic-aliases">
+        <Section id="section-semantic-aliases">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Semantic aliases</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Convenience aliases that map to the pixel breakpoints above.
@@ -155,7 +148,7 @@ export const Breakpoints: FunctionComponent = () => {
           </Table>
         </Section>
 
-        <Section id="media-query-helpers">
+        <Section id="section-media-query-helpers">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Media query helpers</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Helper methods on <code>theme.breakpoints</code> that return ready-to-use media query strings.
@@ -185,7 +178,7 @@ export const Breakpoints: FunctionComponent = () => {
           </Table>
         </Section>
 
-        <Section id="usage">
+        <Section id="section-usage">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Use the helpers inside <code>styled</code> components or access breakpoint values
@@ -197,7 +190,7 @@ export const Breakpoints: FunctionComponent = () => {
         <PageNavigation />
       </MainContent>
 
-      <TableOfContents items={tocItems} />
+      <TableOfContents />
     </PageLayout>
   );
 };
