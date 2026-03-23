@@ -96,4 +96,7 @@ export interface ThemeCustomization {
 
 export interface SeedContextType {
   customizations: ThemeCustomization;
+  colorService: {
+    generateShades: (mainColor: string, isDark: boolean) => SemanticColorShades | null;
+  };
 }

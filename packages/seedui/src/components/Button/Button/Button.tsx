@@ -5,11 +5,12 @@ import {
   ReactNode,
   useContext,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
   useLayoutEffect,
 } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import { SeedContextType, Theme } from '../../../types';
 import {
@@ -77,23 +78,14 @@ const customComponents = customStylesBuilder(ButtonBase);
 /** A clickable button for triggering actions. Available in filled and transparent variants across primary, neutral, and error colors, or any custom hex color. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props: ButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
-    const { customizations } = useContext<SeedContextType>(SeedContext);
-    const {
-      onClick,
-      variant,
-      color,
-      disabled,
-      size,
-      type,
-      isLoading,
-      className,
-      children,
-      ...restProps
-    } = getDefaultProps<ButtonProps & InternalProps>({
-      providedProps: props,
-      globalDefaultProps: customizations?.components?.button?.defaultProps,
-      defaultProps: defaultProps as ButtonProps,
-    });
+    const { customizations, colorService } = useContext<SeedContextType>(SeedContext);
+    const { mode } = useTheme();
+    const { onClick, variant, color, disabled, size, type, isLoading, className, children, ...restProps } =
+      getDefaultProps<ButtonProps & InternalProps>({
+        providedProps: props,
+        globalDefaultProps: customizations?.components?.button?.defaultProps,
+        defaultProps: defaultProps as ButtonProps,
+      });
 
     const innerRef = useRef<HTMLButtonElement>(null);
     const [buttonSize, setButtonSize] = useState<{
@@ -115,15 +107,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         onClick(event);
       }
       if (event.detail === 0) {
+        // This means that the click was triggered by a keyboard event. We want to keep the focus in that case.
         return;
       }
       event.currentTarget.blur();
     };
 
     const isCustom = !isPresetColor(color);
-    const ButtonComponent = isCustom
-      ? customComponents[variant]
-      : componentsMap[variant][color];
+    const colorScale = useMemo(
+      () => (isCustom ? colorService.generateShades(color, mode === 'dark') : undefined),
+      [isCustom, color, mode, colorService],
+    );
+    const ButtonComponent = isCustom ? customComponents[variant] : componentsMap[variant][color];
 
     return (
       <ButtonComponent
@@ -135,15 +130,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
         className={className}
         $customizations={customizations.components?.button}
-        {...(isCustom && { $customColor: color })}
+        {...(isCustom && { $colorScale: colorScale })}
         ref={innerRef}
+        // lock dimensions when loading, merge with user-provided style
         style={{
           ...restProps?.style,
           ...(isLoading && buttonSize.width && buttonSize.height
             ? {
-              width: `${buttonSize.width}px`,
-              height: `${buttonSize.height}px`,
-            }
+                width: `${buttonSize.width}px`,
+                height: `${buttonSize.height}px`,
+              }
             : undefined),
         }}
       >

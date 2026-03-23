@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
+import { SemanticColorShades } from '../../../../types';
 import { StyledComponent, StyledProps } from '../../../../types/internal';
 import { applyCustomStyles } from '../../../../utils/custom-styles';
-import { generateShades } from '../../../../utils/generate-shades';
 import { ButtonProps } from '../../Button';
 import { getNeutralFilledButtonStyles } from './get-neutral-filled-styles';
 import { getNeutralTransparentButtonStyles } from './get-neutral-transparent-styles';
@@ -10,7 +10,7 @@ import { getFilledButtonStyles } from './get-filled-styles';
 import { getTransparentButtonStyles } from './get-transparent-styles';
 import { ButtonPresetColors, ButtonVariants } from '../ButtonCommon';
 
-type CustomColorProps = StyledProps<ButtonProps> & { $customColor?: string };
+type CustomColorProps = StyledProps<ButtonProps> & { $colorScale?: SemanticColorShades };
 
 export const stylesMapBuilder = (
   base: StyledComponent<unknown>,
@@ -39,21 +39,17 @@ export const stylesMapBuilder = (
   },
 });
 
-export const customStylesBuilder = (
-  base: StyledComponent<unknown>,
-): Record<ButtonVariants, typeof base> => ({
+export const customStylesBuilder = (base: StyledComponent<unknown>): Record<ButtonVariants, typeof base> => ({
   filled: applyCustomStyles(
     styled(base)((props: CustomColorProps) => {
-      if (!props.$customColor) return {};
-      const scale = generateShades(props.$customColor, props.theme.mode === 'dark');
-      return scale ? getFilledButtonStyles(props.theme, scale) : {};
+      if (!props.$colorScale) return {};
+      return getFilledButtonStyles(props.theme, props.$colorScale);
     }),
   ),
   transparent: applyCustomStyles(
     styled(base)((props: CustomColorProps) => {
-      if (!props.$customColor) return {};
-      const scale = generateShades(props.$customColor, props.theme.mode === 'dark');
-      return scale ? getTransparentButtonStyles(scale) : {};
+      if (!props.$colorScale) return {};
+      return getTransparentButtonStyles(props.$colorScale);
     }),
   ),
 });

@@ -5,9 +5,10 @@ import {
   ReactNode,
   useContext,
   useImperativeHandle,
+  useMemo,
   useRef,
 } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import {
   ButtonBaseProps,
@@ -21,6 +22,7 @@ import {
 import { InternalProps, StyledProps } from '../../../types/internal';
 import { getDefaultProps } from '../../../utils/props';
 import { SeedContextType } from '../../../types';
+
 import { SeedContext } from '../../ThemeProvider/context';
 
 /** Props for the IconButton component — a circular button designed to hold a single icon. */
@@ -61,17 +63,11 @@ const customComponents = customStylesBuilder(IconButtonBase);
 /** A circular button designed for icon-only actions like edit, delete, or settings. */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
-    const { customizations } = useContext<SeedContextType>(SeedContext);
-    const {
-      onClick,
-      variant,
-      color,
-      disabled,
-      size,
-      className,
-      children,
-      ...restProps
-    } = getDefaultProps<IconButtonProps & InternalProps>({
+    const { customizations, colorService } = useContext<SeedContextType>(SeedContext);
+    const { mode } = useTheme();
+    const { onClick, variant, color, disabled, size, className, children, ...restProps } = getDefaultProps<
+      IconButtonProps & InternalProps
+    >({
       providedProps: props,
       globalDefaultProps: customizations?.components?.iconButton?.defaultProps,
       defaultProps: defaultProps as IconButtonProps,
@@ -80,9 +76,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     const isCustom = !isPresetColor(color);
-    const IconButtonComponent = isCustom
-      ? customComponents[variant]
-      : componentsMap[variant][color];
+    const colorScale = useMemo(
+      () => (isCustom ? colorService.generateShades(color, mode === 'dark') : undefined),
+      [isCustom, color, mode, colorService],
+    );
+    const IconButtonComponent = isCustom ? customComponents[variant] : componentsMap[variant][color];
 
     useImperativeHandle(forwardedRef, () => buttonRef.current as HTMLButtonElement);
 
@@ -92,6 +90,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       }
 
       if (event.detail === 0) {
+        // This means that the click was triggered by a keyboard event. We want to keep the focus in that case.
         return;
       }
       event.currentTarget.blur();
@@ -106,7 +105,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         size={size}
         className={className}
         $customizations={customizations.components?.iconButton}
-        {...(isCustom && { $customColor: color })}
+        {...(isCustom && { $colorScale: colorScale })}
         ref={buttonRef}
       >
         {children}

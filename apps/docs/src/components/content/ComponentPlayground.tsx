@@ -115,7 +115,9 @@ const PreviewPane = styled('div')(({ theme }) => {
 
 const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) => ({
   position: 'relative',
-  borderTop: $hasPreview ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}` : undefined,
+  borderTop: $hasPreview
+    ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`
+    : undefined,
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[100],
 
   '& .code-editor': {
@@ -237,9 +239,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   if (!code) {
     return (
       <Wrapper>
-        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
-          {preview}
-        </PreviewPane>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
       </Wrapper>
     );
   }
@@ -364,7 +364,12 @@ const LivePlayground: FunctionComponent<{
   }
 
   return (
-    <LiveProvider code={liveCode} scope={scope ? { ...baseScope, ...scope } : baseScope} noInline={noInline} theme={themes.vsDark}>
+    <LiveProvider
+      code={liveCode}
+      scope={scope ? { ...baseScope, ...scope } : baseScope}
+      noInline={noInline}
+      theme={themes.vsDark}
+    >
       <Wrapper>
         <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
           <StablePreview />
