@@ -64,11 +64,6 @@ const Value = styled('span')(({ theme }) => {
   };
 });
 
-const tocItems = [
-  { id: 'scale', label: 'Scale' },
-  { id: 'usage', label: 'Usage' },
-];
-
 const radiusFactors: (number | 'full')[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 'full'];
 
 const usageCode = `const theme = useTheme();
@@ -98,7 +93,7 @@ export const BorderRadius: FunctionComponent = () => {
 
         <Divider spacing={28} />
 
-        <Section id="scale">
+        <Section id="section-scale">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Access via <code>theme.borderRadius(factor)</code> — returns the pixel value as a number
@@ -118,7 +113,7 @@ export const BorderRadius: FunctionComponent = () => {
           </Grid>
         </Section>
 
-        <Section id="usage">
+        <Section id="section-usage">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Access border radius via <code>useTheme()</code> or styled-components theme injection.
@@ -128,7 +123,7 @@ export const BorderRadius: FunctionComponent = () => {
         <PageNavigation />
       </MainContent>
 
-      <TableOfContents items={tocItems} />
+      <TableOfContents />
     </PageLayout>
   );
 };

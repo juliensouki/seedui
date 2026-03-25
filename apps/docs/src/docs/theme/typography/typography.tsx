@@ -52,11 +52,6 @@ const MetaLabel = styled('span')(({ theme }) => {
 
 const variants = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'caption', 'small'] as const;
 
-const tocItems = [
-  { id: 'variants', label: 'Variants' },
-  { id: 'usage', label: 'Usage' },
-];
-
 const usageCode = `<div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
   <Text variant="h4">Heading 4</Text>
   <Text variant="p">This is body text using the p variant.</Text>
@@ -77,7 +72,7 @@ export const Typography: FunctionComponent = () => {
 
         <Divider spacing={28} />
 
-        <Section id="variants">
+        <Section id="section-variants">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Variants</Text>
           {variants.map((variant) => {
             const config = theme.typography[variant];
@@ -108,7 +103,7 @@ export const Typography: FunctionComponent = () => {
           })}
         </Section>
 
-        <Section id="usage">
+        <Section id="section-usage">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
           <Text variant="p" style={{ marginBottom: 16 }}>
             Use the <code>Text</code> component with a <code>variant</code> prop.
@@ -119,7 +114,7 @@ export const Typography: FunctionComponent = () => {
         <PageNavigation />
       </MainContent>
 
-      <TableOfContents items={tocItems} />
+      <TableOfContents />
     </PageLayout>
   );
 };

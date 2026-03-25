@@ -119,11 +119,6 @@ const colorConfig = [
   { semantic: 'error', primitive: 'red' },
 ] as const;
 
-const tocItems = [
-  { id: 'palettes', label: 'Palettes' },
-  { id: 'usage', label: 'Usage' },
-];
-
 const usageExampleCode = `const theme = useTheme();
 
 <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -194,7 +189,7 @@ export const Colors: FunctionComponent = () => {
 
         <Divider spacing={28} />
 
-        <Section id="palettes">
+        <Section id="section-palettes">
           <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>Palettes</Text>
           {colorConfig.map(({ semantic, primitive }) => (
             <ColorPalette
@@ -209,7 +204,7 @@ export const Colors: FunctionComponent = () => {
           ))}
         </Section>
 
-        <Section id="usage">
+        <Section id="section-usage">
           <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
           <Text variant="p" style={{ color: theme.mode === 'light' ? undefined : theme.colors.neutral[800], marginBottom: 12, lineHeight: 1.6 }}>
             Access semantic colors via <code>useTheme()</code> or through the <code>theme</code> object
@@ -222,7 +217,7 @@ export const Colors: FunctionComponent = () => {
         <PageNavigation />
       </MainContent>
 
-      <TableOfContents items={tocItems} />
+      <TableOfContents />
     </PageLayout>
   );
 };

@@ -160,7 +160,9 @@ function getTitle(path: string): string {
 }
 
 export const DocsApp: FunctionComponent<DocsAppProps> = ({ initialPath }) => {
-  const [currentPath, setCurrentPath] = useState(initialPath);
+  const [currentPath, setCurrentPath] = useState(
+    typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') || '/' : initialPath
+  );
 
   const navigate = useCallback((newPath: string) => {
     const p = newPath === '/' ? '/' : newPath.replace(/\/$/, '');
