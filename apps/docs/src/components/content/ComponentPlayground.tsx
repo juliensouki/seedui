@@ -109,7 +109,7 @@ const PreviewPane = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: theme.spacing(3),
-    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+    backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
   };
 });
 
@@ -118,7 +118,7 @@ const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview 
   borderTop: $hasPreview
     ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`
     : undefined,
-  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[100],
+  backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[200],
 
   '& .code-editor': {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
@@ -146,11 +146,12 @@ const ReadOnlyCode = styled('pre')(({ theme }) => ({
   background: 'transparent',
 }));
 
-const CopyButton = styled('button')(({ theme }) => {
+const CopyButton = styled('button')<{ $centered?: boolean }>(({ theme, $centered }) => {
   const isLight = theme.mode === 'light';
   return {
     position: 'absolute',
-    top: theme.spacing(1),
+    top: $centered ? '50%' : theme.spacing(1),
+    transform: $centered ? 'translateY(-50%)' : undefined,
     right: theme.spacing(1),
     zIndex: 2,
     display: 'flex',
@@ -165,7 +166,7 @@ const CopyButton = styled('button')(({ theme }) => {
     color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
     transition: 'color 0.15s, background-color 0.15s',
     '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[200],
+      backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[300],
       color: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
     },
   };
@@ -246,10 +247,11 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
 
   // Read-only code block mode
   if (readOnly) {
+    const isSingleLine = code.trim().split('\n').length === 1;
     return (
       <Wrapper>
         <CodePane>
-          <CopyButton style={{ top: '50%', transform: 'translateY(-50%)' }} onClick={handleCopy} title="Copy code">
+          <CopyButton $centered={isSingleLine} onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
           <Highlight theme={themes.vsDark} code={code.trim()} language={language}>
