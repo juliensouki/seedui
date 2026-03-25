@@ -38,5 +38,8 @@ export default defineConfig({
         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       }),
     ],
+    ssr: {
+      noExternal: ['styled-components'],
+    },
   },
 });
