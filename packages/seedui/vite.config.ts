@@ -13,13 +13,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        seedui: resolve(__dirname, 'src/index.ts'),
+        index: resolve(__dirname, 'src/index.ts'),
         sc: resolve(__dirname, 'src/sc.ts'),
       },
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'styled-components'],
     },
   },
   resolve: {
