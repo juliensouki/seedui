@@ -8,7 +8,7 @@ import { getNeutralFilledButtonStyles } from './get-neutral-filled-styles';
 import { getNeutralTransparentButtonStyles } from './get-neutral-transparent-styles';
 import { getFilledButtonStyles } from './get-filled-styles';
 import { getTransparentButtonStyles } from './get-transparent-styles';
-import { ButtonPresetColors, ButtonVariants } from '../ButtonCommon';
+import { ButtonPresetColors, ButtonVariants } from '../types';
 
 type CustomColorProps = StyledProps<ButtonProps> & { $colorScale?: SemanticColorShades };
 
