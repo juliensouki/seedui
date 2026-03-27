@@ -1,0 +1,8 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+import { DocsApp } from '../components/DocsApp';
+---
+
+<DocsLayout title="seedui | Component Wall">
+  <DocsApp client:only="react" initialPath="/component-wall" />
+</DocsLayout>
