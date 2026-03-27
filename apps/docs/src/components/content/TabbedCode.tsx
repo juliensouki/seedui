@@ -36,8 +36,10 @@ const PmButton = styled('button')<{ $active: boolean }>(({ $active, theme }) => 
 
 const TabbedCodeWrapper = styled('div')(({ theme }) => ({
   marginBottom: theme.spacing(2),
-  '& pre': {
+  '& > div:last-child': {
     borderRadius: `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px`,
+    border: 'none',
+    marginBottom: 0,
   },
 }));
 
