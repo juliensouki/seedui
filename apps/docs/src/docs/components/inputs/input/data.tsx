@@ -90,6 +90,28 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
+      title: 'With icon',
+      description: 'Add an icon to the left or right side of the input using the inputIcon prop. The icon sits in a visually distinct container attached to the input edge.',
+      code: `const [value, setValue] = useState('');
+
+<Input
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+  label="Search"
+  placeholder="Search..."
+  inputIcon={{
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="11" cy="11" r="8" />
+        <path d="M21 21l-4.35-4.35" />
+      </svg>
+    ),
+    placement: 'left',
+  }}
+  width={300}
+/>`,
+    },
+    {
       title: 'Disabled',
       description: 'A disabled input is visually muted and does not accept user interaction.',
       code: `<Input

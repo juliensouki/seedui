@@ -165,8 +165,7 @@ const InputElement = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: `2px solid ${theme.colors.primary[300]}`,
-        outlineOffset: 1,
+        outline: 'none',
         borderColor: theme.colors.primary.default,
         [`& + ${IconContainer}`]: {
           backgroundColor: theme.colors.primary.default,
@@ -197,6 +196,11 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
     flexDirection: $iconPlacement === 'right' ? 'row' : 'row-reverse',
     width: '100%',
     borderRadius: theme.borderRadius(4),
+
+    '&:focus-within': {
+      outline: `2px solid ${theme.colors.primary[300]}`,
+      outlineOffset: 1,
+    },
   }),
 );
 

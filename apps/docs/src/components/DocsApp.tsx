@@ -11,6 +11,7 @@ import { Spacing } from '../docs/theme/spacing/spacing';
 import { BorderRadius } from '../docs/theme/border-radius/border-radius';
 import { BoxShadow } from '../docs/theme/box-shadow/box-shadow';
 import { Breakpoints } from '../docs/theme/breakpoints/breakpoints';
+import { ComponentWall } from '../docs/component-wall/ComponentWall';
 
 // MDX content imports (compiled as React components via @mdx-js/rollup)
 import InstallationContent, { meta as installationMeta } from '../docs/getting-started/installation/installation.mdx';
@@ -51,6 +52,9 @@ function PageContent({ path }: { path: string }) {
 
   // Home
   if (p === '/') return <HomePage />;
+
+  // Component Wall
+  if (p === '/component-wall') return <ComponentWall />;
 
   // Getting started
   if (p === '/getting-started/installation') {
@@ -134,6 +138,7 @@ function PageContent({ path }: { path: string }) {
 // Title map
 const pageTitles: Record<string, string> = {
   '/': 'seedui | React Component Library',
+  '/component-wall': 'seedui | Component Wall',
   '/getting-started/installation': 'seedui | Installation',
   '/getting-started/quick-start': 'seedui | Quick Start',
   '/theming/theme-provider': 'seedui | ThemeProvider',
