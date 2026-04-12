@@ -79,7 +79,7 @@ const TagSelectorContainer = styled.div<StyledComponentsPrefix<Record<string, ne
   gap: theme.spacing(0.25),
 }));
 
-const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean }>>(({ theme, $isFocused }) => {
+const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; disabled?: boolean }>>(({ theme, $isFocused, $disabled }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -90,16 +90,26 @@ const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean }
     border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[500]}`,
     gap: '8px',
 
-    ...(!$isFocused && {
+    '& .input-container:focus-within': {
+      outline: 'none',
+    },
+
+    ...(!$isFocused && !$disabled && {
       '&:hover': {
         borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
       },
     }),
 
-    ...($isFocused && {
-      outline: `2px solid ${theme.colors.primary[300]}`,
+    ...($isFocused && !$disabled && {
+      outline: `2px solid ${isLight ? theme.colors.primary[300] : theme.colors.primary[600]}`,
       outlineOffset: 1,
       borderColor: theme.colors.primary.default,
+    }),
+
+    ...($disabled && {
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+      borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
+      cursor: 'not-allowed',
     }),
   };
 });
@@ -108,9 +118,6 @@ const TagInput = styled(Input)({
   borderRadius: 'unset',
   border: 'unset',
   flex: 1,
-  '&:focus': {
-    outline: 'unset',
-  },
   '& input': {
     paddingRight: '8px !important',
   },
@@ -192,7 +199,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
     return (
       <ContainerWithLabel label={label} forwardProps={forwardProps} elementProps={elementProps} width={width} className="tag-selector-root">
         <TagSelectorContainer className={joinClasses(className)} $customizations={customizations.components?.tagSelector}>
-          <InputContainer {...elementProps.inputContainer} $isFocused={isFocused} className={joinClasses('tag-selector-input-container', elementProps?.inputContainer?.className)}>
+          <InputContainer {...elementProps.inputContainer} $isFocused={isFocused} $disabled={disabled} className={joinClasses('tag-selector-input-container', elementProps?.inputContainer?.className)}>
             <TagInput
               ref={forwardedRef}
               value={inputValue}
@@ -218,7 +225,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
             />
 
             <AddButton onClick={handleAddTag} disabled={isAddDisabled} className={joinClasses('tag-selector-button', elementProps.button?.className)}>
-              <Text style={{ color: 'white' }}>{buttonLabel}</Text>
+              <Text style={{ color: 'inherit' }}>{buttonLabel}</Text>
             </AddButton>
           </InputContainer>
 

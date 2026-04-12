@@ -92,15 +92,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       width?: number;
       height?: number;
     }>({});
+    const hasMeasured = buttonSize.width !== undefined && buttonSize.height !== undefined;
+    const showLoader = isLoading && hasMeasured;
 
     useImperativeHandle(forwardedRef, () => innerRef.current as HTMLButtonElement);
 
     useLayoutEffect(() => {
-      if (innerRef.current && !isLoading) {
+      if (innerRef.current && !showLoader) {
         const { width, height } = innerRef.current.getBoundingClientRect();
         setButtonSize({ width, height });
       }
-    }, [isLoading, children]);
+    }, [showLoader, children]);
 
     const preventFocusOnClick = (event: MouseEvent<HTMLButtonElement>): void => {
       if (onClick && !isLoading) {
@@ -135,7 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         // lock dimensions when loading, merge with user-provided style
         style={{
           ...restProps?.style,
-          ...(isLoading && buttonSize.width && buttonSize.height
+          ...(showLoader
             ? {
               width: `${buttonSize.width}px`,
               height: `${buttonSize.height}px`,
@@ -143,7 +145,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             : undefined),
         }}
       >
-        {isLoading ? (
+        {showLoader ? (
           <Loader size={size} color={color === 'primary' && variant === 'filled' ? 'white' : undefined} />
         ) : (
           children

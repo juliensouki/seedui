@@ -19,7 +19,7 @@ export const getFilledButtonStyles = (theme: Theme, scale: SemanticColorShades) 
     },
 
     '&:focus': {
-      outline: `2px solid ${scale[300]}`,
+      outline: `2px solid ${theme.mode === 'light' ? scale[300] : scale[600]}`,
       outlineOffset: 1,
     },
 

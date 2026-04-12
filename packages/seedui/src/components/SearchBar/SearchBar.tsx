@@ -90,7 +90,7 @@ const SearchBarContainer = styled.div<
 
     ...($isFocused &&
       !$disabled && {
-        outline: `2px solid ${theme.colors.primary[300]}`,
+        outline: `2px solid ${theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[600]}`,
         outlineOffset: 1,
         borderColor: theme.colors.primary.default,
       }),

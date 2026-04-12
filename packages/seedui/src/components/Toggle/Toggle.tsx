@@ -131,7 +131,7 @@ const ToggleInput = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: `2px solid ${theme.colors.primary[300]}`,
+        outline: `2px solid ${theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[600]}`,
         outlineOffset: 2,
       },
 

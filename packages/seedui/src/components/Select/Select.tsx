@@ -118,7 +118,7 @@ const SelectContainer = applyCustomStyles(
       paddingRight: 0,
       cursor: $disabled ? 'not-allowed' : 'pointer',
 
-      outline: $isFocused ? `2px solid ${theme.colors.primary[300]}` : undefined,
+      outline: $isFocused ? `2px solid ${isLight ? theme.colors.primary[300] : theme.colors.primary[600]}` : undefined,
       outlineOffset: $isFocused ? 1 : undefined,
       borderColor: theme.colors.primary.default,
       border: `1px solid ${$isFocused ? activeColor : baseColor}`,

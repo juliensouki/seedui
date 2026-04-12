@@ -207,7 +207,7 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
     borderRadius: theme.borderRadius(4),
 
     '&:focus-within': {
-      outline: `2px solid ${theme.colors.primary[300]}`,
+      outline: `2px solid ${theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[600]}`,
       outlineOffset: 1,
     },
   }),
