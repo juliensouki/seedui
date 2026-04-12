@@ -18,6 +18,7 @@ export const tooltipDoc: ComponentDoc = {
     { name: 'text', type: 'string', default: '—', description: 'Tooltip text content. Required.' },
     { name: 'direction', type: "'top' | 'right' | 'bottom' | 'left'", default: "'top'", description: 'Position relative to the child.' },
     { name: 'children', type: 'ReactNode', default: '—', description: 'Element that triggers the tooltip. Required.' },
+    { name: 'padding', type: 'number | string', default: "'8px 12px'", description: 'Inner padding in px (number) or any valid CSS padding string.' },
   ],
   example: TooltipExample,
   code: `<Tooltip text="Hello!" direction="right">

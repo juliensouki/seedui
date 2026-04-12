@@ -28,6 +28,7 @@ export const modalDoc: ComponentDoc = {
     { name: 'closeOnOverlayClick', type: 'boolean', default: 'true', description: 'Close when clicking the overlay.' },
     { name: 'closeOnEscape', type: 'boolean', default: 'true', description: 'Close when pressing Escape.' },
     { name: 'width', type: 'string | number', default: '—', description: 'Modal width.' },
+    { name: 'padding', type: 'number | string', default: '16', description: 'Inner padding of the modal body in px (number) or any valid CSS padding string.' },
   ],
   example: ModalExample,
   code: `const [open, setOpen] = useState(false);

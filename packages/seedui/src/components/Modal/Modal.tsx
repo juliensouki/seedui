@@ -28,6 +28,8 @@ export interface ModalProps {
   closeOnEscape?: boolean;
   /** Modal width — number (px) or string. Defaults to 500px. */
   width?: string | number;
+  /** Inner padding of the modal body — a number (px) or any valid CSS padding string. Defaults to 16px. */
+  padding?: number | string;
   /** Access underlying DOM elements (overlay, container, header, content, closeButton). */
   elementProps?: {
     overlay?: HTMLAttributes<HTMLDivElement>;
@@ -45,6 +47,7 @@ const defaultProps: ModalProps = {
   closeOnOverlayClick: true,
   closeOnEscape: true,
   width: 500,
+  padding: 16,
   elementProps: {
     overlay: {},
     container: {},
@@ -120,8 +123,11 @@ const ModalHeader = styled.div<StyledComponentsPrefix<Record<string, never>>>(({
   };
 });
 
-const ModalContent = styled.div<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => ({
-  padding: `${theme.spacing(2)}px`,
+const resolvePadding = (padding: number | string): string =>
+  typeof padding === 'number' ? `${padding}px` : padding;
+
+const ModalContent = styled.div<StyledComponentsPrefix<{ padding: number | string }>>(({ $padding }) => ({
+  padding: resolvePadding($padding),
   overflowY: 'auto',
   flex: 1,
 }));
@@ -171,6 +177,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
       closeOnOverlayClick,
       closeOnEscape,
       width,
+      padding,
       elementProps: {
         overlay: overlayHTMLAttributes,
         container: containerHTMLAttributes,
@@ -265,6 +272,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
           )}
           <ModalContent
             {...contentHTMLAttributes}
+            $padding={padding}
             className={joinClasses('modal-content', contentHTMLAttributes?.className)}
           >
             {children}

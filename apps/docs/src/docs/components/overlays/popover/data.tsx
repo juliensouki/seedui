@@ -9,7 +9,7 @@ function PopoverExample() {
       isOpen={open}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
-      content={<div style={{ padding: 12 }}><Text variant="p">Popover content</Text></div>}
+      content={<Text variant="p">Popover content</Text>}
     >
       <Button onClick={() => setOpen(!open)}>Toggle Popover</Button>
     </Popover>
@@ -32,6 +32,7 @@ export const popoverDoc: ComponentDoc = {
     { name: 'spacing', type: 'number', default: '—', description: 'Gap between trigger and popover.' },
     { name: 'closeOnOutsideClick', type: 'boolean', default: 'true', description: 'Close when clicking outside.' },
     { name: 'closeOnEscape', type: 'boolean', default: 'true', description: 'Close when pressing Escape.' },
+    { name: 'padding', type: 'number | string', default: '12', description: 'Inner padding of the panel in px (number) or any valid CSS padding string.' },
   ],
   example: PopoverExample,
   code: `const [open, setOpen] = useState(false);
@@ -60,10 +61,10 @@ export const popoverDoc: ComponentDoc = {
   onOpen={() => setOpen(true)}
   onClose={() => setOpen(false)}
   content={
-    <div style={{ padding: 16 }}>
+    <>
       <Text variant="h6">Popover Title</Text>
       <Text variant="p" style={{ marginTop: 8 }}>Some helpful context.</Text>
-    </div>
+    </>
   }
 >
   <Button onClick={() => setOpen(!open)}>Show Info</Button>
@@ -80,11 +81,7 @@ export const popoverDoc: ComponentDoc = {
   onClose={() => setOpen(false)}
   verticalAlignment="top"
   horizontalAlignment="center"
-  content={
-    <div style={{ padding: 12 }}>
-      <Text variant="p">Positioned above, centered.</Text>
-    </div>
-  }
+  content={<Text variant="p">Positioned above, centered.</Text>}
 >
   <Button onClick={() => setOpen(!open)}>Top Center</Button>
 </Popover>`,
