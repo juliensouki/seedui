@@ -100,7 +100,6 @@ const Wrapper = styled('div')(({ theme }) => {
   return {
     borderRadius: theme.borderRadius(4),
     border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
-    overflow: 'hidden' as const,
     marginBottom: theme.spacing(3),
   };
 });
@@ -110,6 +109,8 @@ const PreviewPane = styled('div')(({ theme }) => {
   return {
     padding: theme.spacing(3),
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
+    borderRadius: `${theme.borderRadius(4)}px ${theme.borderRadius(4)}px 0 0`,
+    overflow: 'visible',
   };
 });
 
@@ -119,6 +120,10 @@ const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview 
     ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`
     : undefined,
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[200],
+  borderRadius: $hasPreview
+    ? `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px`
+    : theme.borderRadius(4),
+  overflow: 'hidden',
 
   '& .code-editor': {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",

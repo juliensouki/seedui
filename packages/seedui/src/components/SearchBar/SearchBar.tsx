@@ -1,5 +1,5 @@
 import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, useContext, useState } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
 import { joinClasses } from '../../utils/classes';
@@ -52,55 +52,52 @@ const defaultProps: SearchBarProps = {
   hideButton: false,
 };
 
-const SearchBarContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; disabled?: boolean; width?: string | number; hideButton?: boolean }>>(
-  ({ theme, $isFocused, $disabled, $width, $hideButton }) => {
-    const isLight = theme.mode === 'light';
-    return {
-      display: 'flex',
-      alignItems: 'center',
-      width: $width,
-      backgroundColor: $disabled
-        ? isLight
-          ? theme.colors.neutral[100]
-          : theme.colors.neutral[200]
-        : isLight
-        ? theme.colors.neutral.white
-        : theme.colors.neutral[300],
-      padding: $hideButton
-        ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px ${theme.spacing(1)}px ${theme.spacing(0.5)}px`
-        : `${theme.spacing(0.5)}px`,
-      borderRadius: theme.borderRadius(4),
-      border: `1px solid ${$disabled
+const SearchBarContainer = styled.div<
+  StyledComponentsPrefix<{ isFocused?: boolean; disabled?: boolean; width?: string | number; hideButton?: boolean }>
+>(({ theme, $isFocused, $disabled, $width, $hideButton }) => {
+  const isLight = theme.mode === 'light';
+  return {
+    display: 'flex',
+    alignItems: 'center',
+    width: $width,
+    backgroundColor: $disabled
+      ? isLight
+        ? theme.colors.neutral[100]
+        : theme.colors.neutral[200]
+      : isLight
+      ? theme.colors.neutral.white
+      : theme.colors.neutral[300],
+    padding: $hideButton
+      ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px ${theme.spacing(1)}px ${theme.spacing(0.5)}px`
+      : `${theme.spacing(0.5)}px`,
+    borderRadius: theme.borderRadius(4),
+    border: `1px solid ${
+      $disabled
         ? isLight
           ? theme.colors.neutral[200]
           : theme.colors.neutral[400]
         : isLight
         ? theme.colors.neutral[200]
-        : theme.colors.neutral[500]}`,
+        : theme.colors.neutral[500]
+    }`,
 
-      ...(!$disabled && !$isFocused && {
+    ...(!$disabled &&
+      !$isFocused && {
         '&:hover': {
           borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
         },
       }),
 
-      ...($isFocused && !$disabled && {
+    ...($isFocused &&
+      !$disabled && {
         outline: `2px solid ${theme.colors.primary[300]}`,
         outlineOffset: 1,
         borderColor: theme.colors.primary.default,
       }),
-    };
-  },
-);
-
-const SearchInput = styled(Input)({
-  paddingLeft: 0,
-  borderRadius: 'unset',
-  border: 'unset',
-  '&:focus': {
-    outline: 'unset',
-  },
+  };
 });
+
+const SearchInput = Input;
 
 const SearchButton = styled(Button)(({ theme }: StyledProps<SearchBarProps>) => ({
   height: 34,
@@ -110,7 +107,7 @@ const SearchButton = styled(Button)(({ theme }: StyledProps<SearchBarProps>) => 
   },
 }));
 
-const IconWrapper = styled.div(({ theme }) => {
+const IconWrapper = styled.div<StyledComponentsPrefix<{ disabled?: boolean }>>(({ theme, $disabled }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -122,7 +119,13 @@ const IconWrapper = styled.div(({ theme }) => {
     '& svg': {
       width: 18,
       height: 18,
-      color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[700],
+      color: $disabled
+        ? isLight
+          ? theme.colors.neutral[300]
+          : theme.colors.neutral[500]
+        : isLight
+        ? theme.colors.neutral[400]
+        : theme.colors.neutral[600],
     },
   };
 });
@@ -132,14 +135,24 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
   (props, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const { customizations } = useContext<SeedContextType>(SeedContext);
     const [isFocused, setIsFocused] = useState<boolean>(false);
-    const { spacing } = useTheme();
 
-    const { value, placeholder, disabled, inputValidation, width, onChange, onSearch, buttonLabel, hideButton, className, elementProps = {} } =
-      getDefaultProps<SearchBarProps & InternalProps>({
-        providedProps: props,
-        globalDefaultProps: customizations?.components?.searchBar?.defaultProps,
-        defaultProps,
-      });
+    const {
+      value,
+      placeholder,
+      disabled,
+      inputValidation,
+      width,
+      onChange,
+      onSearch,
+      buttonLabel,
+      hideButton,
+      className,
+      elementProps = {},
+    } = getDefaultProps<SearchBarProps & InternalProps>({
+      providedProps: props,
+      globalDefaultProps: customizations?.components?.searchBar?.defaultProps,
+      defaultProps,
+    });
 
     return (
       <SearchBarContainer
@@ -151,7 +164,11 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
         $disabled={disabled}
         $hideButton={hideButton}
       >
-        <IconWrapper {...elementProps.icon} className={joinClasses('search-bar-icon', elementProps.icon?.className)}>
+        <IconWrapper
+          {...elementProps.icon}
+          $disabled={disabled}
+          className={joinClasses('search-bar-icon', elementProps.icon?.className)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -175,10 +192,18 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
           width="100%"
           className="search-bar-input"
           elementProps={{
+            container: {
+              style: {
+                outline: 'none',
+              },
+            },
             input: {
               style: {
-                padding: 'unset',
-                paddingRight: spacing(1),
+                padding: 0,
+                borderRadius: 0,
+                border: 'none',
+                outline: 'none',
+                background: 'transparent',
               },
               onFocus: () => setIsFocused(true),
               onBlur: () => setIsFocused(false),

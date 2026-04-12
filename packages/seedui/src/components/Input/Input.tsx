@@ -94,6 +94,7 @@ const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPl
     '& svg': {
       width: 18,
       height: 18,
+      color: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[600],
     },
   }),
 );
@@ -183,6 +184,14 @@ const InputElement = applyCustomStyles(
 
         '&::placeholder': {
           color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+        },
+
+        [`& + ${IconContainer}`]: {
+          backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
+
+          '& > svg': {
+            color: theme.colors.neutral[400],
+          },
         },
       },
     };

@@ -18,7 +18,7 @@ function TagSelectorExample() {
 export const tagSelectorDoc: ComponentDoc = {
   name: 'TagSelector',
   category: 'Inputs',
-  description: 'Field for building a list of tags by typing and pressing Enter.',
+  description: 'An input for managing a dynamic list of tags, useful for categories, filters, or metadata.',
   overview: 'An input for creating a list of tags. Type a value and press Enter to add it. Each tag can be removed individually. Supports a maximum tag limit.',
   props: [
     { name: 'tags', type: 'string[]', default: '—', description: 'Current list of tags. Required.' },

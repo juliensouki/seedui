@@ -67,7 +67,7 @@ const StackItem = styled.div<{ $overlap: number; $zIndex: number }>((props) => {
   const isLight = props.theme.mode === 'light';
   return {
     marginLeft: props.$overlap,
-    border: `2px solid ${isLight ? props.theme.colors.neutral.white : props.theme.colors.neutral[200]}`,
+    border: `2px solid ${isLight ? props.theme.colors.neutral.white : props.theme.colors.neutral[600]}`,
     borderRadius: props.theme.borderRadius('full'),
     lineHeight: 0,
     zIndex: props.$zIndex,

@@ -88,7 +88,7 @@ const ModalContainer = applyCustomStyles(
       width: typeof $width === 'number' ? `${$width}px` : $width,
       maxWidth: '90vw',
       maxHeight: '90vh',
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
       borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[3],
       display: 'flex',
