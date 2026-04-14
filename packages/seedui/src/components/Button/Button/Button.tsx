@@ -35,19 +35,25 @@ export interface ButtonProps extends ButtonBaseProps {
 
 const getButtonStyles = (
   theme: Theme,
-): Record<ButtonSizes, { fontSize: string | number; borderRadius: number; padding: string }> => ({
+): Record<
+  ButtonSizes,
+  { fontSize: string | number; lineHeight: string | number; borderRadius: number; padding: string }
+> => ({
   sm: {
     fontSize: theme.typography.small.fontSize,
+    lineHeight: theme.typography.small.lineHeight,
     borderRadius: theme.borderRadius(3),
     padding: `${theme.spacing(0.375)}px ${theme.spacing(0.875)}px`,
   },
   md: {
     fontSize: theme.typography.p.fontSize,
+    lineHeight: theme.typography.p.lineHeight,
     borderRadius: theme.borderRadius(4),
     padding: `${theme.spacing(0.75)}px ${theme.spacing(1.25)}px`,
   },
   lg: {
     fontSize: theme.typography.p.fontSize,
+    lineHeight: theme.typography.p.lineHeight,
     borderRadius: theme.borderRadius(5),
     padding: `${theme.spacing(1.25)}px ${theme.spacing(1.75)}px`,
   },
@@ -55,7 +61,7 @@ const getButtonStyles = (
 
 export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<ButtonProps>>) => {
   const size = props.size;
-  const { fontSize, borderRadius, padding } = getButtonStyles(props.theme)[size];
+  const { fontSize, lineHeight, borderRadius, padding } = getButtonStyles(props.theme)[size];
 
   return {
     alignItems: 'center',
@@ -64,7 +70,7 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
     fontSize,
     borderRadius,
     padding,
-    lineHeight: '24px',
+    lineHeight,
 
     '&:hover': {
       cursor: 'pointer',

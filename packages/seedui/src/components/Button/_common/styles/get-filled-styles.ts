@@ -7,8 +7,8 @@ const getContrastText = (bgColor: string, theme: Theme): string => {
   return color.isLight() ? theme.colors.neutral.black : theme.colors.neutral.white;
 };
 
-export const getFilledButtonStyles = (theme: Theme, scale: SemanticColorShades) => {
-  const textColor = getContrastText(scale.default, theme);
+export const getFilledButtonStyles = (theme: Theme, scale: SemanticColorShades, forcedTextColor?: string) => {
+  const textColor = forcedTextColor ?? getContrastText(scale.default, theme);
 
   return {
     backgroundColor: scale.default,
@@ -19,12 +19,14 @@ export const getFilledButtonStyles = (theme: Theme, scale: SemanticColorShades) 
     },
 
     '&:focus': {
-      outline: `2px solid ${theme.mode === 'light' ? scale[300] : scale[600]}`,
+      outline: `2px solid ${theme.mode === 'light' ? scale.default : scale.default}`,
       outlineOffset: 1,
     },
 
     '&:active': {
-      backgroundColor: theme.mode === 'light' ? scale[800] : scale.default,
+      backgroundColor: theme.mode === 'light' ? scale[800] : scale[300],
+      outline: `2px solid ${theme.mode === 'light' ? scale[800] : scale[300]}`,
+      outlineOffset: 1,
     },
 
     '& svg': {

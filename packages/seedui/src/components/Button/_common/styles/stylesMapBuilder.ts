@@ -17,24 +17,24 @@ export const stylesMapBuilder = (
 ): Record<ButtonVariants, Record<ButtonPresetColors, typeof base>> => ({
   filled: {
     primary: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getFilledButtonStyles(props.theme, props.theme.colors.primary)),
+      styled(base)((props: StyledProps<ButtonProps>) => getFilledButtonStyles(props.theme, props.theme.colors.primary, props.theme.colors.neutral.white)),
     ),
     neutral: applyCustomStyles(
       styled(base)((props: StyledProps<ButtonProps>) => getNeutralFilledButtonStyles(props.theme)),
     ),
     error: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getFilledButtonStyles(props.theme, props.theme.colors.error)),
+      styled(base)((props: StyledProps<ButtonProps>) => getFilledButtonStyles(props.theme, props.theme.colors.error, props.theme.colors.neutral.white)),
     ),
   },
   transparent: {
     primary: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme.colors.primary)),
+      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme, props.theme.colors.primary)),
     ),
     neutral: applyCustomStyles(
       styled(base)((props: StyledProps<ButtonProps>) => getNeutralTransparentButtonStyles(props.theme)),
     ),
     error: applyCustomStyles(
-      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme.colors.error)),
+      styled(base)((props: StyledProps<ButtonProps>) => getTransparentButtonStyles(props.theme, props.theme.colors.error)),
     ),
   },
 });
@@ -49,7 +49,7 @@ export const customStylesBuilder = (base: StyledComponent<unknown>): Record<Butt
   transparent: applyCustomStyles(
     styled(base)((props: CustomColorProps) => {
       if (!props.$colorScale) return {};
-      return getTransparentButtonStyles(props.$colorScale);
+      return getTransparentButtonStyles(props.theme, props.$colorScale);
     }),
   ),
 });

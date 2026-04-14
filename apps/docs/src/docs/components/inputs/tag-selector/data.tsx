@@ -89,5 +89,18 @@ export const tagSelectorDoc: ComponentDoc = {
   width={300}
 />`,
     },
+    {
+      title: 'Disabled',
+      description: 'A disabled tag selector is visually muted and does not accept user interaction.',
+      code: `<TagSelector
+  tags={['React', 'TypeScript']}
+  onAddTag={() => {}}
+  onRemoveTag={() => {}}
+  label="Skills"
+  placeholder="Add a skill..."
+  disabled
+  width={300}
+/>`,
+    },
   ],
 };

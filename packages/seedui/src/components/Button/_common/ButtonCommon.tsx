@@ -21,19 +21,20 @@ export const ButtonCommon = styled.button((props) => {
     },
 
     '&:disabled': {
-      backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[800],
-      color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[700],
+      backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[400],
+      color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[500],
       cursor: 'default',
       transform: 'none',
 
       '& svg': {
-        color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[700],
+        color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[500],
       },
 
       '&:hover, &:active': {
-        backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[800],
-        color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[700],
+        backgroundColor: theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[400],
+        color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[500],
         transform: 'none',
+        outline: 'none',
       },
     },
   };

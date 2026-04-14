@@ -85,9 +85,9 @@ const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; 
     display: 'flex',
     alignItems: 'center',
     backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
-    padding: theme.spacing(0.5),
+    padding: theme.spacing(0.625),
     borderRadius: theme.borderRadius(4),
-    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[500]}`,
+    border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
     gap: '8px',
 
     '& .input-container:focus-within': {
@@ -101,15 +101,14 @@ const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; 
     }),
 
     ...($isFocused && !$disabled && {
-      outline: `2px solid ${isLight ? theme.colors.primary[300] : theme.colors.primary[600]}`,
+      outline: `2px solid ${theme.colors.primary[400]}`,
       outlineOffset: 1,
       borderColor: theme.colors.primary.default,
     }),
 
     ...($disabled && {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[300],
       borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
-      cursor: 'not-allowed',
     }),
   };
 });
@@ -131,7 +130,6 @@ const TagsContainer = styled.div(({ theme }) => ({
 }));
 
 const AddButton = styled(Button)(({ theme }: StyledProps<TagSelectorProps>) => ({
-  height: 34,
   flexShrink: 0,
   '&:focus': {
     outline: `1px solid ${theme.colors.primary[600]}`,

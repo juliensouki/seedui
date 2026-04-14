@@ -26,6 +26,18 @@ const defaultProps: TextProps = {
   bottomSpacing: false,
 };
 
+const bottomSpacingByVariant: Record<TextVariants, string> = {
+  h1: '0.5em',
+  h2: '0.5em',
+  h3: '0.5em',
+  h4: '0.5em',
+  h5: '0.75em',
+  h6: '0.75em',
+  p: '1em',
+  caption: '0.75em',
+  small: '0.75em',
+};
+
 const TextFactory = (variant: TextVariants) => {
   const isHeading =
     variant === 'h1' ||
@@ -52,7 +64,7 @@ const TextFactory = (variant: TextVariants) => {
       margin: 0,
       fontSize: theme.typography[$variant].fontSize,
       lineHeight: theme.typography[$variant].lineHeight,
-      marginBottom: $bottomSpacing ? '0.4em' : 0,
+      marginBottom: $bottomSpacing ? bottomSpacingByVariant[$variant] : 0,
 
       ...(theme.typography[$variant].responsive?.tablet && {
         [`@media only screen and (max-width: ${theme.breakpoints[theme.breakpoints.tablet]}px)`]: {

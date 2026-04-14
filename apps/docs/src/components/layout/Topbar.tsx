@@ -183,55 +183,59 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
           <VerticalDivider style={{ margin: `0 ${theme.spacing(1)}px` }} />
         </DesktopOnly>
         <DesktopOnly>
-          {mounted ? (
-            <Popover
-              isOpen={popoverOpen}
-              onClose={() => setPopoverOpen(false)}
-              verticalAlignment="bottom"
-              horizontalAlignment="center"
-              elementProps={{
-                panel: {
-                  style: mode === 'dark' ? { backgroundColor: theme.colors.neutral[300] } : undefined,
-                },
-              }}
-              content={
-                <ResultList>
-                  {groupedResults.length > 0 ? (
-                    groupedResults.map((group) => (
-                      <div key={group.section}>
-                        <SectionLabel variant="small">{group.section}</SectionLabel>
-                        {group.pages.map((page) => (
-                          <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
-                            <Text variant="p">{page.name}</Text>
-                          </ResultItem>
-                        ))}
-                      </div>
-                    ))
-                  ) : (
-                    <NoResults variant="p">No results found</NoResults>
-                  )}
-                </ResultList>
-              }
-            >
+          {(() => {
+            const searchBar = (
               <SearchBar
-                value={search}
-                onChange={handleChange}
+                value={mounted ? search : ''}
+                onChange={mounted ? handleChange : () => {}}
                 placeholder="Search docs..."
                 width={260}
                 hideButton
-                style={mode === 'dark' ? { backgroundColor: theme.colors.neutral[400] } : undefined}
+                elementProps={{
+                  root: {
+                    style: {
+                      padding: '8px 8px 8px 4px',
+                      ...(mode === 'dark' && { backgroundColor: theme.colors.neutral[400] }),
+                    },
+                  },
+                }}
               />
-            </Popover>
-          ) : (
-            <SearchBar
-              value=""
-              onChange={() => {}}
-              placeholder="Search docs..."
-              width={260}
-              hideButton
-              style={mode === 'dark' ? { backgroundColor: theme.colors.neutral[400] } : undefined}
-            />
-          )}
+            );
+            if (!mounted) return searchBar;
+            return (
+              <Popover
+                isOpen={popoverOpen}
+                onClose={() => setPopoverOpen(false)}
+                verticalAlignment="bottom"
+                horizontalAlignment="center"
+                elementProps={{
+                  panel: {
+                    style: mode === 'dark' ? { backgroundColor: theme.colors.neutral[300] } : undefined,
+                  },
+                }}
+                content={
+                  <ResultList>
+                    {groupedResults.length > 0 ? (
+                      groupedResults.map((group) => (
+                        <div key={group.section}>
+                          <SectionLabel variant="small">{group.section}</SectionLabel>
+                          {group.pages.map((page) => (
+                            <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
+                              <Text variant="p">{page.name}</Text>
+                            </ResultItem>
+                          ))}
+                        </div>
+                      ))
+                    ) : (
+                      <NoResults variant="p">No results found</NoResults>
+                    )}
+                  </ResultList>
+                }
+              >
+                {searchBar}
+              </Popover>
+            );
+          })()}
           <VerticalDivider style={{ margin: `0 ${theme.spacing(1)}px` }} />
         </DesktopOnly>
         <ThemeToggle>

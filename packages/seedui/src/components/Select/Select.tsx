@@ -93,7 +93,9 @@ const SelectDiv = applyCustomStyles(
 const SelectContainer = applyCustomStyles(
   styled.div<{ $isFocused: boolean; $disabled?: boolean }>(({ theme, $isFocused, $disabled }) => {
     const isLight = theme.mode === 'light';
-    const baseColor = isLight ? theme.colors.neutral[200] : theme.colors.neutral[600];
+    const baseColor = $disabled
+      ? isLight ? theme.colors.neutral[200] : theme.colors.neutral[400]
+      : isLight ? theme.colors.neutral[300] : theme.colors.neutral[600];
     const activeColor = theme.colors.primary.default;
     const textColor = isLight ? theme.colors.neutral[900] : theme.colors.neutral.white;
 
@@ -105,7 +107,7 @@ const SelectContainer = applyCustomStyles(
       backgroundColor: $disabled
         ? isLight
           ? theme.colors.neutral[100]
-          : theme.colors.neutral[200]
+          : theme.colors.neutral[300]
         : isLight
         ? theme.colors.neutral.white
         : theme.colors.neutral[300],
@@ -114,11 +116,11 @@ const SelectContainer = applyCustomStyles(
           ? theme.colors.neutral[400]
           : theme.colors.neutral[500]
         : textColor,
-      padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
+      padding: `${theme.spacing(1.5)}px ${theme.spacing(1.5)}px`,
       paddingRight: 0,
-      cursor: $disabled ? 'not-allowed' : 'pointer',
+      cursor: $disabled ? 'default' : 'pointer',
 
-      outline: $isFocused ? `2px solid ${isLight ? theme.colors.primary[300] : theme.colors.primary[600]}` : undefined,
+      outline: $isFocused ? `2px solid ${theme.colors.primary[400]}` : undefined,
       outlineOffset: $isFocused ? 1 : undefined,
       borderColor: theme.colors.primary.default,
       border: `1px solid ${$isFocused ? activeColor : baseColor}`,
@@ -126,6 +128,12 @@ const SelectContainer = applyCustomStyles(
       ...(!$disabled && !$isFocused && {
         '&:hover': {
           borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+        },
+      }),
+
+      ...($disabled && {
+        '.select-arrow svg': {
+          color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
         },
       }),
 
@@ -192,6 +200,9 @@ const SelectArrowContainer = styled.div({
   alignItems: 'center',
   justifyContent: 'center',
   padding: '0 8px',
+  '& button': {
+    padding: 0,
+  },
 });
 
 const SelectMenu = styled.div<{ $menuHeight: string | number }>(({ theme, $menuHeight }) => ({

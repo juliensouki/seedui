@@ -63,13 +63,13 @@ const SearchBarContainer = styled.div<
     backgroundColor: $disabled
       ? isLight
         ? theme.colors.neutral[100]
-        : theme.colors.neutral[200]
+        : theme.colors.neutral[300]
       : isLight
       ? theme.colors.neutral.white
       : theme.colors.neutral[300],
     padding: $hideButton
-      ? `${theme.spacing(1)}px ${theme.spacing(1.5)}px ${theme.spacing(1)}px ${theme.spacing(0.5)}px`
-      : `${theme.spacing(0.5)}px`,
+      ? `${theme.spacing(1.5)}px ${theme.spacing(1.5)}px ${theme.spacing(1.5)}px ${theme.spacing(0.5)}px`
+      : `${theme.spacing(0.625)}px`,
     borderRadius: theme.borderRadius(4),
     border: `1px solid ${
       $disabled
@@ -77,8 +77,8 @@ const SearchBarContainer = styled.div<
           ? theme.colors.neutral[200]
           : theme.colors.neutral[400]
         : isLight
-        ? theme.colors.neutral[200]
-        : theme.colors.neutral[500]
+        ? theme.colors.neutral[300]
+        : theme.colors.neutral[600]
     }`,
 
     ...(!$disabled &&
@@ -90,7 +90,7 @@ const SearchBarContainer = styled.div<
 
     ...($isFocused &&
       !$disabled && {
-        outline: `2px solid ${theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[600]}`,
+        outline: `2px solid ${theme.colors.primary[400]}`,
         outlineOffset: 1,
         borderColor: theme.colors.primary.default,
       }),
@@ -100,7 +100,6 @@ const SearchBarContainer = styled.div<
 const SearchInput = Input;
 
 const SearchButton = styled(Button)(({ theme }: StyledProps<SearchBarProps>) => ({
-  height: 34,
   '&:focus': {
     outline: `1px solid ${theme.colors.primary[600]}`,
     offset: 0,
@@ -120,12 +119,10 @@ const IconWrapper = styled.div<StyledComponentsPrefix<{ disabled?: boolean }>>((
       width: 18,
       height: 18,
       color: $disabled
-        ? isLight
-          ? theme.colors.neutral[300]
-          : theme.colors.neutral[500]
-        : isLight
         ? theme.colors.neutral[400]
-        : theme.colors.neutral[600],
+        : isLight
+        ? theme.colors.neutral.black
+        : theme.colors.neutral.white,
     },
   };
 });

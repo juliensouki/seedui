@@ -11,6 +11,10 @@ const RootDiv = styled.div<{ $width?: string | number }>(({ $width }) => ({
   width: $width || '100%',
 }));
 
+const LabelText = styled(Text)(({ theme }) => ({
+  color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral[900],
+}));
+
 interface ContainerWithLabelProps {
   label?: string;
   width?: string | number;
@@ -38,9 +42,9 @@ export const ContainerWithLabel: FunctionComponent<ContainerWithLabelProps> = ({
     return (
       <RootDiv {...root} className={mergedClassName} $width={width}>
         {label && (
-          <Text {...labelTextProps} variant="caption">
+          <LabelText {...labelTextProps} variant="caption">
             {label}
-          </Text>
+          </LabelText>
         )}
         {children}
       </RootDiv>
