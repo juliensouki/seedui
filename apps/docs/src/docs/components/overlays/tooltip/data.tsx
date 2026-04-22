@@ -31,34 +31,32 @@ export const tooltipDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', padding: 40 }}>
-  <Tooltip text="Top tooltip" direction="top">
-    <Button variant="transparent" color="neutral">Top</Button>
-  </Tooltip>
-  <Tooltip text="Right tooltip" direction="right">
-    <Button variant="transparent" color="neutral">Right</Button>
-  </Tooltip>
-  <Tooltip text="Bottom tooltip" direction="bottom">
-    <Button variant="transparent" color="neutral">Bottom</Button>
-  </Tooltip>
-  <Tooltip text="Left tooltip" direction="left">
-    <Button variant="transparent" color="neutral">Left</Button>
-  </Tooltip>
-</div>`,
+      layout: { display: 'flex', gap: 24, flexWrap: 'wrap', padding: 40 },
+      code: `<Tooltip text="Top tooltip" direction="top">
+  <Button variant="transparent" color="neutral">Top</Button>
+</Tooltip>
+<Tooltip text="Right tooltip" direction="right">
+  <Button variant="transparent" color="neutral">Right</Button>
+</Tooltip>
+<Tooltip text="Bottom tooltip" direction="bottom">
+  <Button variant="transparent" color="neutral">Bottom</Button>
+</Tooltip>
+<Tooltip text="Left tooltip" direction="left">
+  <Button variant="transparent" color="neutral">Left</Button>
+</Tooltip>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8, paddingTop: 40 }}>
-  <Tooltip text="Edit" direction="top">
-    <IconButton variant="transparent" color="neutral">
-      <PencilIcon strokeWidth={1.8} />
-    </IconButton>
-  </Tooltip>
-  <Tooltip text="Settings" direction="top">
-    <IconButton variant="transparent" color="neutral">
-      <SettingsIcon strokeWidth={1.8} />
-    </IconButton>
-  </Tooltip>
-</div>`,
+      layout: { display: 'flex', gap: 8, paddingTop: 40 },
+      code: `<Tooltip text="Edit" direction="top">
+  <IconButton variant="transparent" color="neutral">
+    <PencilIcon strokeWidth={1.8} />
+  </IconButton>
+</Tooltip>
+<Tooltip text="Settings" direction="top">
+  <IconButton variant="transparent" color="neutral">
+    <SettingsIcon strokeWidth={1.8} />
+  </IconButton>
+</Tooltip>`,
     },
   ],
 };

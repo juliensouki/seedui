@@ -3,6 +3,8 @@ import { Text, Divider, Button } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { GithubIcon } from 'lucide-react';
 import { WallContent } from './wallOfComponents';
+import { Footer } from './Footer';
+import { BASE_GITHUB_URL } from '../../constants';
 
 const Section = styled.section(() => ({
   marginBottom: 40,
@@ -124,7 +126,7 @@ export const HomePage: FunctionComponent = () => {
                 variant="transparent"
                 color="neutral"
                 size="md"
-                onClick={() => window.open('https://github.com/juliensouki/seedui', '_blank', 'noopener,noreferrer')}
+                onClick={() => window.open(BASE_GITHUB_URL, '_blank', 'noopener,noreferrer')}
               >
                 <GithubIcon size={16} style={{ marginRight: 6 }} />
                 View on GitHub
@@ -205,34 +207,7 @@ export const HomePage: FunctionComponent = () => {
         </FeatureGrid>
       </Section>
 
-      <Divider spacing={0} style={{ marginBottom: 16 }} />
-      <Text
-        variant="caption"
-        style={{
-          textAlign: 'center',
-          color: isLight ? theme.colors.neutral[500] : undefined,
-          paddingBottom: 24,
-        }}
-      >
-        Built by{' '}
-        <a
-          href="https://github.com/juliensouki"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'inherit', textDecoration: 'underline' }}
-        >
-          Julien Souki-Léon
-        </a>
-        {' · MIT License · '}
-        <a
-          href="https://github.com/juliensouki/seedui"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'inherit', textDecoration: 'underline' }}
-        >
-          GitHub
-        </a>
-      </Text>
+      <Footer />
     </div>
   );
 };

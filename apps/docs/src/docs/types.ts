@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { CSSProperties, FunctionComponent } from 'react';
 
 export interface PropDef {
   name: string;
@@ -25,6 +25,7 @@ export interface AnatomyPart {
 
 export interface UsageExample {
   code: string;
+  layout?: CSSProperties;
 }
 
 export interface ComponentDoc {
@@ -35,6 +36,7 @@ export interface ComponentDoc {
   props: PropDef[];
   example: FunctionComponent;
   code: string;
+  layout?: CSSProperties;
   usageExamples?: UsageExample[];
   anatomy?: AnatomyPart[];
 }

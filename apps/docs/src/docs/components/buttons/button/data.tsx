@@ -40,42 +40,37 @@ export const buttonDoc: ComponentDoc = {
   anatomy: [],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Button color="primary">Primary</Button>
-  <Button color="neutral">Neutral</Button>
-  <Button color="error">Error</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Button color="primary">Primary</Button>
+<Button color="neutral">Neutral</Button>
+<Button color="error">Error</Button>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Button color="#2563EB">Custom Blue</Button>
-  <Button color="#10B981">Custom Green</Button>
-  <Button color="#F59E0B">Amber</Button>
-  <Button color="#2563EB" variant="transparent">Custom Blue</Button>
-  <Button color="#10B981" variant="transparent">Custom Green</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Button color="#2563EB">Custom Blue</Button>
+<Button color="#10B981">Custom Green</Button>
+<Button color="#F59E0B">Amber</Button>
+<Button color="#2563EB" variant="transparent">Custom Blue</Button>
+<Button color="#10B981" variant="transparent">Custom Green</Button>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <Button variant="filled">Filled</Button>
-  <Button variant="transparent">Transparent</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<Button variant="filled">Filled</Button>
+<Button variant="transparent">Transparent</Button>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-  <Button size="sm">Small</Button>
-  <Button size="md">Medium</Button>
-  <Button size="lg">Large</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8, alignItems: 'center' },
+      code: `<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>`,
     },
     {
       code: `<Button isLoading>Submitting...</Button>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <Button disabled>Disabled</Button>
-  <Button variant="transparent" disabled>Disabled</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<Button disabled>Disabled</Button>
+<Button variant="transparent" disabled>Disabled</Button>`,
     },
   ],
 };

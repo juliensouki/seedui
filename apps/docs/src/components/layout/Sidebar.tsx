@@ -5,6 +5,7 @@ import { GithubIcon, FigmaIcon, ChevronDown } from 'lucide-react';
 import { ComponentCategory } from '../../docs/components';
 import { allPages, NavPage, ThemeCategory } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
+import { BASE_GITHUB_URL } from '../../constants';
 
 
 const Nav = styled.nav<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => {
@@ -405,7 +406,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
           variant="transparent"
           color="neutral"
           size="sm"
-          onClick={() => window.open('https://github.com/juliensouki/seedui', '_blank', 'noopener,noreferrer')}
+          onClick={() => window.open(BASE_GITHUB_URL, '_blank', 'noopener,noreferrer')}
         >
           <GithubIcon size={18} />
         </IconButton>

@@ -36,27 +36,24 @@ export const tagDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Tag color="primary">Primary</Tag>
-  <Tag color="neutral">Neutral</Tag>
-  <Tag color="success">Success</Tag>
-  <Tag color="info">Info</Tag>
-  <Tag color="warning">Warning</Tag>
-  <Tag color="error">Error</Tag>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Tag color="primary">Primary</Tag>
+<Tag color="neutral">Neutral</Tag>
+<Tag color="success">Success</Tag>
+<Tag color="info">Info</Tag>
+<Tag color="warning">Warning</Tag>
+<Tag color="error">Error</Tag>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-  <Tag size="sm" color="primary">Small</Tag>
-  <Tag size="md" color="primary">Medium</Tag>
-</div>`,
+      layout: { display: 'flex', gap: 8, alignItems: 'center' },
+      code: `<Tag size="sm" color="primary">Small</Tag>
+<Tag size="md" color="primary">Medium</Tag>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Tag color="primary" removable onRemove={() => {}}>React</Tag>
-  <Tag color="info" removable onRemove={() => {}}>TypeScript</Tag>
-  <Tag color="success" removable onRemove={() => {}}>Node.js</Tag>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Tag color="primary" removable onRemove={() => {}}>React</Tag>
+<Tag color="info" removable onRemove={() => {}}>TypeScript</Tag>
+<Tag color="success" removable onRemove={() => {}}>Node.js</Tag>`,
     },
   ],
 };

@@ -44,38 +44,33 @@ export const iconButtonDoc: ComponentDoc = {
   anatomy: [],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <IconButton variant="filled"><PencilIcon strokeWidth={1.8} /></IconButton>
-  <IconButton variant="transparent"><PencilIcon strokeWidth={1.8} /></IconButton>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<IconButton variant="filled"><PencilIcon strokeWidth={1.8} /></IconButton>
+<IconButton variant="transparent"><PencilIcon strokeWidth={1.8} /></IconButton>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <IconButton color="primary"><ShareIcon strokeWidth={1.8} /></IconButton>
-  <IconButton color="neutral"><SettingsIcon strokeWidth={1.8} /></IconButton>
-  <IconButton color="error"><TrashIcon strokeWidth={1.8} /></IconButton>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<IconButton color="primary"><ShareIcon strokeWidth={1.8} /></IconButton>
+<IconButton color="neutral"><SettingsIcon strokeWidth={1.8} /></IconButton>
+<IconButton color="error"><TrashIcon strokeWidth={1.8} /></IconButton>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <IconButton color="#2563EB"><ShareIcon strokeWidth={1.8} /></IconButton>
-  <IconButton color="#10B981"><SearchIcon strokeWidth={1.8} /></IconButton>
-  <IconButton color="#2563EB" variant="transparent"><ShareIcon strokeWidth={1.8} /></IconButton>
-  <IconButton color="#10B981" variant="transparent"><SearchIcon strokeWidth={1.8} /></IconButton>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<IconButton color="#2563EB"><ShareIcon strokeWidth={1.8} /></IconButton>
+<IconButton color="#10B981"><SearchIcon strokeWidth={1.8} /></IconButton>
+<IconButton color="#2563EB" variant="transparent"><ShareIcon strokeWidth={1.8} /></IconButton>
+<IconButton color="#10B981" variant="transparent"><SearchIcon strokeWidth={1.8} /></IconButton>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-  <IconButton size="sm"><SearchIcon size={14} strokeWidth={1.8} /></IconButton>
-  <IconButton size="md"><SearchIcon strokeWidth={1.8} /></IconButton>
-  <IconButton size="lg"><SearchIcon size={22} strokeWidth={1.8} /></IconButton>
-</div>`,
+      layout: { display: 'flex', gap: 8, alignItems: 'center' },
+      code: `<IconButton size="sm"><SearchIcon size={14} strokeWidth={1.8} /></IconButton>
+<IconButton size="md"><SearchIcon strokeWidth={1.8} /></IconButton>
+<IconButton size="lg"><SearchIcon size={22} strokeWidth={1.8} /></IconButton>`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <IconButton disabled><PencilIcon strokeWidth={1.8} /></IconButton>
-  <IconButton variant="transparent" disabled><PencilIcon strokeWidth={1.8} /></IconButton>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<IconButton disabled><PencilIcon strokeWidth={1.8} /></IconButton>
+<IconButton variant="transparent" disabled><PencilIcon strokeWidth={1.8} /></IconButton>`,
     },
   ],
 };

@@ -54,37 +54,35 @@ export const avatarStackDoc: ComponentDoc = {
 </AvatarStack>`,
     },
     {
-      code: `<div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-  <AvatarStack size="sm">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-  <AvatarStack size="md">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-  <AvatarStack size="lg">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-</div>`,
+      layout: { display: 'flex', alignItems: 'center', gap: 16 },
+      code: `<AvatarStack size="sm">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>
+<AvatarStack size="md">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>
+<AvatarStack size="lg">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>`,
     },
     {
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-  <AvatarStack direction="left">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-  <AvatarStack direction="right">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 16 },
+      code: `<AvatarStack direction="left">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>
+<AvatarStack direction="right">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>`,
     },
   ],
 };

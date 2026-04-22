@@ -4,6 +4,7 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
+import { BASE_GITHUB_URL } from '../../constants';
 
 const Bar = styled.header(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -185,7 +186,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             variant="transparent"
             color="neutral"
             size="md"
-            onClick={() => window.open('https://github.com/juliensouki/seedui', '_blank', 'noopener,noreferrer')}
+            onClick={() => window.open(BASE_GITHUB_URL, '_blank', 'noopener,noreferrer')}
           >
             <GithubIcon size={18} />
           </IconButton>

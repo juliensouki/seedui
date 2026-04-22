@@ -27,11 +27,10 @@ export const stepperDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-  <Stepper steps={['Account', 'Profile', 'Review']} activeStep={0} />
-  <Stepper steps={['Account', 'Profile', 'Review']} activeStep={1} />
-  <Stepper steps={['Account', 'Profile', 'Review']} activeStep={2} />
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 24 },
+      code: `<Stepper steps={['Account', 'Profile', 'Review']} activeStep={0} />
+<Stepper steps={['Account', 'Profile', 'Review']} activeStep={1} />
+<Stepper steps={['Account', 'Profile', 'Review']} activeStep={2} />`,
     },
     {
       code: `<Stepper

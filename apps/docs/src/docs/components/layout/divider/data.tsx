@@ -33,36 +33,30 @@ export const dividerDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      code: `<div>
-  <Text variant="p">Section one</Text>
-  <Divider spacing={20} />
-  <Text variant="p">Section two</Text>
-</div>`,
+      code: `<Text variant="p">Section one</Text>
+<Divider spacing={20} />
+<Text variant="p">Section two</Text>`,
     },
     {
-      code: `<div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-  <Text variant="p">Left</Text>
-  <Divider vertical height={24} />
-  <Text variant="p">Right</Text>
-</div>`,
+      layout: { display: 'flex', alignItems: 'center', gap: 12 },
+      code: `<Text variant="p">Left</Text>
+<Divider vertical height={24} />
+<Text variant="p">Right</Text>`,
     },
     {
-      code: `<div style={{ maxWidth: 320 }}>
-  <Text variant="p">Section one</Text>
-  <Divider><Text variant="p">or</Text></Divider>
-  <Text variant="p">Section two</Text>
-</div>`,
+      layout: { maxWidth: 320 },
+      code: `<Text variant="p">Section one</Text>
+<Divider><Text variant="p">or</Text></Divider>
+<Text variant="p">Section two</Text>`,
     },
     {
-      code: `<div>
-  <Text variant="p">spacing=8</Text>
-  <Divider spacing={8} />
-  <Text variant="p">spacing=20 (default)</Text>
-  <Divider spacing={20} />
-  <Text variant="p">spacing=40</Text>
-  <Divider spacing={40} />
-  <Text variant="p">End</Text>
-</div>`,
+      code: `<Text variant="p">spacing=8</Text>
+<Divider spacing={8} />
+<Text variant="p">spacing=20 (default)</Text>
+<Divider spacing={20} />
+<Text variant="p">spacing=40</Text>
+<Divider spacing={40} />
+<Text variant="p">End</Text>`,
     },
   ],
 };

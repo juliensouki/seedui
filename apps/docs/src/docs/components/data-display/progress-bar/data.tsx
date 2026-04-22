@@ -51,30 +51,28 @@ export const progressBarDoc: ComponentDoc = {
       code: `<ProgressBar value={45} />`,
     },
     {
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 280 }}>
-  <ProgressBar value={60} height={8} />
-  <ProgressBar value={60} height={12} />
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 12, width: 280 },
+      code: `<ProgressBar value={60} height={8} />
+<ProgressBar value={60} height={12} />`,
     },
     {
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 280 }}>
-  <ProgressBar value={100} color="success" />
-  <ProgressBar value={75} color="warning" />
-  <ProgressBar value={30} color="error" />
-  <ProgressBar value={50} color="info" />
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 12, width: 280 },
+      code: `<ProgressBar value={100} color="success" />
+<ProgressBar value={75} color="warning" />
+<ProgressBar value={30} color="error" />
+<ProgressBar value={50} color="info" />`,
     },
     {
       code: `<ProgressBar value={60} disableAnimation />`,
     },
     {
+      layout: { display: 'flex', flexDirection: 'column', gap: 12, width: 280 },
       code: `const [progress, setProgress] = useState(30);
-<div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 280 }}>
-  <ProgressBar value={progress} color={progress === 100 ? 'success' : 'primary'} />
-  <div style={{ display: 'flex', gap: 8 }}>
-    <Button size="sm" onClick={() => setProgress(p => Math.max(0, p - 10))}>−10</Button>
-    <Button size="sm" onClick={() => setProgress(p => Math.min(100, p + 10))}>+10</Button>
-  </div>
+
+<ProgressBar value={progress} color={progress === 100 ? 'success' : 'primary'} />
+<div style={{ display: 'flex', gap: 8 }}>
+  <Button size="sm" onClick={() => setProgress(p => Math.max(0, p - 10))}>−10</Button>
+  <Button size="sm" onClick={() => setProgress(p => Math.min(100, p + 10))}>+10</Button>
 </div>`,
     },
   ],

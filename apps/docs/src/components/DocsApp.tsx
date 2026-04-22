@@ -5,13 +5,13 @@ import { DocsShell } from './layout/DocsShell';
 import { HomePage } from '../docs/home/HomePage';
 import { PageLayout } from './mdx/PageLayout';
 import { componentDocs } from '../docs/components';
+import { BASE_GITHUB_URL } from '../constants';
 import { Colors } from '../docs/theme/colors/colors';
 import { Typography } from '../docs/theme/typography/typography';
 import { Spacing } from '../docs/theme/spacing/spacing';
 import { BorderRadius } from '../docs/theme/border-radius/border-radius';
 import { BoxShadow } from '../docs/theme/box-shadow/box-shadow';
 import { Breakpoints } from '../docs/theme/breakpoints/breakpoints';
-import { ComponentWall } from '../docs/component-wall/ComponentWall';
 
 // MDX content imports (compiled as React components via @mdx-js/rollup)
 import InstallationContent, { meta as installationMeta } from '../docs/getting-started/installation/installation.mdx';
@@ -31,8 +31,6 @@ const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { ea
 >;
 
 
-const REPO_URL = 'https://github.com/juliensouki/seedui';
-
 // Source paths relative to packages/seedui/src/components/
 // Most components are `{Name}/{Name}.tsx`; a few are grouped under a shared parent folder.
 const componentSourcePaths: Record<string, string> = {
@@ -42,7 +40,7 @@ const componentSourcePaths: Record<string, string> = {
 
 const componentSourceUrl = (name: string) => {
   const relPath = componentSourcePaths[name] ?? `${name}/${name}.tsx`;
-  return `${REPO_URL}/blob/main/packages/seedui/src/components/${relPath}`;
+  return `${BASE_GITHUB_URL}/blob/main/packages/seedui/src/components/${relPath}`;
 };
 
 const componentHeaderActions = (name: string) => (
@@ -72,9 +70,6 @@ function PageContent({ path }: { path: string }) {
 
   // Home
   if (p === '/') return <HomePage />;
-
-  // Component Wall
-  if (p === '/component-wall') return <ComponentWall />;
 
   // Getting started
   if (p === '/getting-started/installation') {
@@ -157,7 +152,6 @@ function PageContent({ path }: { path: string }) {
 // Title map
 const pageTitles: Record<string, string> = {
   '/': 'seedui | React Component Library',
-  '/component-wall': 'seedui | Component Wall',
   '/getting-started/installation': 'seedui | Installation',
   '/getting-started/quick-start': 'seedui | Quick Start',
   '/theming/theme-provider': 'seedui | ThemeProvider',

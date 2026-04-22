@@ -1,4 +1,5 @@
 import {
+  CSSProperties,
   FunctionComponent,
   ReactNode,
   useEffect,
@@ -41,90 +42,34 @@ function highlightCode(code: string): string {
   return html.replace(/^<pre[^>]*><code[^>]*>/, '').replace(/<\/code><\/pre>$/, '');
 }
 
-interface LayoutWrapper {
-  open: string;
-  close: string;
-  baseIndent: string;
-}
-
-function stripLayoutWrapper(code: string): { wrapper: LayoutWrapper | null; inner: string } {
-  const trimmed = code.trim();
-  if (!trimmed.startsWith('<div')) return { wrapper: null, inner: code };
-
-  let openEnd = -1;
-  let braceDepth = 0;
-  for (let i = 0; i < trimmed.length; i++) {
-    const c = trimmed[i];
-    if (c === '{') braceDepth++;
-    else if (c === '}') braceDepth--;
-    else if (c === '>' && braceDepth === 0) {
-      openEnd = i;
-      break;
-    }
-  }
-  if (openEnd === -1) return { wrapper: null, inner: code };
-
-  const open = trimmed.slice(0, openEnd + 1);
-  const isPlainDiv = open === '<div>';
-  const hasStyle = /\sstyle\s*=\s*\{\{/.test(open);
-  if (!isPlainDiv && !hasStyle) return { wrapper: null, inner: code };
-  if (!trimmed.endsWith('</div>')) return { wrapper: null, inner: code };
-
-  const innerRaw = trimmed.slice(openEnd + 1, trimmed.length - '</div>'.length);
-  const openDivs = (innerRaw.match(/<div[\s>/]/g) || []).length;
-  const closeDivs = (innerRaw.match(/<\/div>/g) || []).length;
-  if (openDivs !== closeDivs) return { wrapper: null, inner: code };
-
-  const lines = innerRaw.split('\n');
-  while (lines.length && lines[0].trim() === '') lines.shift();
-  while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
-
-  const indents = lines.filter((l) => l.trim() !== '').map((l) => l.match(/^ */)?.[0].length ?? 0);
-  const minIndent = indents.length ? Math.min(...indents) : 0;
-  const dedented = lines.map((l) => l.slice(minIndent)).join('\n');
-
-  return {
-    wrapper: { open, close: '</div>', baseIndent: ' '.repeat(minIndent || 2) },
-    inner: dedented,
-  };
-}
-
-function rewrapLayout(inner: string, wrapper: LayoutWrapper): string {
-  const lines = inner.split('\n').map((l) => (l.length ? wrapper.baseIndent + l : l));
-  return `${wrapper.open}\n${lines.join('\n')}\n${wrapper.close}`;
-}
-
 function prepareCode(code: string): { code: string; noInline: boolean } {
-  const hasHooks = /\buse[A-Z]\w*\s*\(/.test(code);
+  const trimmed = code.trim();
+  const hasHooks = /\buse[A-Z]\w*\s*\(/.test(trimmed);
 
-  if (!hasHooks) {
-    return { code: code.trim(), noInline: false };
-  }
+  if (!hasHooks) return { code: `<>${trimmed}</>`, noInline: false };
 
-  const lines = code.split('\n');
-  const firstJsxIdx = lines.findIndex((l) => l.trim().startsWith('<'));
+  const lines = trimmed.split('\n');
+  const firstJsxLine = lines.findIndex((l) => l.trim().startsWith('<'));
+  if (firstJsxLine === -1) return { code: trimmed, noInline: false };
 
-  if (firstJsxIdx === -1) {
-    return { code: code.trim(), noInline: false };
-  }
+  const statements = lines.slice(0, firstJsxLine).filter((l) => l.trim());
+  const jsx = lines.slice(firstJsxLine).join('\n    ');
 
-  const statements = lines.slice(0, firstJsxIdx).filter((l) => l.trim());
-  const jsx = lines.slice(firstJsxIdx);
-  const jsxStr = jsx.join('\n    ');
-
-  const wrapped = `function Demo() {
-  ${statements.join('\n  ')}
-  return (
-    <>${jsxStr}</>
-  );
-}
-
-render(<Demo />)`;
+  const wrapped = [
+    'function Demo() {',
+    ...statements.map((s) => '  ' + s),
+    '  return (',
+    `    <>${jsx}</>`,
+    '  );',
+    '}',
+    '',
+    'render(<Demo />)',
+  ].join('\n');
 
   return { code: wrapped, noInline: true };
 }
 
-function StablePreview() {
+function StablePreview({ style }: { style?: CSSProperties }) {
   const { error, element } = useContext(LiveContext);
   const liveRef = useRef<HTMLDivElement>(null);
   const snapshotRef = useRef('');
@@ -142,7 +87,7 @@ function StablePreview() {
   return (
     <>
       <div ref={liveRef} style={hasError && snapshotRef.current ? { display: 'none' } : undefined}>
-        <LivePreview />
+        <LivePreview style={style} />
       </div>
       {hasError && snapshotRef.current && <div dangerouslySetInnerHTML={{ __html: snapshotRef.current }} />}
     </>
@@ -163,9 +108,7 @@ const PreviewPane = styled.div<{ $standalone?: boolean }>(({ theme, $standalone 
   return {
     padding: theme.spacing(3),
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
-    borderRadius: $standalone
-      ? theme.borderRadius(4)
-      : `${theme.borderRadius(4)}px ${theme.borderRadius(4)}px 0 0`,
+    borderRadius: $standalone ? theme.borderRadius(4) : `${theme.borderRadius(4)}px ${theme.borderRadius(4)}px 0 0`,
     overflow: 'visible',
   };
 });
@@ -176,9 +119,7 @@ const CodePane = styled.div<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) 
     ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`
     : undefined,
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[200],
-  borderRadius: $hasPreview
-    ? `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px`
-    : theme.borderRadius(4),
+  borderRadius: $hasPreview ? `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px` : theme.borderRadius(4),
   overflow: 'hidden',
 
   '& .code-editor': {
@@ -269,6 +210,8 @@ interface ComponentPlaygroundProps {
   preview?: ReactNode;
   /** Background for the preview pane. */
   previewBg?: 'contrast' | string;
+  /** Layout styles applied to a wrapper around the rendered preview. */
+  layout?: CSSProperties;
   /** Additional scope variables for react-live. */
   scope?: Record<string, unknown>;
   /** When true, shows code as read-only with syntax highlighting (no live editing). */
@@ -281,6 +224,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   code,
   preview,
   previewBg: previewBgProp,
+  layout,
   scope,
   readOnly,
   language = 'tsx',
@@ -293,37 +237,44 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
         : theme.colors.neutral[100]
       : previewBgProp;
 
-  const displayCode = useMemo(() => (code ? stripLayoutWrapper(code).inner : ''), [code]);
-
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
-    if (displayCode) {
-      void navigator.clipboard.writeText(displayCode.trim());
+    if (code) {
+      void navigator.clipboard.writeText(code.trim());
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
-  }, [displayCode]);
+  }, [code]);
 
   // Preview-only mode (no code)
   if (!code) {
     return (
       <Wrapper>
-        <PreviewPane $standalone style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <PreviewPane $standalone style={previewBg ? { backgroundColor: previewBg } : undefined}>
+          {layout ? <div style={layout}>{preview}</div> : preview}
+        </PreviewPane>
       </Wrapper>
     );
   }
 
   // Read-only code block mode
   if (readOnly) {
-    const isSingleLine = displayCode.trim().split('\n').length === 1;
+    const isSingleLine = code.trim().split('\n').length === 1;
     return (
       <Wrapper>
         <CodePane>
-          <CopyButton $centered={isSingleLine} variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">
+          <CopyButton
+            $centered={isSingleLine}
+            variant="transparent"
+            color="neutral"
+            size="sm"
+            onClick={handleCopy}
+            title="Copy code"
+          >
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
-          <Highlight theme={themes.vsDark} code={displayCode.trim()} language={language}>
+          <Highlight theme={themes.vsDark} code={code.trim()} language={language}>
             {({ tokens, getLineProps, getTokenProps }) => (
               <ReadOnlyCode>
                 {tokens.map((line, i) => (
@@ -342,7 +293,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   }
 
   // Live playground mode
-  return <LivePlayground code={code} preview={preview} previewBg={previewBg} scope={scope} />;
+  return <LivePlayground code={code} preview={preview} previewBg={previewBg} layout={layout} scope={scope} />;
 };
 
 // Separated to avoid hooks running in read-only/preview-only paths
@@ -350,41 +301,34 @@ const LivePlayground: FunctionComponent<{
   code: string;
   preview?: ReactNode;
   previewBg?: string;
+  layout?: CSSProperties;
   scope?: Record<string, unknown>;
-}> = ({ code, preview, previewBg, scope }) => {
+}> = ({ code, preview, previewBg, layout, scope }) => {
   const theme = useTheme();
-  const initial = useMemo(() => {
-    const { wrapper, inner } = stripLayoutWrapper(code);
-    const prepared = prepareCode(code);
-    return { wrapper, display: inner, prepared };
-  }, [code]);
+  const initialPrepared = useMemo(() => prepareCode(code), [code]);
 
-  const wrapperRef = useRef<LayoutWrapper | null>(initial.wrapper);
-  const [liveCode, setLiveCode] = useState(initial.prepared.code);
-  const [noInline, setNoInline] = useState(initial.prepared.noInline);
+  const [liveCode, setLiveCode] = useState(initialPrepared.code);
+  const [noInline, setNoInline] = useState(initialPrepared.noInline);
   const [copied, setCopied] = useState(false);
-  const editorCodeRef = useRef(initial.display);
-  const [editorCode, setEditorCode] = useState(initial.display);
+  const editorCodeRef = useRef(code);
+  const [editorCode, setEditorCode] = useState(code);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    const { wrapper, inner } = stripLayoutWrapper(code);
-    wrapperRef.current = wrapper;
     const prepared = prepareCode(code);
     setLiveCode(prepared.code);
     setNoInline(prepared.noInline);
-    editorCodeRef.current = inner;
-    setEditorCode(inner);
+    editorCodeRef.current = code;
+    setEditorCode(code);
   }, [code]);
 
-  const handleCodeChange = useCallback((newDisplayCode: string) => {
-    editorCodeRef.current = newDisplayCode;
-    setEditorCode(newDisplayCode);
-    const full = wrapperRef.current ? rewrapLayout(newDisplayCode, wrapperRef.current) : newDisplayCode;
-    const prepared = prepareCode(full);
+  const handleCodeChange = useCallback((newCode: string) => {
+    editorCodeRef.current = newCode;
+    setEditorCode(newCode);
+    const prepared = prepareCode(newCode);
     setLiveCode(prepared.code);
     setNoInline(prepared.noInline);
   }, []);
@@ -395,12 +339,12 @@ const LivePlayground: FunctionComponent<{
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
-  const hasPreview = !!preview || !preview; // always show preview pane for live mode
+  const staticPreview = layout ? <div style={layout}>{preview}</div> : preview;
 
   if (!mounted) {
     return (
       <Wrapper>
-        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{staticPreview}</PreviewPane>
         <CodePane $hasPreview>
           <pre
             className="code-editor"
@@ -425,7 +369,7 @@ const LivePlayground: FunctionComponent<{
   if (preview) {
     return (
       <Wrapper>
-        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{staticPreview}</PreviewPane>
         <CodePane $hasPreview>
           <CopyButton variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
@@ -451,7 +395,7 @@ const LivePlayground: FunctionComponent<{
     >
       <Wrapper>
         <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
-          <StablePreview />
+          <StablePreview style={layout} />
         </PreviewPane>
         <CodePane $hasPreview>
           <CopyButton variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">

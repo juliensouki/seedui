@@ -31,27 +31,23 @@ export const textDoc: ComponentDoc = {
   anatomy: [],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-  <Text variant="h1">Heading 1</Text>
-  <Text variant="h2">Heading 2</Text>
-  <Text variant="h3">Heading 3</Text>
-  <Text variant="h4">Heading 4</Text>
-  <Text variant="h5">Heading 5</Text>
-  <Text variant="h6">Heading 6</Text>
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 4 },
+      code: `<Text variant="h1">Heading 1</Text>
+<Text variant="h2">Heading 2</Text>
+<Text variant="h3">Heading 3</Text>
+<Text variant="h4">Heading 4</Text>
+<Text variant="h5">Heading 5</Text>
+<Text variant="h6">Heading 6</Text>`,
     },
     {
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-  <Text variant="p">This is paragraph text for body content.</Text>
-  <Text variant="caption">This is caption text for labels and metadata.</Text>
-  <Text variant="small">This is small text for fine print.</Text>
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 8 },
+      code: `<Text variant="p">This is paragraph text for body content.</Text>
+<Text variant="caption">This is caption text for labels and metadata.</Text>
+<Text variant="small">This is small text for fine print.</Text>`,
     },
     {
-      code: `<div>
-  <Text variant="h4" bottomSpacing>Section Title</Text>
-  <Text variant="p">Paragraph that follows the heading with automatic spacing applied.</Text>
-</div>`,
+      code: `<Text variant="h4" bottomSpacing>Section Title</Text>
+<Text variant="p">Paragraph that follows the heading with automatic spacing applied.</Text>`,
     },
   ],
 };

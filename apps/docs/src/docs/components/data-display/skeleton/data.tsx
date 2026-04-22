@@ -43,19 +43,17 @@ export const skeletonDoc: ComponentDoc = {
     },
   ],
   example: SkeletonExample,
-  code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: 240 }}>
-  <Skeleton variant="text" />
-  <Skeleton variant="text" />
-  <Skeleton variant="text" width="60%" />
-</div>`,
+  layout: { display: 'flex', flexDirection: 'column', gap: 8, width: 240 },
+  code: `<Skeleton variant="text" />
+<Skeleton variant="text" />
+<Skeleton variant="text" width="60%" />`,
   anatomy: [],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: 240 }}>
-  <Skeleton variant="text" />
-  <Skeleton variant="text" />
-  <Skeleton variant="text" width="60%" />
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 8, width: 240 },
+      code: `<Skeleton variant="text" />
+<Skeleton variant="text" />
+<Skeleton variant="text" width="60%" />`,
     },
     {
       code: `<Skeleton variant="circular" width={48} height={48} />`,

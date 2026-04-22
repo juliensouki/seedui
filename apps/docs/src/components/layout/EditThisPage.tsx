@@ -3,8 +3,9 @@ import { Text, Divider, Button } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
 import { PencilIcon } from 'lucide-react';
 import { componentDocs } from '../../docs/components';
+import { BASE_GITHUB_URL } from '../../constants';
 
-const EDIT_URL_BASE = 'https://github.com/juliensouki/seedui/edit/main/apps/docs/src/docs';
+const EDIT_URL_BASE = `${BASE_GITHUB_URL}/edit/main/apps/docs/src/docs`;
 
 const staticPathMap: Record<string, string> = {
   '/getting-started/installation': 'getting-started/installation/installation.mdx',

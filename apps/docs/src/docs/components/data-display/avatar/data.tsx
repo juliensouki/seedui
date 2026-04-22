@@ -33,43 +33,38 @@ export const avatarDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar src="https://i.pravatar.cc/150?img=1" name="Jane Doe" />
-  <Avatar src="https://i.pravatar.cc/150?img=2" name="John Smith" />
-  <Avatar src="https://i.pravatar.cc/150?img=3" name="Alex Kim" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar src="https://i.pravatar.cc/150?img=1" name="Jane Doe" />
+<Avatar src="https://i.pravatar.cc/150?img=2" name="John Smith" />
+<Avatar src="https://i.pravatar.cc/150?img=3" name="Alex Kim" />`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar name="Jane Doe" color="primary" />
-  <Avatar name="John" color="success" />
-  <Avatar name="Alex Kim Park" color="warning" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar name="Jane Doe" color="primary" />
+<Avatar name="John" color="success" />
+<Avatar name="Alex Kim Park" color="warning" />`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar name="JD" size="sm" />
-  <Avatar name="JD" size="md" />
-  <Avatar name="JD" size="lg" />
-  <Avatar name="JD" size={60} />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar name="JD" size="sm" />
+<Avatar name="JD" size="md" />
+<Avatar name="JD" size="lg" />
+<Avatar name="JD" size={60} />`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar name="AB" color="primary" />
-  <Avatar name="CD" color="neutral" />
-  <Avatar name="EF" color="success" />
-  <Avatar name="GH" color="info" />
-  <Avatar name="IJ" color="warning" />
-  <Avatar name="KL" color="error" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar name="AB" color="primary" />
+<Avatar name="CD" color="neutral" />
+<Avatar name="EF" color="success" />
+<Avatar name="GH" color="info" />
+<Avatar name="IJ" color="warning" />
+<Avatar name="KL" color="error" />`,
     },
     {
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar size="sm" color="neutral" />
-  <Avatar size="md" color="neutral" />
-  <Avatar size="lg" color="neutral" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar size="sm" color="neutral" />
+<Avatar size="md" color="neutral" />
+<Avatar size="lg" color="neutral" />`,
     },
   ],
 };
