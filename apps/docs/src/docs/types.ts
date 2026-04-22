@@ -24,8 +24,6 @@ export interface AnatomyPart {
 }
 
 export interface UsageExample {
-  title: string;
-  description: string;
   code: string;
 }
 

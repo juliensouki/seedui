@@ -33,7 +33,7 @@ function App() {
 }
 ```
 
-The full shape of the customization object:
+The full shape of the theme object:
 
 <Table>
   <thead>
@@ -111,9 +111,11 @@ Available palettes: `primary`, `neutral`, `success`, `info`, `warning`, and `err
       },
     },
   },
-};`} />
+};`}
+/>
 
 For the `neutral` palette you can also override the `white` and `black` values alongside shade numbers.
+
 </section>
 
 <section id="section-spacing">
@@ -126,6 +128,7 @@ const myTheme: ThemeCustomization = {
   spacing: 10,
 };
 ```
+
 </section>
 
 <section id="section-typography">
@@ -144,24 +147,42 @@ Variants: `h1` – `h6`, `p`, `caption`, `small`.
   </thead>
   <tbody>
     <tr>
-      <Td><code>fontFamily</code></Td>
-      <Td><code>string</code></Td>
+      <Td>
+        <code>fontFamily</code>
+      </Td>
+      <Td>
+        <code>string</code>
+      </Td>
       <Td>CSS font-family value.</Td>
     </tr>
     <tr>
-      <Td><code>fontWeight</code></Td>
-      <Td><code>string | number</code></Td>
+      <Td>
+        <code>fontWeight</code>
+      </Td>
+      <Td>
+        <code>string | number</code>
+      </Td>
       <Td>CSS font-weight value.</Td>
     </tr>
     <tr>
-      <Td><code>letterSpacing</code></Td>
-      <Td><code>string</code></Td>
+      <Td>
+        <code>letterSpacing</code>
+      </Td>
+      <Td>
+        <code>string</code>
+      </Td>
       <Td>CSS letter-spacing value.</Td>
     </tr>
     <tr>
-      <Td><code>responsive</code></Td>
-      <Td><code>{'{ desktop?, tablet?, mobile? }'}</code></Td>
-      <Td>Override <code>fontSize</code> and <code>lineHeight</code> per breakpoint.</Td>
+      <Td>
+        <code>responsive</code>
+      </Td>
+      <Td>
+        <code>{'{ desktop?, tablet?, mobile? }'}</code>
+      </Td>
+      <Td>
+        Override <code>fontSize</code> and <code>lineHeight</code> per breakpoint.
+      </Td>
     </tr>
   </tbody>
 </Table>
@@ -174,8 +195,8 @@ const myTheme: ThemeCustomization = {
       fontWeight: 800,
       responsive: {
         desktop: { fontSize: '3rem', lineHeight: 1.1 },
-        tablet:  { fontSize: '2.25rem' },
-        mobile:  { fontSize: '1.75rem' },
+        tablet: { fontSize: '2.25rem' },
+        mobile: { fontSize: '1.75rem' },
       },
     },
     p: {
@@ -184,6 +205,7 @@ const myTheme: ThemeCustomization = {
   },
 };
 ```
+
 </section>
 
 <section id="section-border-radius">
@@ -196,6 +218,7 @@ const myTheme: ThemeCustomization = {
   borderRadius: 4,
 };
 ```
+
 </section>
 
 <section id="section-box-shadow">
@@ -218,6 +241,7 @@ const myTheme: ThemeCustomization = {
   },
 };
 ```
+
 </section>
 
 <section id="section-breakpoints">
@@ -234,11 +258,51 @@ Override the pixel values for responsive breakpoints. The defaults are:
     </tr>
   </thead>
   <tbody>
-    <tr><Td><code>xs</code></Td><Td><code>450</code></Td><Td>Extra-small screens</Td></tr>
-    <tr><Td><code>sm</code></Td><Td><code>600</code></Td><Td>Small screens</Td></tr>
-    <tr><Td><code>md</code></Td><Td><code>960</code></Td><Td>Medium screens</Td></tr>
-    <tr><Td><code>lg</code></Td><Td><code>1200</code></Td><Td>Large screens</Td></tr>
-    <tr><Td><code>xl</code></Td><Td><code>1550</code></Td><Td>Extra-large screens</Td></tr>
+    <tr>
+      <Td>
+        <code>xs</code>
+      </Td>
+      <Td>
+        <code>450</code>
+      </Td>
+      <Td>Extra-small screens</Td>
+    </tr>
+    <tr>
+      <Td>
+        <code>sm</code>
+      </Td>
+      <Td>
+        <code>600</code>
+      </Td>
+      <Td>Small screens</Td>
+    </tr>
+    <tr>
+      <Td>
+        <code>md</code>
+      </Td>
+      <Td>
+        <code>960</code>
+      </Td>
+      <Td>Medium screens</Td>
+    </tr>
+    <tr>
+      <Td>
+        <code>lg</code>
+      </Td>
+      <Td>
+        <code>1200</code>
+      </Td>
+      <Td>Large screens</Td>
+    </tr>
+    <tr>
+      <Td>
+        <code>xl</code>
+      </Td>
+      <Td>
+        <code>1550</code>
+      </Td>
+      <Td>Extra-large screens</Td>
+    </tr>
   </tbody>
 </Table>
 
@@ -257,6 +321,7 @@ const myTheme: ThemeCustomization = {
   },
 };
 ```
+
 </section>
 
 <section id="section-components">
@@ -275,22 +340,38 @@ styles for any seedui component globally. Each component entry accepts:
   </thead>
   <tbody>
     <tr>
-      <Td><code>defaultProps</code></Td>
-      <Td><code>Partial&lt;Props&gt;</code></Td>
+      <Td>
+        <code>defaultProps</code>
+      </Td>
+      <Td>
+        <code>Partial&lt;Props&gt;</code>
+      </Td>
       <Td>Default prop values applied when the consumer doesn't specify them.</Td>
     </tr>
     <tr>
-      <Td><code>styles</code></Td>
-      <Td><code>CSSObject</code></Td>
+      <Td>
+        <code>styles</code>
+      </Td>
+      <Td>
+        <code>CSSObject</code>
+      </Td>
       <Td>Base style overrides applied to every instance of the component.</Td>
     </tr>
     <tr>
-      <Td><code>conditionalStyles</code></Td>
-      <Td><code>Array</code></Td>
-      <Td>An array of <code>{'{ condition, styles }'}</code> entries. Each <code>condition</code> receives <code>(props, theme)</code> and the styles are applied when it returns <code>true</code>.</Td>
+      <Td>
+        <code>conditionalStyles</code>
+      </Td>
+      <Td>
+        <code>Array</code>
+      </Td>
+      <Td>
+        An array of <code>{'{ condition, styles }'}</code> entries. Each <code>condition</code> receives{' '}
+        <code>(props, theme)</code> and the styles are applied when it returns <code>true</code>.
+      </Td>
     </tr>
   </tbody>
 </Table>
 
 All seedui components support global customization. For usage details and examples, see the [Component Styles](/theming/component-styles) and [Default Props](/theming/default-props) pages.
+
 </section>

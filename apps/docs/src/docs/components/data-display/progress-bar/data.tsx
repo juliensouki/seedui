@@ -48,21 +48,15 @@ export const progressBarDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic progress',
-      description: 'Show simple progress toward completion.',
       code: `<ProgressBar value={45} />`,
     },
     {
-      title: 'Custom heights',
-      description: 'Adjust the height to fit the visual weight needed.',
       code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 280 }}>
   <ProgressBar value={60} height={8} />
   <ProgressBar value={60} height={12} />
 </div>`,
     },
     {
-      title: 'Semantic colors',
-      description: 'Use color to communicate status — success for completion, warning for limits, error for failures.',
       code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 280 }}>
   <ProgressBar value={100} color="success" />
   <ProgressBar value={75} color="warning" />
@@ -71,13 +65,9 @@ export const progressBarDoc: ComponentDoc = {
 </div>`,
     },
     {
-      title: 'Without animation',
-      description: 'Disable the shimmer effect for a static fill.',
       code: `<ProgressBar value={60} disableAnimation />`,
     },
     {
-      title: 'Interactive progress',
-      description: 'Combine with state to create a dynamic progress indicator.',
       code: `const [progress, setProgress] = useState(30);
 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 280 }}>
   <ProgressBar value={progress} color={progress === 100 ? 'success' : 'primary'} />

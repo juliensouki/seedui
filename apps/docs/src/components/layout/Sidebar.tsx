@@ -1,7 +1,7 @@
 import { ChangeEvent, FunctionComponent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { IconButton, SearchBar } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
-import { GithubIcon, FigmaIcon } from 'lucide-react';
+import { GithubIcon, FigmaIcon, ChevronDown } from 'lucide-react';
 import { ComponentCategory } from '../../docs/components';
 import { allPages, NavPage, ThemeCategory } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
@@ -98,40 +98,27 @@ const MobileFooter = styled('div')(({ theme }) => {
   };
 });
 
-const SectionHeader = styled('button')(({ theme }) => {
+const NavSectionLabel = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
     padding: `0 ${theme.spacing(2.5)}px`,
     marginBottom: theme.spacing(0.75),
-    border: 'none',
-    background: 'none',
-    cursor: 'pointer',
-    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,
-    fontSize: theme.typography.p.fontSize,
-    fontWeight: 700,
+    fontSize: theme.typography.caption.fontSize,
+    fontWeight: 600,
+    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[700],
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.05em',
     fontFamily: 'inherit',
-    '&:hover': {
-      color: isLight ? theme.colors.neutral[700] : theme.colors.neutral[700],
-    },
   };
 });
 
-const Chevron = styled('span')<{ $open: boolean }>(({ theme, $open }) => ({
-  display: 'inline-block',
-  fontSize: theme.typography.p.fontSize,
+const CategoryChevron = styled('span')<{ $open: boolean }>(({ $open }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
   transition: 'transform 0.2s ease',
-  transform: $open ? 'rotate(90deg)' : 'rotate(0deg)',
-}));
-
-const SmallChevron = styled('span')<{ $open: boolean }>(({ theme, $open }) => ({
-  display: 'inline-block',
-  fontSize: theme.typography.caption.fontSize,
-  transition: 'transform 0.2s ease',
-  transform: $open ? 'rotate(90deg)' : 'rotate(0deg)',
+  transform: $open ? 'rotate(-180deg)' : 'rotate(0deg)',
+  color: 'inherit',
+  flexShrink: 0,
 }));
 
 const SectionLinks = styled('div')<{ $open: boolean }>(({ $open }) => ({
@@ -144,39 +131,40 @@ const SectionLinks = styled('div')<{ $open: boolean }>(({ $open }) => ({
 }));
 
 const LinkList = styled('div')(({ theme }) => ({
-  padding: `0 ${theme.spacing(1.25)}px`,
+  margin: `0 ${theme.spacing(2.5)}px 0 ${theme.spacing(3.5)}px`,
   display: 'flex',
   flexDirection: 'column' as const,
-  gap: theme.spacing(0.25),
+  gap: theme.spacing(0.125),
 }));
 
 const StyledLink = styled('a')<{ $active: boolean }>(({ theme, $active }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
-    padding: `${theme.spacing(0.875)}px ${theme.spacing(1.25)}px`,
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(1.25)}px`,
     borderRadius: theme.borderRadius(3),
     fontSize: theme.typography.p.fontSize,
+    lineHeight: theme.typography.p.lineHeight,
     fontFamily: 'inherit',
     color: $active
       ? (isLight ? theme.colors.primary[600] : theme.colors.neutral.white)
-      : (isLight ? theme.colors.neutral[900] : theme.colors.neutral[900]),
+      : (isLight ? theme.colors.neutral[900] : theme.colors.neutral.white),
     textDecoration: 'none',
     transition: 'background 0.15s, color 0.15s',
     backgroundColor: $active
-      ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+      ? (isLight ? theme.colors.primary[100] : theme.colors.primary[300])
       : 'transparent',
     fontWeight: $active ? 500 : 400,
     '&:hover': {
       backgroundColor: $active
-        ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+        ? (isLight ? theme.colors.primary[100] : theme.colors.primary[300])
         : (isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]),
     },
   };
 });
 
 const CategoryGroup = styled('div')(({ theme }) => ({
-  margin: `${theme.spacing(1)}px ${theme.spacing(2.5)}px 0 ${theme.spacing(3.5)}px`,
+  margin: `${theme.spacing(0.125)}px ${theme.spacing(2.5)}px 0 ${theme.spacing(3.5)}px`,
 }));
 
 const CategoryHeader = styled('button')(({ theme }) => {
@@ -186,16 +174,20 @@ const CategoryHeader = styled('button')(({ theme }) => {
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    padding: `${theme.spacing(0.5)}px 0`,
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(1.25)}px`,
     border: 'none',
     background: 'none',
     cursor: 'pointer',
-    fontSize: theme.typography.small.fontSize,
-    fontWeight: 600,
-    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[700],
+    borderRadius: theme.borderRadius(3),
+    fontSize: theme.typography.p.fontSize,
+    lineHeight: theme.typography.p.lineHeight,
+    fontWeight: 400,
+    color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,
     fontFamily: 'inherit',
-    textTransform: 'uppercase' as const,
-    letterSpacing: '0.05em',
+    textAlign: 'left' as const,
+    '&:hover': {
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+    },
   };
 });
 
@@ -215,22 +207,23 @@ const CategoryLink = styled('a')<{ $active: boolean }>(({ theme, $active }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
-    padding: `${theme.spacing(0.625)}px ${theme.spacing(1)}px`,
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(1.25)}px`,
     borderRadius: theme.borderRadius(2),
     fontSize: theme.typography.p.fontSize,
+    lineHeight: theme.typography.p.lineHeight,
     fontFamily: 'inherit',
     color: $active
       ? (isLight ? theme.colors.primary[600] : theme.colors.neutral.white)
-      : (isLight ? theme.colors.neutral[900] : theme.colors.neutral[900]),
+      : (isLight ? theme.colors.neutral[900] : theme.colors.neutral.white),
     textDecoration: 'none',
     transition: 'background 0.15s, color 0.15s',
     backgroundColor: $active
-      ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+      ? (isLight ? theme.colors.primary[100] : theme.colors.primary[300])
       : 'transparent',
     fontWeight: $active ? 500 : 400,
     '&:hover': {
       backgroundColor: $active
-        ? (isLight ? theme.colors.primary[100] : theme.colors.primary.default)
+        ? (isLight ? theme.colors.primary[100] : theme.colors.primary[300])
         : (isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]),
     },
   };
@@ -251,18 +244,13 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
 }) => {
   const [mobileSearch, setMobileSearch] = useState('');
 
-  // Compute which keys need to be open for a given path
+  // Compute which category keys need to be open for a given path
   const getKeysForPath = useCallback((path: string): string[] => {
     const keys: string[] = [];
 
-    if (gettingStartedPages.some((p) => p.path === path)) {
-      keys.push('getting-started');
-      return keys;
-    }
-
     for (const group of themeGroups) {
       if (group.pages.some((p) => p.path === path)) {
-        keys.push('theme', `theme-${group.category}`);
+        keys.push(`theme-${group.category}`);
         return keys;
       }
     }
@@ -270,13 +258,13 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
     const componentName = path.startsWith('/components/') ? path.replace('/components/', '') : '';
     for (const group of componentGroups) {
       if (group.names.includes(componentName)) {
-        keys.push('components', `cat-${group.category}`);
+        keys.push(`cat-${group.category}`);
         return keys;
       }
     }
 
-    return ['getting-started'];
-  }, [gettingStartedPages, themeGroups, componentGroups]);
+    return keys;
+  }, [themeGroups, componentGroups]);
 
   const [openState, setOpenState] = useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
@@ -347,85 +335,68 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
       <NavContent>
         {gettingStartedPages.length > 0 && (
           <div>
-            <SectionHeader onClick={() => toggle('getting-started')}>
-              Getting Started
-              <Chevron $open={isOpen('getting-started')}>&#8250;</Chevron>
-            </SectionHeader>
-            <SectionLinks $open={isOpen('getting-started')}>
-              <div>
-                <LinkList>
-                  {gettingStartedPages.map((page) => (
-                    <StyledLink key={page.path} href={page.path} $active={normPath === page.path}>
-                      {page.name}
-                    </StyledLink>
-                  ))}
-                </LinkList>
-              </div>
-            </SectionLinks>
+            <NavSectionLabel>Overview</NavSectionLabel>
+            <LinkList>
+              {gettingStartedPages.map((page) => (
+                <StyledLink key={page.path} href={page.path} $active={normPath === page.path}>
+                  {page.name}
+                </StyledLink>
+              ))}
+            </LinkList>
           </div>
         )}
 
         {themeGroups.length > 0 && (
           <div style={{ marginTop: 20 }}>
-            <SectionHeader onClick={() => toggle('theme')}>
-              Theme
-              <Chevron $open={isOpen('theme')}>&#8250;</Chevron>
-            </SectionHeader>
-            <SectionLinks $open={isOpen('theme')}>
-              <div>
-                {themeGroups.map((group) => (
-                  <CategoryGroup key={group.category}>
-                    <CategoryHeader onClick={() => toggle(`theme-${group.category}`)}>
-                      {group.category}
-                      <SmallChevron $open={isOpen(`theme-${group.category}`)}>&#8250;</SmallChevron>
-                    </CategoryHeader>
-                    <SectionLinks $open={isOpen(`theme-${group.category}`)}>
-                      <div>
-                        <CategoryLinks>
-                          {group.pages.map((page) => (
-                            <CategoryLink key={page.path} href={page.path} $active={normPath === page.path}>
-                              {page.name}
-                            </CategoryLink>
-                          ))}
-                        </CategoryLinks>
-                      </div>
-                    </SectionLinks>
-                  </CategoryGroup>
-                ))}
-              </div>
-            </SectionLinks>
+            <NavSectionLabel>Theme</NavSectionLabel>
+            {themeGroups.map((group) => (
+              <CategoryGroup key={group.category}>
+                <CategoryHeader onClick={() => toggle(`theme-${group.category}`)}>
+                  {group.category}
+                  <CategoryChevron $open={isOpen(`theme-${group.category}`)}>
+                    <ChevronDown size={16} />
+                  </CategoryChevron>
+                </CategoryHeader>
+                <SectionLinks $open={isOpen(`theme-${group.category}`)}>
+                  <div>
+                    <CategoryLinks>
+                      {group.pages.map((page) => (
+                        <CategoryLink key={page.path} href={page.path} $active={normPath === page.path}>
+                          {page.name}
+                        </CategoryLink>
+                      ))}
+                    </CategoryLinks>
+                  </div>
+                </SectionLinks>
+              </CategoryGroup>
+            ))}
           </div>
         )}
 
         {componentGroups.length > 0 && (
           <div style={{ marginTop: 20 }}>
-            <SectionHeader onClick={() => toggle('components')}>
-              Components
-              <Chevron $open={isOpen('components')}>&#8250;</Chevron>
-            </SectionHeader>
-            <SectionLinks $open={isOpen('components')}>
-              <div>
-                {componentGroups.map((group) => (
-                  <CategoryGroup key={group.category}>
-                    <CategoryHeader onClick={() => toggle(`cat-${group.category}`)}>
-                      {group.category}
-                      <SmallChevron $open={isOpen(`cat-${group.category}`)}>&#8250;</SmallChevron>
-                    </CategoryHeader>
-                    <SectionLinks $open={isOpen(`cat-${group.category}`)}>
-                      <div>
-                        <CategoryLinks>
-                          {group.names.map((name) => (
-                            <CategoryLink key={name} href={`/components/${name}`} $active={normPath === `/components/${name}`}>
-                              {name}
-                            </CategoryLink>
-                          ))}
-                        </CategoryLinks>
-                      </div>
-                    </SectionLinks>
-                  </CategoryGroup>
-                ))}
-              </div>
-            </SectionLinks>
+            <NavSectionLabel>Components</NavSectionLabel>
+            {componentGroups.map((group) => (
+              <CategoryGroup key={group.category}>
+                <CategoryHeader onClick={() => toggle(`cat-${group.category}`)}>
+                  {group.category}
+                  <CategoryChevron $open={isOpen(`cat-${group.category}`)}>
+                    <ChevronDown size={16} />
+                  </CategoryChevron>
+                </CategoryHeader>
+                <SectionLinks $open={isOpen(`cat-${group.category}`)}>
+                  <div>
+                    <CategoryLinks>
+                      {group.names.map((name) => (
+                        <CategoryLink key={name} href={`/components/${name}`} $active={normPath === `/components/${name}`}>
+                          {name}
+                        </CategoryLink>
+                      ))}
+                    </CategoryLinks>
+                  </div>
+                </SectionLinks>
+              </CategoryGroup>
+            ))}
           </div>
         )}
       </NavContent>
@@ -434,7 +405,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
           variant="transparent"
           color="neutral"
           size="sm"
-          onClick={() => window.open('https://github.com', '_blank')}
+          onClick={() => window.open('https://github.com/juliensouki/seedui', '_blank', 'noopener,noreferrer')}
         >
           <GithubIcon size={18} />
         </IconButton>

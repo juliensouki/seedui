@@ -186,7 +186,7 @@ const InputElement = applyCustomStyles(
         color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
 
         '&::placeholder': {
-          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[400],
+          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
         },
 
         [`& + ${IconContainer}`]: {

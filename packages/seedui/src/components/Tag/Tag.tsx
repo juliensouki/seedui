@@ -1,5 +1,6 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, useContext } from 'react';
 import styled from 'styled-components';
+import { XIcon } from 'lucide-react';
 
 import { SeedContextType, SemanticColors, Sizes } from '../../types';
 import { Text, TextPropsAndAttributes } from '../Text';
@@ -77,7 +78,8 @@ const TagDiv = applyCustomStyles(
       boxSizing: 'border-box',
       ...(theme.mode === 'dark' && color === 'neutral' ? darkNeutralColors : commonColors),
       padding: `${theme.spacing(0.75)}px ${theme.spacing(1)}px`,
-      borderRadius: theme.borderRadius(6),
+      minHeight: 24 + theme.spacing(0.75) * 2,
+      borderRadius: 9999,
       flexShrink: 0,
     };
   }),
@@ -134,7 +136,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps & InternalProps>(
         </TagText>
         {removable && onRemove && (
           <RemoveButton size="sm" color="neutral" onClick={onRemove} type="button" className={joinClasses('tag-remove-button', removeButtonHTMLAttributes?.className)} {...removeButtonHTMLAttributes}>
-            <Text style={{ padding: 0, fontSize: 18 }}>×</Text>
+            <XIcon size={14} />
           </RemoveButton>
         )}
       </TagDiv>

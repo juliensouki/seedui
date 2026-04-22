@@ -10,8 +10,7 @@ export const meta = {
 
 Every seedui component supports global style customization through the
 `theme.components` configuration. You can apply static CSS overrides and
-conditional styles that respond to component props and theme values &mdash; all without
-touching individual component instances.
+conditional styles that respond to component props and theme values.
 
 <Callout>
   Global component styles are applied via the <code>ThemeProvider</code>'s{' '}
@@ -59,6 +58,7 @@ function App() {
   );
 }
 ```
+
 </section>
 
 <section id="section-conditional-styles">
@@ -75,15 +75,7 @@ const theme: ThemeCustomization = {
     button: {
       conditionalStyles: [
         {
-          condition: (props) => props.disabled === true,
-          styles: {
-            opacity: 0.4,
-            cursor: 'not-allowed',
-          },
-        },
-        {
-          condition: (props, theme) =>
-            props.color === 'primary' && props.variant === 'filled',
+          condition: (props, theme) => props.color === 'primary' && props.variant === 'filled',
           styles: {
             boxShadow: '0 0 0 3px rgba(99, 102, 241, 0.3)',
           },
@@ -96,6 +88,7 @@ const theme: ThemeCustomization = {
 
 Conditional styles are evaluated in order. When multiple conditions match, their styles
 are merged, with later entries taking precedence.
+
 </section>
 
 <section id="section-combining-static-and-conditional-styles">
@@ -132,6 +125,7 @@ const theme: ThemeCustomization = {
   },
 };
 ```
+
 </section>
 
 <section id="section-using-the-theme-in-conditions">
@@ -157,4 +151,5 @@ const theme: ThemeCustomization = {
   },
 };
 ```
+
 </section>

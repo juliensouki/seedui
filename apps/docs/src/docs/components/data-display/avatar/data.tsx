@@ -33,8 +33,6 @@ export const avatarDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'With image',
-      description: 'Pass a src prop to display an image. The name prop provides alt text and serves as a fallback if the image fails to load.',
       code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
   <Avatar src="https://i.pravatar.cc/150?img=1" name="Jane Doe" />
   <Avatar src="https://i.pravatar.cc/150?img=2" name="John Smith" />
@@ -42,8 +40,6 @@ export const avatarDoc: ComponentDoc = {
 </div>`,
     },
     {
-      title: 'With initials',
-      description: 'When no image is provided, initials are generated from the name prop. Single names show one letter, multi-word names show first and last initials.',
       code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
   <Avatar name="Jane Doe" color="primary" />
   <Avatar name="John" color="success" />
@@ -51,8 +47,6 @@ export const avatarDoc: ComponentDoc = {
 </div>`,
     },
     {
-      title: 'Sizes',
-      description: 'Use sm for dense layouts, md for general use, lg for profile pages, or pass a number for a custom pixel size.',
       code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
   <Avatar name="JD" size="sm" />
   <Avatar name="JD" size="md" />
@@ -61,8 +55,6 @@ export const avatarDoc: ComponentDoc = {
 </div>`,
     },
     {
-      title: 'Colors',
-      description: 'Use color to differentiate avatars by role, team, or status when no image is available.',
       code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
   <Avatar name="AB" color="primary" />
   <Avatar name="CD" color="neutral" />
@@ -73,8 +65,6 @@ export const avatarDoc: ComponentDoc = {
 </div>`,
     },
     {
-      title: 'Fallback icon',
-      description: 'When neither src nor name is provided, a generic person icon is displayed.',
       code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
   <Avatar size="sm" color="neutral" />
   <Avatar size="md" color="neutral" />

@@ -52,8 +52,6 @@ export const popoverDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic popover',
-      description: 'A popover anchored to a button. It opens on click and closes when clicking outside or pressing Escape.',
       code: `const [open, setOpen] = useState(false);
 
 <Popover
@@ -71,8 +69,6 @@ export const popoverDoc: ComponentDoc = {
 </Popover>`,
     },
     {
-      title: 'Alignment',
-      description: 'Control where the popover appears relative to the trigger using verticalAlignment and horizontalAlignment.',
       code: `const [open, setOpen] = useState(false);
 
 <Popover

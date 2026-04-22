@@ -1,19 +1,8 @@
 import { FunctionComponent, useCallback, useState } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
+import { Text } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
-import { TableOfContents } from '../../../components/layout/TableOfContents';
-import { PageNavigation } from '../../../components/layout/PageNavigation';
+import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
-
-const PageLayout = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-}));
-
-const MainContent = styled('div')(() => ({
-  flex: 1,
-  minWidth: 0,
-}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
@@ -178,46 +167,34 @@ export const Colors: FunctionComponent = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <MainContent>
-        <Text variant="h3" as="h1">Colors</Text>
-        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
-          Each semantic color maps to a primitive palette.
-          Use semantic names in components so colors stay consistent when customized.
-          Click any swatch to copy its hex value.
+    <PageLayout
+      title="Colors"
+      description="Each semantic color maps to a primitive palette. Use semantic names in components so colors stay consistent when customized. Click any swatch to copy its hex value."
+    >
+      <Section id="section-palettes">
+        <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>Palettes</Text>
+        {colorConfig.map(({ semantic, primitive }) => (
+          <ColorPalette
+            key={semantic}
+            semantic={semantic}
+            primitive={primitive}
+            isDark={theme.mode === 'dark'}
+            palette={theme.colors[semantic] as unknown as Record<number, string>}
+            copiedKey={copiedKey}
+            onCopy={copyToClipboard}
+          />
+        ))}
+      </Section>
+
+      <Section id="section-usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+        <Text variant="p" style={{ marginBottom: 12 }}>
+          Access semantic colors via <code>useTheme()</code> or through the <code>theme</code> object
+          injected in <code>styled()</code> components. Use <code>theme.colors.[name][shade]</code> to
+          reference any color from the palette.
         </Text>
-
-        <Divider spacing={28} />
-
-        <Section id="section-palettes">
-          <Text variant="h4" as="h2" style={{ marginBottom: 16 }}>Palettes</Text>
-          {colorConfig.map(({ semantic, primitive }) => (
-            <ColorPalette
-              key={semantic}
-              semantic={semantic}
-              primitive={primitive}
-              isDark={theme.mode === 'dark'}
-              palette={theme.colors[semantic] as unknown as Record<number, string>}
-              copiedKey={copiedKey}
-              onCopy={copyToClipboard}
-            />
-          ))}
-        </Section>
-
-        <Section id="section-usage">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-          <Text variant="p" style={{ color: theme.mode === 'light' ? undefined : theme.colors.neutral[800], marginBottom: 12, lineHeight: 1.6 }}>
-            Access semantic colors via <code>useTheme()</code> or through the <code>theme</code> object
-            injected in <code>styled()</code> components. Use <code>theme.colors.[name][shade]</code> to
-            reference any color from the palette.
-          </Text>
-          <ComponentPlayground code={usageExampleCode} />
-        </Section>
-
-        <PageNavigation />
-      </MainContent>
-
-      <TableOfContents />
+        <ComponentPlayground code={usageExampleCode} />
+      </Section>
     </PageLayout>
   );
 };

@@ -118,11 +118,9 @@ const IconWrapper = styled.div<StyledComponentsPrefix<{ disabled?: boolean }>>((
     '& svg': {
       width: 18,
       height: 18,
-      color: $disabled
-        ? theme.colors.neutral[400]
-        : isLight
-        ? theme.colors.neutral.black
-        : theme.colors.neutral.white,
+      color: isLight
+        ? $disabled ? theme.colors.neutral[300] : theme.colors.neutral[400]
+        : $disabled ? theme.colors.neutral[500] : theme.colors.neutral[700],
     },
   };
 });

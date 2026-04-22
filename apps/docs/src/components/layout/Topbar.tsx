@@ -70,7 +70,7 @@ const ResultList = styled('div')(({ theme }) => ({
 
 const SectionLabel = styled(Text)(({ theme }) => ({
   padding: `${theme.spacing(1)}px ${theme.spacing(1.75)}px ${theme.spacing(0.5)}px`,
-  color: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[600],
+  color: theme.mode === 'light' ? theme.colors.neutral[600] : theme.colors.neutral[800],
   textTransform: 'uppercase' as const,
   letterSpacing: '0.04em',
 }));
@@ -152,15 +152,32 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             {mobileMenuOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
           </IconButton>
         </MenuButton>
-        <img
-          src="/logo-black.svg"
-          alt="seedui"
-          height={24}
-          width={24}
-          style={mode === 'dark' ? { filter: 'invert(1)' } : undefined}
-        />
-        <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', fontFamily: theme.typography.h1.fontFamily, color: mode === 'dark' ? theme.colors.neutral.white : undefined }}>seedui</span>
-        <Tag color="neutral" size="sm">docs</Tag>
+        <a
+          href="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: theme.spacing(1.25),
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
+          <img
+            src="/logo-black.svg"
+            alt="seedui"
+            height={24}
+            width={24}
+            style={mode === 'dark' ? { filter: 'invert(1)' } : undefined}
+          />
+          <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', fontFamily: theme.typography.h1.fontFamily, color: mode === 'dark' ? theme.colors.neutral.white : undefined }}>seedui</span>
+        </a>
+        <Tag
+          color="neutral"
+          size="sm"
+          elementProps={{ root: { style: { minHeight: 'unset', borderRadius: 12 } } }}
+        >
+          docs
+        </Tag>
       </div>
       <RightSection>
         <DesktopOnly>
@@ -168,7 +185,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             variant="transparent"
             color="neutral"
             size="md"
-            onClick={() => window.open('https://github.com', '_blank')}
+            onClick={() => window.open('https://github.com/juliensouki/seedui', '_blank', 'noopener,noreferrer')}
           >
             <GithubIcon size={18} />
           </IconButton>
@@ -195,7 +212,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
                   root: {
                     style: {
                       padding: '8px 8px 8px 4px',
-                      ...(mode === 'dark' && { backgroundColor: theme.colors.neutral[400] }),
+                      backgroundColor: mode === 'dark' ? theme.colors.neutral[400] : theme.colors.neutral[100],
                     },
                   },
                 }}
@@ -210,7 +227,9 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
                 horizontalAlignment="center"
                 elementProps={{
                   panel: {
-                    style: mode === 'dark' ? { backgroundColor: theme.colors.neutral[300] } : undefined,
+                    style: {
+                      backgroundColor: mode === 'dark' ? theme.colors.neutral[300] : theme.colors.neutral.white,
+                    },
                   },
                 }}
                 content={

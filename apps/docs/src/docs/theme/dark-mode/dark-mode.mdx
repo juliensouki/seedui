@@ -9,8 +9,7 @@ export const meta = {
 ## Overview
 
 seedui supports light and dark mode out of the box. Set the `mode` prop on
-`ThemeProvider` and every component, color token, and box shadow automatically adapts &mdash; no
-extra configuration needed.
+`ThemeProvider` and every component, color token, and box shadow automatically adapts.
 
 ```tsx
 import { ThemeProvider } from '@seedui-react/seedui';
@@ -23,6 +22,7 @@ function App() {
   );
 }
 ```
+
 </section>
 
 <section id="section-toggling-modes">
@@ -42,13 +42,12 @@ function App() {
 
   return (
     <ThemeProvider mode={mode}>
-      <button onClick={() => setMode(m => m === 'light' ? 'dark' : 'light')}>
-        Toggle mode
-      </button>
+      <button onClick={() => setMode((m) => (m === 'light' ? 'dark' : 'light'))}>Toggle mode</button>
     </ThemeProvider>
   );
 }
 ```
+
 </section>
 
 <section id="section-mode-aware-custom-styles">
@@ -80,15 +79,18 @@ function Banner() {
   const isLight = theme.mode === 'light';
 
   return (
-    <div style={{
-      backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary[900],
-      color: isLight ? theme.colors.primary[800] : theme.colors.primary[200],
-    }}>
+    <div
+      style={{
+        backgroundColor: isLight ? theme.colors.primary[100] : theme.colors.primary[900],
+        color: isLight ? theme.colors.primary[800] : theme.colors.primary[200],
+      }}
+    >
       Mode-aware banner
     </div>
   );
 }
 ```
+
 </section>
 
 <section id="section-mode-aware-colors">
@@ -138,6 +140,7 @@ const theme: ThemeCustomization = {
   },
 };
 ```
+
 </section>
 
 <section id="section-conditional-styles">
@@ -173,4 +176,5 @@ const theme: ThemeCustomization = {
   },
 };
 ```
+
 </section>

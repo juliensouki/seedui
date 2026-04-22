@@ -49,8 +49,6 @@ export const tagSelectorDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic tag selector',
-      description: 'Type a value and press Enter to add a tag. Click the remove button on any tag to delete it.',
       code: `const [tags, setTags] = useState(['React', 'TypeScript']);
 
 <TagSelector
@@ -62,8 +60,6 @@ export const tagSelectorDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'With label',
-      description: 'Add a label to provide context about what kind of tags the user should enter.',
       code: `const [tags, setTags] = useState([]);
 
 <TagSelector
@@ -76,8 +72,6 @@ export const tagSelectorDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Max tags limit',
-      description: 'Use maxTags to cap the number of tags a user can add. The input disables once the limit is reached.',
       code: `const [tags, setTags] = useState(['Design']);
 
 <TagSelector
@@ -90,8 +84,6 @@ export const tagSelectorDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Disabled',
-      description: 'A disabled tag selector is visually muted and does not accept user interaction.',
       code: `<TagSelector
   tags={['React', 'TypeScript']}
   onAddTag={() => {}}

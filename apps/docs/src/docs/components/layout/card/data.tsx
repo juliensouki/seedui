@@ -28,8 +28,6 @@ export const cardDoc: ComponentDoc = {
   anatomy: [],
   usageExamples: [
     {
-      title: 'Default variant',
-      description: 'The default card has a subtle background and shadow, giving it a slightly elevated look that works well for dashboard widgets and content panels.',
       code: `<Card>
   <Text variant="h6">Dashboard Widget</Text>
   <Text variant="p" style={{ marginTop: 8 }}>
@@ -38,8 +36,6 @@ export const cardDoc: ComponentDoc = {
 </Card>`,
     },
     {
-      title: 'Outlined variant',
-      description: 'The outlined variant uses a border instead of a shadow for a flatter appearance. It works well when you want clear boundaries without depth.',
       code: `<Card variant="outlined">
   <Text variant="h6">Settings Panel</Text>
   <Text variant="p" style={{ marginTop: 8 }}>

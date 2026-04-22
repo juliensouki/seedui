@@ -9,6 +9,8 @@ import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
 import { Text } from '../Text';
+import { IconButton } from '../Button';
+import { XIcon } from 'lucide-react';
 
 /** A dialog overlay that focuses attention on a specific task or message. */
 export interface ModalProps {
@@ -132,38 +134,6 @@ const ModalContent = styled.div<StyledComponentsPrefix<{ padding: number | strin
   flex: 1,
 }));
 
-const CloseButton = styled.button<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => {
-  const isLight = theme.mode === 'light';
-
-  return {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: theme.spacing(0.5),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: theme.borderRadius(2),
-    color: theme.colors.neutral[600],
-    transition: 'background-color 0.15s ease-in-out, color 0.15s ease-in-out',
-
-    '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
-      color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,
-    },
-
-    '&:focus': {
-      outline: `2px solid ${theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[600]}`,
-      outlineOffset: 2,
-    },
-
-    '& svg': {
-      width: 20,
-      height: 20,
-    },
-  };
-});
-
 /** A dialog overlay that focuses user attention on a task, confirmation, or message. */
 export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
   (props, forwardedRef: ForwardedRef<HTMLDivElement>) => {
@@ -256,17 +226,17 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
                 </Text>
               )}
               {showCloseButton && (
-                <CloseButton
+                <IconButton
                   {...closeButtonHTMLAttributes}
                   onClick={onClose}
-                  type="button"
+                  variant="transparent"
+                  color="neutral"
+                  size="sm"
                   aria-label="Close modal"
                   className={joinClasses('modal-close-button', closeButtonHTMLAttributes?.className)}
                 >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </CloseButton>
+                  <XIcon size={18} />
+                </IconButton>
               )}
             </ModalHeader>
           )}

@@ -16,6 +16,7 @@ import { ComponentWall } from '../docs/component-wall/ComponentWall';
 // MDX content imports (compiled as React components via @mdx-js/rollup)
 import InstallationContent, { meta as installationMeta } from '../docs/getting-started/installation/installation.mdx';
 import QuickStartContent, { meta as quickStartMeta } from '../docs/getting-started/quick-start/quick-start.mdx';
+import ContributeContent, { meta as contributeMeta } from '../docs/getting-started/contribute/contribute.mdx';
 import ThemeProviderContent, { meta as themeProviderMeta } from '../docs/theme/theme-provider/theme-provider.mdx';
 import CustomizationContent, { meta as customizationMeta } from '../docs/theme/customization/customization.mdx';
 import DarkModeContent, { meta as darkModeMeta } from '../docs/theme/dark-mode/dark-mode.mdx';
@@ -31,9 +32,29 @@ const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { ea
 >;
 
 
-const componentHeaderActions = (
+const REPO_URL = 'https://github.com/juliensouki/seedui';
+
+// Source paths relative to packages/seedui/src/components/
+// Most components are `{Name}/{Name}.tsx`; a few are grouped under a shared parent folder.
+const componentSourcePaths: Record<string, string> = {
+  Button: 'Button/Button/Button.tsx',
+  IconButton: 'Button/IconButton/IconButton.tsx',
+};
+
+const componentSourceUrl = (name: string) => {
+  const relPath = componentSourcePaths[name] ?? `${name}/${name}.tsx`;
+  return `${REPO_URL}/blob/main/packages/seedui/src/components/${relPath}`;
+};
+
+const componentHeaderActions = (name: string) => (
   <>
-    <IconButton variant="transparent" color="neutral" size="md">
+    <IconButton
+      variant="transparent"
+      color="neutral"
+      size="md"
+      onClick={() => window.open(componentSourceUrl(name), '_blank', 'noopener,noreferrer')}
+      title="View source on GitHub"
+    >
       <GithubIcon size={16} strokeWidth={1.8} />
     </IconButton>
     <IconButton variant="transparent" color="neutral" size="md">
@@ -76,6 +97,17 @@ function PageContent({ path }: { path: string }) {
         currentPath={p}
       >
         <QuickStartContent />
+      </PageLayout>
+    );
+  }
+  if (p === '/getting-started/contribute') {
+    return (
+      <PageLayout
+        title={contributeMeta.title}
+        description={contributeMeta.description}
+        currentPath={p}
+      >
+        <ContributeContent />
       </PageLayout>
     );
   }
@@ -124,7 +156,7 @@ function PageContent({ path }: { path: string }) {
           title={doc.name}
           description={doc.description}
           currentPath={p}
-          headerActions={componentHeaderActions}
+          headerActions={componentHeaderActions(doc.name)}
         >
           {Content ? <Content /> : <p>Not found.</p>}
         </PageLayout>
@@ -141,6 +173,7 @@ const pageTitles: Record<string, string> = {
   '/component-wall': 'seedui | Component Wall',
   '/getting-started/installation': 'seedui | Installation',
   '/getting-started/quick-start': 'seedui | Quick Start',
+  '/getting-started/contribute': 'seedui | How to Contribute',
   '/theming/theme-provider': 'seedui | ThemeProvider',
   '/theming/customization': 'seedui | Customization',
   '/theming/dark-mode': 'seedui | Dark Mode',

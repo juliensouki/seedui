@@ -27,8 +27,6 @@ export const stepperDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Step progression',
-      description: 'Set activeStep to highlight the current step. Steps before it appear as completed, and steps after appear as upcoming.',
       code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
   <Stepper steps={['Account', 'Profile', 'Review']} activeStep={0} />
   <Stepper steps={['Account', 'Profile', 'Review']} activeStep={1} />
@@ -36,8 +34,6 @@ export const stepperDoc: ComponentDoc = {
 </div>`,
     },
     {
-      title: 'Longer flows',
-      description: 'Stepper works with any number of steps. It scales horizontally to fit the available space.',
       code: `<Stepper
   steps={['Cart', 'Shipping', 'Payment', 'Review', 'Confirmation']}
   activeStep={2}

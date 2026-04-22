@@ -27,7 +27,13 @@ const MainContent = styled('div')(({ theme }) => ({
   },
 }));
 
-export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, description, currentPath, headerActions, children }) => {
+export const PageLayout: FunctionComponent<PageLayoutProps> = ({
+  title,
+  description,
+  currentPath,
+  headerActions,
+  children,
+}) => {
   const theme = useTheme();
   const isLight = theme.mode === 'light';
   return (
@@ -35,19 +41,25 @@ export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, descript
       <MainContent>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <SectionHeading variant="h3" as="h1">{title}</SectionHeading>
-            <Text variant="p" style={{ marginTop: theme.spacing(1), color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
+            <SectionHeading variant="h3" as="h1">
+              {title}
+            </SectionHeading>
+            <Text
+              variant="p"
+              style={{
+                marginTop: theme.spacing(1),
+                color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[900],
+              }}
+            >
+              {description}
+            </Text>
           </div>
           {headerActions && (
-            <div style={{ display: 'flex', gap: theme.spacing(1), flexShrink: 0 }}>
-              {headerActions}
-            </div>
+            <div style={{ display: 'flex', gap: theme.spacing(1), flexShrink: 0 }}>{headerActions}</div>
           )}
         </div>
         <Divider spacing={28} />
-        <MDXProvider components={mdxComponents}>
-          {children}
-        </MDXProvider>
+        <MDXProvider components={mdxComponents}>{children}</MDXProvider>
         <PageNavigation currentPath={currentPath} />
       </MainContent>
       <TableOfContents path={currentPath} />

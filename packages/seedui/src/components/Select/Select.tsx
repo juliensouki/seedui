@@ -55,13 +55,14 @@ export interface SelectProps {
   activeItemStyle?: SelectActiveItemStyle;
   /** Disables the select and applies a muted appearance. */
   disabled?: boolean;
-  /** Access underlying DOM elements (root, container, arrow, menu, menuItem). */
+  /** Access underlying DOM elements (root, container, arrow, menu, menuItem, menuItemIcon). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
     container?: HTMLAttributes<HTMLDivElement>;
     arrow?: HTMLAttributes<HTMLDivElement>;
     menu?: HTMLAttributes<HTMLDivElement>;
     menuItem?: HTMLAttributes<HTMLDivElement>;
+    menuItemIcon?: HTMLAttributes<HTMLElement>;
   };
 }
 
@@ -78,6 +79,7 @@ const defaultProps: SelectProps = {
     arrow: {},
     menu: {},
     menuItem: {},
+    menuItemIcon: {},
   },
 };
 
@@ -116,7 +118,7 @@ const SelectContainer = applyCustomStyles(
           ? theme.colors.neutral[400]
           : theme.colors.neutral[500]
         : textColor,
-      padding: `${theme.spacing(1.5)}px ${theme.spacing(1.5)}px`,
+      padding: `${theme.spacing(0.875)}px ${theme.spacing(1.5)}px`,
       paddingRight: 0,
       cursor: $disabled ? 'default' : 'pointer',
 
@@ -155,6 +157,7 @@ const SelectInput = styled.input(({ theme }) => ({
   border: 'none',
   outline: 'none',
   font: 'inherit',
+  cursor: 'inherit',
   userSelect: 'none',
   WebkitUserSelect: 'none',
   msUserSelect: 'none',
@@ -200,9 +203,6 @@ const SelectArrowContainer = styled.div({
   alignItems: 'center',
   justifyContent: 'center',
   padding: '0 8px',
-  '& button': {
-    padding: 0,
-  },
 });
 
 const SelectMenu = styled.div<{ $menuHeight: string | number }>(({ theme, $menuHeight }) => ({
@@ -255,6 +255,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
         arrow: arrowHTMLAttributes,
         menu: menuHTMLAttributes,
         menuItem: menuItemHTMLAttributes,
+        menuItemIcon: menuItemIconHTMLAttributes,
       },
     } = getDefaultProps<SelectProps & InternalProps>({
       providedProps: props,
@@ -325,6 +326,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
       const target = e.target as HTMLElement;
       if (target.closest('.select-arrow')) return;
       if (target.closest('.select-menu')) return;
+      e.preventDefault();
       inputRef.current?.focus();
       setActiveItemInMenu(0);
       setIsMenuOpen(true);
@@ -353,6 +355,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
       <SelectDiv
         {...rootHTMLAttributes}
         ref={containerRef}
+        onMouseDown={handleContainerMouseDown}
         $width={width}
         $customizations={customizations.components?.select}
         className={joinClasses('select-root', rootHTMLAttributes?.className)}
@@ -368,7 +371,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
           onFocus={handleContainerFocus}
           onBlur={handleContainerBlur}
           onKeyDown={handleKeyboard}
-          onMouseDown={handleContainerMouseDown}
           $isFocused={isMenuOpen}
           $disabled={disabled}
           $customizations={customizations.components?.select}
@@ -439,6 +441,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
                     onHover={(i: number) => setActiveItemInMenu(i)}
                     activeItemStyle={activeItemStyle}
                     htmlAttributes={menuItemHTMLAttributes}
+                    iconHtmlAttributes={menuItemIconHTMLAttributes}
                   />
                 ))
               )}

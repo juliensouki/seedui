@@ -1,19 +1,8 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
+import { Text } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
-import { TableOfContents } from '../../../components/layout/TableOfContents';
+import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
-import { PageNavigation } from '../../../components/layout/PageNavigation';
-
-const PageLayout = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-}));
-
-const MainContent = styled('div')(() => ({
-  flex: 1,
-  minWidth: 0,
-}));
 
 const Section = styled('section')(() => ({
   marginBottom: 40,
@@ -89,108 +78,98 @@ export const Breakpoints: FunctionComponent = () => {
   ];
 
   return (
-    <PageLayout>
-      <MainContent>
-        <Text variant="h3" as="h1">Breakpoints</Text>
-        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
-          Responsive breakpoints for adapting layouts across screen sizes.
+    <PageLayout
+      title="Breakpoints"
+      description="Responsive breakpoints for adapting layouts across screen sizes."
+    >
+      <Section id="section-pixel-breakpoints">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Pixel breakpoints</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Access via <code>theme.breakpoints.sm</code> etc. Values are in pixels.
         </Text>
-
-        <Divider spacing={28} />
-
-        <Section id="section-pixel-breakpoints">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Pixel breakpoints</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Access via <code>theme.breakpoints.sm</code> etc. Values are in pixels.
-          </Text>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Name</Th>
-                <Th>Value</Th>
-                <Th>Min-width query</Th>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Name</Th>
+              <Th>Value</Th>
+              <Th>Min-width query</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {pixelBreakpoints.map((b) => (
+              <tr key={b.name}>
+                <Td><code>{b.name}</code></Td>
+                <Td>{b.value}px</Td>
+                <Td><code>@media (min-width: {b.value}px)</code></Td>
               </tr>
-            </thead>
-            <tbody>
-              {pixelBreakpoints.map((b) => (
-                <tr key={b.name}>
-                  <Td><code>{b.name}</code></Td>
-                  <Td>{b.value}px</Td>
-                  <Td><code>@media (min-width: {b.value}px)</code></Td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Section>
+            ))}
+          </tbody>
+        </Table>
+      </Section>
 
-        <Section id="section-semantic-aliases">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Semantic aliases</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Convenience aliases that map to the pixel breakpoints above.
-          </Text>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Alias</Th>
-                <Th>Maps to</Th>
-                <Th>Resolved value</Th>
+      <Section id="section-semantic-aliases">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Semantic aliases</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Convenience aliases that map to the pixel breakpoints above.
+        </Text>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Alias</Th>
+              <Th>Maps to</Th>
+              <Th>Resolved value</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {aliases.map((a) => (
+              <tr key={a.name}>
+                <Td><code>{a.name}</code></Td>
+                <Td><code>{a.mapsTo}</code></Td>
+                <Td>{a.resolvedValue}px</Td>
               </tr>
-            </thead>
-            <tbody>
-              {aliases.map((a) => (
-                <tr key={a.name}>
-                  <Td><code>{a.name}</code></Td>
-                  <Td><code>{a.mapsTo}</code></Td>
-                  <Td>{a.resolvedValue}px</Td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Section>
+            ))}
+          </tbody>
+        </Table>
+      </Section>
 
-        <Section id="section-media-query-helpers">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Media query helpers</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Helper methods on <code>theme.breakpoints</code> that return ready-to-use media query strings.
-            Use them as keys in styled-component style objects.
-          </Text>
-          <Table>
-            <thead>
-              <tr>
-                <Th>Method</Th>
-                <Th>Returns</Th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <Td><code>up(key)</code></Td>
-                <Td><code>{bp.up('sm')}</code></Td>
-              </tr>
-              <tr>
-                <Td><code>down(key)</code></Td>
-                <Td><code>{bp.down('sm')}</code></Td>
-              </tr>
-              <tr>
-                <Td><code>between(start, end)</code></Td>
-                <Td><code>{bp.between('sm', 'lg')}</code></Td>
-              </tr>
-            </tbody>
-          </Table>
-        </Section>
+      <Section id="section-media-query-helpers">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Media query helpers</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Helper methods on <code>theme.breakpoints</code> that return ready-to-use media query strings.
+          Use them as keys in styled-component style objects.
+        </Text>
+        <Table>
+          <thead>
+            <tr>
+              <Th>Method</Th>
+              <Th>Returns</Th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <Td><code>up(key)</code></Td>
+              <Td><code>{bp.up('sm')}</code></Td>
+            </tr>
+            <tr>
+              <Td><code>down(key)</code></Td>
+              <Td><code>{bp.down('sm')}</code></Td>
+            </tr>
+            <tr>
+              <Td><code>between(start, end)</code></Td>
+              <Td><code>{bp.between('sm', 'lg')}</code></Td>
+            </tr>
+          </tbody>
+        </Table>
+      </Section>
 
-        <Section id="section-usage">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Use the helpers inside <code>styled</code> components or access breakpoint values
-            via <code>useTheme()</code>.
-          </Text>
-          <ComponentPlayground code={usageCode} readOnly />
-        </Section>
-
-        <PageNavigation />
-      </MainContent>
-
-      <TableOfContents />
+      <Section id="section-usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Use the helpers inside <code>styled</code> components or access breakpoint values
+          via <code>useTheme()</code>.
+        </Text>
+        <ComponentPlayground code={usageCode} readOnly />
+      </Section>
     </PageLayout>
   );
 };

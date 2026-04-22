@@ -49,8 +49,6 @@ export const inputDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic input',
-      description: 'A controlled text input with a label and placeholder. This is the most common usage pattern.',
       code: `const [value, setValue] = useState('');
 
 <Input
@@ -62,8 +60,6 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Password input',
-      description: 'Set type to "password" to mask the input. The browser handles toggling visibility natively.',
       code: `const [value, setValue] = useState('');
 
 <Input
@@ -76,8 +72,6 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'With validation',
-      description: 'Pass a validation function to provide real-time visual feedback. The function receives the current value and should return true if valid.',
       code: `const [value, setValue] = useState('');
 
 <Input
@@ -90,8 +84,6 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'With icon',
-      description: 'Add an icon to the left or right side of the input using the inputIcon prop. The icon sits in a visually distinct container attached to the input edge.',
       code: `const [value, setValue] = useState('');
 
 <Input
@@ -112,8 +104,6 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Disabled',
-      description: 'A disabled input is visually muted and does not accept user interaction.',
       code: `<Input
   value="Read only value"
   onChange={() => {}}

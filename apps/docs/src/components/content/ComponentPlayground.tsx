@@ -17,6 +17,7 @@ import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 import tsx from 'shiki/langs/tsx.mjs';
 import darkPlus from 'shiki/themes/dark-plus.mjs';
 import * as seedui from '@seedui-react/seedui';
+import { IconButton } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { CopyIcon, CheckIcon } from 'lucide-react';
 
@@ -38,6 +39,59 @@ const highlighter = createHighlighterCoreSync({
 function highlightCode(code: string): string {
   const html = highlighter.codeToHtml(code, { lang: 'tsx', theme: 'dark-plus' });
   return html.replace(/^<pre[^>]*><code[^>]*>/, '').replace(/<\/code><\/pre>$/, '');
+}
+
+interface LayoutWrapper {
+  open: string;
+  close: string;
+  baseIndent: string;
+}
+
+function stripLayoutWrapper(code: string): { wrapper: LayoutWrapper | null; inner: string } {
+  const trimmed = code.trim();
+  if (!trimmed.startsWith('<div')) return { wrapper: null, inner: code };
+
+  let openEnd = -1;
+  let braceDepth = 0;
+  for (let i = 0; i < trimmed.length; i++) {
+    const c = trimmed[i];
+    if (c === '{') braceDepth++;
+    else if (c === '}') braceDepth--;
+    else if (c === '>' && braceDepth === 0) {
+      openEnd = i;
+      break;
+    }
+  }
+  if (openEnd === -1) return { wrapper: null, inner: code };
+
+  const open = trimmed.slice(0, openEnd + 1);
+  const isPlainDiv = open === '<div>';
+  const hasStyle = /\sstyle\s*=\s*\{\{/.test(open);
+  if (!isPlainDiv && !hasStyle) return { wrapper: null, inner: code };
+  if (!trimmed.endsWith('</div>')) return { wrapper: null, inner: code };
+
+  const innerRaw = trimmed.slice(openEnd + 1, trimmed.length - '</div>'.length);
+  const openDivs = (innerRaw.match(/<div[\s>/]/g) || []).length;
+  const closeDivs = (innerRaw.match(/<\/div>/g) || []).length;
+  if (openDivs !== closeDivs) return { wrapper: null, inner: code };
+
+  const lines = innerRaw.split('\n');
+  while (lines.length && lines[0].trim() === '') lines.shift();
+  while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
+
+  const indents = lines.filter((l) => l.trim() !== '').map((l) => l.match(/^ */)?.[0].length ?? 0);
+  const minIndent = indents.length ? Math.min(...indents) : 0;
+  const dedented = lines.map((l) => l.slice(minIndent)).join('\n');
+
+  return {
+    wrapper: { open, close: '</div>', baseIndent: ' '.repeat(minIndent || 2) },
+    inner: dedented,
+  };
+}
+
+function rewrapLayout(inner: string, wrapper: LayoutWrapper): string {
+  const lines = inner.split('\n').map((l) => (l.length ? wrapper.baseIndent + l : l));
+  return `${wrapper.open}\n${lines.join('\n')}\n${wrapper.close}`;
 }
 
 function prepareCode(code: string): { code: string; noInline: boolean } {
@@ -104,12 +158,14 @@ const Wrapper = styled('div')(({ theme }) => {
   };
 });
 
-const PreviewPane = styled('div')(({ theme }) => {
+const PreviewPane = styled('div')<{ $standalone?: boolean }>(({ theme, $standalone }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: theme.spacing(3),
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
-    borderRadius: `${theme.borderRadius(4)}px ${theme.borderRadius(4)}px 0 0`,
+    borderRadius: $standalone
+      ? theme.borderRadius(4)
+      : `${theme.borderRadius(4)}px ${theme.borderRadius(4)}px 0 0`,
     overflow: 'visible',
   };
 });
@@ -151,31 +207,37 @@ const ReadOnlyCode = styled('pre')(({ theme }) => ({
   background: 'transparent',
 }));
 
-const CopyButton = styled('button')<{ $centered?: boolean }>(({ theme, $centered }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    position: 'absolute',
-    top: $centered ? '50%' : theme.spacing(1),
-    transform: $centered ? 'translateY(-50%)' : undefined,
-    right: theme.spacing(1),
-    zIndex: 2,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    borderRadius: theme.borderRadius(3),
-    border: 'none',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
-    transition: 'color 0.15s, background-color 0.15s',
-    '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[300],
-      color: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
-    },
-  };
-});
+const CopyButton = styled(IconButton)<{ $centered?: boolean }>(({ theme, $centered }) => ({
+  position: 'absolute',
+  top: $centered ? '50%' : theme.spacing(1),
+  transform: $centered ? 'translateY(-50%)' : undefined,
+  right: theme.spacing(1),
+  zIndex: 2,
+  backgroundColor: 'transparent',
+  color: theme.colors.neutral.white,
+  '& svg': {
+    color: theme.colors.neutral.white,
+    width: 14,
+    height: 14,
+  },
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  '&:focus': {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    outline: '2px solid rgba(255, 255, 255, 0.25)',
+    outlineOffset: 1,
+  },
+  '&:active': {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    outline: '2px solid rgba(255, 255, 255, 0.3)',
+    outlineOffset: 1,
+    ...($centered && { transform: 'translateY(-50%) scale(0.95)' }),
+  },
+  '&:hover svg, &:focus svg, &:active svg': {
+    color: theme.colors.neutral.white,
+  },
+}));
 
 const ErrorBar = styled('div')(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -231,35 +293,37 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
         : theme.colors.neutral[100]
       : previewBgProp;
 
+  const displayCode = useMemo(() => (code ? stripLayoutWrapper(code).inner : ''), [code]);
+
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
-    if (code) {
-      void navigator.clipboard.writeText(code.trim());
+    if (displayCode) {
+      void navigator.clipboard.writeText(displayCode.trim());
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
-  }, [code]);
+  }, [displayCode]);
 
   // Preview-only mode (no code)
   if (!code) {
     return (
       <Wrapper>
-        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <PreviewPane $standalone style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
       </Wrapper>
     );
   }
 
   // Read-only code block mode
   if (readOnly) {
-    const isSingleLine = code.trim().split('\n').length === 1;
+    const isSingleLine = displayCode.trim().split('\n').length === 1;
     return (
       <Wrapper>
         <CodePane>
-          <CopyButton $centered={isSingleLine} onClick={handleCopy} title="Copy code">
+          <CopyButton $centered={isSingleLine} variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
-          <Highlight theme={themes.vsDark} code={code.trim()} language={language}>
+          <Highlight theme={themes.vsDark} code={displayCode.trim()} language={language}>
             {({ tokens, getLineProps, getTokenProps }) => (
               <ReadOnlyCode>
                 {tokens.map((line, i) => (
@@ -289,30 +353,38 @@ const LivePlayground: FunctionComponent<{
   scope?: Record<string, unknown>;
 }> = ({ code, preview, previewBg, scope }) => {
   const theme = useTheme();
-  const initialPrepared = useMemo(() => prepareCode(code), [code]);
+  const initial = useMemo(() => {
+    const { wrapper, inner } = stripLayoutWrapper(code);
+    const prepared = prepareCode(code);
+    return { wrapper, display: inner, prepared };
+  }, [code]);
 
-  const [liveCode, setLiveCode] = useState(initialPrepared.code);
-  const [noInline, setNoInline] = useState(initialPrepared.noInline);
+  const wrapperRef = useRef<LayoutWrapper | null>(initial.wrapper);
+  const [liveCode, setLiveCode] = useState(initial.prepared.code);
+  const [noInline, setNoInline] = useState(initial.prepared.noInline);
   const [copied, setCopied] = useState(false);
-  const editorCodeRef = useRef(code);
-  const [editorCode, setEditorCode] = useState(code);
+  const editorCodeRef = useRef(initial.display);
+  const [editorCode, setEditorCode] = useState(initial.display);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
+    const { wrapper, inner } = stripLayoutWrapper(code);
+    wrapperRef.current = wrapper;
     const prepared = prepareCode(code);
     setLiveCode(prepared.code);
     setNoInline(prepared.noInline);
-    editorCodeRef.current = code;
-    setEditorCode(code);
+    editorCodeRef.current = inner;
+    setEditorCode(inner);
   }, [code]);
 
-  const handleCodeChange = useCallback((newCode: string) => {
-    editorCodeRef.current = newCode;
-    setEditorCode(newCode);
-    const prepared = prepareCode(newCode);
+  const handleCodeChange = useCallback((newDisplayCode: string) => {
+    editorCodeRef.current = newDisplayCode;
+    setEditorCode(newDisplayCode);
+    const full = wrapperRef.current ? rewrapLayout(newDisplayCode, wrapperRef.current) : newDisplayCode;
+    const prepared = prepareCode(full);
     setLiveCode(prepared.code);
     setNoInline(prepared.noInline);
   }, []);
@@ -343,7 +415,7 @@ const LivePlayground: FunctionComponent<{
               whiteSpace: 'pre-wrap',
             }}
           >
-            <code>{code}</code>
+            <code>{editorCode}</code>
           </pre>
         </CodePane>
       </Wrapper>
@@ -355,7 +427,7 @@ const LivePlayground: FunctionComponent<{
       <Wrapper>
         <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
         <CodePane $hasPreview>
-          <CopyButton onClick={handleCopy} title="Copy code">
+          <CopyButton variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
           <SimpleEditor
@@ -382,7 +454,7 @@ const LivePlayground: FunctionComponent<{
           <StablePreview />
         </PreviewPane>
         <CodePane $hasPreview>
-          <CopyButton onClick={handleCopy} title="Copy code">
+          <CopyButton variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
           <SimpleEditor

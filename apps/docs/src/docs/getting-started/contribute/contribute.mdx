@@ -1,0 +1,83 @@
+import { TabbedCode } from '../../../components/content/TabbedCode';
+
+export const meta = {
+  title: 'How to Contribute',
+  description: 'Set up the seedui monorepo locally and submit your first contribution.',
+};
+
+<section id="section-overview">
+## Overview
+
+seedui is an open-source design system. Contributions are welcome — whether it's fixing a bug, improving a component, expanding the docs, or proposing a new component.
+
+This guide walks through setting up the project locally, making changes, and opening a pull request.
+</section>
+
+<section id="section-repo-structure">
+## Repository structure
+
+The repo is a yarn workspaces monorepo:
+
+- `packages/seedui` — the component library published to npm.
+- `apps/docs` — the Astro-based documentation site you're reading now.
+
+Changes to a component live in `packages/seedui/src/components/<ComponentName>`. Docs for that component live in `apps/docs/src/docs/components/<category>/<component-name>`.
+</section>
+
+<section id="section-prerequisites">
+## Prerequisites
+
+You'll need:
+
+- **Node.js** 18 or newer
+- **yarn** (the project uses yarn workspaces — npm and pnpm are not supported)
+- A GitHub account to fork the repo and open pull requests
+</section>
+
+<section id="section-local-setup">
+## Local setup
+
+Fork the repository on GitHub, then clone your fork:
+
+<TabbedCode commands={{
+  yarn: 'git clone https://github.com/<your-username>/seedui.git\ncd seedui\nyarn install',
+}} />
+
+Start the docs site in dev mode — it hot-reloads changes from both the docs and the library:
+
+<TabbedCode commands={{
+  yarn: 'yarn dev',
+}} />
+
+Always run `yarn install` after pulling changes that touch `package.json` files or workspace dependencies, so the lockfile stays in sync.
+</section>
+
+<section id="section-making-changes">
+## Making a change
+
+1. **Create a branch** from `main` with a descriptive name: `fix/tag-selector-disabled-bg`, `feat/add-breadcrumb`, etc.
+2. **Work on the component** in `packages/seedui/src/components/<ComponentName>`. The docs site will hot-reload your changes so you can preview them.
+3. **Update the docs** in `apps/docs/src/docs/components/...` if your change affects behavior, props, or visuals.
+4. **Typecheck** before committing: `yarn tsc --noEmit` from either package.
+</section>
+
+<section id="section-submitting">
+## Submitting a pull request
+
+1. Push your branch to your fork.
+2. Open a pull request against `main` on the upstream repository.
+3. Fill in the PR description: what changed, why, and any visual diff (screenshots help a lot for styling changes).
+4. Respond to review feedback. A maintainer will merge once the change is approved.
+
+For larger changes (new components, breaking API changes), open a GitHub issue first to discuss the direction before you invest time in implementation.
+</section>
+
+<section id="section-guidelines">
+## Contribution guidelines
+
+- **Keep PRs focused** — one logical change per PR. Avoid bundling unrelated refactors.
+- **Match existing patterns.** Look at neighboring components to understand conventions before introducing new ones.
+- **No new library exports** without explicit discussion — seedui's public API is intentionally minimal.
+- **Write small, informative commit messages.** Focus on *why* the change was made.
+- **Don't commit generated files** (`dist/`, build artifacts) — they're produced during publish.
+</section>

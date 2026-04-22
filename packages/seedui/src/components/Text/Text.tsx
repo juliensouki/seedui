@@ -54,12 +54,7 @@ const TextFactory = (variant: TextVariants) => {
       fontFamily: theme.typography[$variant].fontFamily,
       fontWeight: theme.typography[$variant].fontWeight,
       letterSpacing: theme.typography[$variant].letterSpacing,
-      color:
-        tag === 'p' && theme.mode === 'dark'
-          ? theme.colors.neutral[900]
-          : theme.mode === 'light'
-          ? theme.colors.neutral.black
-          : theme.colors.neutral.white,
+      color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
 
       margin: 0,
       fontSize: theme.typography[$variant].fontSize,

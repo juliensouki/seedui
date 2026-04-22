@@ -27,9 +27,8 @@ const FeatureCard = styled('div')(({ theme }) => {
 const FeatureDescription = styled(Text)(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    ...(isLight && { color: theme.colors.neutral[500] }),
     fontSize: 14,
-    lineHeight: 1.5,
   };
 });
 
@@ -98,18 +97,14 @@ export const HomePage: FunctionComponent = () => {
         <HeroLeft>
           <div>
             <Text variant="h1">seedui</Text>
-            <Text
-              variant="p"
-              style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral.white }}
-            >
+            <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : undefined }}>
               A simple and elegant React component library that&apos;s endlessly customizable.
             </Text>
             <Text
               variant="p"
               style={{
                 marginTop: 16,
-                lineHeight: 1.7,
-                color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+                color: isLight ? theme.colors.neutral[500] : undefined,
               }}
             >
               Everything you need to craft polished applications, internal tools, and delightful user experiences.
@@ -125,7 +120,12 @@ export const HomePage: FunctionComponent = () => {
               >
                 How to install
               </Button>
-              <Button variant="transparent" color="neutral" size="md">
+              <Button
+                variant="transparent"
+                color="neutral"
+                size="md"
+                onClick={() => window.open('https://github.com/juliensouki/seedui', '_blank', 'noopener,noreferrer')}
+              >
                 <GithubIcon size={16} style={{ marginRight: 6 }} />
                 View on GitHub
               </Button>
@@ -205,6 +205,35 @@ export const HomePage: FunctionComponent = () => {
           </FeatureCard>
         </FeatureGrid>
       </Section>
+
+      <Divider spacing={0} style={{ marginBottom: 16 }} />
+      <Text
+        variant="caption"
+        style={{
+          textAlign: 'center',
+          color: isLight ? theme.colors.neutral[500] : undefined,
+          paddingBottom: 24,
+        }}
+      >
+        Built by{' '}
+        <a
+          href="https://github.com/juliensouki"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'underline' }}
+        >
+          Julien Souki-Léon
+        </a>
+        {' · MIT License · '}
+        <a
+          href="https://github.com/juliensouki/seedui"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'underline' }}
+        >
+          GitHub
+        </a>
+      </Text>
     </div>
   );
 };

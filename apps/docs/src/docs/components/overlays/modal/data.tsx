@@ -46,8 +46,6 @@ export const modalDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic modal',
-      description: 'A simple modal with a title and content. It closes when clicking the overlay, pressing Escape, or clicking the close button.',
       code: `const [open, setOpen] = useState(false);
 
 <Button onClick={() => setOpen(true)}>Open Modal</Button>
@@ -56,8 +54,6 @@ export const modalDoc: ComponentDoc = {
 </Modal>`,
     },
     {
-      title: 'Custom width',
-      description: 'Use the width prop to control the modal size. This is useful for forms or content that needs more horizontal space.',
       code: `const [open, setOpen] = useState(false);
 
 <Button onClick={() => setOpen(true)}>Wide Modal</Button>
@@ -66,8 +62,6 @@ export const modalDoc: ComponentDoc = {
 </Modal>`,
     },
     {
-      title: 'Persistent modal',
-      description: 'Disable overlay click and Escape to force the user to interact with the modal content. Useful for critical confirmations.',
       code: `const [open, setOpen] = useState(false);
 
 <Button onClick={() => setOpen(true)}>Confirm Action</Button>

@@ -230,7 +230,7 @@ export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & Inter
           {tags.length > 0 && (
             <TagsContainer {...elementProps.tagsContainer} className={joinClasses('tag-selector-tags-container', elementProps?.tagsContainer?.className)}>
               {tags.map((tag, index) => (
-                <Tag key={index} removable onRemove={() => handleRemoveTag(tag)}>
+                <Tag key={index} removable={!disabled} onRemove={disabled ? undefined : () => handleRemoveTag(tag)}>
                   {tag}
                 </Tag>
               ))}

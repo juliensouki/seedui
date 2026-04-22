@@ -20,23 +20,29 @@ const Th = styled('th')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     textAlign: 'left' as const,
-    padding: `${theme.spacing(1.25)}px 0`,
+    padding: `${theme.spacing(1.25)}px ${theme.spacing(2)}px ${theme.spacing(1.25)}px 0`,
     fontWeight: 600,
     fontSize: theme.typography.caption.fontSize,
     textTransform: 'uppercase' as const,
     letterSpacing: '0.04em',
     color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    '&:last-child': {
+      paddingRight: 0,
+    },
   };
 });
 
 const Td = styled('td')(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    padding: `${theme.spacing(2)}px 0`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(2)}px 0`,
     borderBottom: `1px solid ${isLight ? theme.colors.neutral[100] : theme.colors.neutral[200]}`,
     verticalAlign: 'top' as const,
     lineHeight: 1.5,
+    '&:last-child': {
+      paddingRight: 0,
+    },
   };
 });
 
