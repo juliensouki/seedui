@@ -83,17 +83,17 @@ const SearchBarContainer = styled.div<
 
     ...(!$disabled &&
       !$isFocused && {
-        '&:hover': {
-          borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
-        },
-      }),
+      '&:hover': {
+        borderColor: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+      },
+    }),
 
     ...($isFocused &&
       !$disabled && {
-        outline: `2px solid ${theme.colors.primary[400]}`,
-        outlineOffset: 1,
-        borderColor: theme.colors.primary.default,
-      }),
+      outline: `2px solid ${theme.colors.primary[400]}`,
+      outlineOffset: 1,
+      borderColor: theme.colors.primary.default,
+    }),
   };
 });
 

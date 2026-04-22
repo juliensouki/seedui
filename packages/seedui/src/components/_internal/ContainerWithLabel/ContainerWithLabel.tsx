@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../../Text';
 import { joinClasses } from '../../../utils/classes';
+import { StyledProps } from '../../../types/internal';
 
 const RootDiv = styled.div<{ $width?: string | number }>(({ $width }) => ({
   display: 'flex',
@@ -11,7 +12,7 @@ const RootDiv = styled.div<{ $width?: string | number }>(({ $width }) => ({
   width: $width || '100%',
 }));
 
-const LabelText = styled(Text)(({ theme }) => ({
+const LabelText = styled(Text)(({ theme }: StyledProps<object>) => ({
   color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral[900],
 }));
 
