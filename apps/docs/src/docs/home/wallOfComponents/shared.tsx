@@ -7,7 +7,7 @@ export const WallCard = styled(Card)(() => ({
   boxSizing: 'border-box',
 }));
 
-export const MiniLabel = styled('span')(({ theme }) => {
+export const MiniLabel = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 11,
@@ -20,13 +20,13 @@ export const MiniLabel = styled('span')(({ theme }) => {
   };
 });
 
-export const Row = styled('div')(() => ({
+export const Row = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
 }));
 
-export const SettingRow = styled('div')(({ theme }) => {
+export const SettingRow = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -54,7 +54,7 @@ export const StatLabel = styled(Text)(({ theme }) => {
   };
 });
 
-export const StatusDot = styled('span')<{ $color: string }>(({ $color }) => ({
+export const StatusDot = styled.span<{ $color: string }>(({ $color }) => ({
   display: 'inline-block',
   width: 8,
   height: 8,
@@ -63,7 +63,7 @@ export const StatusDot = styled('span')<{ $color: string }>(({ $color }) => ({
   marginRight: 6,
 }));
 
-export const NotifItem = styled('div')(({ theme }) => {
+export const NotifItem = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',

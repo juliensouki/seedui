@@ -4,11 +4,11 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
-const VariantRow = styled('div')(({ theme }) => {
+const VariantRow = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: '20px 0',
@@ -19,7 +19,7 @@ const VariantRow = styled('div')(({ theme }) => {
   };
 });
 
-const MetaGrid = styled('div')(({ theme }) => {
+const MetaGrid = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -32,7 +32,7 @@ const MetaGrid = styled('div')(({ theme }) => {
   };
 });
 
-const MetaLabel = styled('span')(({ theme }) => {
+const MetaLabel = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],

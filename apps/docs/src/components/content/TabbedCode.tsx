@@ -4,7 +4,7 @@ import { ComponentPlayground } from './ComponentPlayground';
 
 type PkgManager = 'yarn' | 'npm';
 
-const TabbedCodeWrapper = styled('div')(({ theme }) => ({
+const TabbedCodeWrapper = styled.div(({ theme }) => ({
   marginBottom: theme.spacing(3),
   '& > div:last-child': {
     borderRadius: `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px`,
@@ -16,7 +16,7 @@ const TabbedCodeWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const CodeToolbar = styled('div')(({ theme }) => {
+const CodeToolbar = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -29,7 +29,7 @@ const CodeToolbar = styled('div')(({ theme }) => {
   };
 });
 
-const PmButton = styled('button')<{ $active: boolean }>(({ $active, theme }) => {
+const PmButton = styled.button<{ $active: boolean }>(({ $active, theme }) => {
   const isLight = theme.mode === 'light';
   const activeColor = isLight ? theme.colors.primary[400] : theme.colors.primary[700];
   const inactiveColor = isLight ? theme.colors.neutral[400] : theme.colors.neutral[800];

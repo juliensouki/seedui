@@ -39,11 +39,11 @@ function resolveSourcePath(path: string): string | null {
   return null;
 }
 
-const Wrapper = styled('div')(({ theme }) => ({
+const Wrapper = styled.div(({ theme }) => ({
   marginTop: theme.spacing(6),
 }));
 
-const Content = styled('div')(({ theme }) => ({
+const Content = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

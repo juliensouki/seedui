@@ -11,7 +11,7 @@ import { NotificationsCard } from './NotificationsCard';
 import { StorageCard } from './StorageCard';
 import { TeamCard } from './TeamCard';
 
-const ComponentWall = styled('div')(() => ({
+const ComponentWall = styled.div(() => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(280px, 1fr))',
   gap: 16,

@@ -58,7 +58,7 @@ When building your own styled components, access `theme.mode` to apply different
 ```tsx
 import { styled } from '@seedui-react/seedui';
 
-const Card = styled('div')(({ theme }) => {
+const Card = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: theme.spacing(3),

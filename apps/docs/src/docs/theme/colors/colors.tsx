@@ -4,24 +4,24 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
 /* ── Palette block ── */
 
-const PaletteBlock = styled('div')(() => ({
+const PaletteBlock = styled.div(() => ({
   marginBottom: 20,
 }));
 
-const PaletteHeader = styled('div')(() => ({
+const PaletteHeader = styled.div(() => ({
   display: 'flex',
   alignItems: 'baseline',
   gap: 8,
   marginBottom: 8,
 }));
 
-const PaletteNameText = styled('span')(({ theme }) => {
+const PaletteNameText = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 14,
@@ -31,7 +31,7 @@ const PaletteNameText = styled('span')(({ theme }) => {
   };
 });
 
-const PrimitiveBadge = styled('span')(({ theme }) => {
+const PrimitiveBadge = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 12,
@@ -42,7 +42,7 @@ const PrimitiveBadge = styled('span')(({ theme }) => {
 
 /* ── Swatch grid ── */
 
-const SwatchGrid = styled('div')(({ theme }) => ({
+const SwatchGrid = styled.div(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(9, 1fr)',
   gap: 6,
@@ -56,7 +56,7 @@ const SwatchGrid = styled('div')(({ theme }) => ({
   },
 }));
 
-const SwatchCard = styled('div')(({ theme }) => ({
+const SwatchCard = styled.div(({ theme }) => ({
   borderRadius: 8,
   overflow: 'hidden',
   cursor: 'pointer',
@@ -77,12 +77,12 @@ const SwatchCard = styled('div')(({ theme }) => ({
   },
 }));
 
-const SwatchColor = styled('div')(() => ({
+const SwatchColor = styled.div(() => ({
   height: 52,
   borderRadius: '8px 8px 0 0',
 }));
 
-const SwatchInfo = styled('div')(({ theme }) => {
+const SwatchInfo = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: '6px 8px',

@@ -4,17 +4,17 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { GithubIcon } from 'lucide-react';
 import { WallContent } from './wallOfComponents';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
-const FeatureGrid = styled('div')(() => ({
+const FeatureGrid = styled.div(() => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
   gap: 20,
 }));
 
-const FeatureCard = styled('div')(({ theme }) => {
+const FeatureCard = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: '20px 24px',
@@ -32,7 +32,7 @@ const FeatureDescription = styled(Text)(({ theme }) => {
   };
 });
 
-const HeroSection = styled('div')(() => ({
+const HeroSection = styled.div(() => ({
   display: 'flex',
   alignItems: 'stretch',
   gap: 0,
@@ -43,7 +43,7 @@ const HeroSection = styled('div')(() => ({
   position: 'relative' as const,
 }));
 
-const HeroLeft = styled('div')(() => ({
+const HeroLeft = styled.div(() => ({
   flex: '0 0 400px',
   display: 'flex',
   flexDirection: 'column' as const,
@@ -53,14 +53,14 @@ const HeroLeft = styled('div')(() => ({
   zIndex: 2,
 }));
 
-const HeroRight = styled('div')(() => ({
+const HeroRight = styled.div(() => ({
   flex: 1,
   overflow: 'hidden',
   minWidth: 0,
   position: 'relative' as const,
 }));
 
-const WallFade = styled('div')(({ theme }) => {
+const WallFade = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     position: 'absolute' as const,
@@ -76,9 +76,9 @@ const WallFade = styled('div')(({ theme }) => {
   };
 });
 
-const ComponentWallWrapper = styled('div')(() => ({}));
+const ComponentWallWrapper = styled.div(() => ({}));
 
-const ScrollContainer = styled('div')(() => ({
+const ScrollContainer = styled.div(() => ({
   display: 'flex',
   flexDirection: 'column' as const,
   animation: 'seedui-wall-scroll 60s linear infinite',

@@ -41,7 +41,7 @@ The library re-exports styled-components API through `@seedui-react/seedui/sc`. 
 ```tsx
 import styled, { css, keyframes } from '@seedui-react/seedui/sc';
 
-const Container = styled('div')(({ theme }) => ({
+const Container = styled.div(({ theme }) => ({
   padding: theme.spacing(3),
   backgroundColor: theme.colors.primary[100],
   borderRadius: theme.borderRadius(4),

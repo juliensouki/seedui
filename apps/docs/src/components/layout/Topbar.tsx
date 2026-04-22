@@ -5,7 +5,7 @@ import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
 
-const Bar = styled('header')(({ theme }) => {
+const Bar = styled.header(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     height: theme.spacing(7),
@@ -21,7 +21,7 @@ const Bar = styled('header')(({ theme }) => {
   };
 });
 
-const MenuButton = styled('div')(({ theme }) => ({
+const MenuButton = styled.div(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.down('md')]: {
     display: 'flex',
@@ -30,20 +30,20 @@ const MenuButton = styled('div')(({ theme }) => ({
   },
 }));
 
-const DesktopOnly = styled('div')(({ theme }) => ({
+const DesktopOnly = styled.div(({ theme }) => ({
   display: 'contents',
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
 }));
 
-const RightSection = styled('div')(({ theme }) => ({
+const RightSection = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(0.5),
 }));
 
-const VerticalDivider = styled('div')(({ theme }) => {
+const VerticalDivider = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 1,
@@ -52,13 +52,13 @@ const VerticalDivider = styled('div')(({ theme }) => {
   };
 });
 
-const ThemeToggle = styled('div')(({ theme }) => ({
+const ThemeToggle = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(1),
 }));
 
-const ResultList = styled('div')(({ theme }) => ({
+const ResultList = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column' as const,
   minWidth: 280,
@@ -75,7 +75,7 @@ const SectionLabel = styled(Text)(({ theme }) => ({
   letterSpacing: '0.04em',
 }));
 
-const ResultItem = styled('button')(({ theme }) => {
+const ResultItem = styled.button(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',

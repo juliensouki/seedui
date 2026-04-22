@@ -7,7 +7,7 @@ import { allPages, NavPage, ThemeCategory } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
 
 
-const Nav = styled('nav')<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => {
+const Nav = styled.nav<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 260,
@@ -36,7 +36,7 @@ const Nav = styled('nav')<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => 
   };
 });
 
-const MobileSearch = styled('div')(({ theme }) => {
+const MobileSearch = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'none',
@@ -49,13 +49,13 @@ const MobileSearch = styled('div')(({ theme }) => {
   };
 });
 
-const SearchResultList = styled('div')(({ theme }) => ({
+const SearchResultList = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column' as const,
   marginTop: theme.spacing(1),
 }));
 
-const SearchResultItem = styled('button')(({ theme }) => {
+const SearchResultItem = styled.button(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
@@ -75,7 +75,7 @@ const SearchResultItem = styled('button')(({ theme }) => {
   };
 });
 
-const NavContent = styled('div')(({ theme }) => ({
+const NavContent = styled.div(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     flex: 1,
     overflowY: 'auto' as const,
@@ -83,7 +83,7 @@ const NavContent = styled('div')(({ theme }) => ({
   },
 }));
 
-const MobileFooter = styled('div')(({ theme }) => {
+const MobileFooter = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'none',
@@ -98,7 +98,7 @@ const MobileFooter = styled('div')(({ theme }) => {
   };
 });
 
-const NavSectionLabel = styled('div')(({ theme }) => {
+const NavSectionLabel = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `0 ${theme.spacing(2.5)}px`,
@@ -112,7 +112,7 @@ const NavSectionLabel = styled('div')(({ theme }) => {
   };
 });
 
-const CategoryChevron = styled('span')<{ $open: boolean }>(({ $open }) => ({
+const CategoryChevron = styled.span<{ $open: boolean }>(({ $open }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   transition: 'transform 0.2s ease',
@@ -121,7 +121,7 @@ const CategoryChevron = styled('span')<{ $open: boolean }>(({ $open }) => ({
   flexShrink: 0,
 }));
 
-const SectionLinks = styled('div')<{ $open: boolean }>(({ $open }) => ({
+const SectionLinks = styled.div<{ $open: boolean }>(({ $open }) => ({
   display: 'grid',
   gridTemplateRows: $open ? '1fr' : '0fr',
   transition: 'grid-template-rows 0.2s ease',
@@ -130,14 +130,14 @@ const SectionLinks = styled('div')<{ $open: boolean }>(({ $open }) => ({
   },
 }));
 
-const LinkList = styled('div')(({ theme }) => ({
+const LinkList = styled.div(({ theme }) => ({
   margin: `0 ${theme.spacing(2.5)}px 0 ${theme.spacing(3.5)}px`,
   display: 'flex',
   flexDirection: 'column' as const,
   gap: theme.spacing(0.125),
 }));
 
-const StyledLink = styled('a')<{ $active: boolean }>(({ theme, $active }) => {
+const StyledLink = styled.a<{ $active: boolean }>(({ theme, $active }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
@@ -163,11 +163,11 @@ const StyledLink = styled('a')<{ $active: boolean }>(({ theme, $active }) => {
   };
 });
 
-const CategoryGroup = styled('div')(({ theme }) => ({
+const CategoryGroup = styled.div(({ theme }) => ({
   margin: `${theme.spacing(0.125)}px ${theme.spacing(2.5)}px 0 ${theme.spacing(3.5)}px`,
 }));
 
-const CategoryHeader = styled('button')(({ theme }) => {
+const CategoryHeader = styled.button(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -191,7 +191,7 @@ const CategoryHeader = styled('button')(({ theme }) => {
   };
 });
 
-const CategoryLinks = styled('div')(({ theme }) => {
+const CategoryLinks = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     marginLeft: theme.spacing(0.75),
@@ -203,7 +203,7 @@ const CategoryLinks = styled('div')(({ theme }) => {
   };
 });
 
-const CategoryLink = styled('a')<{ $active: boolean }>(({ theme, $active }) => {
+const CategoryLink = styled.a<{ $active: boolean }>(({ theme, $active }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',

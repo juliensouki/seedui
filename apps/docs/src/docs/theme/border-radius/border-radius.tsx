@@ -4,17 +4,17 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
-const Grid = styled('div')(() => ({
+const Grid = styled.div(() => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
   gap: 16,
 }));
 
-const Sample = styled('div')(({ theme }) => {
+const Sample = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -27,14 +27,14 @@ const Sample = styled('div')(({ theme }) => {
   };
 });
 
-const Box = styled('div')(({ theme }) => ({
+const Box = styled.div(({ theme }) => ({
   width: 56,
   height: 56,
   backgroundColor: theme.mode === 'light' ? theme.colors.primary[400] : theme.colors.primary.default,
   overflow: 'hidden',
 }));
 
-const Label = styled('span')(({ theme }) => {
+const Label = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 12,
@@ -44,7 +44,7 @@ const Label = styled('span')(({ theme }) => {
   };
 });
 
-const Value = styled('span')(({ theme }) => {
+const Value = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 11,

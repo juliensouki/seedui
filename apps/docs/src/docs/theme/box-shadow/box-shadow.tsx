@@ -4,18 +4,18 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
 
-const Grid = styled('div')(() => ({
+const Grid = styled.div(() => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
   gap: 24,
 }));
 
-const ShadowCard = styled('div')(({ theme }) => {
+const ShadowCard = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -30,7 +30,7 @@ const ShadowCard = styled('div')(({ theme }) => {
   };
 });
 
-const Label = styled('span')(({ theme }) => {
+const Label = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 13,
@@ -39,7 +39,7 @@ const Label = styled('span')(({ theme }) => {
   };
 });
 
-const ShadowValue = styled('span')(({ theme }) => {
+const ShadowValue = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 10,

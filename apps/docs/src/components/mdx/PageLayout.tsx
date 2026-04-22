@@ -15,12 +15,12 @@ interface PageLayoutProps {
   children: ReactNode;
 }
 
-const Layout = styled('div')(() => ({
+const Layout = styled.div(() => ({
   display: 'flex',
   alignItems: 'flex-start',
 }));
 
-const MainContent = styled('div')(({ theme }) => ({
+const MainContent = styled.div(({ theme }) => ({
   flex: 1,
   minWidth: 0,
   '& section': {

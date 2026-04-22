@@ -7,7 +7,7 @@ import { ComponentSchema } from '../content/ComponentSchema';
 import { SectionHeading } from './MDXComponents';
 import type { PropDef, AnatomyPart } from '../../docs/types';
 
-const AnatomyTable = styled('table')(({ theme }) => {
+const AnatomyTable = styled.table(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: '100%',
@@ -19,7 +19,7 @@ const AnatomyTable = styled('table')(({ theme }) => {
   };
 });
 
-const AnatomyTh = styled('th')(({ theme }) => {
+const AnatomyTh = styled.th(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     textAlign: 'left' as const,
@@ -33,7 +33,7 @@ const AnatomyTh = styled('th')(({ theme }) => {
   };
 });
 
-const AnatomyTd = styled('td')(({ theme }) => {
+const AnatomyTd = styled.td(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(2)}px 0`,
@@ -43,7 +43,7 @@ const AnatomyTd = styled('td')(({ theme }) => {
   };
 });
 
-const MonoCode = styled('code')(({ theme }) => {
+const MonoCode = styled.code(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace",

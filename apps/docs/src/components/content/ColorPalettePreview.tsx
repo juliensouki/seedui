@@ -3,7 +3,7 @@ import { ThemeProvider } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import type { ThemeCustomization } from '@seedui-react/seedui';
 
-const PreviewBox = styled('div')(({ theme }) => {
+const PreviewBox = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     borderRadius: theme.borderRadius(4),
@@ -14,14 +14,14 @@ const PreviewBox = styled('div')(({ theme }) => {
   };
 });
 
-const PaletteRow = styled('div')(({ theme }) => ({
+const PaletteRow = styled.div(({ theme }) => ({
   display: 'flex',
   gap: 3,
   borderRadius: theme.borderRadius(3),
   overflow: 'hidden',
 }));
 
-const PaletteLabel = styled('span')(({ theme }) => {
+const PaletteLabel = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: theme.typography.caption.fontSize,
@@ -33,7 +33,7 @@ const PaletteLabel = styled('span')(({ theme }) => {
   };
 });
 
-const Swatch = styled('div')(({ theme }) => ({
+const Swatch = styled.div(({ theme }) => ({
   flex: 1,
   height: theme.spacing(4),
 }));

@@ -4,11 +4,11 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
-const TokenRow = styled('div')(({ theme }) => {
+const TokenRow = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -22,7 +22,7 @@ const TokenRow = styled('div')(({ theme }) => {
   };
 });
 
-const TokenName = styled('span')(({ theme }) => {
+const TokenName = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 100,
@@ -33,7 +33,7 @@ const TokenName = styled('span')(({ theme }) => {
   };
 });
 
-const TokenValue = styled('span')(({ theme }) => {
+const TokenValue = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 50,
@@ -45,7 +45,7 @@ const TokenValue = styled('span')(({ theme }) => {
   };
 });
 
-const Bar = styled('div')(({ theme }) => ({
+const Bar = styled.div(({ theme }) => ({
   height: 12,
   borderRadius: 3,
   backgroundColor: theme.mode === 'light' ? theme.colors.primary[400] : theme.colors.primary.default,

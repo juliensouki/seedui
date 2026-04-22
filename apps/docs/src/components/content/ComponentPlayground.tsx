@@ -149,7 +149,7 @@ function StablePreview() {
   );
 }
 
-const Wrapper = styled('div')(({ theme }) => {
+const Wrapper = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     borderRadius: theme.borderRadius(4),
@@ -158,7 +158,7 @@ const Wrapper = styled('div')(({ theme }) => {
   };
 });
 
-const PreviewPane = styled('div')<{ $standalone?: boolean }>(({ theme, $standalone }) => {
+const PreviewPane = styled.div<{ $standalone?: boolean }>(({ theme, $standalone }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: theme.spacing(3),
@@ -170,7 +170,7 @@ const PreviewPane = styled('div')<{ $standalone?: boolean }>(({ theme, $standalo
   };
 });
 
-const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) => ({
+const CodePane = styled.div<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) => ({
   position: 'relative',
   borderTop: $hasPreview
     ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`
@@ -197,7 +197,7 @@ const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview 
   },
 }));
 
-const ReadOnlyCode = styled('pre')(({ theme }) => ({
+const ReadOnlyCode = styled.pre(({ theme }) => ({
   padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`,
   fontSize: theme.typography.caption.fontSize,
   lineHeight: 1.6,
@@ -239,7 +239,7 @@ const CopyButton = styled(IconButton)<{ $centered?: boolean }>(({ theme, $center
   },
 }));
 
-const ErrorBar = styled('div')(({ theme }) => {
+const ErrorBar = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `${theme.spacing(1.5)}px ${theme.spacing(2)}px`,

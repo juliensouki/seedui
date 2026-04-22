@@ -24,7 +24,7 @@ const docsTheme: ThemeCustomization = {
   },
 };
 
-const Shell = styled('div')(({ theme }) => {
+const Shell = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -36,13 +36,13 @@ const Shell = styled('div')(({ theme }) => {
   };
 });
 
-const Body = styled('div')(() => ({
+const Body = styled.div(() => ({
   display: 'flex',
   flex: 1,
   overflow: 'hidden',
 }));
 
-const Content = styled('main')(({ theme }) => {
+const Content = styled.main(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     flex: 1,
@@ -62,7 +62,7 @@ const Content = styled('main')(({ theme }) => {
   };
 });
 
-const Inner = styled('div')(() => ({
+const Inner = styled.div(() => ({
   maxWidth: 1100,
   margin: '0 auto',
 }));

@@ -3,7 +3,7 @@ import styled from '@seedui-react/seedui/sc';
 
 type CalloutColor = 'info' | 'warning' | 'success' | 'error';
 
-const CalloutBox = styled('div')<{ $color: CalloutColor }>(({ theme, $color }) => {
+const CalloutBox = styled.div<{ $color: CalloutColor }>(({ theme, $color }) => {
   const isLight = theme.mode === 'light';
   const palette = theme.colors[$color];
   return {

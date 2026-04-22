@@ -7,7 +7,7 @@ interface TocItem {
   label: string;
 }
 
-const Nav = styled('nav')(({ theme }) => ({
+const Nav = styled.nav(({ theme }) => ({
   position: 'sticky' as const,
   top: theme.spacing(5),
   width: 180,
@@ -19,7 +19,7 @@ const Nav = styled('nav')(({ theme }) => ({
   },
 }));
 
-const Inner = styled('div')(({ theme }) => {
+const Inner = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     borderLeft: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
@@ -27,7 +27,7 @@ const Inner = styled('div')(({ theme }) => {
   };
 });
 
-const Indicator = styled('div')(({ theme }) => ({
+const Indicator = styled.div(({ theme }) => ({
   position: 'absolute',
   left: -17,
   width: 2,
@@ -36,11 +36,11 @@ const Indicator = styled('div')(({ theme }) => ({
   transition: 'top 0.25s ease, height 0.25s ease',
 }));
 
-const ItemList = styled('div')(() => ({
+const ItemList = styled.div(() => ({
   position: 'relative',
 }));
 
-const Item = styled('button')<{ $active: boolean }>(({ theme, $active }) => {
+const Item = styled.button<{ $active: boolean }>(({ theme, $active }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',

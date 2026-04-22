@@ -4,11 +4,11 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
-const Table = styled('table')(({ theme }) => {
+const Table = styled.table(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: '100%',
@@ -19,7 +19,7 @@ const Table = styled('table')(({ theme }) => {
   };
 });
 
-const Th = styled('th')(({ theme }) => {
+const Th = styled.th(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     textAlign: 'left' as const,
@@ -33,7 +33,7 @@ const Th = styled('th')(({ theme }) => {
   };
 });
 
-const Td = styled('td')(({ theme }) => {
+const Td = styled.td(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `${theme.spacing(2)}px 16px ${theme.spacing(2)}px 0`,
@@ -43,7 +43,7 @@ const Td = styled('td')(({ theme }) => {
   };
 });
 
-const usageCode = `const Container = styled('div')(({ theme }) => ({
+const usageCode = `const Container = styled.div(({ theme }) => ({
   padding: theme.spacing(2),
 
   [theme.breakpoints.up('md')]: {
