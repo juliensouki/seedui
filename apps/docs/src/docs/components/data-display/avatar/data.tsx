@@ -33,53 +33,38 @@ export const avatarDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'With image',
-      description: 'Pass a src prop to display an image. The name prop provides alt text and serves as a fallback if the image fails to load.',
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar src="https://i.pravatar.cc/150?img=1" name="Jane Doe" />
-  <Avatar src="https://i.pravatar.cc/150?img=2" name="John Smith" />
-  <Avatar src="https://i.pravatar.cc/150?img=3" name="Alex Kim" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar src="https://i.pravatar.cc/150?img=1" name="Jane Doe" />
+<Avatar src="https://i.pravatar.cc/150?img=2" name="John Smith" />
+<Avatar src="https://i.pravatar.cc/150?img=3" name="Alex Kim" />`,
     },
     {
-      title: 'With initials',
-      description: 'When no image is provided, initials are generated from the name prop. Single names show one letter, multi-word names show first and last initials.',
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar name="Jane Doe" color="primary" />
-  <Avatar name="John" color="success" />
-  <Avatar name="Alex Kim Park" color="warning" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar name="Jane Doe" color="primary" />
+<Avatar name="John" color="success" />
+<Avatar name="Alex Kim Park" color="warning" />`,
     },
     {
-      title: 'Sizes',
-      description: 'Use sm for dense layouts, md for general use, lg for profile pages, or pass a number for a custom pixel size.',
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar name="JD" size="sm" />
-  <Avatar name="JD" size="md" />
-  <Avatar name="JD" size="lg" />
-  <Avatar name="JD" size={60} />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar name="JD" size="sm" />
+<Avatar name="JD" size="md" />
+<Avatar name="JD" size="lg" />
+<Avatar name="JD" size={60} />`,
     },
     {
-      title: 'Colors',
-      description: 'Use color to differentiate avatars by role, team, or status when no image is available.',
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar name="AB" color="primary" />
-  <Avatar name="CD" color="neutral" />
-  <Avatar name="EF" color="success" />
-  <Avatar name="GH" color="info" />
-  <Avatar name="IJ" color="warning" />
-  <Avatar name="KL" color="error" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar name="AB" color="primary" />
+<Avatar name="CD" color="neutral" />
+<Avatar name="EF" color="success" />
+<Avatar name="GH" color="info" />
+<Avatar name="IJ" color="warning" />
+<Avatar name="KL" color="error" />`,
     },
     {
-      title: 'Fallback icon',
-      description: 'When neither src nor name is provided, a generic person icon is displayed.',
-      code: `<div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-  <Avatar size="sm" color="neutral" />
-  <Avatar size="md" color="neutral" />
-  <Avatar size="lg" color="neutral" />
-</div>`,
+      layout: { display: 'flex', gap: 12, alignItems: 'center' },
+      code: `<Avatar size="sm" color="neutral" />
+<Avatar size="md" color="neutral" />
+<Avatar size="lg" color="neutral" />`,
     },
   ],
 };

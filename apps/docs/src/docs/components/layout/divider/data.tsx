@@ -33,44 +33,30 @@ export const dividerDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Horizontal divider',
-      description: 'A horizontal divider separates stacked content. Use the spacing prop to control the vertical margin around it.',
-      code: `<div>
-  <Text variant="p">Section one</Text>
-  <Divider spacing={20} />
-  <Text variant="p">Section two</Text>
-</div>`,
+      code: `<Text variant="p">Section one</Text>
+<Divider spacing={20} />
+<Text variant="p">Section two</Text>`,
     },
     {
-      title: 'Vertical divider',
-      description: 'A vertical divider separates side-by-side content inside a flex layout. Set a height to match the surrounding elements.',
-      code: `<div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-  <Text variant="p">Left</Text>
-  <Divider vertical height={24} />
-  <Text variant="p">Right</Text>
-</div>`,
+      layout: { display: 'flex', alignItems: 'center', gap: 12 },
+      code: `<Text variant="p">Left</Text>
+<Divider vertical height={24} />
+<Text variant="p">Right</Text>`,
     },
     {
-      title: 'With text',
-      description: 'Pass children to display a label between the two lines.',
-      code: `<div style={{ maxWidth: 320 }}>
-  <Text variant="p">Section one</Text>
-  <Divider><Text variant="p">or</Text></Divider>
-  <Text variant="p">Section two</Text>
-</div>`,
+      layout: { maxWidth: 320 },
+      code: `<Text variant="p">Section one</Text>
+<Divider><Text variant="p">or</Text></Divider>
+<Text variant="p">Section two</Text>`,
     },
     {
-      title: 'Custom spacing',
-      description: 'Adjust the spacing prop to increase or decrease the breathing room around the divider.',
-      code: `<div>
-  <Text variant="p">spacing=8</Text>
-  <Divider spacing={8} />
-  <Text variant="p">spacing=20 (default)</Text>
-  <Divider spacing={20} />
-  <Text variant="p">spacing=40</Text>
-  <Divider spacing={40} />
-  <Text variant="p">End</Text>
-</div>`,
+      code: `<Text variant="p">spacing=8</Text>
+<Divider spacing={8} />
+<Text variant="p">spacing=20 (default)</Text>
+<Divider spacing={20} />
+<Text variant="p">spacing=40</Text>
+<Divider spacing={40} />
+<Text variant="p">End</Text>`,
     },
   ],
 };

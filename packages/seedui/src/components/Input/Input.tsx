@@ -79,23 +79,27 @@ const defaultProps: InputProps = {
 };
 
 const IconContainer = styled.div<StyledComponentsPrefix<{ placement: InputIconPlacement }>>(
-  ({ theme, $placement }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[700],
-    borderTopRightRadius: $placement === 'left' ? 0 : 'inherit',
-    borderBottomRightRadius: $placement === 'left' ? 0 : 'inherit',
-    borderTopLeftRadius: $placement === 'right' ? 0 : 'inherit',
-    borderBottomLeftRadius: $placement === 'right' ? 0 : 'inherit',
+  ({ theme, $placement }) => {
+    const isLight = theme.mode === 'light';
+    return {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: isLight ? theme.colors.neutral[300] : theme.colors.neutral[600],
+      borderTopRightRadius: $placement === 'left' ? 0 : 'inherit',
+      borderBottomRightRadius: $placement === 'left' ? 0 : 'inherit',
+      borderTopLeftRadius: $placement === 'right' ? 0 : 'inherit',
+      borderBottomLeftRadius: $placement === 'right' ? 0 : 'inherit',
 
-    padding: `0px ${theme.spacing(1)}px`,
+      padding: `0px ${theme.spacing(1)}px`,
 
-    '& svg': {
-      width: 18,
-      height: 18,
-    },
-  }),
+      '& svg': {
+        width: 18,
+        height: 18,
+        color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
+      },
+    };
+  },
 );
 
 const ValidationIconContainer = styled.div(({ theme }) => ({
@@ -144,7 +148,7 @@ const InputElement = applyCustomStyles(
       borderBottomRightRadius: $iconPlacement === 'right' ? 0 : 'inherit',
       borderTopLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
       borderBottomLeftRadius: $iconPlacement === 'left' ? 0 : 'inherit',
-      border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[600]}`,
+      border: `1px solid ${isLight ? theme.colors.neutral[300] : theme.colors.neutral[600]}`,
 
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
       color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
@@ -165,8 +169,7 @@ const InputElement = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: `2px solid ${theme.colors.primary[300]}`,
-        outlineOffset: 1,
+        outline: 'none',
         borderColor: theme.colors.primary.default,
         [`& + ${IconContainer}`]: {
           backgroundColor: theme.colors.primary.default,
@@ -178,12 +181,20 @@ const InputElement = applyCustomStyles(
       },
 
       '&:disabled': {
-        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[300],
         borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
         color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
 
         '&::placeholder': {
           color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+        },
+
+        [`& + ${IconContainer}`]: {
+          backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
+
+          '& > svg': {
+            color: theme.colors.neutral[400],
+          },
         },
       },
     };
@@ -197,6 +208,11 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
     flexDirection: $iconPlacement === 'right' ? 'row' : 'row-reverse',
     width: '100%',
     borderRadius: theme.borderRadius(4),
+
+    '&:focus-within': {
+      outline: `2px solid ${theme.colors.primary[400]}`,
+      outlineOffset: 1,
+    },
   }),
 );
 

@@ -4,18 +4,18 @@ import styled from '@seedui-react/seedui/sc';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { allPages } from './navigation';
 
-const Wrapper = styled('div')(({ theme }) => ({
+const Wrapper = styled.div(({ theme }) => ({
   marginTop: theme.spacing(6),
 }));
 
-const Nav = styled('div')(({ theme }) => ({
+const Nav = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: `${theme.spacing(2)}px 0`,
 }));
 
-const NavLink = styled('a')(({ theme }) => {
+const NavLink = styled.a(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -44,7 +44,7 @@ const Label = styled(Text)(({ theme }) => {
   };
 });
 
-const Side = styled('div')(({ theme }) => ({
+const Side = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(0.25),

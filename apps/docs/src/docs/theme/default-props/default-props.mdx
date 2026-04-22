@@ -43,52 +43,14 @@ function App() {
   return (
     <ThemeProvider mode="light" theme={theme}>
       <Button>Save</Button>
-      <Button size="sm" variant="filled">Cancel</Button>
+      <Button size="sm" variant="filled">
+        Cancel
+      </Button>
     </ThemeProvider>
   );
 }
 ```
-</section>
 
-<section id="section-multiple-components">
-## Multiple components
-
-You can configure defaults for as many components as you need in a single theme object.
-
-```tsx
-const theme: ThemeCustomization = {
-  components: {
-    button: {
-      defaultProps: {
-        size: 'md',
-        variant: 'filled',
-      },
-    },
-    input: {
-      defaultProps: {
-        size: 'lg',
-      },
-    },
-    tag: {
-      defaultProps: {
-        size: 'sm',
-        variant: 'outlined',
-        color: 'neutral',
-      },
-    },
-    modal: {
-      defaultProps: {
-        size: 'md',
-      },
-    },
-    text: {
-      defaultProps: {
-        variant: 'p',
-      },
-    },
-  },
-};
-```
 </section>
 
 <section id="section-priority-order">
@@ -106,7 +68,7 @@ Props are resolved in the following order, from highest to lowest priority:
   </thead>
   <tbody>
     <tr>
-      <Td>1 (highest)</Td>
+      <Td>1</Td>
       <Td><code>{'<Button size="sm" />'}</code></Td>
       <Td>Props passed directly to the component instance.</Td>
     </tr>
@@ -116,7 +78,7 @@ Props are resolved in the following order, from highest to lowest priority:
       <Td>Global defaults set via ThemeProvider.</Td>
     </tr>
     <tr>
-      <Td>3 (lowest)</Td>
+      <Td>3</Td>
       <Td>Component built-in defaults</Td>
       <Td>The component's own internal default values.</Td>
     </tr>
@@ -151,4 +113,5 @@ const theme: ThemeCustomization = {
   },
 };
 ```
+
 </section>

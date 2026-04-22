@@ -23,11 +23,17 @@ const SelectSchema: FunctionComponent = () => (
           <Col>
             <Box $dashed>
               <BoxLabel>Menu item</BoxLabel>
-              <Placeholder>option</Placeholder>
+              <Row>
+                <Placeholder>icon</Placeholder>
+                <Placeholder $grow>option</Placeholder>
+              </Row>
             </Box>
             <Box $dashed>
               <BoxLabel>Menu item</BoxLabel>
-              <Placeholder>option</Placeholder>
+              <Row>
+                <Placeholder>icon</Placeholder>
+                <Placeholder $grow>option</Placeholder>
+              </Row>
             </Box>
           </Col>
         </Box>

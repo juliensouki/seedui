@@ -38,8 +38,6 @@ export const avatarStackDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic stack',
-      description: 'Avatars overlap naturally. Each avatar receives a border to maintain visual separation.',
       code: `<AvatarStack>
   <Avatar src="https://i.pravatar.cc/150?img=1" name="Jane Doe" />
   <Avatar src="https://i.pravatar.cc/150?img=2" name="John Smith" />
@@ -47,8 +45,6 @@ export const avatarStackDoc: ComponentDoc = {
 </AvatarStack>`,
     },
     {
-      title: 'With overflow',
-      description: 'Set max to limit visible avatars. A "+N" indicator shows how many are hidden.',
       code: `<AvatarStack max={2}>
   <Avatar name="Jane Doe" color="primary" />
   <Avatar name="John Smith" color="success" />
@@ -58,41 +54,35 @@ export const avatarStackDoc: ComponentDoc = {
 </AvatarStack>`,
     },
     {
-      title: 'Sizes',
-      description: 'The size prop controls all avatars in the stack uniformly.',
-      code: `<div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-  <AvatarStack size="sm">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-  <AvatarStack size="md">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-  <AvatarStack size="lg">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-</div>`,
+      layout: { display: 'flex', alignItems: 'center', gap: 16 },
+      code: `<AvatarStack size="sm">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>
+<AvatarStack size="md">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>
+<AvatarStack size="lg">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>`,
     },
     {
-      title: 'Direction',
-      description: 'Controls which avatar appears on top. "left" (default) puts the first avatar on top, "right" puts the last on top.',
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-  <AvatarStack direction="left">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-  <AvatarStack direction="right">
-    <Avatar name="AB" color="primary" />
-    <Avatar name="CD" color="success" />
-    <Avatar name="EF" color="info" />
-  </AvatarStack>
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 16 },
+      code: `<AvatarStack direction="left">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>
+<AvatarStack direction="right">
+  <Avatar name="AB" color="primary" />
+  <Avatar name="CD" color="success" />
+  <Avatar name="EF" color="info" />
+</AvatarStack>`,
     },
   ],
 };

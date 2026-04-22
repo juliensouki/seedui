@@ -3,12 +3,17 @@ import styled from 'styled-components';
 
 import { Text, TextPropsAndAttributes } from '../../Text';
 import { joinClasses } from '../../../utils/classes';
+import { StyledProps } from '../../../types/internal';
 
 const RootDiv = styled.div<{ $width?: string | number }>(({ $width }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 4,
   width: $width || '100%',
+}));
+
+const LabelText = styled(Text)(({ theme }: StyledProps<object>) => ({
+  color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral[900],
 }));
 
 interface ContainerWithLabelProps {
@@ -38,9 +43,9 @@ export const ContainerWithLabel: FunctionComponent<ContainerWithLabelProps> = ({
     return (
       <RootDiv {...root} className={mergedClassName} $width={width}>
         {label && (
-          <Text {...labelTextProps} variant="caption">
+          <LabelText {...labelTextProps} variant="caption">
             {label}
-          </Text>
+          </LabelText>
         )}
         {children}
       </RootDiv>

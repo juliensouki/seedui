@@ -1,4 +1,5 @@
 import {
+  CSSProperties,
   FunctionComponent,
   ReactNode,
   useEffect,
@@ -17,6 +18,7 @@ import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 import tsx from 'shiki/langs/tsx.mjs';
 import darkPlus from 'shiki/themes/dark-plus.mjs';
 import * as seedui from '@seedui-react/seedui';
+import { IconButton } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { CopyIcon, CheckIcon } from 'lucide-react';
 
@@ -41,36 +43,33 @@ function highlightCode(code: string): string {
 }
 
 function prepareCode(code: string): { code: string; noInline: boolean } {
-  const hasHooks = /\buse[A-Z]\w*\s*\(/.test(code);
+  const trimmed = code.trim();
+  const hasHooks = /\buse[A-Z]\w*\s*\(/.test(trimmed);
 
-  if (!hasHooks) {
-    return { code: code.trim(), noInline: false };
-  }
+  if (!hasHooks) return { code: `<>${trimmed}</>`, noInline: false };
 
-  const lines = code.split('\n');
-  const firstJsxIdx = lines.findIndex((l) => l.trim().startsWith('<'));
+  const lines = trimmed.split('\n');
+  const firstJsxLine = lines.findIndex((l) => l.trim().startsWith('<'));
+  if (firstJsxLine === -1) return { code: trimmed, noInline: false };
 
-  if (firstJsxIdx === -1) {
-    return { code: code.trim(), noInline: false };
-  }
+  const statements = lines.slice(0, firstJsxLine).filter((l) => l.trim());
+  const jsx = lines.slice(firstJsxLine).join('\n    ');
 
-  const statements = lines.slice(0, firstJsxIdx).filter((l) => l.trim());
-  const jsx = lines.slice(firstJsxIdx);
-  const jsxStr = jsx.join('\n    ');
-
-  const wrapped = `function Demo() {
-  ${statements.join('\n  ')}
-  return (
-    <>${jsxStr}</>
-  );
-}
-
-render(<Demo />)`;
+  const wrapped = [
+    'function Demo() {',
+    ...statements.map((s) => '  ' + s),
+    '  return (',
+    `    <>${jsx}</>`,
+    '  );',
+    '}',
+    '',
+    'render(<Demo />)',
+  ].join('\n');
 
   return { code: wrapped, noInline: true };
 }
 
-function StablePreview() {
+function StablePreview({ style }: { style?: CSSProperties }) {
   const { error, element } = useContext(LiveContext);
   const liveRef = useRef<HTMLDivElement>(null);
   const snapshotRef = useRef('');
@@ -88,37 +87,40 @@ function StablePreview() {
   return (
     <>
       <div ref={liveRef} style={hasError && snapshotRef.current ? { display: 'none' } : undefined}>
-        <LivePreview />
+        <LivePreview style={style} />
       </div>
       {hasError && snapshotRef.current && <div dangerouslySetInnerHTML={{ __html: snapshotRef.current }} />}
     </>
   );
 }
 
-const Wrapper = styled('div')(({ theme }) => {
+const Wrapper = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     borderRadius: theme.borderRadius(4),
     border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
-    overflow: 'hidden' as const,
     marginBottom: theme.spacing(3),
   };
 });
 
-const PreviewPane = styled('div')(({ theme }) => {
+const PreviewPane = styled.div<{ $standalone?: boolean }>(({ theme, $standalone }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: theme.spacing(3),
     backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[100],
+    borderRadius: $standalone ? theme.borderRadius(4) : `${theme.borderRadius(4)}px ${theme.borderRadius(4)}px 0 0`,
+    overflow: 'visible',
   };
 });
 
-const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) => ({
+const CodePane = styled.div<{ $hasPreview?: boolean }>(({ theme, $hasPreview }) => ({
   position: 'relative',
   borderTop: $hasPreview
     ? `1px solid ${theme.mode === 'light' ? theme.colors.neutral[200] : theme.colors.neutral[300]}`
     : undefined,
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[900] : theme.colors.neutral[200],
+  borderRadius: $hasPreview ? `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px` : theme.borderRadius(4),
+  overflow: 'hidden',
 
   '& .code-editor': {
     fontFamily: "'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace !important",
@@ -136,7 +138,7 @@ const CodePane = styled('div')<{ $hasPreview?: boolean }>(({ theme, $hasPreview 
   },
 }));
 
-const ReadOnlyCode = styled('pre')(({ theme }) => ({
+const ReadOnlyCode = styled.pre(({ theme }) => ({
   padding: `${theme.spacing(2)}px ${theme.spacing(6)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`,
   fontSize: theme.typography.caption.fontSize,
   lineHeight: 1.6,
@@ -146,33 +148,39 @@ const ReadOnlyCode = styled('pre')(({ theme }) => ({
   background: 'transparent',
 }));
 
-const CopyButton = styled('button')<{ $centered?: boolean }>(({ theme, $centered }) => {
-  const isLight = theme.mode === 'light';
-  return {
-    position: 'absolute',
-    top: $centered ? '50%' : theme.spacing(1),
-    transform: $centered ? 'translateY(-50%)' : undefined,
-    right: theme.spacing(1),
-    zIndex: 2,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: theme.spacing(4),
-    height: theme.spacing(4),
-    borderRadius: theme.borderRadius(3),
-    border: 'none',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[800],
-    transition: 'color 0.15s, background-color 0.15s',
-    '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[300],
-      color: isLight ? theme.colors.neutral[200] : theme.colors.neutral[800],
-    },
-  };
-});
+const CopyButton = styled(IconButton)<{ $centered?: boolean }>(({ theme, $centered }) => ({
+  position: 'absolute',
+  top: $centered ? '50%' : theme.spacing(1),
+  transform: $centered ? 'translateY(-50%)' : undefined,
+  right: theme.spacing(1),
+  zIndex: 2,
+  backgroundColor: 'transparent',
+  color: theme.colors.neutral.white,
+  '& svg': {
+    color: theme.colors.neutral.white,
+    width: 14,
+    height: 14,
+  },
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  '&:focus': {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    outline: '2px solid rgba(255, 255, 255, 0.25)',
+    outlineOffset: 1,
+  },
+  '&:active': {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    outline: '2px solid rgba(255, 255, 255, 0.3)',
+    outlineOffset: 1,
+    ...($centered && { transform: 'translateY(-50%) scale(0.95)' }),
+  },
+  '&:hover svg, &:focus svg, &:active svg': {
+    color: theme.colors.neutral.white,
+  },
+}));
 
-const ErrorBar = styled('div')(({ theme }) => {
+const ErrorBar = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `${theme.spacing(1.5)}px ${theme.spacing(2)}px`,
@@ -202,6 +210,8 @@ interface ComponentPlaygroundProps {
   preview?: ReactNode;
   /** Background for the preview pane. */
   previewBg?: 'contrast' | string;
+  /** Layout styles applied to a wrapper around the rendered preview. */
+  layout?: CSSProperties;
   /** Additional scope variables for react-live. */
   scope?: Record<string, unknown>;
   /** When true, shows code as read-only with syntax highlighting (no live editing). */
@@ -214,6 +224,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   code,
   preview,
   previewBg: previewBgProp,
+  layout,
   scope,
   readOnly,
   language = 'tsx',
@@ -240,7 +251,9 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   if (!code) {
     return (
       <Wrapper>
-        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <PreviewPane $standalone style={previewBg ? { backgroundColor: previewBg } : undefined}>
+          {layout ? <div style={layout}>{preview}</div> : preview}
+        </PreviewPane>
       </Wrapper>
     );
   }
@@ -251,7 +264,14 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
     return (
       <Wrapper>
         <CodePane>
-          <CopyButton $centered={isSingleLine} onClick={handleCopy} title="Copy code">
+          <CopyButton
+            $centered={isSingleLine}
+            variant="transparent"
+            color="neutral"
+            size="sm"
+            onClick={handleCopy}
+            title="Copy code"
+          >
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
           <Highlight theme={themes.vsDark} code={code.trim()} language={language}>
@@ -273,7 +293,7 @@ export const ComponentPlayground: FunctionComponent<ComponentPlaygroundProps> = 
   }
 
   // Live playground mode
-  return <LivePlayground code={code} preview={preview} previewBg={previewBg} scope={scope} />;
+  return <LivePlayground code={code} preview={preview} previewBg={previewBg} layout={layout} scope={scope} />;
 };
 
 // Separated to avoid hooks running in read-only/preview-only paths
@@ -281,8 +301,9 @@ const LivePlayground: FunctionComponent<{
   code: string;
   preview?: ReactNode;
   previewBg?: string;
+  layout?: CSSProperties;
   scope?: Record<string, unknown>;
-}> = ({ code, preview, previewBg, scope }) => {
+}> = ({ code, preview, previewBg, layout, scope }) => {
   const theme = useTheme();
   const initialPrepared = useMemo(() => prepareCode(code), [code]);
 
@@ -318,12 +339,12 @@ const LivePlayground: FunctionComponent<{
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
-  const hasPreview = !!preview || !preview; // always show preview pane for live mode
+  const staticPreview = layout ? <div style={layout}>{preview}</div> : preview;
 
   if (!mounted) {
     return (
       <Wrapper>
-        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{staticPreview}</PreviewPane>
         <CodePane $hasPreview>
           <pre
             className="code-editor"
@@ -338,7 +359,7 @@ const LivePlayground: FunctionComponent<{
               whiteSpace: 'pre-wrap',
             }}
           >
-            <code>{code}</code>
+            <code>{editorCode}</code>
           </pre>
         </CodePane>
       </Wrapper>
@@ -348,9 +369,9 @@ const LivePlayground: FunctionComponent<{
   if (preview) {
     return (
       <Wrapper>
-        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{preview}</PreviewPane>
+        <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>{staticPreview}</PreviewPane>
         <CodePane $hasPreview>
-          <CopyButton onClick={handleCopy} title="Copy code">
+          <CopyButton variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
           <SimpleEditor
@@ -374,10 +395,10 @@ const LivePlayground: FunctionComponent<{
     >
       <Wrapper>
         <PreviewPane style={previewBg ? { backgroundColor: previewBg } : undefined}>
-          <StablePreview />
+          <StablePreview style={layout} />
         </PreviewPane>
         <CodePane $hasPreview>
-          <CopyButton onClick={handleCopy} title="Copy code">
+          <CopyButton variant="transparent" color="neutral" size="sm" onClick={handleCopy} title="Copy code">
             {copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
           </CopyButton>
           <SimpleEditor

@@ -40,8 +40,6 @@ export const toggleDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic toggle',
-      description: 'A controlled switch with a label. The change takes effect immediately, making it ideal for settings that don\'t require a form submission.',
       code: `const [checked, setChecked] = useState(false);
 
 <Toggle
@@ -51,25 +49,19 @@ export const toggleDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Sizes',
-      description: 'Three sizes are available. Small works in dense settings panels, while large provides a bigger hit target for touch interfaces.',
+      layout: { display: 'flex', flexDirection: 'column', gap: 12 },
       code: `const [a, setA] = useState(false);
 const [b, setB] = useState(true);
 const [c, setC] = useState(false);
 
-<div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-  <Toggle size="sm" checked={a} onChange={() => setA(!a)} label="Small" />
-  <Toggle size="md" checked={b} onChange={() => setB(!b)} label="Medium" />
-  <Toggle size="lg" checked={c} onChange={() => setC(!c)} label="Large" />
-</div>`,
+<Toggle size="sm" checked={a} onChange={() => setA(!a)} label="Small" />
+<Toggle size="md" checked={b} onChange={() => setB(!b)} label="Medium" />
+<Toggle size="lg" checked={c} onChange={() => setC(!c)} label="Large" />`,
     },
     {
-      title: 'Disabled',
-      description: 'A disabled toggle is visually muted and cannot be interacted with. Use it when a setting is locked or unavailable.',
-      code: `<div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-  <Toggle checked={false} onChange={() => {}} label="Disabled off" disabled />
-  <Toggle checked={true} onChange={() => {}} label="Disabled on" disabled />
-</div>`,
+      layout: { display: 'flex', flexDirection: 'column', gap: 12 },
+      code: `<Toggle checked={false} onChange={() => {}} label="Disabled off" disabled />
+<Toggle checked={true} onChange={() => {}} label="Disabled on" disabled />`,
     },
   ],
 };

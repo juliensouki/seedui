@@ -45,8 +45,6 @@ export const searchBarDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic search',
-      description: 'A controlled search bar with a placeholder. The onChange fires on every keystroke for real-time filtering.',
       code: `const [value, setValue] = useState('');
 
 <SearchBar
@@ -57,8 +55,6 @@ export const searchBarDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Custom button label',
-      description: 'Change the search button text with the buttonLabel prop to match your context.',
       code: `const [value, setValue] = useState('');
 
 <SearchBar
@@ -70,8 +66,6 @@ export const searchBarDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Disabled',
-      description: 'A disabled search bar prevents interaction. Use it when search is temporarily unavailable.',
       code: `<SearchBar
   value=""
   onChange={() => {}}

@@ -49,8 +49,6 @@ export const inputDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic input',
-      description: 'A controlled text input with a label and placeholder. This is the most common usage pattern.',
       code: `const [value, setValue] = useState('');
 
 <Input
@@ -62,8 +60,6 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Password input',
-      description: 'Set type to "password" to mask the input. The browser handles toggling visibility natively.',
       code: `const [value, setValue] = useState('');
 
 <Input
@@ -76,8 +72,6 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'With validation',
-      description: 'Pass a validation function to provide real-time visual feedback. The function receives the current value and should return true if valid.',
       code: `const [value, setValue] = useState('');
 
 <Input
@@ -90,8 +84,26 @@ export const inputDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Disabled',
-      description: 'A disabled input is visually muted and does not accept user interaction.',
+      code: `const [value, setValue] = useState('');
+
+<Input
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+  label="Search"
+  placeholder="Search..."
+  inputIcon={{
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="11" cy="11" r="8" />
+        <path d="M21 21l-4.35-4.35" />
+      </svg>
+    ),
+    placement: 'left',
+  }}
+  width={300}
+/>`,
+    },
+    {
       code: `<Input
   value="Read only value"
   onChange={() => {}}

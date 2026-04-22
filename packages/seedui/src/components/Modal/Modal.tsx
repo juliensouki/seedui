@@ -9,6 +9,8 @@ import { applyCustomStyles } from '../../utils/custom-styles';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
 import { Text } from '../Text';
+import { IconButton } from '../Button';
+import { XIcon } from 'lucide-react';
 
 /** A dialog overlay that focuses attention on a specific task or message. */
 export interface ModalProps {
@@ -28,6 +30,8 @@ export interface ModalProps {
   closeOnEscape?: boolean;
   /** Modal width — number (px) or string. Defaults to 500px. */
   width?: string | number;
+  /** Inner padding of the modal body — a number (px) or any valid CSS padding string. Defaults to 16px. */
+  padding?: number | string;
   /** Access underlying DOM elements (overlay, container, header, content, closeButton). */
   elementProps?: {
     overlay?: HTMLAttributes<HTMLDivElement>;
@@ -45,6 +49,7 @@ const defaultProps: ModalProps = {
   closeOnOverlayClick: true,
   closeOnEscape: true,
   width: 500,
+  padding: 16,
   elementProps: {
     overlay: {},
     container: {},
@@ -88,7 +93,7 @@ const ModalContainer = applyCustomStyles(
       width: typeof $width === 'number' ? `${$width}px` : $width,
       maxWidth: '90vw',
       maxHeight: '90vh',
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
       borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[3],
       display: 'flex',
@@ -120,43 +125,14 @@ const ModalHeader = styled.div<StyledComponentsPrefix<Record<string, never>>>(({
   };
 });
 
-const ModalContent = styled.div<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => ({
-  padding: `${theme.spacing(2)}px`,
+const resolvePadding = (padding: number | string): string =>
+  typeof padding === 'number' ? `${padding}px` : padding;
+
+const ModalContent = styled.div<StyledComponentsPrefix<{ padding: number | string }>>(({ $padding }) => ({
+  padding: resolvePadding($padding),
   overflowY: 'auto',
   flex: 1,
 }));
-
-const CloseButton = styled.button<StyledComponentsPrefix<Record<string, never>>>(({ theme }) => {
-  const isLight = theme.mode === 'light';
-
-  return {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: theme.spacing(0.5),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: theme.borderRadius(2),
-    color: theme.colors.neutral[600],
-    transition: 'background-color 0.15s ease-in-out, color 0.15s ease-in-out',
-
-    '&:hover': {
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
-      color: isLight ? theme.colors.neutral[900] : theme.colors.neutral.white,
-    },
-
-    '&:focus': {
-      outline: `2px solid ${theme.colors.primary[300]}`,
-      outlineOffset: 2,
-    },
-
-    '& svg': {
-      width: 20,
-      height: 20,
-    },
-  };
-});
 
 /** A dialog overlay that focuses user attention on a task, confirmation, or message. */
 export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
@@ -171,6 +147,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
       closeOnOverlayClick,
       closeOnEscape,
       width,
+      padding,
       elementProps: {
         overlay: overlayHTMLAttributes,
         container: containerHTMLAttributes,
@@ -249,22 +226,23 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
                 </Text>
               )}
               {showCloseButton && (
-                <CloseButton
+                <IconButton
                   {...closeButtonHTMLAttributes}
                   onClick={onClose}
-                  type="button"
+                  variant="transparent"
+                  color="neutral"
+                  size="sm"
                   aria-label="Close modal"
                   className={joinClasses('modal-close-button', closeButtonHTMLAttributes?.className)}
                 >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </CloseButton>
+                  <XIcon size={18} />
+                </IconButton>
               )}
             </ModalHeader>
           )}
           <ModalContent
             {...contentHTMLAttributes}
+            $padding={padding}
             className={joinClasses('modal-content', contentHTMLAttributes?.className)}
           >
             {children}

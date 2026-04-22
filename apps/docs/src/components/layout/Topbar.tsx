@@ -4,8 +4,9 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
+import { BASE_GITHUB_URL } from '../../constants';
 
-const Bar = styled('header')(({ theme }) => {
+const Bar = styled.header(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     height: theme.spacing(7),
@@ -21,7 +22,7 @@ const Bar = styled('header')(({ theme }) => {
   };
 });
 
-const MenuButton = styled('div')(({ theme }) => ({
+const MenuButton = styled.div(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.down('md')]: {
     display: 'flex',
@@ -30,20 +31,20 @@ const MenuButton = styled('div')(({ theme }) => ({
   },
 }));
 
-const DesktopOnly = styled('div')(({ theme }) => ({
+const DesktopOnly = styled.div(({ theme }) => ({
   display: 'contents',
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
 }));
 
-const RightSection = styled('div')(({ theme }) => ({
+const RightSection = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(0.5),
 }));
 
-const VerticalDivider = styled('div')(({ theme }) => {
+const VerticalDivider = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 1,
@@ -52,13 +53,13 @@ const VerticalDivider = styled('div')(({ theme }) => {
   };
 });
 
-const ThemeToggle = styled('div')(({ theme }) => ({
+const ThemeToggle = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(1),
 }));
 
-const ResultList = styled('div')(({ theme }) => ({
+const ResultList = styled.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column' as const,
   minWidth: 280,
@@ -70,12 +71,12 @@ const ResultList = styled('div')(({ theme }) => ({
 
 const SectionLabel = styled(Text)(({ theme }) => ({
   padding: `${theme.spacing(1)}px ${theme.spacing(1.75)}px ${theme.spacing(0.5)}px`,
-  color: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[600],
+  color: theme.mode === 'light' ? theme.colors.neutral[600] : theme.colors.neutral[800],
   textTransform: 'uppercase' as const,
   letterSpacing: '0.04em',
 }));
 
-const ResultItem = styled('button')(({ theme }) => {
+const ResultItem = styled.button(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'block',
@@ -152,15 +153,32 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             {mobileMenuOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
           </IconButton>
         </MenuButton>
-        <img
-          src="/logo-black.svg"
-          alt="seedui"
-          height={24}
-          width={24}
-          style={mode === 'dark' ? { filter: 'invert(1)' } : undefined}
-        />
-        <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', fontFamily: theme.typography.h1.fontFamily, color: mode === 'dark' ? theme.colors.neutral.white : undefined }}>seedui</span>
-        <Tag color="neutral" size="sm">docs</Tag>
+        <a
+          href="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: theme.spacing(1.25),
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
+          <img
+            src="/logo-black.svg"
+            alt="seedui"
+            height={24}
+            width={24}
+            style={mode === 'dark' ? { filter: 'invert(1)' } : undefined}
+          />
+          <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', fontFamily: theme.typography.h1.fontFamily, color: mode === 'dark' ? theme.colors.neutral.white : undefined }}>seedui</span>
+        </a>
+        <Tag
+          color="neutral"
+          size="sm"
+          elementProps={{ root: { style: { minHeight: 'unset', borderRadius: 12 } } }}
+        >
+          docs
+        </Tag>
       </div>
       <RightSection>
         <DesktopOnly>
@@ -168,7 +186,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             variant="transparent"
             color="neutral"
             size="md"
-            onClick={() => window.open('https://github.com', '_blank')}
+            onClick={() => window.open(BASE_GITHUB_URL, '_blank', 'noopener,noreferrer')}
           >
             <GithubIcon size={18} />
           </IconButton>
@@ -183,55 +201,61 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
           <VerticalDivider style={{ margin: `0 ${theme.spacing(1)}px` }} />
         </DesktopOnly>
         <DesktopOnly>
-          {mounted ? (
-            <Popover
-              isOpen={popoverOpen}
-              onClose={() => setPopoverOpen(false)}
-              verticalAlignment="bottom"
-              horizontalAlignment="center"
-              elementProps={{
-                panel: {
-                  style: mode === 'dark' ? { backgroundColor: theme.colors.neutral[300] } : undefined,
-                },
-              }}
-              content={
-                <ResultList>
-                  {groupedResults.length > 0 ? (
-                    groupedResults.map((group) => (
-                      <div key={group.section}>
-                        <SectionLabel variant="small">{group.section}</SectionLabel>
-                        {group.pages.map((page) => (
-                          <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
-                            <Text variant="p">{page.name}</Text>
-                          </ResultItem>
-                        ))}
-                      </div>
-                    ))
-                  ) : (
-                    <NoResults variant="p">No results found</NoResults>
-                  )}
-                </ResultList>
-              }
-            >
+          {(() => {
+            const searchBar = (
               <SearchBar
-                value={search}
-                onChange={handleChange}
+                value={mounted ? search : ''}
+                onChange={mounted ? handleChange : () => {}}
                 placeholder="Search docs..."
                 width={260}
                 hideButton
-                style={mode === 'dark' ? { backgroundColor: theme.colors.neutral[400] } : undefined}
+                elementProps={{
+                  root: {
+                    style: {
+                      padding: '8px 8px 8px 4px',
+                      backgroundColor: mode === 'dark' ? theme.colors.neutral[400] : theme.colors.neutral[100],
+                    },
+                  },
+                }}
               />
-            </Popover>
-          ) : (
-            <SearchBar
-              value=""
-              onChange={() => {}}
-              placeholder="Search docs..."
-              width={260}
-              hideButton
-              style={mode === 'dark' ? { backgroundColor: theme.colors.neutral[400] } : undefined}
-            />
-          )}
+            );
+            if (!mounted) return searchBar;
+            return (
+              <Popover
+                isOpen={popoverOpen}
+                onClose={() => setPopoverOpen(false)}
+                verticalAlignment="bottom"
+                horizontalAlignment="center"
+                elementProps={{
+                  panel: {
+                    style: {
+                      backgroundColor: mode === 'dark' ? theme.colors.neutral[300] : theme.colors.neutral.white,
+                    },
+                  },
+                }}
+                content={
+                  <ResultList>
+                    {groupedResults.length > 0 ? (
+                      groupedResults.map((group) => (
+                        <div key={group.section}>
+                          <SectionLabel variant="small">{group.section}</SectionLabel>
+                          {group.pages.map((page) => (
+                            <ResultItem key={page.path} onClick={() => handleSelect(page.path)}>
+                              <Text variant="p">{page.name}</Text>
+                            </ResultItem>
+                          ))}
+                        </div>
+                      ))
+                    ) : (
+                      <NoResults variant="p">No results found</NoResults>
+                    )}
+                  </ResultList>
+                }
+              >
+                {searchBar}
+              </Popover>
+            );
+          })()}
           <VerticalDivider style={{ margin: `0 ${theme.spacing(1)}px` }} />
         </DesktopOnly>
         <ThemeToggle>

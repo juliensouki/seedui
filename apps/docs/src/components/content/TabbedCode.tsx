@@ -4,52 +4,79 @@ import { ComponentPlayground } from './ComponentPlayground';
 
 type PkgManager = 'yarn' | 'npm';
 
-const CodeToolbar = styled('div')(({ theme }) => {
+const TabbedCodeWrapper = styled.div(({ theme }) => ({
+  marginBottom: theme.spacing(3),
+  '& > div:last-child': {
+    borderRadius: `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px`,
+    borderTop: 'none',
+    marginBottom: 0,
+    '& > div': {
+      borderRadius: `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px`,
+    },
+  },
+}));
+
+const CodeToolbar = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
-    gap: theme.spacing(0.5),
-    padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
-    backgroundColor: isLight ? theme.colors.neutral[800] : theme.colors.neutral[300],
+    alignItems: 'stretch',
+    padding: `0 ${theme.spacing(1)}px`,
+    backgroundColor: isLight ? theme.colors.neutral[900] : theme.colors.neutral[200],
+    border: `1px solid ${isLight ? theme.colors.neutral[200] : theme.colors.neutral[300]}`,
+    borderBottom: `1px solid rgba(255, 255, 255, 0.12)`,
     borderRadius: `${theme.borderRadius(4)}px ${theme.borderRadius(4)}px 0 0`,
   };
 });
 
-const PmButton = styled('button')<{ $active: boolean }>(({ $active, theme }) => {
+const PmButton = styled.button<{ $active: boolean }>(({ $active, theme }) => {
   const isLight = theme.mode === 'light';
+  const activeColor = isLight ? theme.colors.primary[400] : theme.colors.primary[700];
+  const inactiveColor = isLight ? theme.colors.neutral[400] : theme.colors.neutral[800];
+  const hoverColor = isLight ? theme.colors.neutral.white : theme.colors.neutral[900];
   return {
-    padding: `${theme.spacing(0.5)}px ${theme.spacing(1.5)}px`,
+    position: 'relative',
+    padding: `${theme.spacing(1.25)}px ${theme.spacing(1.5)}px`,
     fontSize: theme.typography.caption.fontSize,
-    fontWeight: 500,
+    fontWeight: $active ? 600 : 500,
     fontFamily: "'SF Mono', 'Fira Code', monospace",
     border: 'none',
-    borderRadius: theme.borderRadius(2),
+    background: 'transparent',
     cursor: 'pointer',
-    transition: 'all 0.15s',
-    backgroundColor: $active ? (isLight ? theme.colors.neutral[600] : theme.colors.neutral[400]) : 'transparent',
-    color: $active ? (isLight ? theme.colors.neutral[100] : theme.colors.neutral[900]) : (isLight ? theme.colors.neutral[500] : theme.colors.neutral[700]),
+    transition: 'color 0.15s ease',
+    color: $active ? activeColor : inactiveColor,
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      left: theme.spacing(1.5),
+      right: theme.spacing(1.5),
+      bottom: -1,
+      height: 2,
+      backgroundColor: $active ? activeColor : 'transparent',
+      borderRadius: `${theme.borderRadius(1)}px ${theme.borderRadius(1)}px 0 0`,
+      transition: 'background-color 0.15s ease',
+    },
     '&:hover': {
-      backgroundColor: $active ? (isLight ? theme.colors.neutral[600] : theme.colors.neutral[400]) : (isLight ? theme.colors.neutral[700] : theme.colors.neutral[300]),
+      color: $active ? activeColor : hoverColor,
+    },
+    '&:focus-visible': {
+      outline: 'none',
+      color: $active ? activeColor : hoverColor,
+    },
+    '&:focus-visible::after': {
+      backgroundColor: activeColor,
+      opacity: $active ? 1 : 0.4,
     },
   };
 });
-
-const TabbedCodeWrapper = styled('div')(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-  '& > div:last-child': {
-    borderRadius: `0 0 ${theme.borderRadius(4)}px ${theme.borderRadius(4)}px`,
-    border: 'none',
-    marginBottom: 0,
-  },
-}));
 
 export const TabbedCode: FunctionComponent<{ commands: Record<PkgManager, string> }> = ({ commands }) => {
   const [pm, setPm] = useState<PkgManager>('yarn');
   return (
     <TabbedCodeWrapper>
-      <CodeToolbar>
-        <PmButton $active={pm === 'yarn'} onClick={() => setPm('yarn')}>yarn</PmButton>
-        <PmButton $active={pm === 'npm'} onClick={() => setPm('npm')}>npm</PmButton>
+      <CodeToolbar role="tablist">
+        <PmButton role="tab" aria-selected={pm === 'yarn'} $active={pm === 'yarn'} onClick={() => setPm('yarn')}>yarn</PmButton>
+        <PmButton role="tab" aria-selected={pm === 'npm'} $active={pm === 'npm'} onClick={() => setPm('npm')}>npm</PmButton>
       </CodeToolbar>
       <ComponentPlayground code={commands[pm]} readOnly language="bash" />
     </TabbedCodeWrapper>

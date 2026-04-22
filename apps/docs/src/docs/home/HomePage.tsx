@@ -3,18 +3,20 @@ import { Text, Divider, Button } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { GithubIcon } from 'lucide-react';
 import { WallContent } from './wallOfComponents';
+import { Footer } from './Footer';
+import { BASE_GITHUB_URL } from '../../constants';
 
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
-const FeatureGrid = styled('div')(() => ({
+const FeatureGrid = styled.div(() => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
   gap: 20,
 }));
 
-const FeatureCard = styled('div')(({ theme }) => {
+const FeatureCard = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: '20px 24px',
@@ -27,13 +29,12 @@ const FeatureCard = styled('div')(({ theme }) => {
 const FeatureDescription = styled(Text)(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
-    color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+    ...(isLight && { color: theme.colors.neutral[500] }),
     fontSize: 14,
-    lineHeight: 1.5,
   };
 });
 
-const HeroSection = styled('div')(() => ({
+const HeroSection = styled.div(() => ({
   display: 'flex',
   alignItems: 'stretch',
   gap: 0,
@@ -44,7 +45,7 @@ const HeroSection = styled('div')(() => ({
   position: 'relative' as const,
 }));
 
-const HeroLeft = styled('div')(() => ({
+const HeroLeft = styled.div(() => ({
   flex: '0 0 400px',
   display: 'flex',
   flexDirection: 'column' as const,
@@ -54,14 +55,14 @@ const HeroLeft = styled('div')(() => ({
   zIndex: 2,
 }));
 
-const HeroRight = styled('div')(() => ({
+const HeroRight = styled.div(() => ({
   flex: 1,
   overflow: 'hidden',
   minWidth: 0,
   position: 'relative' as const,
 }));
 
-const WallFade = styled('div')(({ theme }) => {
+const WallFade = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     position: 'absolute' as const,
@@ -77,9 +78,9 @@ const WallFade = styled('div')(({ theme }) => {
   };
 });
 
-const ComponentWallWrapper = styled('div')(() => ({}));
+const ComponentWallWrapper = styled.div(() => ({}));
 
-const ScrollContainer = styled('div')(() => ({
+const ScrollContainer = styled.div(() => ({
   display: 'flex',
   flexDirection: 'column' as const,
   animation: 'seedui-wall-scroll 60s linear infinite',
@@ -98,18 +99,14 @@ export const HomePage: FunctionComponent = () => {
         <HeroLeft>
           <div>
             <Text variant="h1">seedui</Text>
-            <Text
-              variant="p"
-              style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : theme.colors.neutral.white }}
-            >
+            <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : undefined }}>
               A simple and elegant React component library that&apos;s endlessly customizable.
             </Text>
             <Text
               variant="p"
               style={{
                 marginTop: 16,
-                lineHeight: 1.7,
-                color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800],
+                color: isLight ? theme.colors.neutral[500] : undefined,
               }}
             >
               Everything you need to craft polished applications, internal tools, and delightful user experiences.
@@ -125,7 +122,12 @@ export const HomePage: FunctionComponent = () => {
               >
                 How to install
               </Button>
-              <Button variant="transparent" color="neutral" size="md">
+              <Button
+                variant="transparent"
+                color="neutral"
+                size="md"
+                onClick={() => window.open(BASE_GITHUB_URL, '_blank', 'noopener,noreferrer')}
+              >
                 <GithubIcon size={16} style={{ marginRight: 6 }} />
                 View on GitHub
               </Button>
@@ -152,37 +154,11 @@ export const HomePage: FunctionComponent = () => {
         <FeatureGrid>
           <FeatureCard>
             <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Clean Foundation
+              Open Source
             </Text>
             <FeatureDescription>
-              A React component library that aims to look and feel right from the start. Use it as-is or build on top of
-              it to create your own design system.
-            </FeatureDescription>
-          </FeatureCard>
-          <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Dark Mode
-            </Text>
-            <FeatureDescription>
-              Built-in light and dark mode support. All components and tokens adapt automatically when you switch modes.
-            </FeatureDescription>
-          </FeatureCard>
-          <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Fully Customizable
-            </Text>
-            <FeatureDescription>
-              Built on styled-components, every token and component can be tailored to your needs. Override anything
-              from a single theme object, or create your own themed components using the same tools that power seedui.
-            </FeatureDescription>
-          </FeatureCard>
-          <FeatureCard>
-            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Designed in Figma
-            </Text>
-            <FeatureDescription>
-              Every component comes with matching Figma designs, ready to use in your workflows. Designers and
-              developers stay in sync from day one.
+              Free to use and MIT licensed. The code is on GitHub, and I&apos;d love to hear your feature requests and
+              review your pull requests.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
@@ -190,21 +166,48 @@ export const HomePage: FunctionComponent = () => {
               AI-Friendly Docs
             </Text>
             <FeatureDescription>
-              Documentation is server-side rendered so AI agents and coding assistants can read it directly. Point your
-              tools at the docs and let them help you build.
+              Every page is server-rendered, so AI coding assistants can read the docs directly. Point yours at seedui
+              and let it help you build.
             </FeatureDescription>
           </FeatureCard>
           <FeatureCard>
             <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
-              Developer Experience
+              Dark Mode
             </Text>
             <FeatureDescription>
-              Fully typed with TypeScript, so you get autocompletion and type safety for every prop, token, and style
-              override. Spend less time looking things up and more time building.
+              Light and dark themes come in the box. Flip the switch and every component follows along.
+            </FeatureDescription>
+          </FeatureCard>
+          <FeatureCard>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Design Tokens
+            </Text>
+            <FeatureDescription>
+              Colors, spacing, typography, and more are exposed as tokens. Use them anywhere in your app to keep things
+              consistent.
+            </FeatureDescription>
+          </FeatureCard>
+          <FeatureCard>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Fully Customizable
+            </Text>
+            <FeatureDescription>
+              Any token or component style can be overridden through the theme, so seedui can match your brand or your
+              existing design system.
+            </FeatureDescription>
+          </FeatureCard>
+          <FeatureCard>
+            <Text variant="h5" as="h3" style={{ marginBottom: 6 }}>
+              Designed in Figma
+            </Text>
+            <FeatureDescription>
+              Every component has a matching design in Figma that designers can use directly in their mockups.
             </FeatureDescription>
           </FeatureCard>
         </FeatureGrid>
       </Section>
+
+      <Footer />
     </div>
   );
 };

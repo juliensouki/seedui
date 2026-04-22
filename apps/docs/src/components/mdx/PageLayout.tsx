@@ -4,6 +4,7 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { MDXProvider } from '@mdx-js/react';
 import { TableOfContents } from '../layout/TableOfContents';
 import { PageNavigation } from '../layout/PageNavigation';
+import { EditThisPage } from '../layout/EditThisPage';
 import { mdxComponents, SectionHeading } from './MDXComponents';
 
 interface PageLayoutProps {
@@ -14,12 +15,12 @@ interface PageLayoutProps {
   children: ReactNode;
 }
 
-const Layout = styled('div')(() => ({
+const Layout = styled.div(() => ({
   display: 'flex',
   alignItems: 'flex-start',
 }));
 
-const MainContent = styled('div')(({ theme }) => ({
+const MainContent = styled.div(({ theme }) => ({
   flex: 1,
   minWidth: 0,
   '& section': {
@@ -27,7 +28,13 @@ const MainContent = styled('div')(({ theme }) => ({
   },
 }));
 
-export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, description, currentPath, headerActions, children }) => {
+export const PageLayout: FunctionComponent<PageLayoutProps> = ({
+  title,
+  description,
+  currentPath,
+  headerActions,
+  children,
+}) => {
   const theme = useTheme();
   const isLight = theme.mode === 'light';
   return (
@@ -35,19 +42,26 @@ export const PageLayout: FunctionComponent<PageLayoutProps> = ({ title, descript
       <MainContent>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <SectionHeading variant="h3" as="h1">{title}</SectionHeading>
-            <Text variant="p" style={{ marginTop: theme.spacing(1), color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[800] }}>{description}</Text>
+            <SectionHeading variant="h3" as="h1">
+              {title}
+            </SectionHeading>
+            <Text
+              variant="p"
+              style={{
+                marginTop: theme.spacing(1),
+                color: isLight ? theme.colors.neutral[500] : theme.colors.neutral[900],
+              }}
+            >
+              {description}
+            </Text>
           </div>
           {headerActions && (
-            <div style={{ display: 'flex', gap: theme.spacing(1), flexShrink: 0 }}>
-              {headerActions}
-            </div>
+            <div style={{ display: 'flex', gap: theme.spacing(1), flexShrink: 0 }}>{headerActions}</div>
           )}
         </div>
         <Divider spacing={28} />
-        <MDXProvider components={mdxComponents}>
-          {children}
-        </MDXProvider>
+        <MDXProvider components={mdxComponents}>{children}</MDXProvider>
+        <EditThisPage currentPath={currentPath} />
         <PageNavigation currentPath={currentPath} />
       </MainContent>
       <TableOfContents path={currentPath} />

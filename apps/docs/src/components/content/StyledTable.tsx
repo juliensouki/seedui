@@ -1,6 +1,6 @@
 import styled from '@seedui-react/seedui/sc';
 
-export const Table = styled('table')(({ theme }) => {
+export const Table = styled.table(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: '100%',
@@ -12,7 +12,7 @@ export const Table = styled('table')(({ theme }) => {
   };
 });
 
-export const Th = styled('th')(({ theme }) => {
+export const Th = styled.th(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     textAlign: 'left' as const,
@@ -26,7 +26,7 @@ export const Th = styled('th')(({ theme }) => {
   };
 });
 
-export const Td = styled('td')(({ theme }) => {
+export const Td = styled.td(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(2)}px 0`,

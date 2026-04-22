@@ -26,6 +26,7 @@ export interface MenuItemProps {
   activeItemStyle?: SelectActiveItemStyle;
   className?: string;
   htmlAttributes?: HTMLAttributes<HTMLDivElement>;
+  iconHtmlAttributes?: HTMLAttributes<HTMLElement>;
 }
 
 const MenuItemDiv = applyCustomStyles(
@@ -69,6 +70,7 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
   activeItemStyle,
   className,
   htmlAttributes,
+  iconHtmlAttributes,
 }) => {
   const { customizations } = useContext<SeedContextType>(SeedContext);
   const uniqueId = useId();
@@ -100,7 +102,11 @@ export const MenuItem: FunctionComponent<MenuItemProps> = ({
         backgroundColor: isActive ? activeBackgroundColor : undefined,
       }}
     >
-      {option.icon && cloneElement(option.icon, { style: { ...optionIconStyles } })}
+      {option.icon && cloneElement(option.icon, {
+        ...iconHtmlAttributes,
+        style: { ...optionIconStyles, ...iconHtmlAttributes?.style },
+        className: joinClasses('select-menu-item-icon', iconHtmlAttributes?.className),
+      })}
       {typeof option.label === 'string' ? (
         <MenuItemText
           style={{

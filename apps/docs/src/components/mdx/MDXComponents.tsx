@@ -4,11 +4,11 @@ import styled from '@seedui-react/seedui/sc';
 import { ComponentPlayground } from '../content/ComponentPlayground';
 import { CheckIcon, LinkIcon } from 'lucide-react';
 
-const StyledSection = styled('section')(({ theme }) => ({
+const StyledSection = styled.section(({ theme }) => ({
   marginBottom: theme.spacing(9),
 }));
 
-const InlineCode = styled('code')(({ theme }) => {
+const InlineCode = styled.code(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     backgroundColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[300],
@@ -19,7 +19,7 @@ const InlineCode = styled('code')(({ theme }) => {
   };
 });
 
-const HeadingRow = styled('div')(() => ({
+const HeadingRow = styled.div(() => ({
   '&:hover .anchor-link': {
     opacity: 1,
   },
@@ -28,7 +28,7 @@ const HeadingRow = styled('div')(() => ({
   },
 }));
 
-const AnchorButton = styled('button')(({ theme }) => ({
+const AnchorButton = styled.button(({ theme }) => ({
   all: 'unset',
   opacity: 0,
   transition: 'opacity 0.2s ease',
@@ -115,17 +115,18 @@ const p: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
   <Text variant="p" style={{ marginBottom: 22 }}>{children}</Text>
 );
 
-const CodeBlockWrapper = styled('div')(({ theme }) => ({
+const CodeBlockWrapper = styled.div(({ theme }) => ({
   marginTop: theme.spacing(1.5),
   marginBottom: theme.spacing(3.5),
 }));
 
-const code: FunctionComponent<{ children?: string; className?: string }> = ({ children, className }) => {
+const code: FunctionComponent<{ children?: ReactNode; className?: string }> = ({ children, className }) => {
   const language = className?.replace('language-', '');
   if (language) {
+    const text = typeof children === 'string' ? children : getTextContent(children);
     return (
       <CodeBlockWrapper>
-        <ComponentPlayground code={(children ?? '').replace(/\n$/, '')} readOnly language={language} />
+        <ComponentPlayground code={text.replace(/\n$/, '')} readOnly language={language} />
       </CodeBlockWrapper>
     );
   }

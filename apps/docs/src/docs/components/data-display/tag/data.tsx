@@ -36,33 +36,24 @@ export const tagDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Colors',
-      description: 'Each color maps to a semantic meaning. Use success for positive states, error for problems, warning for caution, and info for neutral highlights.',
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Tag color="primary">Primary</Tag>
-  <Tag color="neutral">Neutral</Tag>
-  <Tag color="success">Success</Tag>
-  <Tag color="info">Info</Tag>
-  <Tag color="warning">Warning</Tag>
-  <Tag color="error">Error</Tag>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Tag color="primary">Primary</Tag>
+<Tag color="neutral">Neutral</Tag>
+<Tag color="success">Success</Tag>
+<Tag color="info">Info</Tag>
+<Tag color="warning">Warning</Tag>
+<Tag color="error">Error</Tag>`,
     },
     {
-      title: 'Sizes',
-      description: 'Small tags work well in dense layouts like tables, while medium is the default for general use.',
-      code: `<div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-  <Tag size="sm" color="primary">Small</Tag>
-  <Tag size="md" color="primary">Medium</Tag>
-</div>`,
+      layout: { display: 'flex', gap: 8, alignItems: 'center' },
+      code: `<Tag size="sm" color="primary">Small</Tag>
+<Tag size="md" color="primary">Medium</Tag>`,
     },
     {
-      title: 'Removable',
-      description: 'Enable the removable prop to show a dismiss button. Use this for filter chips or user-selected values that can be cleared.',
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Tag color="primary" removable onRemove={() => {}}>React</Tag>
-  <Tag color="info" removable onRemove={() => {}}>TypeScript</Tag>
-  <Tag color="success" removable onRemove={() => {}}>Node.js</Tag>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Tag color="primary" removable onRemove={() => {}}>React</Tag>
+<Tag color="info" removable onRemove={() => {}}>TypeScript</Tag>
+<Tag color="success" removable onRemove={() => {}}>Node.js</Tag>`,
     },
   ],
 };

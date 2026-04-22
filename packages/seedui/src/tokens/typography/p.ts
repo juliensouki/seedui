@@ -5,5 +5,5 @@ export const pStyles: TypographyConfig = {
   fontWeight: 'normal',
   letterSpacing: 'normal',
   fontSize: '0.875rem',
-  lineHeight: '1.25rem',
+  lineHeight: '1.4375rem',
 };

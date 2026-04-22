@@ -46,6 +46,8 @@ export interface PopoverProps {
   closeOnOutsideClick?: boolean;
   /** Whether pressing Escape closes the popover. Defaults to true. */
   closeOnEscape?: boolean;
+  /** Inner padding of the panel — a number (px) or any valid CSS padding string. Defaults to 12px. */
+  padding?: number | string;
   /** Access underlying DOM elements (root, trigger, panel). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
@@ -54,7 +56,10 @@ export interface PopoverProps {
   };
 }
 
-type PopoverContainerProps = StyledComponentsPrefix<Record<string, never>>;
+type PopoverContainerProps = StyledComponentsPrefix<{ padding: number | string }>;
+
+const resolvePadding = (padding: number | string): string =>
+  typeof padding === 'number' ? `${padding}px` : padding;
 
 const defaultProps: PopoverProps = {
   isOpen: false,
@@ -67,6 +72,7 @@ const defaultProps: PopoverProps = {
   content: <></>,
   closeOnOutsideClick: true,
   closeOnEscape: true,
+  padding: 12,
   elementProps: {
     root: {},
     trigger: {},
@@ -81,7 +87,8 @@ const PopoverContainer = applyCustomStyles(
 
     return {
       position: 'fixed',
-      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
+      padding: resolvePadding(props.$padding),
+      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
       borderRadius: theme.borderRadius(4),
       boxShadow: theme.boxShadow[1],
       boxSizing: 'border-box',
@@ -118,6 +125,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       content,
       closeOnOutsideClick,
       closeOnEscape,
+      padding,
       elementProps: {
         root: rootHTMLAttributes,
         trigger: triggerHTMLAttributes,
@@ -292,6 +300,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps & InternalProps>(
       <PopoverContainer
         {...panelHTMLAttributes}
         ref={popoverRef}
+        $padding={padding}
         $customizations={customizations.components?.popover}
         className={joinClasses('popover-panel', className, panelHTMLAttributes?.className)}
         style={{

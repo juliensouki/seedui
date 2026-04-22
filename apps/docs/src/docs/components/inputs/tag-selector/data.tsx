@@ -18,7 +18,7 @@ function TagSelectorExample() {
 export const tagSelectorDoc: ComponentDoc = {
   name: 'TagSelector',
   category: 'Inputs',
-  description: 'Field for building a list of tags by typing and pressing Enter.',
+  description: 'An input for managing a dynamic list of tags, useful for categories, filters, or metadata.',
   overview: 'An input for creating a list of tags. Type a value and press Enter to add it. Each tag can be removed individually. Supports a maximum tag limit.',
   props: [
     { name: 'tags', type: 'string[]', default: '—', description: 'Current list of tags. Required.' },
@@ -49,8 +49,6 @@ export const tagSelectorDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic tag selector',
-      description: 'Type a value and press Enter to add a tag. Click the remove button on any tag to delete it.',
       code: `const [tags, setTags] = useState(['React', 'TypeScript']);
 
 <TagSelector
@@ -62,8 +60,6 @@ export const tagSelectorDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'With label',
-      description: 'Add a label to provide context about what kind of tags the user should enter.',
       code: `const [tags, setTags] = useState([]);
 
 <TagSelector
@@ -76,8 +72,6 @@ export const tagSelectorDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Max tags limit',
-      description: 'Use maxTags to cap the number of tags a user can add. The input disables once the limit is reached.',
       code: `const [tags, setTags] = useState(['Design']);
 
 <TagSelector
@@ -86,6 +80,17 @@ export const tagSelectorDoc: ComponentDoc = {
   onRemoveTag={(tag) => setTags(tags.filter(t => t !== tag))}
   placeholder="Max 3 tags..."
   maxTags={3}
+  width={300}
+/>`,
+    },
+    {
+      code: `<TagSelector
+  tags={['React', 'TypeScript']}
+  onAddTag={() => {}}
+  onRemoveTag={() => {}}
+  label="Skills"
+  placeholder="Add a skill..."
+  disabled
   width={300}
 />`,
     },

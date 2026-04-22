@@ -1,5 +1,6 @@
 import { Button } from '@seedui-react/seedui';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
+import { Callout } from '../../../components/content/Callout';
 
 export const meta = {
   title: 'Quick Start',
@@ -17,9 +18,7 @@ import { ThemeProvider, Button } from '@seedui-react/seedui';
 function App() {
   return (
     <ThemeProvider mode="light">
-      <Button onClick={() => alert('Hello World!')}>
-        Click me
-      </Button>
+      <Button onClick={() => alert('Hello World!')}>Click me</Button>
     </ThemeProvider>
   );
 }
@@ -33,19 +32,24 @@ Here's what the example above looks like when rendered:
 <section id="section-styled">
 ## Using styled-components
 
-seedui re-exports the entire styled-components API through `@seedui-react/seedui/sc`. Use this import for `styled`, `css`, `keyframes`, and everything else you would normally import from styled-components:
+<Callout color="warning">
+  Do not import directly from <code>styled-components</code>.
+</Callout>
+
+The library re-exports styled-components API through `@seedui-react/seedui/sc`. Use this import for everything you would normally import from styled-components:
 
 ```tsx
 import styled, { css, keyframes } from '@seedui-react/seedui/sc';
 
-const Container = styled('div')(({ theme }) => ({
+const Container = styled.div(({ theme }) => ({
   padding: theme.spacing(3),
   backgroundColor: theme.colors.primary[100],
   borderRadius: theme.borderRadius(4),
 }));
 ```
 
-This ensures you share the same styled-components instance as seedui, which is required for theming to work correctly. **Do not import directly from `styled-components`** — always use `@seedui-react/seedui/sc` instead.
+This ensures you share the same styled-components instance as seedui, which is required for theming to work correctly.
+
 </section>
 
 <section id="section-use-theme">
@@ -58,11 +62,8 @@ import { useTheme } from '@seedui-react/seedui';
 
 function MyComponent() {
   const theme = useTheme();
-  return (
-    <div style={{ color: theme.colors.primary[600] }}>
-      Themed content
-    </div>
-  );
+  return <div style={{ color: theme.colors.primary[600] }}>Themed content</div>;
 }
 ```
+
 </section>

@@ -74,12 +74,11 @@ const ToggleLabel = applyCustomStyles(
   styled.label<StyledComponentsPrefix<{ disabled?: boolean }>>(({ theme, $disabled }) => ({
     display: 'flex',
     alignItems: 'center',
-    cursor: $disabled ? 'not-allowed' : 'pointer',
+    cursor: $disabled ? 'default' : 'pointer',
     userSelect: 'none',
     fontFamily: theme.typography.p.fontFamily,
     fontSize: theme.typography.p.fontSize,
     color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
-    opacity: $disabled ? 0.5 : 1,
   })),
 );
 
@@ -102,6 +101,23 @@ const ToggleInput = applyCustomStyles(
         : isLight
         ? theme.colors.neutral[300]
         : theme.colors.neutral[400],
+
+      '&:disabled': {
+        backgroundColor: $checked
+          ? theme.colors.primary[300]
+          : isLight
+          ? theme.colors.neutral[200]
+          : theme.colors.neutral[300],
+        cursor: 'default',
+
+        '&::before': {
+          backgroundColor: $checked
+            ? theme.colors.neutral.white
+            : isLight
+            ? theme.colors.neutral[100]
+            : theme.colors.neutral[500],
+        },
+      },
       border: 'none',
       outline: 'none',
       cursor: 'pointer',
@@ -131,14 +147,10 @@ const ToggleInput = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: `2px solid ${theme.colors.primary[300]}`,
+        outline: `2px solid ${theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[400]}`,
         outlineOffset: 2,
       },
 
-      '&:disabled': {
-        cursor: 'not-allowed',
-        opacity: 0.5,
-      },
     };
   }),
 );

@@ -1,32 +1,21 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
+import { Text } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
-import { TableOfContents } from '../../../components/layout/TableOfContents';
+import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
-import { PageNavigation } from '../../../components/layout/PageNavigation';
 
-const PageLayout = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-}));
-
-const MainContent = styled('div')(() => ({
-  flex: 1,
-  minWidth: 0,
-}));
-
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
 
-const Grid = styled('div')(() => ({
+const Grid = styled.div(() => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
   gap: 24,
 }));
 
-const ShadowCard = styled('div')(({ theme }) => {
+const ShadowCard = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -41,7 +30,7 @@ const ShadowCard = styled('div')(({ theme }) => {
   };
 });
 
-const Label = styled('span')(({ theme }) => {
+const Label = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 13,
@@ -50,7 +39,7 @@ const Label = styled('span')(({ theme }) => {
   };
 });
 
-const ShadowValue = styled('span')(({ theme }) => {
+const ShadowValue = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     fontSize: 10,
@@ -62,17 +51,15 @@ const ShadowValue = styled('span')(({ theme }) => {
   };
 });
 
-const usageCode = `const theme = useTheme();
-
-<div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
-  <Card elementProps={{ rootDiv: { style: { boxShadow: theme.boxShadow[1], padding: 16 } } }}>
-    boxShadow[1]
+const usageCode = `<div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
+  <Card elementProps={{ rootDiv: { style: { boxShadow: useTheme().boxShadow[1], padding: 16 } } }}>
+    <Text variant="p">boxShadow[1]</Text>
   </Card>
-  <Card elementProps={{ rootDiv: { style: { boxShadow: theme.boxShadow[3], padding: 16 } } }}>
-    boxShadow[3]
+  <Card elementProps={{ rootDiv: { style: { boxShadow: useTheme().boxShadow[3], padding: 16 } } }}>
+    <Text variant="p">boxShadow[3]</Text>
   </Card>
-  <Card elementProps={{ rootDiv: { style: { boxShadow: theme.boxShadow[5], padding: 16 } } }}>
-    boxShadow[5]
+  <Card elementProps={{ rootDiv: { style: { boxShadow: useTheme().boxShadow[5], padding: 16 } } }}>
+    <Text variant="p">boxShadow[5]</Text>
   </Card>
 </div>`;
 
@@ -81,40 +68,31 @@ export const BoxShadow: FunctionComponent = () => {
   const entries = Object.entries(theme.boxShadow);
 
   return (
-    <PageLayout>
-      <MainContent>
-        <Text variant="h3" as="h1">Box Shadow</Text>
-        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
-          Elevation levels for creating depth and visual hierarchy.
+    <PageLayout
+      title="Box Shadow"
+      description="Elevation levels for creating depth and visual hierarchy."
+    >
+      <Section id="section-levels">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Levels</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Access via <code>theme.boxShadow[1]</code> through <code>theme.boxShadow[5]</code>.
         </Text>
-
-        <Divider spacing={28} />
-
-        <Section id="section-levels">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Levels</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Access via <code>theme.boxShadow[1]</code> through <code>theme.boxShadow[5]</code>.
-          </Text>
-          <Grid>
-            {entries.map(([level, shadow]) => (
-              <ShadowCard key={level} style={{ boxShadow: shadow as string }}>
-                <Label>Level {level}</Label>
-                <ShadowValue>{shadow as string}</ShadowValue>
-              </ShadowCard>
-            ))}
-          </Grid>
-        </Section>
-        <Section id="section-usage">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Access box shadow via <code>useTheme()</code> or styled-components theme injection.
-          </Text>
-          <ComponentPlayground code={usageCode} />
-        </Section>
-        <PageNavigation />
-      </MainContent>
-
-      <TableOfContents />
+        <Grid>
+          {entries.map(([level, shadow]) => (
+            <ShadowCard key={level} style={{ boxShadow: shadow as string }}>
+              <Label>Level {level}</Label>
+              <ShadowValue>{shadow as string}</ShadowValue>
+            </ShadowCard>
+          ))}
+        </Grid>
+      </Section>
+      <Section id="section-usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Access box shadow via <code>useTheme()</code> or styled-components theme injection.
+        </Text>
+        <ComponentPlayground code={usageCode} />
+      </Section>
     </PageLayout>
   );
 };

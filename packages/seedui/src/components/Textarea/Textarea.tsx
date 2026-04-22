@@ -64,7 +64,7 @@ const TextareaElement = applyCustomStyles(
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
       color: isLight ? theme.colors.neutral.black : theme.colors.neutral.white,
 
-      padding: `${theme.spacing(1)}px ${theme.spacing(1.5)}px`,
+      padding: `${theme.spacing(1.5)}px ${theme.spacing(1.5)}px`,
 
       fontFamily: theme.typography.p.fontFamily,
       fontSize: theme.typography.p.fontSize,
@@ -80,18 +80,18 @@ const TextareaElement = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: `2px solid ${theme.colors.primary[300]}`,
+        outline: `2px solid ${theme.colors.primary[400]}`,
         outlineOffset: 1,
         borderColor: theme.colors.primary.default,
       },
 
       '&:disabled': {
-        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+        backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[300],
         borderColor: isLight ? theme.colors.neutral[200] : theme.colors.neutral[400],
         color: isLight ? theme.colors.neutral[400] : theme.colors.neutral[500],
 
         '&::placeholder': {
-          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[500],
+          color: isLight ? theme.colors.neutral[300] : theme.colors.neutral[400],
         },
       },
     };

@@ -4,7 +4,7 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { SunIcon, MoonIcon } from 'lucide-react';
 import { useModeToggle } from '../layout/ModeContext';
 
-const ModeToggleRow = styled('div')(({ theme }) => {
+const ModeToggleRow = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',

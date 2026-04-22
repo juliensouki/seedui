@@ -5,6 +5,7 @@ import { DocsShell } from './layout/DocsShell';
 import { HomePage } from '../docs/home/HomePage';
 import { PageLayout } from './mdx/PageLayout';
 import { componentDocs } from '../docs/components';
+import { BASE_GITHUB_URL } from '../constants';
 import { Colors } from '../docs/theme/colors/colors';
 import { Typography } from '../docs/theme/typography/typography';
 import { Spacing } from '../docs/theme/spacing/spacing';
@@ -30,9 +31,27 @@ const componentMdxModules = import.meta.glob('../docs/components/**/*.mdx', { ea
 >;
 
 
-const componentHeaderActions = (
+// Source paths relative to packages/seedui/src/components/
+// Most components are `{Name}/{Name}.tsx`; a few are grouped under a shared parent folder.
+const componentSourcePaths: Record<string, string> = {
+  Button: 'Button/Button/Button.tsx',
+  IconButton: 'Button/IconButton/IconButton.tsx',
+};
+
+const componentSourceUrl = (name: string) => {
+  const relPath = componentSourcePaths[name] ?? `${name}/${name}.tsx`;
+  return `${BASE_GITHUB_URL}/blob/main/packages/seedui/src/components/${relPath}`;
+};
+
+const componentHeaderActions = (name: string) => (
   <>
-    <IconButton variant="transparent" color="neutral" size="md">
+    <IconButton
+      variant="transparent"
+      color="neutral"
+      size="md"
+      onClick={() => window.open(componentSourceUrl(name), '_blank', 'noopener,noreferrer')}
+      title="View source on GitHub"
+    >
       <GithubIcon size={16} strokeWidth={1.8} />
     </IconButton>
     <IconButton variant="transparent" color="neutral" size="md">
@@ -75,7 +94,6 @@ function PageContent({ path }: { path: string }) {
       </PageLayout>
     );
   }
-
   // Theming
   const themingPages: Record<string, { Content: FunctionComponent; meta: any }> = {
     '/theming/theme-provider': { Content: ThemeProviderContent, meta: themeProviderMeta },
@@ -120,7 +138,7 @@ function PageContent({ path }: { path: string }) {
           title={doc.name}
           description={doc.description}
           currentPath={p}
-          headerActions={componentHeaderActions}
+          headerActions={componentHeaderActions(doc.name)}
         >
           {Content ? <Content /> : <p>Not found.</p>}
         </PageLayout>

@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import styled from '@seedui-react/seedui/sc';
 
-export const SchemaWrapper = styled('div')(({ theme }) => {
+export const SchemaWrapper = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     padding: 32,
@@ -13,7 +13,7 @@ export const SchemaWrapper = styled('div')(({ theme }) => {
   };
 });
 
-export const Box = styled('div')<{ $dashed?: boolean }>(({ theme, $dashed }) => {
+export const Box = styled.div<{ $dashed?: boolean }>(({ theme, $dashed }) => {
   const isLight = theme.mode === 'light';
   return {
     position: 'relative',
@@ -24,7 +24,7 @@ export const Box = styled('div')<{ $dashed?: boolean }>(({ theme, $dashed }) => 
   };
 });
 
-export const BoxLabel = styled('span')(({ theme }) => {
+export const BoxLabel = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     position: 'absolute',
@@ -40,19 +40,19 @@ export const BoxLabel = styled('span')(({ theme }) => {
   };
 });
 
-export const Row = styled('div')(() => ({
+export const Row = styled.div(() => ({
   display: 'flex',
   gap: 10,
   alignItems: 'stretch',
 }));
 
-export const Col = styled('div')(() => ({
+export const Col = styled.div(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 10,
 }));
 
-export const Placeholder = styled('div')<{ $grow?: boolean }>(({ theme, $grow }) => {
+export const Placeholder = styled.div<{ $grow?: boolean }>(({ theme, $grow }) => {
   const isLight = theme.mode === 'light';
   return {
     flex: $grow ? 1 : undefined,
@@ -70,7 +70,7 @@ export const Placeholder = styled('div')<{ $grow?: boolean }>(({ theme, $grow })
   };
 });
 
-export const CirclePlaceholder = styled('div')<{ $size?: number }>(({ theme, $size = 48 }) => {
+export const CirclePlaceholder = styled.div<{ $size?: number }>(({ theme, $size = 48 }) => {
   const isLight = theme.mode === 'light';
   return {
     width: $size,

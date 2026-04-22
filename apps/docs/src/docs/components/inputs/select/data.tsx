@@ -41,6 +41,7 @@ export const selectDoc: ComponentDoc = {
     { name: 'Arrow', htmlAttribute: 'arrow', cssClass: 'select-arrow' },
     { name: 'Menu', htmlAttribute: 'menu', cssClass: 'select-menu' },
     { name: 'Menu item', htmlAttribute: 'menuItem', cssClass: 'select-menu-item' },
+    { name: 'Menu item icon', htmlAttribute: 'menuItemIcon', cssClass: 'select-menu-item-icon' },
   ],
   example: SelectExample,
   code: `const [value, setValue] = useState(null);
@@ -56,8 +57,6 @@ export const selectDoc: ComponentDoc = {
 />`,
   usageExamples: [
     {
-      title: 'Basic select',
-      description: 'A controlled dropdown with a list of options. The built-in search lets users filter long lists by typing.',
       code: `const [value, setValue] = useState(null);
 
 <Select
@@ -74,8 +73,6 @@ export const selectDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'With label',
-      description: 'Add a label above the select to give context about what the user is choosing.',
       code: `const [value, setValue] = useState(null);
 
 <Select
@@ -92,8 +89,6 @@ export const selectDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'With icons',
-      description: 'Each option can include an icon element for richer visual context. Pass any React element as the icon prop.',
       code: `const [value, setValue] = useState(null);
 
 <Select
@@ -110,8 +105,6 @@ export const selectDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Disabled',
-      description: 'A disabled select is non-interactive and visually muted.',
       code: `<Select
   options={[{ value: 'locked', label: 'Locked Option' }]}
   value="locked"

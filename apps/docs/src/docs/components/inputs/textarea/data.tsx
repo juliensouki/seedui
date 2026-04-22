@@ -44,8 +44,6 @@ export const textareaDoc: ComponentDoc = {
   ],
   usageExamples: [
     {
-      title: 'Basic textarea',
-      description: 'A controlled multi-line input with a label and placeholder. Ideal for comments, descriptions, or any longer-form text.',
       code: `const [value, setValue] = useState('');
 
 <Textarea
@@ -57,8 +55,6 @@ export const textareaDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Resizable',
-      description: 'Set isResizable to let users drag the corner to resize the textarea to fit their content.',
       code: `const [value, setValue] = useState('');
 
 <Textarea
@@ -71,8 +67,6 @@ export const textareaDoc: ComponentDoc = {
 />`,
     },
     {
-      title: 'Disabled',
-      description: 'A disabled textarea is visually muted and prevents any interaction.',
       code: `<Textarea
   value="This content cannot be edited."
   onChange={() => {}}

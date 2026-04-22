@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
-import { ThemeProvider, colors, Mode } from '@seedui-react/seedui';
+import { ThemeProvider, colors, Mode, ThemeCustomization } from '@seedui-react/seedui';
 import styled from '@seedui-react/seedui/sc';
 import { componentDocs, categoryOrder } from '../../docs/components';
 import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from './navigation';
@@ -8,7 +8,23 @@ import { ModeToggleContext } from './ModeContext';
 import { MobileMenuContext } from './MobileMenuContext';
 import { Sidebar } from './Sidebar';
 
-const Shell = styled('div')(({ theme }) => {
+const bodyTextVariants = new Set(['p', 'caption', 'small']);
+
+const docsTheme: ThemeCustomization = {
+  components: {
+    text: {
+      conditionalStyles: [
+        {
+          condition: (props, theme) =>
+            theme.mode === 'dark' && bodyTextVariants.has(props.variant ?? 'p'),
+          styles: { color: colors.dark.semantic.neutral[900] },
+        },
+      ],
+    },
+  },
+};
+
+const Shell = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -20,13 +36,13 @@ const Shell = styled('div')(({ theme }) => {
   };
 });
 
-const Body = styled('div')(() => ({
+const Body = styled.div(() => ({
   display: 'flex',
   flex: 1,
   overflow: 'hidden',
 }));
 
-const Content = styled('main')(({ theme }) => {
+const Content = styled.main(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     flex: 1,
@@ -46,7 +62,7 @@ const Content = styled('main')(({ theme }) => {
   };
 });
 
-const Inner = styled('div')(() => ({
+const Inner = styled.div(() => ({
   maxWidth: 1100,
   margin: '0 auto',
 }));
@@ -146,7 +162,7 @@ export const DocsShell: FunctionComponent<DocsShellProps> = ({ currentPath, chil
           : colors.dark.semantic.neutral[100],
       }}
     >
-      <ThemeProvider mode={mode}>
+      <ThemeProvider mode={mode} theme={docsTheme}>
         <ModeToggleContext.Provider value={handleModeToggle}>
           <MobileMenuContext.Provider value={mobileMenuValue}>
             <Shell>

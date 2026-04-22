@@ -27,6 +27,8 @@ export interface TooltipProps {
   text: string;
   /** Position relative to the trigger: 'top', 'right', 'bottom', or 'left'. */
   direction?: TooltipDirection;
+  /** Inner padding — a number (px) or any valid CSS padding string. Defaults to '8px 12px'. */
+  padding?: number | string;
   /** Access underlying DOM elements (root, trigger, tooltip). */
   elementProps?: {
     root?: HTMLAttributes<HTMLDivElement>;
@@ -43,9 +45,13 @@ export interface TooltipProps {
 
 type TooltipSpanProps = StyledComponentsPrefix<Required<TooltipProps> & { tooltipWidth: number; tooltipTop?: number }>;
 
+const resolvePadding = (padding: number | string): string =>
+  typeof padding === 'number' ? `${padding}px` : padding;
+
 const defaultProps: TooltipProps = {
   text: '',
   direction: 'top',
+  padding: '8px 12px',
   elementProps: {
     root: {},
     trigger: {},
@@ -73,7 +79,7 @@ const TooltipSpan = styled.span<TooltipSpanProps>((props) => {
     maxWidth: 200,
     textAlign: 'center',
     borderRadius: props.theme.borderRadius(4),
-    padding: `${props.theme.spacing(1)}px ${props.theme.spacing(1.5)}px`,
+    padding: resolvePadding(props.$padding),
     zIndex: 9999,
     opacity: 0,
     transition: 'all 0.2s',
@@ -146,6 +152,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
     const {
       text,
       direction,
+      padding,
       elementProps: {
         root: rootHTMLAttributes,
         trigger: triggerHTMLAttributes,
@@ -203,6 +210,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps & InternalProps>(
           $tooltipWidth={tooltipWidth}
           $tooltipTop={tooltipTop}
           $direction={direction}
+          $padding={padding}
           $customizations={customizations.components?.tooltip}
           className={joinClasses('tooltip-content', className, tooltipHTMLAttributes?.className)}
           {...tooltipHTMLAttributes}

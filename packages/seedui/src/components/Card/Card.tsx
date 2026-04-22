@@ -20,22 +20,29 @@ export interface CardProps {
   children?: ReactNode;
   /** Visual style: 'default' (elevated with shadow) or 'outlined' (bordered, flat). */
   variant?: CardVariants;
+  /** Inner padding — a number (px) or any valid CSS padding string. Defaults to 16px. */
+  padding?: number | string;
 }
 
 const defaultProps: CardProps = {
   variant: 'default',
+  padding: 16,
   elementProps: {
     rootDiv: {},
   },
 };
 
+const resolvePadding = (padding: number | string): string =>
+  typeof padding === 'number' ? `${padding}px` : padding;
+
 const CardDiv = applyCustomStyles(
-  styled.div<StyledComponentsPrefix<Required<CardProps>>>(({ theme, $variant }) => {
+  styled.div<StyledComponentsPrefix<Required<CardProps>>>(({ theme, $variant, $padding }) => {
     const isLight = theme.mode === 'light';
 
     return {
       display: 'block',
       width: 'fit-content',
+      padding: resolvePadding($padding),
       backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
       borderRadius: theme.borderRadius(3),
       boxShadow: theme.boxShadow[1],
@@ -53,6 +60,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
     const { customizations } = useContext<SeedContextType>(SeedContext);
     const {
       variant,
+      padding,
       className,
       elementProps: { rootDiv: rootDivHTMLAttributes } = {},
       children,
@@ -66,6 +74,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps & InternalProps>(
       <CardDiv
         {...rootDivHTMLAttributes}
         $variant={variant}
+        $padding={padding}
         $customizations={customizations.components?.card}
         className={joinClasses(className, rootDivHTMLAttributes?.className)}
         ref={forwardedRef}

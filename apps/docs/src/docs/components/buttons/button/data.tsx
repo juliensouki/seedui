@@ -40,60 +40,37 @@ export const buttonDoc: ComponentDoc = {
   anatomy: [],
   usageExamples: [
     {
-      title: 'Color schemes',
-      description:
-        'Use the color prop to match the button to its intent. Primary for main actions, neutral for general-purpose, and error for destructive operations.',
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Button color="primary">Primary</Button>
-  <Button color="neutral">Neutral</Button>
-  <Button color="error">Error</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Button color="primary">Primary</Button>
+<Button color="neutral">Neutral</Button>
+<Button color="error">Error</Button>`,
     },
     {
-      title: 'Custom colors',
-      description:
-        'Pass any hex color to the color prop and SeedUI will automatically generate the full shade scale for hover, focus, and active states.',
-      code: `<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-  <Button color="#2563EB">Custom Blue</Button>
-  <Button color="#10B981">Custom Green</Button>
-  <Button color="#F59E0B">Amber</Button>
-  <Button color="#2563EB" variant="transparent">Custom Blue</Button>
-  <Button color="#10B981" variant="transparent">Custom Green</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+      code: `<Button color="#2563EB">Custom Blue</Button>
+<Button color="#10B981">Custom Green</Button>
+<Button color="#F59E0B">Amber</Button>
+<Button color="#2563EB" variant="transparent">Custom Blue</Button>
+<Button color="#10B981" variant="transparent">Custom Green</Button>`,
     },
     {
-      title: 'Variants',
-      description:
-        'Filled buttons draw the most attention and are best for primary actions. Transparent buttons work well for secondary or less prominent actions.',
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <Button variant="filled">Filled</Button>
-  <Button variant="transparent">Transparent</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<Button variant="filled">Filled</Button>
+<Button variant="transparent">Transparent</Button>`,
     },
     {
-      title: 'Sizes',
-      description:
-        'Three sizes are available. Use small for dense UIs or inline actions, medium as the default, and large for prominent call-to-action buttons.',
-      code: `<div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-  <Button size="sm">Small</Button>
-  <Button size="md">Medium</Button>
-  <Button size="lg">Large</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8, alignItems: 'center' },
+      code: `<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>`,
     },
     {
-      title: 'Loading state',
-      description:
-        'Set isLoading to show a spinner and disable interaction. Useful while waiting for an async operation like a form submission.',
       code: `<Button isLoading>Submitting...</Button>`,
     },
     {
-      title: 'Disabled',
-      description:
-        'Disabled buttons are visually muted and ignore clicks. Use them to indicate that an action is unavailable until a condition is met.',
-      code: `<div style={{ display: 'flex', gap: 8 }}>
-  <Button disabled>Disabled</Button>
-  <Button variant="transparent" disabled>Disabled</Button>
-</div>`,
+      layout: { display: 'flex', gap: 8 },
+      code: `<Button disabled>Disabled</Button>
+<Button variant="transparent" disabled>Disabled</Button>`,
     },
   ],
 };

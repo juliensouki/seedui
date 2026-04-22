@@ -1,26 +1,14 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
+import { Text } from '@seedui-react/seedui';
 import styled, { useTheme } from '@seedui-react/seedui/sc';
-import { TableOfContents } from '../../../components/layout/TableOfContents';
+import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
-import { PageNavigation } from '../../../components/layout/PageNavigation';
 
-const PageLayout = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'flex-start',
-}));
-
-const MainContent = styled('div')(() => ({
-  flex: 1,
-  minWidth: 0,
-}));
-
-const Section = styled('section')(() => ({
+const Section = styled.section(() => ({
   marginBottom: 40,
 }));
 
-
-const TokenRow = styled('div')(({ theme }) => {
+const TokenRow = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     display: 'flex',
@@ -34,7 +22,7 @@ const TokenRow = styled('div')(({ theme }) => {
   };
 });
 
-const TokenName = styled('span')(({ theme }) => {
+const TokenName = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 100,
@@ -45,7 +33,7 @@ const TokenName = styled('span')(({ theme }) => {
   };
 });
 
-const TokenValue = styled('span')(({ theme }) => {
+const TokenValue = styled.span(({ theme }) => {
   const isLight = theme.mode === 'light';
   return {
     width: 50,
@@ -57,7 +45,7 @@ const TokenValue = styled('span')(({ theme }) => {
   };
 });
 
-const Bar = styled('div')(({ theme }) => ({
+const Bar = styled.div(({ theme }) => ({
   height: 12,
   borderRadius: 3,
   backgroundColor: theme.mode === 'light' ? theme.colors.primary[400] : theme.colors.primary.default,
@@ -66,17 +54,15 @@ const Bar = styled('div')(({ theme }) => ({
 
 const spacingFactors = [0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
 
-const usageCode = `const theme = useTheme();
-
-<div style={{ display: 'flex', gap: theme.spacing(2), alignItems: 'center', flexWrap: 'wrap' }}>
-  <Card elementProps={{ rootDiv: { style: { padding: theme.spacing(1) } } }}>
-    padding: spacing(1)
+const usageCode = `<div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+  <Card elementProps={{ rootDiv: { style: { padding: useTheme().spacing(1) } } }}>
+    <Text variant="p">padding: spacing(1)</Text>
   </Card>
-  <Card elementProps={{ rootDiv: { style: { padding: theme.spacing(2) } } }}>
-    padding: spacing(2)
+  <Card elementProps={{ rootDiv: { style: { padding: useTheme().spacing(2) } } }}>
+    <Text variant="p">padding: spacing(2)</Text>
   </Card>
-  <Card elementProps={{ rootDiv: { style: { padding: theme.spacing(4) } } }}>
-    padding: spacing(4)
+  <Card elementProps={{ rootDiv: { style: { padding: useTheme().spacing(4) } } }}>
+    <Text variant="p">padding: spacing(4)</Text>
   </Card>
 </div>`;
 
@@ -84,60 +70,52 @@ export const Spacing: FunctionComponent = () => {
   const theme = useTheme();
 
   return (
-    <PageLayout>
-      <MainContent>
-        <Text variant="h3" as="h1">Spacing</Text>
-        <Text variant="p" style={{ marginTop: 8, color: theme.mode === 'light' ? undefined : theme.colors.neutral[800] }}>
-          A function-based spacing scale using an 8px base unit.
+    <PageLayout title="Spacing" description="A function-based spacing scale using an 8px base unit.">
+      <Section id="section-scale">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>
+          Scale
         </Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Access via <code>theme.spacing(factor)</code> — returns the pixel value as a number (base &times; factor). Any
+          numeric factor is supported.
+        </Text>
+        {spacingFactors.map((factor) => {
+          const px = theme.spacing(factor);
+          return (
+            <TokenRow key={factor}>
+              <TokenName>spacing({factor})</TokenName>
+              <TokenValue>{px}px</TokenValue>
+              <Bar style={{ width: Math.max(2, px) }} />
+            </TokenRow>
+          );
+        })}
+        <TokenRow key="ellipsis">
+          <TokenName>...</TokenName>
+          <TokenValue />
+          <span />
+        </TokenRow>
+        {(() => {
+          const px = theme.spacing(18);
+          return (
+            <TokenRow key={18}>
+              <TokenName>spacing(18)</TokenName>
+              <TokenValue>{px}px</TokenValue>
+              <Bar style={{ width: Math.max(2, px) }} />
+            </TokenRow>
+          );
+        })()}
+      </Section>
 
-        <Divider spacing={28} />
-
-        <Section id="section-scale">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Scale</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Access via <code>theme.spacing(factor)</code> — returns the pixel value as a number (base &times; factor).
-            Any numeric factor is supported.
-          </Text>
-          {spacingFactors.map((factor) => {
-            const px = theme.spacing(factor);
-            return (
-              <TokenRow key={factor}>
-                <TokenName>spacing({factor})</TokenName>
-                <TokenValue>{px}px</TokenValue>
-                <Bar style={{ width: Math.max(2, px) }} />
-              </TokenRow>
-            );
-          })}
-          <TokenRow key="ellipsis">
-            <TokenName>...</TokenName>
-            <TokenValue />
-            <span />
-          </TokenRow>
-          {(() => {
-            const px = theme.spacing(18);
-            return (
-              <TokenRow key={18}>
-                <TokenName>spacing(18)</TokenName>
-                <TokenValue>{px}px</TokenValue>
-                <Bar style={{ width: Math.max(2, px) }} />
-              </TokenRow>
-            );
-          })()}
-        </Section>
-
-        <Section id="section-usage">
-          <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>Usage</Text>
-          <Text variant="p" style={{ marginBottom: 16 }}>
-            Access spacing via <code>useTheme()</code> or styled-components theme injection.
-            The function returns a raw number — append <code>px</code> when used in string templates.
-          </Text>
-          <ComponentPlayground code={usageCode} />
-        </Section>
-        <PageNavigation />
-      </MainContent>
-
-      <TableOfContents />
+      <Section id="section-usage">
+        <Text variant="h4" as="h2" style={{ marginBottom: 12 }}>
+          Usage
+        </Text>
+        <Text variant="p" style={{ marginBottom: 16 }}>
+          Access spacing via <code>useTheme()</code> or styled-components theme injection. The function returns a raw
+          number.
+        </Text>
+        <ComponentPlayground code={usageCode} />
+      </Section>
     </PageLayout>
   );
 };

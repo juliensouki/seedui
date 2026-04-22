@@ -35,19 +35,25 @@ export interface ButtonProps extends ButtonBaseProps {
 
 const getButtonStyles = (
   theme: Theme,
-): Record<ButtonSizes, { fontSize: string | number; borderRadius: number; padding: string }> => ({
+): Record<
+  ButtonSizes,
+  { fontSize: string | number; lineHeight: string | number; borderRadius: number; padding: string }
+> => ({
   sm: {
     fontSize: theme.typography.small.fontSize,
+    lineHeight: theme.typography.small.lineHeight,
     borderRadius: theme.borderRadius(3),
     padding: `${theme.spacing(0.375)}px ${theme.spacing(0.875)}px`,
   },
   md: {
     fontSize: theme.typography.p.fontSize,
+    lineHeight: theme.typography.p.lineHeight,
     borderRadius: theme.borderRadius(4),
     padding: `${theme.spacing(0.75)}px ${theme.spacing(1.25)}px`,
   },
   lg: {
     fontSize: theme.typography.p.fontSize,
+    lineHeight: theme.typography.p.lineHeight,
     borderRadius: theme.borderRadius(5),
     padding: `${theme.spacing(1.25)}px ${theme.spacing(1.75)}px`,
   },
@@ -55,7 +61,7 @@ const getButtonStyles = (
 
 export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<ButtonProps>>) => {
   const size = props.size;
-  const { fontSize, borderRadius, padding } = getButtonStyles(props.theme)[size];
+  const { fontSize, lineHeight, borderRadius, padding } = getButtonStyles(props.theme)[size];
 
   return {
     alignItems: 'center',
@@ -64,7 +70,7 @@ export const ButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Butt
     fontSize,
     borderRadius,
     padding,
-    lineHeight: '24px',
+    lineHeight,
 
     '&:hover': {
       cursor: 'pointer',
@@ -92,15 +98,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       width?: number;
       height?: number;
     }>({});
+    const hasMeasured = buttonSize.width !== undefined && buttonSize.height !== undefined;
+    const showLoader = isLoading && hasMeasured;
 
     useImperativeHandle(forwardedRef, () => innerRef.current as HTMLButtonElement);
 
     useLayoutEffect(() => {
-      if (innerRef.current && !isLoading) {
+      if (innerRef.current && !showLoader) {
         const { width, height } = innerRef.current.getBoundingClientRect();
         setButtonSize({ width, height });
       }
-    }, [isLoading, children]);
+    }, [showLoader, children]);
 
     const preventFocusOnClick = (event: MouseEvent<HTMLButtonElement>): void => {
       if (onClick && !isLoading) {
@@ -135,7 +143,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         // lock dimensions when loading, merge with user-provided style
         style={{
           ...restProps?.style,
-          ...(isLoading && buttonSize.width && buttonSize.height
+          ...(showLoader
             ? {
               width: `${buttonSize.width}px`,
               height: `${buttonSize.height}px`,
@@ -143,7 +151,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             : undefined),
         }}
       >
-        {isLoading ? (
+        {showLoader ? (
           <Loader size={size} color={color === 'primary' && variant === 'filled' ? 'white' : undefined} />
         ) : (
           children
