@@ -4,6 +4,7 @@ import styled, { useTheme } from '@seedui-react/seedui/sc';
 import { MDXProvider } from '@mdx-js/react';
 import { TableOfContents } from '../layout/TableOfContents';
 import { PageNavigation } from '../layout/PageNavigation';
+import { EditThisPage } from '../layout/EditThisPage';
 import { mdxComponents, SectionHeading } from './MDXComponents';
 
 interface PageLayoutProps {
@@ -60,6 +61,7 @@ export const PageLayout: FunctionComponent<PageLayoutProps> = ({
         </div>
         <Divider spacing={28} />
         <MDXProvider components={mdxComponents}>{children}</MDXProvider>
+        <EditThisPage currentPath={currentPath} />
         <PageNavigation currentPath={currentPath} />
       </MainContent>
       <TableOfContents path={currentPath} />
