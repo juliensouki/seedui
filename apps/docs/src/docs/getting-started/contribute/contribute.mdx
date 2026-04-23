@@ -1,0 +1,112 @@
+export const meta = {
+  title: 'Contribute',
+  description: 'How to report bugs, request features, and contribute code to seedui.',
+};
+
+<section id="section-intro">
+## Welcome
+
+Thanks for taking the time to contribute. Feature requests, bug reports, and pull requests are all welcome.
+
+seedui is a young project and the best way to shape it is to tell me what you need. Open an issue even if you are unsure whether it is a bug, a missing feature, or a question. No issue is too small.
+</section>
+
+<section id="section-reporting-bugs">
+## Reporting bugs and requesting features
+
+Open a [GitHub issue](https://github.com/juliensouki/seedui/issues). For bugs, include:
+
+- What you expected to happen
+- What actually happened
+- A minimal reproduction (a short code snippet or a link to a sandbox)
+- Your seedui version, React version, and browser if relevant
+
+For feature requests, describe the use case you are trying to solve. A concrete example helps more than a generic ask.
+</section>
+
+<section id="section-repository-layout">
+## Repository layout
+
+The seedui [monorepo](https://github.com/juliensouki/seedui) is a yarn workspaces project.
+
+```
+packages/seedui     The published library (@seedui-react/seedui)
+apps/docs           The documentation site (Astro + React + MDX)
+```
+</section>
+
+<section id="section-prerequisites">
+## Prerequisites
+
+- Node 18 or later
+- Yarn 3 (pinned via `packageManager` in `package.json`; `corepack enable` will pick it up)
+</section>
+
+<section id="section-local-setup">
+## Local setup
+
+```bash
+git clone https://github.com/juliensouki/seedui.git
+cd seedui
+yarn install
+```
+</section>
+
+<section id="section-common-commands">
+## Common commands
+
+Run from the repository root:
+
+```bash
+yarn dev:package:seedui         # build the library in watch mode
+yarn dev:app:docs               # run the docs site locally
+yarn build:package:seedui       # production build of the library
+yarn build:app:docs             # production build of the docs site
+yarn lint                       # lint every workspace
+```
+
+The docs site consumes the library via a workspace link, so running `dev:package:seedui` alongside `dev:app:docs` will rebuild the library automatically as you edit it.
+</section>
+
+<section id="section-library-changes">
+## Changing library code
+
+Source lives in `packages/seedui/src/components/<ComponentName>/`.
+
+- Each component is self-contained: component file and types.
+- Styling is done with styled-components. Import from `styled-components` inside the library. The `/sc` entry exists for consumers, not for internal code.
+- New components need matching documentation in the docs app (see below).
+</section>
+
+<section id="section-docs-changes">
+## Changing documentation
+
+Each component has two files under `apps/docs/src/docs/components/<category>/<kebab-name>/`:
+
+- `data.tsx` contains metadata: name, description, props, code examples, anatomy. Export a `*Doc` object of type `ComponentDoc`.
+- `<kebab-name>.mdx` is the rendered documentation page. It reads from `data.tsx` and renders sections with `<ComponentPlayground>`.
+
+Code examples in `data.tsx` use a `code` string plus an optional `layout` object for preview styling. Do not embed layout `<div style={{ ... }}>` wrappers inside the code string. See existing components for the pattern.
+</section>
+
+<section id="section-code-style">
+## Code style
+
+- TypeScript. Do not use `any` unless there is no alternative.
+- No unused exports. Do not add new exports to barrel files unless they are meant to be part of the public API.
+- Run `yarn lint` before pushing. CI runs the same command.
+</section>
+
+<section id="section-commits-prs">
+## Commits and pull requests
+
+- Keep commits focused. Prefer small, reviewable PRs over one large one.
+- Open the PR against `main`. Describe what changed and why.
+- If the PR changes a component's public API, call it out in the description.
+</section>
+
+<section id="section-questions">
+## Questions
+
+If something is unclear, open an issue or a draft PR with your question on the [GitHub repository](https://github.com/juliensouki/seedui). You can also reach me directly at [julien.soukileon@gmail.com](mailto:julien.soukileon@gmail.com).
+</section>

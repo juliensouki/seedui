@@ -16,6 +16,7 @@ import { Breakpoints } from '../docs/theme/breakpoints/breakpoints';
 // MDX content imports (compiled as React components via @mdx-js/rollup)
 import InstallationContent, { meta as installationMeta } from '../docs/getting-started/installation/installation.mdx';
 import QuickStartContent, { meta as quickStartMeta } from '../docs/getting-started/quick-start/quick-start.mdx';
+import ContributeContent, { meta as contributeMeta } from '../docs/getting-started/contribute/contribute.mdx';
 import ThemeProviderContent, { meta as themeProviderMeta } from '../docs/theme/theme-provider/theme-provider.mdx';
 import CustomizationContent, { meta as customizationMeta } from '../docs/theme/customization/customization.mdx';
 import DarkModeContent, { meta as darkModeMeta } from '../docs/theme/dark-mode/dark-mode.mdx';
@@ -94,6 +95,17 @@ function PageContent({ path }: { path: string }) {
       </PageLayout>
     );
   }
+  if (p === '/getting-started/contribute') {
+    return (
+      <PageLayout
+        title={contributeMeta.title}
+        description={contributeMeta.description}
+        currentPath={p}
+      >
+        <ContributeContent />
+      </PageLayout>
+    );
+  }
   // Theming
   const themingPages: Record<string, { Content: FunctionComponent; meta: any }> = {
     '/theming/theme-provider': { Content: ThemeProviderContent, meta: themeProviderMeta },
@@ -154,6 +166,7 @@ const pageTitles: Record<string, string> = {
   '/': 'seedui | React Component Library',
   '/getting-started/installation': 'seedui | Installation',
   '/getting-started/quick-start': 'seedui | Quick Start',
+  '/getting-started/contribute': 'seedui | Contribute',
   '/theming/theme-provider': 'seedui | ThemeProvider',
   '/theming/customization': 'seedui | Customization',
   '/theming/dark-mode': 'seedui | Dark Mode',
