@@ -115,6 +115,32 @@ const p: FunctionComponent<{ children?: ReactNode }> = ({ children }) => (
   <Text variant="p" style={{ marginBottom: 22 }}>{children}</Text>
 );
 
+const StyledUl = styled.ul(({ theme }) => {
+  const { responsive: _responsive, ...typography } = theme.typography.p;
+  return {
+    ...typography,
+    marginTop: 0,
+    marginBottom: 22,
+    paddingLeft: theme.spacing(3),
+    color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
+  };
+});
+
+const StyledOl = styled.ol(({ theme }) => {
+  const { responsive: _responsive, ...typography } = theme.typography.p;
+  return {
+    ...typography,
+    marginTop: 0,
+    marginBottom: 22,
+    paddingLeft: theme.spacing(3),
+    color: theme.mode === 'light' ? theme.colors.neutral.black : theme.colors.neutral.white,
+  };
+});
+
+const StyledLi = styled.li(({ theme }) => ({
+  marginBottom: theme.spacing(0.5),
+}));
+
 const CodeBlockWrapper = styled.div(({ theme }) => ({
   marginTop: theme.spacing(1.5),
   marginBottom: theme.spacing(3.5),
@@ -148,6 +174,9 @@ export const mdxComponents = {
   h2,
   h3,
   p,
+  ul: StyledUl,
+  ol: StyledOl,
+  li: StyledLi,
   code,
   pre,
   hr,

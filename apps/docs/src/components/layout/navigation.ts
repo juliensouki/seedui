@@ -11,6 +11,7 @@ export const gettingStartedPages: NavPage[] = [
   { name: 'Overview', path: '/', section: 'Getting Started' },
   { name: 'Installation', path: '/getting-started/installation', section: 'Getting Started' },
   { name: 'Quick Start', path: '/getting-started/quick-start', section: 'Getting Started' },
+  { name: 'Contribute', path: '/getting-started/contribute', section: 'Getting Started' },
 ];
 
 export type ThemeCategory = 'Configuration' | 'Design Tokens';
