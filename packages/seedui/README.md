@@ -1,4 +1,4 @@
-# @seedui-react/seedui
+# <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/juliensouki/seedui/main/apps/docs/public/logo-white.svg" /><img src="https://raw.githubusercontent.com/juliensouki/seedui/main/apps/docs/public/logo-black.svg" width="28" alt="" align="absmiddle" style="vertical-align: -4px" /></picture> &nbsp;@seedui-react/seedui
 
 A React component library and design system. I built it for my own side projects, and I'm sharing it so anyone can use it in theirs.
 
