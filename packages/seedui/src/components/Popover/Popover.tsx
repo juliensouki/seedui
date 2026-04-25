@@ -88,7 +88,7 @@ const PopoverContainer = applyCustomStyles(
     return {
       position: 'fixed',
       padding: resolvePadding(props.$padding),
-      backgroundColor: isLight ? theme.colors.neutral[100] : theme.colors.neutral[200],
+      backgroundColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[200],
       borderRadius: theme.borderRadius(4),
       boxShadow: theme.boxShadow[1],
       boxSizing: 'border-box',
