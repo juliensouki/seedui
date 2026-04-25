@@ -100,7 +100,7 @@ export const HomePage: FunctionComponent = () => {
           <div>
             <Text variant="h1">seedui</Text>
             <Text variant="p" style={{ marginTop: 8, color: isLight ? theme.colors.neutral[500] : undefined }}>
-              A simple and elegant React component library that&apos;s endlessly customizable.
+              A simple and minimalist React component library that&apos;s fully customizable.
             </Text>
             <Text
               variant="p"
@@ -109,7 +109,7 @@ export const HomePage: FunctionComponent = () => {
                 color: isLight ? theme.colors.neutral[500] : undefined,
               }}
             >
-              Everything you need to craft polished applications, internal tools, and delightful user experiences.
+              Everything you need to create modern products with a user experience that feels effortless.
             </Text>
             <div style={{ display: 'flex', gap: 10, marginTop: 24 }}>
               <Button

@@ -18,6 +18,3 @@ export * from './Textarea';
 export * from './Toggle';
 export * from './Tooltip';
 export * from './ThemeProvider';
-
-// Move this out of the internal folder once it's ready
-export * from './_internal/Loader';

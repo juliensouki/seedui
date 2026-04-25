@@ -1,6 +1,6 @@
 {
   "description": "Seed UI codebase",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "packages/*",

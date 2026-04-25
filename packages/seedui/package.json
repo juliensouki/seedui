@@ -1,9 +1,32 @@
 {
   "name": "@seedui-react/seedui",
+  "version": "0.1.33",
+  "description": "A React component library and design system.",
+  "license": "MIT",
+  "author": "Julien Souki-Léon <julien.soukileon@gmail.com>",
+  "homepage": "https://seedui.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliensouki/seedui.git",
+    "directory": "packages/seedui"
+  },
+  "bugs": {
+    "url": "https://github.com/juliensouki/seedui/issues"
+  },
+  "keywords": [
+    "react",
+    "component-library",
+    "design-system",
+    "ui",
+    "ui-components",
+    "styled-components",
+    "typescript",
+    "dark-mode",
+    "theme"
+  ],
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.33",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,6 +47,11 @@
       ]
     }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "vite build --watch",

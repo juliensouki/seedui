@@ -1,4 +1,14 @@
-import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode, useContext, useEffect, useRef, MouseEvent } from 'react';
+import {
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
+  ReactNode,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  MouseEvent,
+} from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
@@ -163,6 +173,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
     });
 
     const modalRef = useRef<HTMLDivElement>(null);
+    const titleId = useId();
 
     useEffect(() => {
       if (!isOpen || !closeOnEscape) return;
@@ -212,6 +223,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
           ref={forwardedRef || modalRef}
           $width={width}
           $isOpen={isOpen}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={title ? titleId : containerHTMLAttributes?.['aria-labelledby']}
           className={joinClasses('modal-container', className, containerHTMLAttributes?.className)}
           onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
@@ -221,7 +235,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps & InternalProps>(
               className={joinClasses('modal-header', headerHTMLAttributes?.className)}
             >
               {title && (
-                <Text variant="h6" style={{ margin: 0 }}>
+                <Text id={titleId} variant="h6" style={{ margin: 0 }}>
                   {title}
                 </Text>
               )}
