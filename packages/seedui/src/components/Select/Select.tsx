@@ -22,6 +22,7 @@ import { MenuItem, SelectOption } from './MenuItem';
 import { SelectActiveItemStyle, optionIconStyles } from './shared';
 import { applyCustomStyles } from '../../utils/custom-styles';
 import { joinClasses } from '../../utils/classes';
+import { getFocusRingBoxShadow } from '../../utils/focus-ring';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContext } from '../ThemeProvider/context';
 import { SeedContextType } from '../../types';
@@ -122,8 +123,7 @@ const SelectContainer = applyCustomStyles(
       paddingRight: 0,
       cursor: $disabled ? 'default' : 'pointer',
 
-      outline: $isFocused ? `2px solid ${theme.colors.primary[400]}` : undefined,
-      outlineOffset: $isFocused ? 1 : undefined,
+      boxShadow: $isFocused ? getFocusRingBoxShadow(theme) : undefined,
       borderColor: theme.colors.primary.default,
       border: `1px solid ${$isFocused ? activeColor : baseColor}`,
 

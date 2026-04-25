@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getFocusRingBoxShadow } from '../../utils/focus-ring';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContextType, Sizes } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
@@ -147,8 +148,9 @@ const ToggleInput = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: `2px solid ${theme.mode === 'light' ? theme.colors.primary[300] : theme.colors.primary[400]}`,
-        outlineOffset: 2,
+        boxShadow: getFocusRingBoxShadow(theme, {
+          ringColor: isLight ? theme.colors.primary[300] : theme.colors.primary[400],
+        }),
       },
 
     };

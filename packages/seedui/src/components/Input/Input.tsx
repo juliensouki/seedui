@@ -15,6 +15,7 @@ import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { InternalProps, StyledComponentsPrefix, StyledProps } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getFocusRingBoxShadow } from '../../utils/focus-ring';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContextType } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
@@ -210,8 +211,7 @@ const InputContainer = styled.div<StyledComponentsPrefix<StyledProps<{ iconPlace
     borderRadius: theme.borderRadius(4),
 
     '&:focus-within': {
-      outline: `2px solid ${theme.colors.primary[400]}`,
-      outlineOffset: 1,
+      boxShadow: getFocusRingBoxShadow(theme),
     },
   }),
 );

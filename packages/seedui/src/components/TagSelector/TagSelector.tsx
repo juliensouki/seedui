@@ -2,6 +2,7 @@ import { ChangeEvent, ForwardedRef, forwardRef, HTMLAttributes, useContext, useS
 import styled from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
+import { getFocusRingBoxShadow } from '../../utils/focus-ring';
 import { joinClasses } from '../../utils/classes';
 import { SeedContext } from '../ThemeProvider/context';
 import { SeedContextType } from '../../types';
@@ -92,6 +93,7 @@ const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; 
 
     '& .input-container:focus-within': {
       outline: 'none',
+      boxShadow: 'none',
     },
 
     ...(!$isFocused && !$disabled && {
@@ -101,8 +103,7 @@ const InputContainer = styled.div<StyledComponentsPrefix<{ isFocused?: boolean; 
     }),
 
     ...($isFocused && !$disabled && {
-      outline: `2px solid ${theme.colors.primary[400]}`,
-      outlineOffset: 1,
+      boxShadow: getFocusRingBoxShadow(theme),
       borderColor: theme.colors.primary.default,
     }),
 
@@ -129,13 +130,19 @@ const TagsContainer = styled.div(({ theme }) => ({
   marginTop: theme.spacing(0.75),
 }));
 
-const AddButton = styled(Button)(({ theme }: StyledProps<TagSelectorProps>) => ({
-  flexShrink: 0,
-  '&:focus': {
-    outline: `1px solid ${theme.colors.primary[600]}`,
-    offset: 0,
-  },
-}));
+const AddButton = styled(Button)(({ theme }: StyledProps<TagSelectorProps>) => {
+  const isLight = theme.mode === 'light';
+  return {
+    flexShrink: 0,
+    '&:focus': {
+      boxShadow: getFocusRingBoxShadow(theme, {
+        ringColor: theme.colors.primary[600],
+        ringWidth: 1,
+        gapColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
+      }),
+    },
+  };
+});
 
 /** An input that lets users build a list of tags by typing and adding them one by one. */
 export const TagSelector = forwardRef<HTMLInputElement, TagSelectorProps & InternalProps>(

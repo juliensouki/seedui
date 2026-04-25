@@ -1,4 +1,5 @@
 import { Theme } from '../../../../types';
+import { getFocusRingBoxShadow } from '../../../../utils/focus-ring';
 
 export const getNeutralTransparentButtonStyles = (theme: Theme) => ({
   backgroundColor: 'transparent',
@@ -10,14 +11,16 @@ export const getNeutralTransparentButtonStyles = (theme: Theme) => ({
 
   '&:focus': {
     backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral.default,
-    outline: `2px solid ${theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral.default}`,
-    outlineOffset: 1,
+    boxShadow: getFocusRingBoxShadow(theme, {
+      ringColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral.default,
+    }),
   },
 
   '&:active': {
     backgroundColor: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[300],
-    outline: `2px solid ${theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[300]}`,
-    outlineOffset: 1,
+    boxShadow: getFocusRingBoxShadow(theme, {
+      ringColor: theme.mode === 'light' ? theme.colors.neutral[400] : theme.colors.neutral[300],
+    }),
   },
 
   '& svg': {
@@ -31,7 +34,7 @@ export const getNeutralTransparentButtonStyles = (theme: Theme) => ({
     '&:hover, &:active, &:focus': {
       backgroundColor: 'transparent',
       color: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[400],
-      outline: 'none',
+      boxShadow: 'none',
     },
   },
 });

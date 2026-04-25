@@ -1,6 +1,7 @@
 import { TinyColor } from '@ctrl/tinycolor';
 
 import { SemanticColorShades, Theme } from '../../../../types';
+import { getFocusRingBoxShadow } from '../../../../utils/focus-ring';
 
 const getContrastText = (bgColor: string, theme: Theme): string => {
   const color = new TinyColor(bgColor);
@@ -19,14 +20,14 @@ export const getFilledButtonStyles = (theme: Theme, scale: SemanticColorShades, 
     },
 
     '&:focus': {
-      outline: `2px solid ${theme.mode === 'light' ? scale.default : scale.default}`,
-      outlineOffset: 1,
+      boxShadow: getFocusRingBoxShadow(theme, { ringColor: scale.default }),
     },
 
     '&:active': {
       backgroundColor: theme.mode === 'light' ? scale[800] : scale[300],
-      outline: `2px solid ${theme.mode === 'light' ? scale[800] : scale[300]}`,
-      outlineOffset: 1,
+      boxShadow: getFocusRingBoxShadow(theme, {
+        ringColor: theme.mode === 'light' ? scale[800] : scale[300],
+      }),
     },
 
     '& svg': {

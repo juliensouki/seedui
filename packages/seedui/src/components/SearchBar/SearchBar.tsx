@@ -2,6 +2,7 @@ import { ChangeEventHandler, ForwardedRef, forwardRef, HTMLAttributes, useContex
 import styled from 'styled-components';
 
 import { getDefaultProps } from '../../utils/props';
+import { getFocusRingBoxShadow } from '../../utils/focus-ring';
 import { joinClasses } from '../../utils/classes';
 import { SeedContext } from '../ThemeProvider/context';
 import { SeedContextType } from '../../types';
@@ -90,8 +91,7 @@ const SearchBarContainer = styled.div<
 
     ...($isFocused &&
       !$disabled && {
-      outline: `2px solid ${theme.colors.primary[400]}`,
-      outlineOffset: 1,
+      boxShadow: getFocusRingBoxShadow(theme),
       borderColor: theme.colors.primary.default,
     }),
   };
@@ -99,12 +99,18 @@ const SearchBarContainer = styled.div<
 
 const SearchInput = Input;
 
-const SearchButton = styled(Button)(({ theme }: StyledProps<SearchBarProps>) => ({
-  '&:focus': {
-    outline: `1px solid ${theme.colors.primary[600]}`,
-    offset: 0,
-  },
-}));
+const SearchButton = styled(Button)(({ theme }: StyledProps<SearchBarProps>) => {
+  const isLight = theme.mode === 'light';
+  return {
+    '&:focus': {
+      boxShadow: getFocusRingBoxShadow(theme, {
+        ringColor: theme.colors.primary[600],
+        ringWidth: 1,
+        gapColor: isLight ? theme.colors.neutral.white : theme.colors.neutral[300],
+      }),
+    },
+  };
+});
 
 const IconWrapper = styled.div<StyledComponentsPrefix<{ disabled?: boolean }>>(({ theme, $disabled }) => {
   const isLight = theme.mode === 'light';
@@ -190,6 +196,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps & InternalP
             container: {
               style: {
                 outline: 'none',
+                boxShadow: 'none',
               },
             },
             input: {

@@ -1,4 +1,5 @@
 import { Theme } from '../../../../types';
+import { getFocusRingBoxShadow } from '../../../../utils/focus-ring';
 
 export const getNeutralFilledButtonStyles = (theme: Theme) => ({
   backgroundColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[500],
@@ -9,14 +10,16 @@ export const getNeutralFilledButtonStyles = (theme: Theme) => ({
   },
 
   '&:focus': {
-    outline: `2px solid ${theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[500]}`,
-    outlineOffset: 1,
+    boxShadow: getFocusRingBoxShadow(theme, {
+      ringColor: theme.mode === 'light' ? theme.colors.neutral[300] : theme.colors.neutral[500],
+    }),
   },
 
   '&:active': {
     backgroundColor: theme.mode === 'light' ? theme.colors.neutral[500] : theme.colors.neutral[300],
-    outline: `2px solid ${theme.mode === 'light' ? theme.colors.neutral[500] : theme.colors.neutral[300]}`,
-    outlineOffset: 1,
+    boxShadow: getFocusRingBoxShadow(theme, {
+      ringColor: theme.mode === 'light' ? theme.colors.neutral[500] : theme.colors.neutral[300],
+    }),
   },
 
   '& svg': {

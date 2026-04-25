@@ -6,6 +6,7 @@ import { ContainerWithLabel } from '../_internal/ContainerWithLabel';
 import { InternalProps, StyledComponentsPrefix } from '../../types/internal';
 import { joinClasses } from '../../utils/classes';
 import { applyCustomStyles } from '../../utils/custom-styles';
+import { getFocusRingBoxShadow } from '../../utils/focus-ring';
 import { getDefaultProps } from '../../utils/props';
 import { SeedContextType } from '../../types';
 import { SeedContext } from '../ThemeProvider/context';
@@ -80,8 +81,8 @@ const TextareaElement = applyCustomStyles(
       },
 
       '&:focus': {
-        outline: `2px solid ${theme.colors.primary[400]}`,
-        outlineOffset: 1,
+        outline: 'none',
+        boxShadow: getFocusRingBoxShadow(theme),
         borderColor: theme.colors.primary.default,
       },
 
