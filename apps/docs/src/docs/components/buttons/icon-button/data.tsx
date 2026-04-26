@@ -1,4 +1,4 @@
-import { IconButton } from '@seedui-react/seedui';
+import { IconButton } from '@juliensouki/seedui';
 import { SettingsIcon, SearchIcon, PencilIcon } from 'lucide-react';
 import { ComponentDoc } from '../../../types';
 

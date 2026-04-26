@@ -35,7 +35,7 @@ function styledSSRVitePlugin() {
            let _sheet;
            let vnode;
            try {
-             const { ServerStyleSheet } = await import('@seedui-react/seedui');
+             const { ServerStyleSheet } = await import('@juliensouki/seedui');
              if (ServerStyleSheet) {
                _sheet = new ServerStyleSheet();
                vnode = _sheet.collectStyles(_rawVnode);

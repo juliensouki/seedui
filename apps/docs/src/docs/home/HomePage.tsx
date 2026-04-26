@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider, Button } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Divider, Button } from '@juliensouki/seedui';
+import styled, { useTheme } from '@juliensouki/seedui/sc';
 import { GithubIcon } from 'lucide-react';
 import { WallContent } from './wallOfComponents';
 import { Footer } from './Footer';

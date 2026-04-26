@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react';
-import { Text, SearchBar } from '@seedui-react/seedui';
-import { useTheme } from '@seedui-react/seedui/sc';
+import { Text, SearchBar } from '@juliensouki/seedui';
+import { useTheme } from '@juliensouki/seedui/sc';
 import { WallCard, MiniLabel, StatusDot } from './shared';
 
 export const ProjectsCard: FunctionComponent = () => {

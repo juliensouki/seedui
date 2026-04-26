@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text, Avatar, Tag } from '@seedui-react/seedui';
-import { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Avatar, Tag } from '@juliensouki/seedui';
+import { useTheme } from '@juliensouki/seedui/sc';
 import { WallCard, MiniLabel, NotifItem } from './shared';
 
 export const NotificationsCard: FunctionComponent = () => {

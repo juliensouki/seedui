@@ -12,7 +12,7 @@ seedui supports light and dark mode out of the box. Set the `mode` prop on
 `ThemeProvider` and every component, color token, and box shadow automatically adapts.
 
 ```tsx
-import { ThemeProvider } from '@seedui-react/seedui';
+import { ThemeProvider } from '@juliensouki/seedui';
 
 function App() {
   return (
@@ -35,7 +35,7 @@ seedui re-renders all themed components when the mode changes.
 
 ```tsx
 import { useState } from 'react';
-import { ThemeProvider, Mode } from '@seedui-react/seedui';
+import { ThemeProvider, Mode } from '@juliensouki/seedui';
 
 function App() {
   const [mode, setMode] = useState<Mode>('light');
@@ -56,7 +56,7 @@ function App() {
 When building your own styled components, access `theme.mode` to apply different styles per mode.
 
 ```tsx
-import { styled } from '@seedui-react/seedui';
+import { styled } from '@juliensouki/seedui';
 
 const Card = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -72,7 +72,7 @@ const Card = styled.div(({ theme }) => {
 You can also use the `useTheme` hook for the same purpose in regular components:
 
 ```tsx
-import { useTheme } from '@seedui-react/seedui';
+import { useTheme } from '@juliensouki/seedui';
 
 function Banner() {
   const theme = useTheme();
@@ -100,7 +100,7 @@ When customizing the theme, you can provide different color overrides for light 
 Each mode receives its own set of color tokens.
 
 ```tsx
-import { ThemeProvider, ThemeCustomization } from '@seedui-react/seedui';
+import { ThemeProvider, ThemeCustomization } from '@juliensouki/seedui';
 
 const theme: ThemeCustomization = {
   colors: {

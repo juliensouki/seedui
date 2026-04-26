@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Toggle } from '@seedui-react/seedui';
+import { Toggle } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function ToggleExample() {

@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Text } from '@seedui-react/seedui';
-import styled from '@seedui-react/seedui/sc';
+import { Text } from '@juliensouki/seedui';
+import styled from '@juliensouki/seedui/sc';
 import { ComponentPlayground } from '../content/ComponentPlayground';
 import { PropsTable } from '../content/PropsTable';
 import { ComponentSchema } from '../content/ComponentSchema';
@@ -68,7 +68,7 @@ export const OverviewDemo: FunctionComponent<{ example: FunctionComponent; previ
 export const ImportSection: FunctionComponent<{ name: string }> = ({ name }) => (
   <section id="section-import">
     <SectionHeading id="section-import" style={{ marginBottom: 12 }}>Import</SectionHeading>
-    <ComponentPlayground code={`import { ${name} } from '@seedui-react/seedui';`} readOnly />
+    <ComponentPlayground code={`import { ${name} } from '@juliensouki/seedui';`} readOnly />
   </section>
 );
 

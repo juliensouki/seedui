@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
-import styled from '@seedui-react/seedui/sc';
+import { Text, Divider } from '@juliensouki/seedui';
+import styled from '@juliensouki/seedui/sc';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { allPages } from './navigation';
 

@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react';
-import { Text, Button, Input } from '@seedui-react/seedui';
-import { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Button, Input } from '@juliensouki/seedui';
+import { useTheme } from '@juliensouki/seedui/sc';
 import { WallCard, MiniLabel } from './shared';
 
 export const InviteCard: FunctionComponent = () => {

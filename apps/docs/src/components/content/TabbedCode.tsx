@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import styled from '@seedui-react/seedui/sc';
+import styled from '@juliensouki/seedui/sc';
 import { ComponentPlayground } from './ComponentPlayground';
 
 type PkgManager = 'yarn' | 'npm';

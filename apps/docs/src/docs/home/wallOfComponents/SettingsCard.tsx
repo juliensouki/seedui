@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react';
-import { Text, Toggle } from '@seedui-react/seedui';
-import { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Toggle } from '@juliensouki/seedui';
+import { useTheme } from '@juliensouki/seedui/sc';
 import { WallCard, MiniLabel, SettingRow } from './shared';
 
 export const SettingsCard: FunctionComponent = () => {

@@ -1,4 +1,4 @@
-import styled from '@seedui-react/seedui/sc';
+import styled from '@juliensouki/seedui/sc';
 
 export const Table = styled.table(({ theme }) => {
   const isLight = theme.mode === 'light';

@@ -1,4 +1,4 @@
-import { Tag } from '@seedui-react/seedui';
+import { Tag } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function TagExample() {

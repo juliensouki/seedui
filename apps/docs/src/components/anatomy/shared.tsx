@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import styled from '@seedui-react/seedui/sc';
+import styled from '@juliensouki/seedui/sc';
 
 export const SchemaWrapper = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';

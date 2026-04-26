@@ -1,4 +1,4 @@
-import { Card, Text } from '@seedui-react/seedui';
+import { Card, Text } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function CardExample() {

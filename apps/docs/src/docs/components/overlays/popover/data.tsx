@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Popover, Text } from '@seedui-react/seedui';
+import { Button, Popover, Text } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function PopoverExample() {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TagSelector } from '@seedui-react/seedui';
+import { TagSelector } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function TagSelectorExample() {

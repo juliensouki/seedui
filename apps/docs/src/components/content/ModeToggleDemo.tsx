@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Toggle } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
+import { Toggle } from '@juliensouki/seedui';
+import styled, { useTheme } from '@juliensouki/seedui/sc';
 import { SunIcon, MoonIcon } from 'lucide-react';
 import { useModeToggle } from '../layout/ModeContext';
 

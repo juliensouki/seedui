@@ -1,5 +1,5 @@
-import { Text, Card } from '@seedui-react/seedui';
-import styled from '@seedui-react/seedui/sc';
+import { Text, Card } from '@juliensouki/seedui';
+import styled from '@juliensouki/seedui/sc';
 
 export const WallCard = styled(Card)(() => ({
   width: '100%',

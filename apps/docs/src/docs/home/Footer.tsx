@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
-import { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Divider } from '@juliensouki/seedui';
+import { useTheme } from '@juliensouki/seedui/sc';
 import { BASE_GITHUB_URL } from '../../constants';
 
 export const Footer: FunctionComponent = () => {

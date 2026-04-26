@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider, Avatar, AvatarStack } from '@seedui-react/seedui';
-import { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Divider, Avatar, AvatarStack } from '@juliensouki/seedui';
+import { useTheme } from '@juliensouki/seedui/sc';
 import { WallCard, MiniLabel } from './shared';
 
 export const ActivityCard: FunctionComponent = () => {

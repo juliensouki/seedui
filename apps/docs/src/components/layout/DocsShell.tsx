@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
-import { ThemeProvider, colors, Mode, ThemeCustomization } from '@seedui-react/seedui';
-import styled from '@seedui-react/seedui/sc';
+import { ThemeProvider, colors, Mode, ThemeCustomization } from '@juliensouki/seedui';
+import styled from '@juliensouki/seedui/sc';
 import { componentDocs, categoryOrder } from '../../docs/components';
 import { gettingStartedPages, themeCategoryOrder, themePagesByCategory } from './navigation';
 import { Topbar } from './Topbar';

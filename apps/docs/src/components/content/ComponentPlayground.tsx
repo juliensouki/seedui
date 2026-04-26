@@ -17,9 +17,9 @@ import { createHighlighterCoreSync } from 'shiki/core';
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 import tsx from 'shiki/langs/tsx.mjs';
 import darkPlus from 'shiki/themes/dark-plus.mjs';
-import * as seedui from '@seedui-react/seedui';
-import { IconButton } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
+import * as seedui from '@juliensouki/seedui';
+import { IconButton } from '@juliensouki/seedui';
+import styled, { useTheme } from '@juliensouki/seedui/sc';
 import { CopyIcon, CheckIcon } from 'lucide-react';
 
 const baseScope = {

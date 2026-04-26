@@ -1,4 +1,4 @@
-import { Stepper } from '@seedui-react/seedui';
+import { Stepper } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function StepperExample() {

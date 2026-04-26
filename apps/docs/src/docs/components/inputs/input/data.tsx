@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { Input } from '@seedui-react/seedui';
+import { Input } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function InputExample() {

@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider, Button, Avatar, Tag } from '@seedui-react/seedui';
-import { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Divider, Button, Avatar, Tag } from '@juliensouki/seedui';
+import { useTheme } from '@juliensouki/seedui/sc';
 import { WallCard, StatValue, StatLabel } from './shared';
 
 export const UserProfileCard: FunctionComponent = () => {

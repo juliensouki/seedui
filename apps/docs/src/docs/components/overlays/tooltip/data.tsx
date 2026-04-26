@@ -1,4 +1,4 @@
-import { Text, Tooltip } from '@seedui-react/seedui';
+import { Text, Tooltip } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function TooltipExample() {

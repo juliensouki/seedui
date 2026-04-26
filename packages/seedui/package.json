@@ -1,6 +1,6 @@
 {
-  "name": "@seedui-react/seedui",
-  "version": "0.1.34",
+  "name": "@juliensouki/seedui",
+  "version": "0.0.1",
   "description": "A React component library and design system.",
   "license": "MIT",
   "author": "Julien Souki-Léon <julien.soukileon@gmail.com>",

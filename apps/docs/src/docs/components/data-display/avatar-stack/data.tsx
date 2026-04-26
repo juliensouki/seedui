@@ -1,4 +1,4 @@
-import { Avatar, AvatarStack } from '@seedui-react/seedui';
+import { Avatar, AvatarStack } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function AvatarStackExample() {

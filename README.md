@@ -4,15 +4,15 @@ A React component library and design system. I built it for my own side projects
 
 This repository contains everything related to seedui:
 
-- The published library, [`@seedui-react/seedui`](./packages/seedui), under [`packages/seedui`](./packages/seedui).
+- The published library, [`@juliensouki/seedui`](./packages/seedui), under [`packages/seedui`](./packages/seedui).
 - The documentation website at [seedui.dev](https://seedui.dev), under [`apps/docs`](./apps/docs).
 
 ## Installation
 
 ```bash
-yarn add @seedui-react/seedui styled-components
+yarn add @juliensouki/seedui styled-components
 # or
-npm install @seedui-react/seedui styled-components
+npm install @juliensouki/seedui styled-components
 ```
 
 ## Why seedui
@@ -53,7 +53,7 @@ Built with [Astro](https://astro.build) and deployed on [Render](https://render.
 ## Quick start
 
 ```tsx
-import { ThemeProvider, Button } from '@seedui-react/seedui';
+import { ThemeProvider, Button } from '@juliensouki/seedui';
 
 function App() {
   return (

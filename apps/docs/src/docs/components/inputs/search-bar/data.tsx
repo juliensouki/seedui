@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { SearchBar } from '@seedui-react/seedui';
+import { SearchBar } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function SearchBarExample() {

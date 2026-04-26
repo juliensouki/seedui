@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { Button, Divider, Tag, Stepper } from '@seedui-react/seedui';
+import { Button, Divider, Tag, Stepper } from '@juliensouki/seedui';
 import { WallCard, MiniLabel } from './shared';
 
 const stepLabels = ['Cart', 'Shipping', 'Payment', 'Confirmation'];

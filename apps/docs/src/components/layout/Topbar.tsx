@@ -1,6 +1,6 @@
 import { ChangeEvent, FunctionComponent, useContext, useEffect, useMemo, useState } from 'react';
-import { Toggle, Mode, Popover, Text, Tag, IconButton, SearchBar } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
+import { Toggle, Mode, Popover, Text, Tag, IconButton, SearchBar } from '@juliensouki/seedui';
+import styled, { useTheme } from '@juliensouki/seedui/sc';
 import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';

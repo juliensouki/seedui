@@ -1,4 +1,4 @@
-import { Divider, Text } from '@seedui-react/seedui';
+import { Divider, Text } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function DividerExample() {

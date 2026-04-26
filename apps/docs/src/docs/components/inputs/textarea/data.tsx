@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { Textarea } from '@seedui-react/seedui';
+import { Textarea } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function TextareaExample() {

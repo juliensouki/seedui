@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode, useCallback, useEffect, useState } from 'react';
-import { IconButton } from '@seedui-react/seedui';
+import { IconButton } from '@juliensouki/seedui';
 import { FigmaIcon, GithubIcon } from 'lucide-react';
 import { DocsShell } from './layout/DocsShell';
 import { HomePage } from '../docs/home/HomePage';

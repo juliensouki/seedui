@@ -1,4 +1,4 @@
-import { Skeleton } from '@seedui-react/seedui';
+import { Skeleton } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function SkeletonExample() {

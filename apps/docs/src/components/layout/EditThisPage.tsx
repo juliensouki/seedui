@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text, Divider, Button } from '@seedui-react/seedui';
-import styled from '@seedui-react/seedui/sc';
+import { Text, Divider, Button } from '@juliensouki/seedui';
+import styled from '@juliensouki/seedui/sc';
 import { PencilIcon } from 'lucide-react';
 import { componentDocs } from '../../docs/components';
 import { BASE_GITHUB_URL } from '../../constants';

@@ -1,4 +1,4 @@
-import { ProgressBar } from '@seedui-react/seedui';
+import { ProgressBar } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function ProgressBarExample() {

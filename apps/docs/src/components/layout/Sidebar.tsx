@@ -1,6 +1,6 @@
 import { ChangeEvent, FunctionComponent, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { IconButton, SearchBar } from '@seedui-react/seedui';
-import styled from '@seedui-react/seedui/sc';
+import { IconButton, SearchBar } from '@juliensouki/seedui';
+import styled from '@juliensouki/seedui/sc';
 import { GithubIcon, FigmaIcon, ChevronDown } from 'lucide-react';
 import { ComponentCategory } from '../../docs/components';
 import { allPages, NavPage, ThemeCategory } from './navigation';

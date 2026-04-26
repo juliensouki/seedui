@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Text } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
+import { Text } from '@juliensouki/seedui';
+import styled, { useTheme } from '@juliensouki/seedui/sc';
 import { PageLayout } from '../../../components/mdx/PageLayout';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 

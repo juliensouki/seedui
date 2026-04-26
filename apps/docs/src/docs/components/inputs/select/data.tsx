@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Select } from '@seedui-react/seedui';
+import { Select } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function SelectExample() {

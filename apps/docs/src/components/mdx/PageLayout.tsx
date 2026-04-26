@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
+import { Text, Divider } from '@juliensouki/seedui';
+import styled, { useTheme } from '@juliensouki/seedui/sc';
 import { MDXProvider } from '@mdx-js/react';
 import { TableOfContents } from '../layout/TableOfContents';
 import { PageNavigation } from '../layout/PageNavigation';

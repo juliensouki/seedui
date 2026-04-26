@@ -18,7 +18,7 @@ For feature requests, describe the use case you are trying to solve. A concrete 
 This is a yarn workspaces monorepo.
 
 ```
-packages/seedui     The published library (@seedui-react/seedui)
+packages/seedui     The published library (@juliensouki/seedui)
 apps/docs           The documentation site (Astro + React + MDX)
 ```
 

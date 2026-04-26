@@ -1,4 +1,4 @@
-import { Button } from '@seedui-react/seedui';
+import { Button } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function ButtonExample() {

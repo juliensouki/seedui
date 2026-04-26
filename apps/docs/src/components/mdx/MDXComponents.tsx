@@ -1,6 +1,6 @@
 import { Children, FunctionComponent, isValidElement, MouseEvent, ReactNode, useState } from 'react';
-import { Text, Divider } from '@seedui-react/seedui';
-import styled from '@seedui-react/seedui/sc';
+import { Text, Divider } from '@juliensouki/seedui';
+import styled from '@juliensouki/seedui/sc';
 import { ComponentPlayground } from '../content/ComponentPlayground';
 import { CheckIcon, LinkIcon } from 'lucide-react';
 

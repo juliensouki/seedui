@@ -1,4 +1,4 @@
-import { Text } from '@seedui-react/seedui';
+import { Text } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function TextExample() {

@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
-import { ThemeProvider } from '@seedui-react/seedui';
-import styled, { useTheme } from '@seedui-react/seedui/sc';
-import type { ThemeCustomization } from '@seedui-react/seedui';
+import { ThemeProvider } from '@juliensouki/seedui';
+import styled, { useTheme } from '@juliensouki/seedui/sc';
+import type { ThemeCustomization } from '@juliensouki/seedui';
 
 const PreviewBox = styled.div(({ theme }) => {
   const isLight = theme.mode === 'light';

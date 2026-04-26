@@ -7,7 +7,7 @@
     "apps/docs"
   ],
   "resolutions": {
-    "@seedui-react/seedui": "workspace:packages/seedui"
+    "@juliensouki/seedui": "workspace:packages/seedui"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
@@ -31,8 +31,8 @@
     "build:app:docs": "yarn workspace @seedui-react/docs run build",
     "dev:app:docs": "yarn workspace @seedui-react/docs run dev",
     "preview:app:docs": "yarn workspace @seedui-react/docs run preview",
-    "build:package:seedui": "yarn workspace @seedui-react/seedui run build",
-    "dev:package:seedui": "yarn workspace @seedui-react/seedui run dev"
+    "build:package:seedui": "yarn workspace @juliensouki/seedui run build",
+    "dev:package:seedui": "yarn workspace @juliensouki/seedui run dev"
   },
   "packageManager": "yarn@3.1.1"
 }

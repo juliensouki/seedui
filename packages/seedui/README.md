@@ -7,9 +7,9 @@ Full documentation and live examples at [seedui.dev](https://seedui.dev).
 ## Installation
 
 ```bash
-yarn add @seedui-react/seedui styled-components
+yarn add @juliensouki/seedui styled-components
 # or
-npm install @seedui-react/seedui styled-components
+npm install @juliensouki/seedui styled-components
 ```
 
 ### Peer dependencies
@@ -59,7 +59,7 @@ If you override typography tokens with your own fonts, you can skip this step.
 ## Quick start
 
 ```tsx
-import { ThemeProvider, Button } from '@seedui-react/seedui';
+import { ThemeProvider, Button } from '@juliensouki/seedui';
 
 function App() {
   return (
@@ -72,10 +72,10 @@ function App() {
 
 ### Using styled-components
 
-> **Do not import directly from `styled-components`.** Use the re-export from `@seedui-react/seedui/sc` instead. This ensures you share the same styled-components instance as seedui, which is required for theming.
+> **Do not import directly from `styled-components`.** Use the re-export from `@juliensouki/seedui/sc` instead. This ensures you share the same styled-components instance as seedui, which is required for theming.
 
 ```tsx
-import styled, { css, keyframes } from '@seedui-react/seedui/sc';
+import styled, { css, keyframes } from '@juliensouki/seedui/sc';
 
 const Container = styled.div(({ theme }) => ({
   padding: theme.spacing(3),
@@ -89,7 +89,7 @@ const Container = styled.div(({ theme }) => ({
 Read theme values in any component with the `useTheme` hook:
 
 ```tsx
-import { useTheme } from '@seedui-react/seedui';
+import { useTheme } from '@juliensouki/seedui';
 
 function MyComponent() {
   const theme = useTheme();

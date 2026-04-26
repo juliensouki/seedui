@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Modal, Text } from '@seedui-react/seedui';
+import { Button, Modal, Text } from '@juliensouki/seedui';
 import { ComponentDoc } from '../../../types';
 
 function ModalExample() {

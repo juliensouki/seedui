@@ -1,4 +1,4 @@
-import { Button } from '@seedui-react/seedui';
+import { Button } from '@juliensouki/seedui';
 import { ComponentPlayground } from '../../../components/content/ComponentPlayground';
 import { Callout } from '../../../components/content/Callout';
 
@@ -13,7 +13,7 @@ export const meta = {
 After installing and wrapping your app in `ThemeProvider`, you can use any seedui component:
 
 ```tsx
-import { ThemeProvider, Button } from '@seedui-react/seedui';
+import { ThemeProvider, Button } from '@juliensouki/seedui';
 
 function App() {
   return (
@@ -36,10 +36,10 @@ Here's what the example above looks like when rendered:
   Do not import directly from <code>styled-components</code>.
 </Callout>
 
-The library re-exports styled-components API through `@seedui-react/seedui/sc`. Use this import for everything you would normally import from styled-components:
+The library re-exports styled-components API through `@juliensouki/seedui/sc`. Use this import for everything you would normally import from styled-components:
 
 ```tsx
-import styled, { css, keyframes } from '@seedui-react/seedui/sc';
+import styled, { css, keyframes } from '@juliensouki/seedui/sc';
 
 const Container = styled.div(({ theme }) => ({
   padding: theme.spacing(3),
@@ -58,7 +58,7 @@ This ensures you share the same styled-components instance as seedui, which is r
 Access theme values directly in your components with `useTheme`:
 
 ```tsx
-import { useTheme } from '@seedui-react/seedui';
+import { useTheme } from '@juliensouki/seedui';
 
 function MyComponent() {
   const theme = useTheme();

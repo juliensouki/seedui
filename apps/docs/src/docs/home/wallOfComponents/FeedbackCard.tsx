@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { Button, Tag, Textarea } from '@seedui-react/seedui';
+import { Button, Tag, Textarea } from '@juliensouki/seedui';
 import { WallCard, MiniLabel, Row } from './shared';
 
 export const FeedbackCard: FunctionComponent = () => {

@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode } from 'react';
-import styled from '@seedui-react/seedui/sc';
+import styled from '@juliensouki/seedui/sc';
 
 type CalloutColor = 'info' | 'warning' | 'success' | 'error';
 
