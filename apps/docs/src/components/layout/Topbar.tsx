@@ -4,7 +4,7 @@ import styled, { useTheme } from '@juliensouki/seedui/sc';
 import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
-import { BASE_GITHUB_URL } from '../../constants';
+import { BASE_GITHUB_URL, BASE_FIGMA_URL } from '../../constants';
 
 const Bar = styled.header(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -194,7 +194,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             variant="transparent"
             color="neutral"
             size="md"
-            onClick={() => window.open('https://figma.com', '_blank')}
+            onClick={() => window.open(BASE_FIGMA_URL, '_blank', 'noopener,noreferrer')}
           >
             <FigmaIcon size={18} />
           </IconButton>

@@ -48,7 +48,7 @@ const componentSourceUrl = (name: string) => {
   return `${BASE_GITHUB_URL}/blob/main/packages/seedui/src/components/${relPath}`;
 };
 
-const componentHeaderActions = (name: string) => (
+const componentHeaderActions = (name: string, figmaUrl?: string) => (
   <>
     <IconButton
       variant="transparent"
@@ -59,9 +59,17 @@ const componentHeaderActions = (name: string) => (
     >
       <GithubIcon size={16} strokeWidth={1.8} />
     </IconButton>
-    <IconButton variant="transparent" color="neutral" size="md">
-      <FigmaIcon size={16} strokeWidth={1.8} />
-    </IconButton>
+    {figmaUrl && (
+      <IconButton
+        variant="transparent"
+        color="neutral"
+        size="md"
+        onClick={() => window.open(figmaUrl, '_blank', 'noopener,noreferrer')}
+        title="View in Figma"
+      >
+        <FigmaIcon size={16} strokeWidth={1.8} />
+      </IconButton>
+    )}
   </>
 );
 
@@ -115,7 +123,7 @@ const renderComponentPage = (name: string): ReactNode | null => {
       title={doc.name}
       description={doc.description}
       currentPath={`/components/${name}`}
-      headerActions={componentHeaderActions(doc.name)}
+      headerActions={componentHeaderActions(doc.name, doc.figmaUrl)}
     >
       {Content ? <Content /> : <p>Not found.</p>}
     </PageLayout>

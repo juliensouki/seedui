@@ -80,4 +80,6 @@ export const modalDoc: ComponentDoc = {
 </Modal>`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=1520-183',
 };

@@ -5,7 +5,7 @@ import { GithubIcon, FigmaIcon, ChevronDown } from 'lucide-react';
 import { ComponentCategory } from '../../docs/components';
 import { allPages, NavPage, ThemeCategory } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
-import { BASE_GITHUB_URL } from '../../constants';
+import { BASE_GITHUB_URL, BASE_FIGMA_URL } from '../../constants';
 
 
 const Nav = styled.nav<{ $mobileOpen: boolean }>(({ theme, $mobileOpen }) => {
@@ -414,7 +414,7 @@ export const Sidebar: FunctionComponent<SidebarProps> = ({
           variant="transparent"
           color="neutral"
           size="sm"
-          onClick={() => window.open('https://figma.com', '_blank')}
+          onClick={() => window.open(BASE_FIGMA_URL, '_blank', 'noopener,noreferrer')}
         >
           <FigmaIcon size={18} />
         </IconButton>

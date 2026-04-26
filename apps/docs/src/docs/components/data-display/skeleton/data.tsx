@@ -68,4 +68,6 @@ export const skeletonDoc: ComponentDoc = {
       code: `<Skeleton variant="rectangular" width={240} height={140} animation="wave" />`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=1517-3',
 };

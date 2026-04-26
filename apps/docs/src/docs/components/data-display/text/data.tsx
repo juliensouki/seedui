@@ -50,4 +50,6 @@ export const textDoc: ComponentDoc = {
 <Text variant="p">Paragraph that follows the heading with automatic spacing applied.</Text>`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=132-229',
 };

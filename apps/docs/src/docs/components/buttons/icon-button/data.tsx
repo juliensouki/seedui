@@ -73,4 +73,6 @@ export const iconButtonDoc: ComponentDoc = {
 <IconButton variant="transparent" disabled><PencilIcon strokeWidth={1.8} /></IconButton>`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=137-156',
 };

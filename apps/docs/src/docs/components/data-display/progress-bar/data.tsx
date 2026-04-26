@@ -76,4 +76,6 @@ export const progressBarDoc: ComponentDoc = {
 </div>`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=1501-573',
 };

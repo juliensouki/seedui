@@ -73,4 +73,6 @@ export const buttonDoc: ComponentDoc = {
 <Button variant="transparent" disabled>Disabled</Button>`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=205-183',
 };

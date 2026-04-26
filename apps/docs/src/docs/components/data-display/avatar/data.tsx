@@ -67,4 +67,6 @@ export const avatarDoc: ComponentDoc = {
 <Avatar size="lg" color="neutral" />`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=1500-215',
 };

@@ -64,4 +64,6 @@ const [c, setC] = useState(false);
 <Toggle checked={true} onChange={() => {}} label="Disabled on" disabled />`,
     },
   ],
+  figmaUrl:
+    'https://www.figma.com/design/KqnKUVKSX3GaltZs4ONXtx/Seedui---React-Library--Community-?node-id=1564-395',
 };

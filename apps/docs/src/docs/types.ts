@@ -39,4 +39,5 @@ export interface ComponentDoc {
   layout?: CSSProperties;
   usageExamples?: UsageExample[];
   anatomy?: AnatomyPart[];
+  figmaUrl?: string;
 }
