@@ -29,11 +29,25 @@ apps/docs           The documentation site (Astro + React + MDX)
 
 ## Local setup
 
-```bash
-git clone https://github.com/juliensouki/seedui.git
-cd seedui
-yarn install
-```
+External contributors do not have push access to this repository, so contributions go through a fork.
+
+1. Click **Fork** on the [GitHub repository](https://github.com/juliensouki/seedui) to create your own copy.
+2. Clone your fork and add this repository as an `upstream` remote so you can pull in updates:
+
+   ```bash
+   git clone https://github.com/<your-username>/seedui.git
+   cd seedui
+   git remote add upstream https://github.com/juliensouki/seedui.git
+   yarn install
+   ```
+
+3. Create a branch for your change, push it to your fork, and open a pull request from `<your-username>:<branch>` against `juliensouki/seedui:main`:
+
+   ```bash
+   git checkout -b my-change
+   # ...make changes, commit...
+   git push -u origin my-change
+   ```
 
 ## Common commands
 

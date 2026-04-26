@@ -29,7 +29,7 @@ For feature requests, describe the use case you are trying to solve. A concrete 
 
 The seedui [monorepo](https://github.com/juliensouki/seedui) is a yarn workspaces project.
 
-```
+```text
 packages/seedui     The published library (@juliensouki/seedui)
 apps/docs           The documentation site (Astro + React + MDX)
 ```
@@ -45,10 +45,24 @@ apps/docs           The documentation site (Astro + React + MDX)
 <section id="section-local-setup">
 ## Local setup
 
+External contributors do not have push access to this repository, so contributions go through a fork.
+
+1. Click **Fork** on the [GitHub repository](https://github.com/juliensouki/seedui) to create your own copy.
+2. Clone your fork and add this repository as an `upstream` remote so you can pull in updates:
+
 ```bash
-git clone https://github.com/juliensouki/seedui.git
+git clone https://github.com/<your-username>/seedui.git
 cd seedui
+git remote add upstream https://github.com/juliensouki/seedui.git
 yarn install
+```
+
+3. Create a branch for your change, push it to your fork, and open a pull request from `<your-username>:<branch>` against `juliensouki/seedui:main`:
+
+```bash
+git checkout -b my-change
+# ...make changes, commit...
+git push -u origin my-change
 ```
 </section>
 
