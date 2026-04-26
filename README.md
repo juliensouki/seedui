@@ -37,7 +37,7 @@ npm install @seedui-react/seedui styled-components
 ### Library (`packages/seedui`)
 
 - [React](https://react.dev) `^18.2.0`. Component runtime (peer dependency).
-- [styled-components](https://styled-components.com) `^6`. All styling and theming (peer dependency).
+- [styled-components](https://styled-components.com) `^6.1`. All styling and theming (peer dependency).
 - [@ctrl/tinycolor](https://github.com/scttcper/tinycolor) `^4.1`. Color manipulation helpers used by the theme engine.
 - [Vite](https://vite.dev) `^5`. Bundler for the library build.
 

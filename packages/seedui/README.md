@@ -1,4 +1,4 @@
-# <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/juliensouki/seedui/main/apps/docs/public/logo-white.svg" /><img src="https://raw.githubusercontent.com/juliensouki/seedui/main/apps/docs/public/logo-black.svg" width="28" alt="" align="absmiddle" style="vertical-align: -4px" /></picture> &nbsp;@seedui-react/seedui
+# <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/juliensouki/seedui/main/apps/docs/public/logo-white.svg" /><img src="https://raw.githubusercontent.com/juliensouki/seedui/main/apps/docs/public/logo-black.svg" width="28" alt="" align="absmiddle" style="vertical-align: -4px" /></picture> &nbsp;seedui
 
 A React component library and design system. I built it for my own side projects, and I'm sharing it so anyone can use it in theirs.
 
@@ -18,7 +18,7 @@ seedui requires these to be installed in your app:
 
 - `react ^18.2.0`
 - `react-dom ^18.2.0`
-- `styled-components ^6`
+- `styled-components ^6.1`
 
 styled-components is a peer dependency (not bundled) so your app and seedui share a single instance. This is required for theming.
 
