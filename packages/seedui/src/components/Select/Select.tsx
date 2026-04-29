@@ -290,6 +290,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
     };
 
     const handleContainerFocus: FocusEventHandler<HTMLDivElement> = (e) => {
+      if (disabled) return;
       if (skipOpenOnceRef.current) {
         skipOpenOnceRef.current = false;
         return;
@@ -308,6 +309,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
     };
 
     const handleArrowClick: MouseEventHandler = (e) => {
+      if (disabled) {
+        e.stopPropagation();
+        return;
+      }
       setIsMenuOpen((prev) => {
         if (prev) {
           skipOpenOnceRef.current = true;
@@ -333,6 +338,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps & InternalProps>(
     };
 
     const handleKeyboard: KeyboardEventHandler = (e) => {
+      if (disabled) return;
       if (e.key === 'ArrowUp') {
         e.preventDefault();
         if (!isMenuOpen) setIsMenuOpen(true);
