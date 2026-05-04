@@ -19,7 +19,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'styled-components'],
+      external: [/^react($|\/)/, /^react-dom($|\/)/, 'styled-components'],
     },
   },
   resolve: {
