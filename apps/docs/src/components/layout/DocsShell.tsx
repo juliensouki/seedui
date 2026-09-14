@@ -7,6 +7,7 @@ import { Topbar } from './Topbar';
 import { ModeToggleContext } from './ModeContext';
 import { MobileMenuContext } from './MobileMenuContext';
 import { Sidebar } from './Sidebar';
+import { trackEvent } from '../../utils/analytics';
 
 const bodyTextVariants = new Set(['p', 'caption', 'small']);
 
@@ -87,6 +88,11 @@ export const DocsShell: FunctionComponent<DocsShellProps> = ({ currentPath, chil
     const stored = localStorage.getItem('seedui-docs-mode');
     return stored === 'dark' ? 'dark' : 'light';
   });
+
+  useEffect(() => {
+    trackEvent(mode === 'dark' ? 'visit-dark-mode' : 'visit-light-mode');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 

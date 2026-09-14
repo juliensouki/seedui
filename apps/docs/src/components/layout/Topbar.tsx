@@ -5,6 +5,7 @@ import { MoonIcon, GithubIcon, FigmaIcon, MenuIcon, XIcon } from 'lucide-react';
 import { allPages, NavPage } from './navigation';
 import { MobileMenuContext } from './MobileMenuContext';
 import { BASE_GITHUB_URL, BASE_FIGMA_URL } from '../../constants';
+import { trackEvent } from '../../utils/analytics';
 
 const Bar = styled.header(({ theme }) => {
   const isLight = theme.mode === 'light';
@@ -135,6 +136,7 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
   };
 
   const handleSelect = (path: string) => {
+    trackEvent('docs-search-select');
     window.location.href = path;
     setSearch('');
     setPopoverOpen(false);
@@ -186,7 +188,10 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             variant="transparent"
             color="neutral"
             size="md"
-            onClick={() => window.open(BASE_GITHUB_URL, '_blank', 'noopener,noreferrer')}
+            onClick={() => {
+              trackEvent('github-click');
+              window.open(BASE_GITHUB_URL, '_blank', 'noopener,noreferrer');
+            }}
           >
             <GithubIcon size={18} />
           </IconButton>
@@ -194,7 +199,10 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
             variant="transparent"
             color="neutral"
             size="md"
-            onClick={() => window.open(BASE_FIGMA_URL, '_blank', 'noopener,noreferrer')}
+            onClick={() => {
+              trackEvent('figma-click');
+              window.open(BASE_FIGMA_URL, '_blank', 'noopener,noreferrer');
+            }}
           >
             <FigmaIcon size={18} />
           </IconButton>
@@ -260,7 +268,14 @@ export const Topbar: FunctionComponent<TopbarProps> = ({ mode, onModeToggle }) =
         </DesktopOnly>
         <ThemeToggle>
           <MoonIcon size={16} />
-          <Toggle checked={mode === 'dark'} onChange={onModeToggle} size="sm" />
+          <Toggle
+            checked={mode === 'dark'}
+            onChange={() => {
+              trackEvent(mode === 'dark' ? 'dark-mode-disabled' : 'dark-mode-enabled');
+              onModeToggle();
+            }}
+            size="sm"
+          />
         </ThemeToggle>
       </RightSection>
     </Bar>
