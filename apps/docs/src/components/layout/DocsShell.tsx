@@ -91,7 +91,6 @@ export const DocsShell: FunctionComponent<DocsShellProps> = ({ currentPath, chil
 
   useEffect(() => {
     trackEvent(mode === 'dark' ? 'visit-dark-mode' : 'visit-light-mode');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
