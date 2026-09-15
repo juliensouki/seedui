@@ -21,6 +21,13 @@ const { title = 'seedui' } = Astro.props;
     <link rel="preload" href={interLatinUrl} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={sourceSerifLatinUrl} as="font" type="font/woff2" crossorigin />
     <style>*, *::before, *::after { box-sizing: border-box; }</style>
+    {import.meta.env.PUBLIC_UMAMI_URL && (
+      <script
+        defer
+        src={`${import.meta.env.PUBLIC_UMAMI_URL}/script.js`}
+        data-website-id={import.meta.env.PUBLIC_UMAMI_WEBSITE_ID}
+      ></script>
+    )}
   </head>
   <body style="margin:0;padding:0;width:100%;height:100%;overflow:hidden;">
     <script is:inline>
