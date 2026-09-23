@@ -9,7 +9,7 @@ export const FeedbackCard: FunctionComponent = () => {
   return (
     <WallCard>
       <MiniLabel>Feedback</MiniLabel>
-      <Row style={{ gap: 6, marginBottom: 12 }}>
+      <Row style={{ gap: 6, marginBottom: 12, flexWrap: 'wrap' }}>
         {['Bug', 'Feature', 'Improvement', 'Other'].map((label) => (
           <Tag
             key={label}
