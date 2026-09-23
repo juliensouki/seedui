@@ -34,6 +34,7 @@ export const iconButtonDoc: ComponentDoc = {
     },
     { name: 'variant', type: "'filled' | 'transparent'", default: "'filled'", description: 'Visual style variant.' },
     { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size.' },
+    { name: 'iconSize', type: 'number', default: '—', description: "Icon size in pixels. Overrides the icon size set by `size`; the button's padding stays the same." },
     { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the button.' },
     { name: 'onClick', type: 'MouseEventHandler', default: '—', description: 'Click handler.' },
   ],
@@ -71,6 +72,13 @@ export const iconButtonDoc: ComponentDoc = {
       layout: { display: 'flex', gap: 8 },
       code: `<IconButton disabled><PencilIcon strokeWidth={1.8} /></IconButton>
 <IconButton variant="transparent" disabled><PencilIcon strokeWidth={1.8} /></IconButton>`,
+    },
+    {
+      layout: { display: 'flex', gap: 8, alignItems: 'center' },
+      code: `<IconButton size="sm"><SearchIcon strokeWidth={1.8} /></IconButton>
+<IconButton size="sm" iconSize={12}><SearchIcon strokeWidth={1.8} /></IconButton>
+<IconButton size="md"><SearchIcon strokeWidth={1.8} /></IconButton>
+<IconButton size="md" iconSize={24}><SearchIcon strokeWidth={1.8} /></IconButton>`,
     },
   ],
   figmaUrl:

@@ -41,11 +41,15 @@ You can also pass any hex color and seedui will automatically generate the full 
 
 <ComponentPlayground code={doc.usageExamples[2].code} layout={doc.usageExamples[2].layout} scope={iconScope} />
 
-### Sizes
+### Button & Icon sizes
 
-Small works well in dense toolbars, medium is the default, and large is suited for prominent standalone actions.
+Two props control how big an IconButton is. <code>size</code> sets the button's padding and a matching icon size. Small works well in dense toolbars, medium is the default, and large is suited for prominent standalone actions.
 
 <ComponentPlayground code={doc.usageExamples[3].code} layout={doc.usageExamples[3].layout} scope={iconScope} />
+
+Use <code>iconSize</code> (in pixels) when you need a different icon size than the preset gives, for example to fit an IconButton inside a smaller component. The padding from <code>size</code> stays the same, so the button's total size is the padding plus the icon.
+
+<ComponentPlayground code={doc.usageExamples[5].code} layout={doc.usageExamples[5].layout} scope={iconScope} />
 
 ### Disabled
 
