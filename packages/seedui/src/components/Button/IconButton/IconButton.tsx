@@ -27,6 +27,8 @@ import { SeedContext } from '../../ThemeProvider/context';
 
 /** Props for the IconButton component — a circular button designed to hold a single icon. */
 export interface IconButtonProps extends ButtonBaseProps {
+  /** Icon size in pixels. Overrides the default icon size for the button's `size`. */
+  iconSize?: number;
   /** Icon element to display inside the button. */
   children?: ReactNode;
 }
@@ -37,9 +39,10 @@ const mapSizeToAttributes: Record<ButtonSizes, { iconSize: number }> = {
   lg: { iconSize: 24 },
 };
 
-const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconButtonProps>>) => {
+const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<Omit<IconButtonProps, 'iconSize'>> & { $iconSize?: number }>) => {
   const theme = props.theme;
   const size = props.size;
+  const iconSize = props.$iconSize ?? mapSizeToAttributes[size].iconSize;
   const isLight = theme.mode === 'light';
 
   return {
@@ -51,8 +54,8 @@ const IconButtonBase = styled(ButtonCommon)((props: StyledProps<Required<IconBut
 
     '& svg': {
       color: isLight ? theme.colors.neutral.white : theme.colors.neutral[100],
-      width: mapSizeToAttributes[size].iconSize,
-      height: mapSizeToAttributes[size].iconSize,
+      width: iconSize,
+      height: iconSize,
     },
   };
 });
@@ -65,7 +68,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (props: IconButtonProps & InternalProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
     const { customizations, colorService } = useContext<SeedContextType>(SeedContext);
     const { mode } = useTheme();
-    const { onClick, variant, color, disabled, size, className, children, ...restProps } = getDefaultProps<
+    const { onClick, variant, color, disabled, size, iconSize, className, children, ...restProps } = getDefaultProps<
       IconButtonProps & InternalProps
     >({
       providedProps: props,
@@ -103,6 +106,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         color={color}
         disabled={disabled}
         size={size}
+        $iconSize={iconSize}
         className={className}
         $customizations={customizations.components?.iconButton}
         {...(isCustom && { $colorScale: colorScale })}
