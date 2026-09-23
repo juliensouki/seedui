@@ -24,8 +24,8 @@ apps/docs           The documentation site (Astro + React + MDX)
 
 ## Prerequisites
 
-- Node 18 or later
-- Yarn 3 (pinned via `packageManager` in `package.json`; `corepack enable` will pick it up)
+- Node 20.3 or later (tested on Node 24)
+- Yarn 4 (pinned via `packageManager` in `package.json`; `corepack enable` will pick it up)
 
 ## Local setup
 
