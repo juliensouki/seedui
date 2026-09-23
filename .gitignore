@@ -23,6 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /.yarn/install-state.gz
+/.yarn/cache
 
 .rollup.cache
 rollup.build.css
